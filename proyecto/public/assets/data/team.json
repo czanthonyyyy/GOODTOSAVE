@@ -1,0 +1,76 @@
+{
+  "team": [
+    {
+      "id": 1,
+      "name": "Sarah Johnson",
+      "role": "Fundadora y CEO",
+      "bio": "Científica ambiental apasionada por los sistemas alimentarios sostenibles y la construcción de comunidades. Con más de 10 años de experiencia en sostenibilidad.",
+      "image": "assets/images/team/sarah.jpg",
+      "linkedin": "https://linkedin.com/in/sarahjohnson",
+      "email": "sarah@foodsaver.com"
+    },
+    {
+      "id": 2,
+      "name": "Carlos Rodríguez",
+      "role": "CTO y Co-fundador",
+      "bio": "Ingeniero de software especializado en plataformas de comercio electrónico. Experto en tecnologías sostenibles y desarrollo de aplicaciones móviles.",
+      "image": "assets/images/team/carlos.jpg",
+      "linkedin": "https://linkedin.com/in/carlosrodriguez",
+      "email": "carlos@foodsaver.com"
+    },
+    {
+      "id": 3,
+      "name": "Ana Martínez",
+      "role": "Directora de Operaciones",
+      "bio": "Especialista en logística y gestión de la cadena de suministro. Comprometida con la eficiencia operativa y la reducción del desperdicio.",
+      "image": "assets/images/team/ana.jpg",
+      "linkedin": "https://linkedin.com/in/anamartinez",
+      "email": "ana@foodsaver.com"
+    },
+    {
+      "id": 4,
+      "name": "David Chen",
+      "role": "Director de Producto",
+      "bio": "Experto en experiencia de usuario y diseño de productos digitales. Enfocado en crear soluciones intuitivas para problemas complejos.",
+      "image": "assets/images/team/david.jpg",
+      "linkedin": "https://linkedin.com/in/davidchen",
+      "email": "david@foodsaver.com"
+    },
+    {
+      "id": 5,
+      "name": "María González",
+      "role": "Directora de Marketing",
+      "bio": "Estratega de marketing digital con experiencia en marcas sostenibles. Apasionada por comunicar el impacto ambiental positivo.",
+      "image": "assets/images/team/maria.jpg",
+      "linkedin": "https://linkedin.com/in/mariagonzalez",
+      "email": "maria@foodsaver.com"
+    },
+    {
+      "id": 6,
+      "name": "Luis Fernández",
+      "role": "Director de Desarrollo de Negocio",
+      "bio": "Especialista en alianzas estratégicas y desarrollo de mercados. Experto en conectar proveedores con consumidores conscientes.",
+      "image": "assets/images/team/luis.jpg",
+      "linkedin": "https://linkedin.com/in/luisfernandez",
+      "email": "luis@foodsaver.com"
+    },
+    {
+      "id": 7,
+      "name": "Elena Petrova",
+      "role": "Directora de Sostenibilidad",
+      "bio": "Consultora ambiental con experiencia en medición de impacto y políticas de sostenibilidad. Doctora en Ciencias Ambientales.",
+      "image": "assets/images/team/elena.jpg",
+      "linkedin": "https://linkedin.com/in/elenapetrova",
+      "email": "elena@foodsaver.com"
+    },
+    {
+      "id": 8,
+      "name": "Roberto Silva",
+      "role": "Director de Tecnología",
+      "bio": "Arquitecto de software con experiencia en sistemas escalables. Especializado en tecnologías cloud y machine learning.",
+      "image": "assets/images/team/roberto.jpg",
+      "linkedin": "https://linkedin.com/in/robertosilva",
+      "email": "roberto@foodsaver.com"
+    }
+  ]
+} 
