@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pago - FoodSaver</title>
+    <meta name="description" content="Completa tu compra de manera segura">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
+</head>
+<body>
+    <!-- Header Web Component -->
+    <app-header></app-header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">Completar Compra</h1>
+            <p class="page-subtitle">Revisa tu pedido y completa el pago</p>
+        </div>
+    </section>
+
+    <!-- Payment Section -->
+    <section class="payment-section">
+        <div class="container">
+            <div class="payment-layout">
+                <!-- Order Summary -->
+                <div class="order-summary">
+                    <h2 class="section-title">Resumen del Pedido</h2>
+                    
+                    <div class="order-items" id="order-items">
+                        <!-- Order items will be loaded from cart -->
+                    </div>
+                    
+                    <div class="order-totals">
+                        <div class="total-row">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">€0.00</span>
+                        </div>
+                        <div class="total-row">
+                            <span>IVA (21%):</span>
+                            <span id="tax">€0.00</span>
+                        </div>
+                        <div class="total-row total-final">
+                            <span>Total:</span>
+                            <span id="total-amount">€0.00</span>
+                        </div>
+                    </div>
+                    
+                    <div class="pickup-info">
+                        <h3>Información de Recogida</h3>
+                        <div class="pickup-details">
+                            <div class="pickup-item">
+                                <span class="pickup-label">Ubicación:</span>
+                                <span id="pickup-location">Mercado Central</span>
+                            </div>
+                            <div class="pickup-item">
+                                <span class="pickup-label">Horario:</span>
+                                <span id="pickup-time">Hoy, 14:00 - 18:00</span>
+                            </div>
+                            <div class="pickup-item">
+                                <span class="pickup-label">Contacto:</span>
+                                <span id="pickup-contact">+34 600 123 456</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Form -->
+                <div class="payment-form">
+                    <h2 class="section-title">Información de Pago</h2>
+                    
+                    <form id="payment-form" class="payment-form-container">
+                        <!-- Customer Information -->
+                        <div class="form-section">
+                            <h3>Información Personal</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="customer-name">Nombre Completo *</label>
+                                    <input type="text" id="customer-name" name="customerName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="customer-email">Correo Electrónico *</label>
+                                    <input type="email" id="customer-email" name="customerEmail" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="customer-phone">Teléfono *</label>
+                                    <input type="tel" id="customer-phone" name="customerPhone" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pickup-preference">Preferencia de Recogida</label>
+                                    <select id="pickup-preference" name="pickupPreference">
+                                        <option value="asap">Lo antes posible</option>
+                                        <option value="morning">Mañana (9:00 - 12:00)</option>
+                                        <option value="afternoon">Tarde (14:00 - 18:00)</option>
+                                        <option value="evening">Noche (18:00 - 20:00)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Payment Method -->
+                        <div class="form-section">
+                            <h3>Método de Pago</h3>
+                            <div class="payment-methods">
+                                <div class="payment-method">
+                                    <input type="radio" id="card-payment" name="paymentMethod" value="card" checked>
+                                    <label for="card-payment">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2"/>
+                                            <line x1="2" y1="10" x2="22" y2="10" stroke="currentColor" stroke-width="2"/>
+                                        </svg>
+                                        Tarjeta de Crédito/Débito
+                                    </label>
+                                </div>
+                                <div class="payment-method">
+                                    <input type="radio" id="paypal-payment" name="paymentMethod" value="paypal">
+                                    <label for="paypal-payment">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path d="M20.067 8.478c.492.315.844.825.844 1.478 0 .653-.352 1.163-.844 1.478" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M3 12h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M3 6h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        PayPal
+                                    </label>
+                                </div>
+                                <div class="payment-method">
+                                    <input type="radio" id="pickup-payment" name="paymentMethod" value="pickup">
+                                    <label for="pickup-payment">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        Pago en Recogida
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card Details -->
+                        <div class="form-section" id="card-details">
+                            <h3>Detalles de la Tarjeta</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="card-number">Número de Tarjeta *</label>
+                                    <input type="text" id="card-number" name="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="card-holder">Titular de la Tarjeta *</label>
+                                    <input type="text" id="card-holder" name="cardHolder" placeholder="NOMBRE APELLIDO" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="card-expiry">Fecha de Vencimiento *</label>
+                                    <input type="text" id="card-expiry" name="cardExpiry" placeholder="MM/AA" maxlength="5" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="card-cvv">CVV *</label>
+                                    <input type="text" id="card-cvv" name="cardCvv" placeholder="123" maxlength="4" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Billing Address -->
+                        <div class="form-section">
+                            <h3>Dirección de Facturación</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="billing-street">Calle *</label>
+                                    <input type="text" id="billing-street" name="billingStreet" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="billing-city">Ciudad *</label>
+                                    <input type="text" id="billing-city" name="billingCity" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="billing-postal">Código Postal *</label>
+                                    <input type="text" id="billing-postal" name="billingPostal" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="billing-country">País *</label>
+                                    <select id="billing-country" name="billingCountry" required>
+                                        <option value="">Seleccionar país</option>
+                                        <option value="ES" selected>España</option>
+                                        <option value="FR">Francia</option>
+                                        <option value="DE">Alemania</option>
+                                        <option value="IT">Italia</option>
+                                        <option value="PT">Portugal</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Special Instructions -->
+                        <div class="form-section">
+                            <h3>Instrucciones Especiales</h3>
+                            <div class="form-group">
+                                <label for="special-instructions">Notas para la recogida (opcional)</label>
+                                <textarea id="special-instructions" name="specialInstructions" rows="3" placeholder="Alergias, preferencias especiales, etc."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Terms and Conditions -->
+                        <div class="form-section">
+                            <div class="form-group checkbox-group">
+                                <input type="checkbox" id="terms-accept" name="termsAccept" required>
+                                <label for="terms-accept">
+                                    Acepto los <a href="#terms" target="_blank">Términos y Condiciones</a> y la 
+                                    <a href="#privacy" target="_blank">Política de Privacidad</a> *
+                                </label>
+                            </div>
+                            <div class="form-group checkbox-group">
+                                <input type="checkbox" id="newsletter-signup" name="newsletterSignup">
+                                <label for="newsletter-signup">
+                                    Quiero recibir ofertas especiales y noticias sobre sostenibilidad
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="form-section">
+                            <button type="submit" class="btn btn-primary btn-lg payment-submit-btn" id="payment-submit">
+                                <span class="btn-text">Completar Pago</span>
+                                <span class="btn-loading" style="display: none;">
+                                    <div class="spinner"></div>
+                                    Procesando...
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security Notice -->
+    <section class="security-notice">
+        <div class="container">
+            <div class="security-content">
+                <div class="security-icon">🔒</div>
+                <div class="security-text">
+                    <h3>Pago Seguro</h3>
+                    <p>Todos los pagos están protegidos con encriptación SSL de 256 bits. Tus datos están seguros con nosotros.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Web Component -->
+    <app-footer></app-footer>
+
+    <!-- Scripts -->
+    <script src="js/web-components.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/cart.js"></script>
+</body>
+</html> 

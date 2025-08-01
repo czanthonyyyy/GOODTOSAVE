@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autenticación - FoodSaver</title>
+    <meta name="description" content="Inicia sesión o regístrate en FoodSaver para comenzar a reducir el desperdicio de alimentos">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+    
+    <!-- Auth Styles - Loaded after global styles -->
+    <link rel="stylesheet" href="css/auth.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
+</head>
+<body>
+    <!-- Header Web Component -->
+    <app-header></app-header>
+
+    <!-- Auth Container - Completely Isolated -->
+    <div class="auth-page">
+        <div class="container" id="container">
+            <div class="form-container sign-up-container">
+                <form id="signupForm" novalidate enctype="multipart/form-data" style="display: flex; flex-direction: column; height: 100%;">
+                    <h1 style="flex-shrink: 0;">Crear Cuenta</h1>
+                    <div class="social-container" style="flex-shrink: 0;">
+                        <a href="#" class="social" aria-label="Registrarse con Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social" aria-label="Registrarse con Google">
+                            <i class="fab fa-google"></i>
+                        </a>
+                        <a href="#" class="social" aria-label="Registrarse con LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                    <span style="flex-shrink: 0;">o usa tu correo para registrarte</span>
+                    <div id="signup-fields-scroll" style="flex: 1 1 auto; overflow-y: auto; min-height: 0; margin-bottom: 10px;">
+                        <div class="input-group">
+                            <input type="text" id="signup-firstname" placeholder="Nombre" required pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,30}$" aria-label="Nombre"/>
+                            <span class="validation-message">Por favor ingresa tu nombre</span>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" id="signup-lastname" placeholder="Apellidos" required pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,30}$" aria-label="Apellidos"/>
+                            <span class="validation-message">Por favor ingresa tus apellidos</span>
+                        </div>
+                        <div class="input-group">
+                            <input type="email" id="signup-email" placeholder="Correo Electrónico" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" aria-label="Correo Electrónico"/>
+                            <span class="validation-message">Por favor ingresa un correo electrónico válido</span>
+                        </div>
+                        <div class="input-group">
+                            <input type="password" id="signup-password" placeholder="Contraseña" required minlength="8" aria-label="Contraseña"/>
+                            <button type="button" class="toggle-password" aria-label="Alternar visibilidad de contraseña">
+                                <i class="far fa-eye"></i>
+                            </button>
+                            <span class="validation-message">La contraseña debe tener al menos 8 caracteres</span>
+                            <div class="password-strength">
+                                <div class="password-strength-bar"></div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <input type="password" id="signup-confirm-password" placeholder="Confirmar Contraseña" required aria-label="Confirmar Contraseña"/>
+                            <button type="button" class="toggle-password" aria-label="Alternar visibilidad de contraseña">
+                                <i class="far fa-eye"></i>
+                            </button>
+                            <span class="validation-message">Las contraseñas no coinciden</span>
+                        </div>
+                        <div class="input-group">
+                            <input type="tel" id="signup-phone" placeholder="Teléfono (opcional)" pattern="^\+?[0-9]{10,15}$" aria-label="Teléfono"/>
+                            <span class="validation-message">Por favor ingresa un número de teléfono válido</span>
+                        </div>
+                        <div class="input-group">
+                            <select id="signup-account-type" required aria-label="Tipo de Cuenta">
+                                <option value="">Selecciona tu tipo de cuenta</option>
+                                <option value="buyer">Comprador</option>
+                                <option value="seller">Proveedor</option>
+                            </select>
+                            <span class="validation-message">Por favor selecciona tu tipo de cuenta</span>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" id="signup-location" placeholder="Ciudad/Localidad (opcional)" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$" aria-label="Ubicación"/>
+                            <span class="validation-message">Por favor ingresa una ubicación válida</span>
+                        </div>
+                        <div class="input-group">
+                            <textarea id="signup-bio" placeholder="Biografía/Sobre ti (opcional)" maxlength="300" aria-label="Biografía"></textarea>
+                            <span class="validation-message">La biografía debe tener menos de 300 caracteres</span>
+                        </div>
+                        <div class="input-group">
+                            <label for="signup-profilepic" style="font-size: 0.9em; color: #888;">Foto de Perfil (opcional, JPG/PNG/WebP, máx 2MB)</label>
+                            <input type="file" id="signup-profilepic" accept="image/png, image/jpeg, image/webp" aria-label="Foto de Perfil"/>
+                            <span class="validation-message">Por favor selecciona un archivo de imagen válido (máx 2MB)</span>
+                        </div>
+                    </div>
+                    <div class="form-error-message" id="signup-error-message" style="display:none;"></div>
+                    <button type="submit" style="flex-shrink: 0; margin-top: 10px;">Registrarse</button>
+                </form>
+            </div>
+            <div class="form-container sign-in-container">
+                <form id="signinForm" novalidate>
+                    <h1>Iniciar Sesión</h1>
+                    <div class="social-container">
+                        <a href="#" class="social" aria-label="Iniciar sesión con Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social" aria-label="Iniciar sesión con Google">
+                            <i class="fab fa-google"></i>
+                        </a>
+                        <a href="#" class="social" aria-label="Iniciar sesión con LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                    <span>o usa tu cuenta</span>
+
+                    <div class="input-group">
+                        <input type="email" id="signin-email" placeholder="Correo Electrónico" required
+                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                            aria-label="Correo Electrónico"/>
+                        <span class="validation-message">Por favor ingresa un correo electrónico válido</span>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="password" id="signin-password" placeholder="Contraseña" required
+                            aria-label="Contraseña"/>
+                        <button type="button" class="toggle-password" aria-label="Alternar visibilidad de contraseña">
+                            <i class="far fa-eye"></i>
+                        </button>
+                        <span class="validation-message">Por favor ingresa tu contraseña</span>
+                    </div>
+
+                    <div class="form-error-message" id="signin-error-message" style="display:none;"></div>
+
+                    <a href="#" tabindex="0">¿Olvidaste tu contraseña?</a>
+                    <button type="submit">Iniciar Sesión</button>
+                </form>
+            </div>
+            <div class="overlay-container">
+                <div class="overlay">
+                    <div class="overlay-panel overlay-left">
+                        <h1>¡Bienvenido de Vuelta!</h1>
+                        <p>Para mantenerte conectado con nosotros, inicia sesión con tu información personal</p>
+                        <button class="ghost" id="signIn">Iniciar Sesión</button>
+                    </div>
+                    <div class="overlay-panel overlay-right">
+                        <h1>¡Hola, Amigo!</h1>
+                        <p>Ingresa tus datos personales y comienza tu viaje con nosotros</p>
+                        <button class="ghost" id="signUp">Registrarse</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Web Component -->
+    <app-footer></app-footer>
+
+    <!-- Scripts -->
+    <script src="js/web-components.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html> 
