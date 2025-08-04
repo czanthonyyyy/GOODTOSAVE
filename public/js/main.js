@@ -1,5 +1,5 @@
 /**
- * FoodSaver Marketplace - Main Application
+ * Good to Save Marketplace - Main Application
  * Maneja toda la funcionalidad principal de la aplicación
  */
 class FoodMarketplaceApp {

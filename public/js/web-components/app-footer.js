@@ -201,7 +201,7 @@ class AppFooter extends HTMLElement {
             <footer class="footer">
                 <div class="footer-content">
                     <div class="footer-section">
-                        <h3>FoodSaver</h3>
+                        <h3>Good to Save</h3>
                         <p>Connecting providers and consumers to reduce food waste and create a more sustainable future.</p>
                         <div class="social-links">
                             <a href="#" class="social-link" aria-label="Facebook">
@@ -253,7 +253,7 @@ class AppFooter extends HTMLElement {
                 </div>
                 
                 <div class="footer-bottom">
-                    <p>&copy; 2024 FoodSaver. All rights reserved. | <i class="fas fa-heart"></i> Made with love for the planet</p>
+                    <p>&copy; 2024 Good to Save. All rights reserved. | <i class="fas fa-heart"></i> Made with love for the planet</p>
                 </div>
             </footer>
         `;

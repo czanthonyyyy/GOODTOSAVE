@@ -335,8 +335,8 @@ class AppHeader extends HTMLElement {
             <header class="header">
                 <div class="header-container">
                     <a href="index.html" class="logo">
-                        <img src="assets/images/logo.svg" alt="FoodSaver Logo">
-                        FoodSaver
+                        <!-- <img src="assets/images/logo.svg" alt="Good to Save Logo"> -->
+                        Good to Save
                     </a>
                     
                     <nav>

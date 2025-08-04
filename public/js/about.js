@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 social: {
                     linkedin: '#',
                     twitter: '#',
-                    email: 'sarah@foodsaver.com'
+                    email: 'sarah@goodtosave.com'
                 }
             },
             {
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 social: {
                     linkedin: '#',
                     twitter: '#',
-                    email: 'michael@foodsaver.com'
+                    email: 'michael@goodtosave.com'
                 }
             },
             {
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 social: {
                     linkedin: '#',
                     twitter: '#',
-                    email: 'emma@foodsaver.com'
+                    email: 'emma@goodtosave.com'
                 }
             },
             {
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 social: {
                     linkedin: '#',
                     twitter: '#',
-                    email: 'david@foodsaver.com'
+                    email: 'david@goodtosave.com'
                 }
             }
         ];
