@@ -125,7 +125,6 @@ class FoodMarketplaceApp {
    */
   initializeHomePage() {
     this.setupHeroAnimations();
-    this.loadFeaturedProducts();
     this.setupCounterAnimations();
     this.setupTestimonials();
   }
@@ -149,16 +148,7 @@ class FoodMarketplaceApp {
     }
   }
 
-  /**
-   * Carga productos destacados
-   */
-  async loadFeaturedProducts() {
-    const featuredGrid = document.getElementById('featured-products-grid');
-    if (featuredGrid && this.products.length > 0) {
-      const featuredProducts = this.products.slice(0, 4);
-      await ComponentLoader.renderProducts('#featured-products-grid', featuredProducts);
-    }
-  }
+
 
   /**
    * Configura animaciones de contadores
