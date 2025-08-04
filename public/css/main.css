@@ -10,15 +10,15 @@
     --white: #ffffff;
     
     /* Colores de Texto */
-    --text-primary: #767676;
-    --text-highlight: #2d3436;
-    --text-secondary: #636e72;
-    --text-light: #909090;
-    --text-lighter: #c5c5c5;
-    --text-lightest: #b8b8b8;
-    --text-muted: #a5a5a5;
-    --text-dark: #222222;
-    --text-darker: #151515;
+    --text-primary: #e0e0e0;
+    --text-highlight: #ffffff;
+    --text-secondary: #cccccc;
+    --text-light: #b0b0b0;
+    --text-lighter: #d0d0d0;
+    --text-lightest: #e8e8e8;
+    --text-muted: #a0a0a0;
+    --text-dark: #f5f5f5;
+    --text-darker: #ffffff;
     
     /* Colores Primarios (Verde) */
     --primary-color: #39b54a;
@@ -29,8 +29,8 @@
     --success-color: #4caf50;
     
     /* Colores Secundarios y de Enlace */
-    --link-color: #0087cc;
-    --link-hover: #3498db;
+    --link-color: #4fc3f7;
+    --link-hover: #81d4fa;
     --warning-color: #f39c12;
     --error-color: #e74c3c;
     --alert-color: #f44336;
@@ -169,22 +169,24 @@ a:hover {
 input, textarea, select {
     width: 100%;
     padding: 12px 16px;
-    border: 2px solid var(--text-lighter);
+    border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: var(--border-radius);
     font-size: 0.875rem;
-    background-color: var(--white);
-    color: var(--text-highlight);
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
     transition: var(--transition);
+    backdrop-filter: blur(10px);
 }
 
 input:focus, textarea:focus, select:focus {
     outline: none;
     border-color: var(--primary-color);
     box-shadow: 0 0 0 3px var(--shadow-green);
+    background-color: rgba(255, 255, 255, 0.15);
 }
 
 input::placeholder, textarea::placeholder {
-    color: var(--text-light);
+    color: var(--text-muted);
 }
 
 /* ===== UTILIDADES ===== */

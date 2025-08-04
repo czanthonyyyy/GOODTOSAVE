@@ -20,17 +20,27 @@ class AppHeader extends HTMLElement {
                     top: 0;
                     z-index: 1000;
                     box-shadow: var(--box-shadow-light);
+                    width: 100%;
+                }
+
+                .header {
+                    width: 100%;
+                    display: block;
+                }
+
+                * {
+                    box-sizing: border-box;
                 }
 
                 .header-container {
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
-                    padding: 1rem 0;
+                    padding: 1rem 20px;
                     max-width: 1200px;
                     margin: 0 auto;
-                    padding-left: 20px;
-                    padding-right: 20px;
+                    width: 100%;
+                    box-sizing: border-box;
                 }
 
                 .logo {
@@ -42,6 +52,7 @@ class AppHeader extends HTMLElement {
                     font-size: 1.5rem;
                     text-decoration: none;
                     font-family: 'Inter', sans-serif;
+                    flex-shrink: 0;
                 }
 
                 .logo:hover {
@@ -51,27 +62,76 @@ class AppHeader extends HTMLElement {
                 .logo img {
                     height: 32px;
                     width: auto;
+                    display: block;
+                }
+
+                nav {
+                    display: flex;
+                    align-items: center;
                 }
 
                 .nav-menu {
                     display: flex;
                     align-items: center;
-                    gap: 2rem;
+                    gap: 0;
                     list-style: none;
                     margin: 0;
-                    padding: 0;
+                    padding: 4px;
+                    background: rgba(255, 255, 255, 0.05);
+                    border-radius: 12px;
+                    backdrop-filter: blur(10px);
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                }
+
+                .nav-menu li {
+                    position: relative;
                 }
 
                 .nav-menu a {
                     color: var(--text-primary);
                     font-weight: 500;
                     text-decoration: none;
-                    transition: var(--transition);
+                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
                     font-family: 'Inter', sans-serif;
+                    padding: 12px 20px;
+                    border-radius: 8px;
+                    position: relative;
+                    display: block;
+                    font-size: 0.9rem;
+                    letter-spacing: 0.025em;
                 }
 
                 .nav-menu a:hover {
                     color: var(--primary-color);
+                    background: rgba(57, 181, 74, 0.1);
+                    transform: translateY(-1px);
+                }
+
+                .nav-menu a::before {
+                    content: '';
+                    position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    width: 0;
+                    height: 2px;
+                    background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+                    transition: all 0.3s ease;
+                    transform: translateX(-50%);
+                    border-radius: 1px;
+                }
+
+                .nav-menu a:hover::before {
+                    width: 80%;
+                }
+
+                .nav-menu a.active {
+                    color: var(--primary-color);
+                    background: rgba(57, 181, 74, 0.15);
+                    box-shadow: 0 2px 8px rgba(57, 181, 74, 0.2);
+                }
+
+                .nav-menu a.active::before {
+                    width: 80%;
                 }
 
                 .auth-buttons {
@@ -84,81 +144,156 @@ class AppHeader extends HTMLElement {
                     display: inline-flex;
                     align-items: center;
                     justify-content: center;
-                    padding: 8px 16px;
+                    padding: 10px 20px;
                     border: none;
-                    border-radius: var(--border-radius);
+                    border-radius: 10px;
                     font-size: 0.875rem;
-                    font-weight: 500;
+                    font-weight: 600;
                     text-decoration: none;
                     cursor: pointer;
-                    transition: var(--transition);
-                    min-height: 36px;
+                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    min-height: 40px;
                     gap: 8px;
                     font-family: 'Inter', sans-serif;
+                    letter-spacing: 0.025em;
+                    position: relative;
+                    overflow: hidden;
+                }
+
+                .btn::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+                    transition: left 0.5s;
+                }
+
+                .btn:hover::before {
+                    left: 100%;
                 }
 
                 .btn-primary {
-                    background-color: var(--primary-color);
+                    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
                     color: var(--white);
+                    box-shadow: 0 4px 15px rgba(57, 181, 74, 0.3);
                 }
 
                 .btn-primary:hover {
-                    background-color: var(--primary-dark);
-                    transform: translateY(-1px);
-                    box-shadow: var(--box-shadow);
+                    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
+                    transform: translateY(-2px);
+                    box-shadow: 0 6px 20px rgba(57, 181, 74, 0.4);
                 }
 
                 .btn-outline {
-                    background-color: transparent;
+                    background: rgba(255, 255, 255, 0.05);
                     color: var(--text-primary);
-                    border: 2px solid var(--text-light);
+                    border: 2px solid rgba(255, 255, 255, 0.1);
+                    backdrop-filter: blur(10px);
                 }
 
                 .btn-outline:hover {
-                    background-color: var(--text-light);
+                    background: rgba(255, 255, 255, 0.1);
                     color: var(--white);
+                    border-color: rgba(255, 255, 255, 0.2);
+                    transform: translateY(-1px);
                 }
 
                 .cart-toggle {
                     position: relative;
-                    background: none;
-                    border: none;
+                    background: transparent;
+                    border: 2px solid rgba(255, 255, 255, 0.1);
                     color: var(--text-primary);
-                    font-size: 1.2rem;
+                    font-size: 1.1rem;
                     cursor: pointer;
-                    padding: 0.5rem;
-                    border-radius: var(--border-radius);
-                    transition: var(--transition);
+                    padding: 8px;
+                    border-radius: 8px;
+                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    min-width: 40px;
+                    min-height: 40px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 40px;
+                    height: 40px;
+                }
+
+                .cart-toggle i {
+                    display: block;
+                    font-size: 1.1rem;
+                    line-height: 1;
+                    font-style: normal;
+                }
+
+                /* Fallback para cuando Font Awesome no se carga */
+                .cart-toggle i:empty::before {
+                    content: "🛒";
+                    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
                 }
 
                 .cart-toggle:hover {
                     color: var(--primary-color);
-                    background-color: var(--background-light);
+                    background: rgba(255, 255, 255, 0.05);
+                    border-color: rgba(255, 255, 255, 0.2);
+                    transform: translateY(-1px);
                 }
 
                 .cart-count {
                     position: absolute;
-                    top: -8px;
-                    right: -8px;
-                    background: var(--error-color);
+                    top: -6px;
+                    right: -6px;
+                    background: linear-gradient(135deg, var(--error-color) 0%, #ff6b6b 100%);
                     color: var(--white);
-                    font-size: 0.75rem;
-                    font-weight: 600;
-                    padding: 2px 6px;
-                    border-radius: 50%;
-                    min-width: 18px;
+                    font-size: 0.7rem;
+                    font-weight: 700;
+                    padding: 3px 6px;
+                    border-radius: 12px;
+                    min-width: 20px;
                     text-align: center;
                     display: none;
+                    box-shadow: 0 2px 8px rgba(231, 76, 60, 0.4);
+                    border: 2px solid var(--white);
                 }
 
                 .mobile-menu-toggle {
                     display: none;
-                    background: none;
-                    border: none;
+                    background: rgba(255, 255, 255, 0.05);
+                    border: 2px solid rgba(255, 255, 255, 0.1);
                     color: var(--text-primary);
-                    font-size: 1.5rem;
+                    font-size: 1.3rem;
                     cursor: pointer;
-                    padding: 0.5rem;
+                    padding: 10px;
+                    border-radius: 10px;
+                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    backdrop-filter: blur(10px);
+                    min-width: 44px;
+                    min-height: 44px;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                /* Ocultar cualquier elemento que no debería estar visible */
+                .header-container > *:not(.logo):not(nav):not(.auth-buttons) {
+                    display: none !important;
+                }
+
+                /* Asegurar que el botón del carrito se muestre correctamente */
+                .cart-toggle {
+                    display: flex !important;
+                }
+
+                /* Ocultar el botón del carrito si no hay ícono */
+                .cart-toggle:empty {
+                    display: none !important;
+                }
+
+                .mobile-menu-toggle:hover {
+                    color: var(--primary-color);
+                    background: rgba(57, 181, 74, 0.1);
+                    border-color: rgba(57, 181, 74, 0.3);
+                    transform: translateY(-1px);
                 }
 
                 @media (max-width: 768px) {
@@ -167,7 +302,7 @@ class AppHeader extends HTMLElement {
                     }
                     
                     .mobile-menu-toggle {
-                        display: block;
+                        display: flex;
                     }
                     
                     .auth-buttons {
@@ -185,6 +320,7 @@ class AppHeader extends HTMLElement {
                     --text-primary: #767676;
                     --text-light: #909090;
                     --primary-color: #39b54a;
+                    --primary-light: #2ecc71;
                     --primary-dark: #219a52;
                     --error-color: #e74c3c;
                     --white: #ffffff;
@@ -213,8 +349,8 @@ class AppHeader extends HTMLElement {
                     </nav>
                     
                     <div class="auth-buttons">
-                        <button class="cart-toggle" id="cart-toggle">
-                            <i class="fas fa-shopping-cart"></i>
+                        <button class="cart-toggle" id="cart-toggle" title="Shopping Cart">
+                            <i class="fas fa-shopping-cart">🛒</i>
                             <span class="cart-count" id="cart-count">0</span>
                         </button>
                         
