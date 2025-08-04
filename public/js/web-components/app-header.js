@@ -344,7 +344,7 @@ class AppHeader extends HTMLElement {
                             <li><a href="index.html">Home</a></li>
                             <li><a href="marketplace.html">Marketplace</a></li>
                             <li><a href="about.html">About Us</a></li>
-                            <li><a href="#contact">Contact</a></li>
+                            <li><a href="contact.html">Contact</a></li>
                         </ul>
                     </nav>
                     
@@ -371,10 +371,10 @@ class AppHeader extends HTMLElement {
         const mobileMenuToggle = this.shadowRoot.getElementById('mobile-menu-toggle');
 
         cartToggle.addEventListener('click', () => {
-            this.dispatchEvent(new CustomEvent('cart-toggle', {
-                bubbles: true,
-                composed: true
-            }));
+            const cartComponent = document.querySelector('app-cart');
+            if (cartComponent) {
+                cartComponent.toggleCart();
+            }
         });
 
         mobileMenuToggle.addEventListener('click', () => {

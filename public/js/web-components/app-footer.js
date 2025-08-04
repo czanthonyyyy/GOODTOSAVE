@@ -16,8 +16,8 @@ class AppFooter extends HTMLElement {
                     display: block;
                     background-color: var(--background-secondary);
                     color: var(--text-primary);
-                    padding: 3rem 0 1rem;
-                    margin-top: 4rem;
+                    padding: 4rem 0 1rem;
+                    margin-top: 6rem;
                 }
 
                 .footer-content {
@@ -30,6 +30,7 @@ class AppFooter extends HTMLElement {
                     margin-right: auto;
                     padding-left: 20px;
                     padding-right: 20px;
+                    margin-top: 2rem;
                 }
 
                 .footer-section h3 {
@@ -235,7 +236,7 @@ class AppFooter extends HTMLElement {
                             <li><a href="#blog">Blog</a></li>
                             <li><a href="#guides">Guides</a></li>
                             <li><a href="#faq">FAQ</a></li>
-                            <li><a href="#contact">Contact</a></li>
+                                                         <li><a href="contact.html">Contact</a></li>
                         </ul>
                     </div>
                     

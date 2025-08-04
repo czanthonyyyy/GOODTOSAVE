@@ -97,6 +97,38 @@
     opacity: 0.8;
 }
 
+/* Elegant Section Divider */
+.section-divider {
+    position: relative;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.1) 20%, 
+        rgba(255, 255, 255, 0.2) 50%, 
+        rgba(255, 255, 255, 0.1) 80%, 
+        transparent 100%);
+    margin: 0 auto;
+    max-width: 800px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.section-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--primary-color) 50%, 
+        transparent 100%);
+    border-radius: 2px;
+    box-shadow: 0 0 10px rgba(57, 181, 74, 0.3);
+}
+
 /* How It Works Section */
 .how-it-works {
     padding: 4rem 0;
@@ -994,6 +1026,7 @@
     margin-bottom: 1rem;
     color: var(--text-highlight);
     line-height: 1.2;
+    text-align: center;
 }
 
 .section-description {
@@ -1002,6 +1035,17 @@
     max-width: 600px;
     margin: 0 auto;
     line-height: 1.6;
+    text-align: center;
+}
+
+.section-subtitle {
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    text-align: center;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Mission Section */

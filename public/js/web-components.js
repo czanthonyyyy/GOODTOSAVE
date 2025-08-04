@@ -20,6 +20,11 @@ class WebComponentsLoader {
             await this.loadScript('js/web-components/app-footer.js');
             console.log('app-footer.js cargado exitosamente');
             
+            // Cargar el cart component
+            console.log('Cargando app-cart.js...');
+            await this.loadScript('js/web-components/app-cart.js');
+            console.log('app-cart.js cargado exitosamente');
+            
             this.componentsLoaded = true;
             console.log('Web components cargados exitosamente');
             
@@ -83,6 +88,13 @@ function initializeWebComponents() {
         console.log('Reemplazando footer existente');
         const appFooter = document.createElement('app-footer');
         existingFooter.parentNode.replaceChild(appFooter, existingFooter);
+    }
+
+    // Agregar el carrito si no existe
+    if (!document.querySelector('app-cart')) {
+        console.log('Agregando app-cart');
+        const appCart = document.createElement('app-cart');
+        document.body.appendChild(appCart);
     }
 
     // Configurar event listeners para los componentes
