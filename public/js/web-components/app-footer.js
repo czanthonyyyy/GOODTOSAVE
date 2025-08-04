@@ -202,7 +202,7 @@ class AppFooter extends HTMLElement {
                 <div class="footer-content">
                     <div class="footer-section">
                         <h3>FoodSaver</h3>
-                        <p>Conectando proveedores y consumidores para reducir el desperdicio de alimentos y crear un futuro más sostenible.</p>
+                        <p>Connecting providers and consumers to reduce food waste and create a more sustainable future.</p>
                         <div class="social-links">
                             <a href="#" class="social-link" aria-label="Facebook">
                                 <i class="fab fa-facebook-f"></i>
@@ -220,32 +220,32 @@ class AppFooter extends HTMLElement {
                     </div>
                     
                     <div class="footer-section">
-                        <h3>Enlaces Rápidos</h3>
+                        <h3>Quick Links</h3>
                         <ul class="footer-links">
                             <li><a href="marketplace.html">Marketplace</a></li>
-                            <li><a href="about.html">Sobre Nosotros</a></li>
-                            <li><a href="auth.html">Iniciar Sesión</a></li>
-                            <li><a href="#support">Soporte</a></li>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="auth.html">Sign In</a></li>
+                            <li><a href="#support">Support</a></li>
                         </ul>
                     </div>
                     
                     <div class="footer-section">
-                        <h3>Recursos</h3>
+                        <h3>Resources</h3>
                         <ul class="footer-links">
                             <li><a href="#blog">Blog</a></li>
-                            <li><a href="#guides">Guías</a></li>
-                            <li><a href="#faq">Preguntas Frecuentes</a></li>
-                            <li><a href="#contact">Contacto</a></li>
+                            <li><a href="#guides">Guides</a></li>
+                            <li><a href="#faq">FAQ</a></li>
+                            <li><a href="#contact">Contact</a></li>
                         </ul>
                     </div>
                     
                     <div class="footer-section">
                         <h3>Newsletter</h3>
                         <div class="newsletter">
-                            <p>Suscríbete para recibir las últimas noticias y ofertas especiales.</p>
+                            <p>Subscribe to receive the latest news and special offers.</p>
                             <div class="newsletter-input-group">
-                                <input type="email" class="newsletter-input" placeholder="Tu correo electrónico" id="newsletter-email">
-                                <button class="newsletter-btn" id="newsletter-submit">Suscribirse</button>
+                                <input type="email" class="newsletter-input" placeholder="Your email address" id="newsletter-email">
+                                <button class="newsletter-btn" id="newsletter-submit">Subscribe</button>
                             </div>
                             <div class="newsletter-message" id="newsletter-message"></div>
                         </div>
@@ -253,7 +253,7 @@ class AppFooter extends HTMLElement {
                 </div>
                 
                 <div class="footer-bottom">
-                    <p>&copy; 2024 FoodSaver. Todos los derechos reservados. | <i class="fas fa-heart"></i> Hecho con amor para el planeta</p>
+                    <p>&copy; 2024 FoodSaver. All rights reserved. | <i class="fas fa-heart"></i> Made with love for the planet</p>
                 </div>
             </footer>
         `;
@@ -268,23 +268,23 @@ class AppFooter extends HTMLElement {
             const email = newsletterEmail.value.trim();
             
             if (!email) {
-                this.showNewsletterMessage('Por favor ingresa tu correo electrónico.', 'error');
+                this.showNewsletterMessage('Please enter your email address.', 'error');
                 return;
             }
 
             if (!this.isValidEmail(email)) {
-                this.showNewsletterMessage('Por favor ingresa un correo electrónico válido.', 'error');
+                this.showNewsletterMessage('Please enter a valid email address.', 'error');
                 return;
             }
 
-            // Simular envío del newsletter
-            newsletterSubmit.textContent = 'Enviando...';
+            // Simulate newsletter submission
+            newsletterSubmit.textContent = 'Sending...';
             newsletterSubmit.disabled = true;
 
             setTimeout(() => {
-                this.showNewsletterMessage('¡Gracias por suscribirte! Te mantendremos informado.', 'success');
+                this.showNewsletterMessage('Thank you for subscribing! We will keep you informed.', 'success');
                 newsletterEmail.value = '';
-                newsletterSubmit.textContent = 'Suscribirse';
+                newsletterSubmit.textContent = 'Subscribe';
                 newsletterSubmit.disabled = false;
             }, 1000);
         });

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Autenticación - FoodSaver</title>
-    <meta name="description" content="Inicia sesión o regístrate en FoodSaver para comenzar a reducir el desperdicio de alimentos">
+    <title>Authentication - FoodSaver</title>
+    <meta name="description" content="Sign in or register with FoodSaver to start reducing food waste">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,128 +34,128 @@
         <div class="container" id="container">
             <div class="form-container sign-up-container">
                 <form id="signupForm" novalidate enctype="multipart/form-data" style="display: flex; flex-direction: column; height: 100%;">
-                    <h1 style="flex-shrink: 0;">Crear Cuenta</h1>
+                    <h1 style="flex-shrink: 0;">Create Account</h1>
                     <div class="social-container" style="flex-shrink: 0;">
-                        <a href="#" class="social" aria-label="Registrarse con Facebook">
+                        <a href="#" class="social" aria-label="Sign up with Facebook">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="#" class="social" aria-label="Registrarse con Google">
+                        <a href="#" class="social" aria-label="Sign up with Google">
                             <i class="fab fa-google"></i>
                         </a>
-                        <a href="#" class="social" aria-label="Registrarse con LinkedIn">
+                        <a href="#" class="social" aria-label="Sign up with LinkedIn">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
                     </div>
-                    <span style="flex-shrink: 0;">o usa tu correo para registrarte</span>
+                    <span style="flex-shrink: 0;">or use your email to register</span>
                     <div id="signup-fields-scroll" style="flex: 1 1 auto; overflow-y: auto; min-height: 0; margin-bottom: 10px;">
                         <div class="input-group">
-                            <input type="text" id="signup-firstname" placeholder="Nombre" required pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,30}$" aria-label="Nombre"/>
-                            <span class="validation-message">Por favor ingresa tu nombre</span>
+                            <input type="text" id="signup-firstname" placeholder="First Name" required pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,30}$" aria-label="First Name"/>
+                            <span class="validation-message">Please enter your first name</span>
                         </div>
                         <div class="input-group">
-                            <input type="text" id="signup-lastname" placeholder="Apellidos" required pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,30}$" aria-label="Apellidos"/>
-                            <span class="validation-message">Por favor ingresa tus apellidos</span>
+                            <input type="text" id="signup-lastname" placeholder="Last Name" required pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,30}$" aria-label="Last Name"/>
+                            <span class="validation-message">Please enter your last name</span>
                         </div>
                         <div class="input-group">
-                            <input type="email" id="signup-email" placeholder="Correo Electrónico" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" aria-label="Correo Electrónico"/>
-                            <span class="validation-message">Por favor ingresa un correo electrónico válido</span>
+                            <input type="email" id="signup-email" placeholder="Email Address" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" aria-label="Email Address"/>
+                            <span class="validation-message">Please enter a valid email address</span>
                         </div>
                         <div class="input-group">
-                            <input type="password" id="signup-password" placeholder="Contraseña" required minlength="8" aria-label="Contraseña"/>
-                            <button type="button" class="toggle-password" aria-label="Alternar visibilidad de contraseña">
+                            <input type="password" id="signup-password" placeholder="Password" required minlength="8" aria-label="Password"/>
+                            <button type="button" class="toggle-password" aria-label="Toggle password visibility">
                                 <i class="far fa-eye"></i>
                             </button>
-                            <span class="validation-message">La contraseña debe tener al menos 8 caracteres</span>
+                            <span class="validation-message">Password must be at least 8 characters long</span>
                             <div class="password-strength">
                                 <div class="password-strength-bar"></div>
                             </div>
                         </div>
                         <div class="input-group">
-                            <input type="password" id="signup-confirm-password" placeholder="Confirmar Contraseña" required aria-label="Confirmar Contraseña"/>
-                            <button type="button" class="toggle-password" aria-label="Alternar visibilidad de contraseña">
+                            <input type="password" id="signup-confirm-password" placeholder="Confirm Password" required aria-label="Confirm Password"/>
+                            <button type="button" class="toggle-password" aria-label="Toggle password visibility">
                                 <i class="far fa-eye"></i>
                             </button>
-                            <span class="validation-message">Las contraseñas no coinciden</span>
+                            <span class="validation-message">Passwords do not match</span>
                         </div>
                         <div class="input-group">
-                            <input type="tel" id="signup-phone" placeholder="Teléfono (opcional)" pattern="^\+?[0-9]{10,15}$" aria-label="Teléfono"/>
-                            <span class="validation-message">Por favor ingresa un número de teléfono válido</span>
+                            <input type="tel" id="signup-phone" placeholder="Phone (optional)" pattern="^\+?[0-9]{10,15}$" aria-label="Phone"/>
+                            <span class="validation-message">Please enter a valid phone number</span>
                         </div>
                         <div class="input-group">
-                            <select id="signup-account-type" required aria-label="Tipo de Cuenta">
-                                <option value="">Selecciona tu tipo de cuenta</option>
-                                <option value="buyer">Comprador</option>
-                                <option value="seller">Proveedor</option>
+                            <select id="signup-account-type" required aria-label="Account Type">
+                                <option value="">Select your account type</option>
+                                <option value="buyer">Buyer</option>
+                                <option value="seller">Provider</option>
                             </select>
-                            <span class="validation-message">Por favor selecciona tu tipo de cuenta</span>
+                            <span class="validation-message">Please select your account type</span>
                         </div>
                         <div class="input-group">
-                            <input type="text" id="signup-location" placeholder="Ciudad/Localidad (opcional)" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$" aria-label="Ubicación"/>
-                            <span class="validation-message">Por favor ingresa una ubicación válida</span>
+                            <input type="text" id="signup-location" placeholder="City/Location (optional)" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$" aria-label="Location"/>
+                            <span class="validation-message">Please enter a valid location</span>
                         </div>
                         <div class="input-group">
-                            <textarea id="signup-bio" placeholder="Biografía/Sobre ti (opcional)" maxlength="300" aria-label="Biografía"></textarea>
-                            <span class="validation-message">La biografía debe tener menos de 300 caracteres</span>
+                            <textarea id="signup-bio" placeholder="Bio/About you (optional)" maxlength="300" aria-label="Bio"></textarea>
+                            <span class="validation-message">Bio must be less than 300 characters</span>
                         </div>
                         <div class="input-group">
-                            <label for="signup-profilepic" style="font-size: 0.9em; color: #888;">Foto de Perfil (opcional, JPG/PNG/WebP, máx 2MB)</label>
-                            <input type="file" id="signup-profilepic" accept="image/png, image/jpeg, image/webp" aria-label="Foto de Perfil"/>
-                            <span class="validation-message">Por favor selecciona un archivo de imagen válido (máx 2MB)</span>
+                            <label for="signup-profilepic" style="font-size: 0.9em; color: #888;">Profile Picture (optional, JPG/PNG/WebP, max 2MB)</label>
+                            <input type="file" id="signup-profilepic" accept="image/png, image/jpeg, image/webp" aria-label="Profile Picture"/>
+                            <span class="validation-message">Please select a valid image file (max 2MB)</span>
                         </div>
                     </div>
                     <div class="form-error-message" id="signup-error-message" style="display:none;"></div>
-                    <button type="submit" style="flex-shrink: 0; margin-top: 10px;">Registrarse</button>
+                    <button type="submit" style="flex-shrink: 0; margin-top: 10px;">Sign Up</button>
                 </form>
             </div>
             <div class="form-container sign-in-container">
                 <form id="signinForm" novalidate>
-                    <h1>Iniciar Sesión</h1>
+                    <h1>Sign In</h1>
                     <div class="social-container">
-                        <a href="#" class="social" aria-label="Iniciar sesión con Facebook">
+                        <a href="#" class="social" aria-label="Sign in with Facebook">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="#" class="social" aria-label="Iniciar sesión con Google">
+                        <a href="#" class="social" aria-label="Sign in with Google">
                             <i class="fab fa-google"></i>
                         </a>
-                        <a href="#" class="social" aria-label="Iniciar sesión con LinkedIn">
+                        <a href="#" class="social" aria-label="Sign in with LinkedIn">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
                     </div>
-                    <span>o usa tu cuenta</span>
+                    <span>or use your account</span>
 
                     <div class="input-group">
-                        <input type="email" id="signin-email" placeholder="Correo Electrónico" required
+                        <input type="email" id="signin-email" placeholder="Email Address" required
                             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                            aria-label="Correo Electrónico"/>
-                        <span class="validation-message">Por favor ingresa un correo electrónico válido</span>
+                            aria-label="Email Address"/>
+                        <span class="validation-message">Please enter a valid email address</span>
                     </div>
 
                     <div class="input-group">
-                        <input type="password" id="signin-password" placeholder="Contraseña" required
-                            aria-label="Contraseña"/>
-                        <button type="button" class="toggle-password" aria-label="Alternar visibilidad de contraseña">
+                        <input type="password" id="signin-password" placeholder="Password" required
+                            aria-label="Password"/>
+                        <button type="button" class="toggle-password" aria-label="Toggle password visibility">
                             <i class="far fa-eye"></i>
                         </button>
-                        <span class="validation-message">Por favor ingresa tu contraseña</span>
+                        <span class="validation-message">Please enter your password</span>
                     </div>
 
                     <div class="form-error-message" id="signin-error-message" style="display:none;"></div>
 
-                    <a href="#" tabindex="0">¿Olvidaste tu contraseña?</a>
-                    <button type="submit">Iniciar Sesión</button>
+                    <a href="#" tabindex="0">Forgot your password?</a>
+                    <button type="submit">Sign In</button>
                 </form>
             </div>
             <div class="overlay-container">
                 <div class="overlay">
                     <div class="overlay-panel overlay-left">
-                        <h1>¡Bienvenido de Vuelta!</h1>
-                        <p>Para mantenerte conectado con nosotros, inicia sesión con tu información personal</p>
-                        <button class="ghost" id="signIn">Iniciar Sesión</button>
+                        <h1>Welcome Back!</h1>
+                        <p>To stay connected with us, sign in with your personal information</p>
+                        <button class="ghost" id="signIn">Sign In</button>
                     </div>
                     <div class="overlay-panel overlay-right">
-                        <h1>¡Hola, Amigo!</h1>
-                        <p>Ingresa tus datos personales y comienza tu viaje con nosotros</p>
-                        <button class="ghost" id="signUp">Registrarse</button>
+                        <h1>Hello, Friend!</h1>
+                        <p>Enter your personal details and start your journey with us</p>
+                        <button class="ghost" id="signUp">Sign Up</button>
                     </div>
                 </div>
             </div>

@@ -74,11 +74,11 @@ function hacerVisibleCarrito() {
 function agregarItemAlCarrito(titulo, precio, imagenSrc) {
     var itemsCarrito = document.getElementsByClassName('carrito-items')[0];
 
-    // Verificar si el item ya existe en el carrito
+    // Check if the item already exists in the cart
     var nombresItemsCarrito = itemsCarrito.getElementsByClassName('carrito-item-titulo');
     for (var i = 0; i < nombresItemsCarrito.length; i++) {
         if (nombresItemsCarrito[i].innerText == titulo) {
-            alert("El item ya se encuentra en el carrito");
+            alert("This item is already in your cart");
             return;
         }
     }

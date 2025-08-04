@@ -205,10 +205,10 @@ class AppHeader extends HTMLElement {
                     
                     <nav>
                         <ul class="nav-menu">
-                            <li><a href="index.html">Inicio</a></li>
+                            <li><a href="index.html">Home</a></li>
                             <li><a href="marketplace.html">Marketplace</a></li>
-                            <li><a href="about.html">Sobre Nosotros</a></li>
-                            <li><a href="#contact">Contacto</a></li>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="#contact">Contact</a></li>
                         </ul>
                     </nav>
                     
@@ -218,8 +218,8 @@ class AppHeader extends HTMLElement {
                             <span class="cart-count" id="cart-count">0</span>
                         </button>
                         
-                        <a href="auth.html" class="btn btn-outline">Iniciar Sesión</a>
-                        <a href="auth.html" class="btn btn-primary">Registrarse</a>
+                        <a href="auth.html" class="btn btn-outline">Sign In</a>
+                        <a href="auth.html" class="btn btn-primary">Sign Up</a>
                         
                         <button class="mobile-menu-toggle" id="mobile-menu-toggle">
                             <i class="fas fa-bars"></i>
