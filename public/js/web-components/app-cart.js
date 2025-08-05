@@ -552,7 +552,7 @@ class AppCart extends HTMLElement {
         }
 
         const subtotal = this.cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        const tax = subtotal * 0.1; // 10% tax
+        const tax = subtotal * 0.04; // 4% tax
         const total = subtotal + tax;
 
         return `
@@ -561,7 +561,7 @@ class AppCart extends HTMLElement {
                 <span>$${subtotal.toFixed(2)}</span>
             </div>
             <div class="summary-row">
-                <span>Tax (10%):</span>
+                <span>Tax (4%):</span>
                 <span>$${tax.toFixed(2)}</span>
             </div>
             <div class="summary-row summary-total">

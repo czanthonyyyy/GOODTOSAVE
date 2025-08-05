@@ -3,289 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirmación de Pedido - FoodSaver</title>
-    <meta name="description" content="Tu pedido ha sido confirmado. Descarga tu código QR para la recogida">
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Stylesheets -->
+    <title>Confirmación de Pago - GTS</title>
+    <meta name="description" content="Confirmación de tu pago exitoso con código QR único">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/pages.css">
-    
-    <!-- QR Code Library -->
+    <link rel="stylesheet" href="css/payment.css">
+    <link rel="stylesheet" href="css/components.css">
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
 </head>
 <body>
-    <!-- Header Web Component -->
     <app-header></app-header>
-
-    <!-- Success Confirmation -->
-    <section class="success-confirmation">
+    
+    <main class="qr-confirmation-page">
         <div class="container">
-            <div class="success-content">
-                <div class="success-checkmark">
-                    <!-- Animated checkmark will be shown here -->
+            <!-- Success Header -->
+            <div class="success-header">
+                <div class="success-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22,4 12,14.01 9,11.01"></polyline>
+                    </svg>
                 </div>
-                <h1 class="success-title">¡Pago Exitoso!</h1>
-                <p class="success-message">Tu pedido ha sido confirmado y está listo para recoger</p>
-                
-                <div class="order-details">
-                    <div class="order-number">
-                        <span class="label">Número de Pedido:</span>
-                        <span class="value" id="order-number">FS-2024-001234</span>
-                    </div>
-                    <div class="order-date">
-                        <span class="label">Fecha:</span>
-                        <span class="value" id="order-date">25 de Enero, 2024</span>
-                    </div>
-                    <div class="order-total">
-                        <span class="label">Total:</span>
-                        <span class="value" id="order-total">€24.50</span>
-                    </div>
-                </div>
+                <h1>¡Pago Confirmado!</h1>
+                <p class="success-subtitle">Tu transacción ha sido procesada exitosamente</p>
             </div>
-        </div>
-    </section>
 
-    <!-- QR Code Section -->
-    <section class="qr-section">
-        <div class="container">
-            <div class="qr-content">
-                <h2 class="section-title">Tu Código QR de Recogida</h2>
-                <p class="section-subtitle">Muestra este código al proveedor para recoger tu pedido</p>
-                
-                <div class="qr-container">
-                    <div class="qr-code-wrapper">
-                        <div id="qr-code-container" class="qr-code-display">
-                            <!-- QR code will be generated here -->
+            <!-- Main Content Grid -->
+            <div class="confirmation-grid">
+                <!-- Left Column: QR Code -->
+                <div class="qr-column">
+                    <div class="qr-card">
+                        <div class="qr-header">
+                            <h2>Código QR de Confirmación</h2>
+                            <p>Escanea este código para verificar tu pago</p>
                         </div>
-                        <div class="qr-info">
-                            <div class="qr-details">
-                                <div class="qr-detail">
-                                    <span class="label">Proveedor:</span>
-                                    <span class="value" id="supplier-name">Mercado Central</span>
-                                </div>
-                                <div class="qr-detail">
-                                    <span class="label">Ubicación:</span>
-                                    <span class="value" id="pickup-location">Calle Mayor 123, Madrid</span>
-                                </div>
-                                <div class="qr-detail">
-                                    <span class="label">Horario:</span>
-                                    <span class="value" id="pickup-hours">Hoy, 14:00 - 18:00</span>
-                                </div>
-                                <div class="qr-detail">
-                                    <span class="label">Contacto:</span>
-                                    <span class="value" id="supplier-contact">+34 600 123 456</span>
-                                </div>
-                            </div>
+                        <div class="qr-display">
+                            <canvas id="qr-canvas" width="200" height="200"></canvas>
+                        </div>
+                        <div class="qr-actions">
+                            <button id="download-qr" class="btn btn-outline">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7,10 12,15 17,10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                                Descargar
+                            </button>
+                            <button id="share-qr" class="btn btn-primary">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="18" cy="5" r="3"></circle>
+                                    <circle cx="6" cy="12" r="3"></circle>
+                                    <circle cx="18" cy="19" r="3"></circle>
+                                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                                </svg>
+                                Compartir
+                            </button>
                         </div>
                     </div>
-                    
-                    <div class="qr-actions">
-                        <button class="btn btn-primary" id="download-qr-btn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                                <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            Descargar Código QR
-                        </button>
-                        <button class="btn btn-outline" id="email-qr-btn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                                <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            Enviar por Email
-                        </button>
-                    </div>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Pickup Instructions -->
-    <section class="pickup-instructions">
-        <div class="container">
-            <h2 class="section-title">Instrucciones de Recogida</h2>
-            <div class="instructions-grid">
-                <div class="instruction-step">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h3>Llega al Punto de Recogida</h3>
-                        <p>Dirígete a la ubicación indicada durante el horario de atención</p>
-                    </div>
-                </div>
-                
-                <div class="instruction-step">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <h3>Muestra tu Código QR</h3>
-                        <p>Presenta el código QR al proveedor para verificar tu pedido</p>
-                    </div>
-                </div>
-                
-                <div class="instruction-step">
-                    <div class="step-number">3</div>
-                    <div class="step-content">
-                        <h3>Recoge tu Pedido</h3>
-                        <p>El proveedor te entregará tus productos y confirmará la recogida</p>
-                    </div>
-                </div>
-                
-                <div class="instruction-step">
-                    <div class="step-number">4</div>
-                    <div class="step-content">
-                        <h3>¡Disfruta!</h3>
-                        <p>Lleva tus alimentos a casa y contribuye a reducir el desperdicio</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Location Map -->
-    <section class="location-section">
-        <div class="container">
-            <h2 class="section-title">Ubicación del Proveedor</h2>
-            <div class="location-content">
-                <div class="location-info">
-                    <div class="location-details">
-                        <h3 id="location-name">Mercado Central</h3>
-                        <p id="location-address">Calle Mayor 123, 28001 Madrid, España</p>
-                        <div class="location-meta">
-                            <div class="meta-item">
-                                <span class="meta-icon">🕒</span>
-                                <span class="meta-text">Hoy: 14:00 - 18:00</span>
+                <!-- Right Column: Order Details -->
+                <div class="details-column">
+                    <!-- Order Info -->
+                    <div class="order-info-card">
+                        <div class="order-header">
+                            <h3>Información de la Orden</h3>
+                        </div>
+                        <div class="order-details">
+                            <div class="detail-row">
+                                <span class="label">Número de Orden:</span>
+                                <span class="value" id="order-number">GTS-<span id="order-id"></span></span>
                             </div>
-                            <div class="meta-item">
-                                <span class="meta-icon">📞</span>
-                                <span class="meta-text">+34 600 123 456</span>
-                            </div>
-                            <div class="meta-item">
-                                <span class="meta-icon">📧</span>
-                                <span class="meta-text">info@mercadocentral.com</span>
+                            <div class="detail-row">
+                                <span class="label">Fecha:</span>
+                                <span class="value" id="order-date"></span>
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="location-actions">
-                        <button class="btn btn-outline" id="add-to-calendar-btn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
-                                <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
-                                <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
-                                <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
-                            </svg>
-                            Agregar al Calendario
-                        </button>
-                        <button class="btn btn-outline" id="get-directions-btn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                                <path d="M21 10C21 17 12 23 12 23S3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" stroke-width="2"/>
-                                <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
-                            </svg>
-                            Obtener Direcciones
-                        </button>
+
+                    <!-- Order Summary -->
+                    <div class="summary-card">
+                        <div class="summary-header">
+                            <h3>Resumen del Pedido</h3>
+                        </div>
+                        <div class="order-items" id="order-details">
+                            <!-- Order items will be populated by JavaScript -->
+                        </div>
+                        <div class="order-totals">
+                            <div class="total-row">
+                                <span>Subtotal:</span>
+                                <span id="subtotal">$0.00</span>
+                            </div>
+                            <div class="total-row">
+                                <span>Impuestos (4%):</span>
+                                <span id="tax">$0.00</span>
+                            </div>
+                            <div class="total-row total">
+                                <span>Total:</span>
+                                <span id="total">$0.00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pickup Info -->
+                    <div class="pickup-card">
+                        <div class="pickup-header">
+                            <h3>Información de Recogida</h3>
+                        </div>
+                        <div class="pickup-info">
+                            <div class="pickup-item">
+                                <div class="pickup-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12,6 12,12 16,14"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="pickup-content">
+                                    <h4>Tiempo de Preparación</h4>
+                                    <p>15-20 minutos</p>
+                                </div>
+                            </div>
+                            <div class="pickup-item">
+                                <div class="pickup-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                </div>
+                                <div class="pickup-content">
+                                    <h4>Ubicación</h4>
+                                    <p>Local principal</p>
+                                </div>
+                            </div>
+                            <div class="pickup-item">
+                                <div class="pickup-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                                    </svg>
+                                </div>
+                                <div class="pickup-content">
+                                    <h4>Horario</h4>
+                                    <p>8:00 AM - 10:00 PM</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="location-map">
-                    <div class="map-placeholder">
-                        <div class="map-icon">🗺️</div>
-                        <p>Mapa interactivo</p>
-                        <small>Ubicación: Calle Mayor 123, Madrid</small>
-                    </div>
-                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button id="back-to-home" class="btn btn-primary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9,22 9,12 15,12 15,22"></polyline>
+                    </svg>
+                    Volver al Inicio
+                </button>
+                <button id="new-order" class="btn btn-outline">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Nuevo Pedido
+                </button>
             </div>
         </div>
-    </section>
+    </main>
 
-    <!-- Order Summary -->
-    <section class="order-summary-section">
-        <div class="container">
-            <h2 class="section-title">Resumen de tu Pedido</h2>
-            <div class="order-summary-content">
-                <div class="order-items" id="order-items-summary">
-                    <!-- Order items will be loaded here -->
-                </div>
-                
-                <div class="order-totals">
-                    <div class="total-row">
-                        <span>Subtotal:</span>
-                        <span id="summary-subtotal">€20.25</span>
-                    </div>
-                    <div class="total-row">
-                        <span>IVA (21%):</span>
-                        <span id="summary-tax">€4.25</span>
-                    </div>
-                    <div class="total-row total-final">
-                        <span>Total:</span>
-                        <span id="summary-total">€24.50</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Next Steps -->
-    <section class="next-steps">
-        <div class="container">
-            <h2 class="section-title">Próximos Pasos</h2>
-            <div class="steps-content">
-                <div class="step-card">
-                    <div class="step-icon">📱</div>
-                    <h3>Guarda tu Código QR</h3>
-                    <p>Descarga o toma una captura de pantalla del código QR para tenerlo a mano</p>
-                </div>
-                
-                <div class="step-card">
-                    <div class="step-icon">⏰</div>
-                    <h3>Programa tu Recogida</h3>
-                    <p>Agrega la cita a tu calendario para no olvidar la hora de recogida</p>
-                </div>
-                
-                <div class="step-card">
-                    <div class="step-icon">📞</div>
-                    <h3>Contacta si Necesitas Ayuda</h3>
-                    <p>Si tienes alguna pregunta, no dudes en contactar al proveedor</p>
-                </div>
-            </div>
-            
-            <div class="support-info">
-                <h3>¿Necesitas Ayuda?</h3>
-                <p>Nuestro equipo de soporte está disponible para ayudarte</p>
-                <div class="support-contacts">
-                    <a href="mailto:support@foodsaver.com" class="support-link">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                            <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        support@foodsaver.com
-                    </a>
-                    <a href="tel:+34900123456" class="support-link">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                            <path d="M22 16.92V19.92C22.0011 20.1985 21.9441 20.4742 21.8325 20.7294C21.7209 20.9846 21.5573 21.2136 21.3521 21.4019C21.1469 21.5902 20.9046 21.7335 20.6407 21.8227C20.3769 21.9119 20.0973 21.9451 19.82 21.92C16.7428 21.5856 13.787 20.5341 11.19 18.85C8.77382 17.3146 6.72533 15.2661 5.18999 12.85C3.49997 10.2412 2.44824 7.27099 2.11999 4.18C2.09494 3.90347 2.12787 3.62476 2.21649 3.36162C2.30512 3.09849 2.44756 2.85669 2.63476 2.65172C2.82196 2.44676 3.0498 2.28299 3.30379 2.17082C3.55778 2.05866 3.83233 2.00026 4.10999 2H7.10999C7.59522 1.99522 8.06579 2.16708 8.43376 2.48353C8.80173 2.79999 9.04201 3.23945 9.10999 3.72C9.23662 4.68007 9.47144 5.62273 9.80999 6.53C9.94454 6.88792 9.9736 7.27675 9.89399 7.65308C9.81439 8.02942 9.62984 8.37471 9.35999 8.65L8.08999 9.92C9.5137 12.4135 11.5865 14.4863 14.08 15.91L15.35 14.64C15.6253 14.3702 15.9706 14.1856 16.3469 14.106C16.7233 14.0264 17.1121 14.0555 17.47 14.19C18.3773 14.5286 19.3199 14.7634 20.28 14.89C20.7658 14.9585 21.2094 15.2032 21.5265 15.5775C21.8437 15.9518 22.0122 16.4296 22 16.92Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        +34 900 123 456
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer Web Component -->
     <app-footer></app-footer>
 
-    <!-- Scripts -->
     <script src="js/web-components.js"></script>
     <script src="js/components.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/cart.js"></script>
+    <script src="js/qr-confirmation.js"></script>
 </body>
 </html> 

@@ -1,6 +1,13 @@
 // About Us Page JavaScript
 document.addEventListener('DOMContentLoaded', function() {
     
+    // Team Carousel functionality - Variables must be declared first
+    let currentSlide = 0;
+    let totalSlides = 0;
+    let slidesPerView = 3;
+    let autoPlayInterval = null;
+    let isAutoPlaying = false;
+    
     // Initialize all components
     initializeCounters();
     initializeScrollAnimations();
@@ -68,8 +75,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Load Team Members
     function loadTeamMembers() {
-        const teamGrid = document.getElementById('team-grid');
-        if (!teamGrid) return;
+        const teamCarouselTrack = document.getElementById('team-carousel-track');
+        if (!teamCarouselTrack) return;
         
         // Sample team data (in a real app, this would come from an API)
         const teamMembers = [
@@ -116,13 +123,100 @@ document.addEventListener('DOMContentLoaded', function() {
                     twitter: '#',
                     email: 'david@goodtosave.com'
                 }
+            },
+            {
+                name: 'Lisa Wang',
+                role: 'Product Manager',
+                bio: 'User-centered designer focused on creating intuitive and impactful experiences.',
+                image: 'https://via.placeholder.com/150x150/39b54a/ffffff?text=LW',
+                social: {
+                    linkedin: '#',
+                    twitter: '#',
+                    email: 'lisa@goodtosave.com'
+                }
+            },
+            {
+                name: 'Carlos Mendez',
+                role: 'Lead Developer',
+                bio: 'Full-stack developer passionate about building robust and scalable applications.',
+                image: 'https://via.placeholder.com/150x150/39b54a/ffffff?text=CM',
+                social: {
+                    linkedin: '#',
+                    twitter: '#',
+                    email: 'carlos@goodtosave.com'
+                }
+            },
+            {
+                name: 'Ana Garcia',
+                role: 'UX/UI Designer',
+                bio: 'Creative designer focused on creating beautiful and intuitive user interfaces that enhance user experience.',
+                image: 'https://via.placeholder.com/150x150/39b54a/ffffff?text=AG',
+                social: {
+                    linkedin: '#',
+                    twitter: '#',
+                    email: 'ana@goodtosave.com'
+                }
+            },
+            {
+                name: 'James Wilson',
+                role: 'Data Scientist',
+                bio: 'Analytics expert dedicated to leveraging data insights to drive sustainable business decisions.',
+                image: 'https://via.placeholder.com/150x150/39b54a/ffffff?text=JW',
+                social: {
+                    linkedin: '#',
+                    twitter: '#',
+                    email: 'james@goodtosave.com'
+                }
+            },
+            {
+                name: 'Maria Santos',
+                role: 'Community Manager',
+                bio: 'Passionate about building and nurturing communities around sustainable living and food waste reduction.',
+                image: 'https://via.placeholder.com/150x150/39b54a/ffffff?text=MS',
+                social: {
+                    linkedin: '#',
+                    twitter: '#',
+                    email: 'maria@goodtosave.com'
+                }
+            },
+            {
+                name: 'Alex Thompson',
+                role: 'Business Development',
+                bio: 'Strategic partnerships expert focused on expanding our impact through meaningful collaborations.',
+                image: 'https://via.placeholder.com/150x150/39b54a/ffffff?text=AT',
+                social: {
+                    linkedin: '#',
+                    twitter: '#',
+                    email: 'alex@goodtosave.com'
+                }
+            },
+            {
+                name: 'Sophie Lee',
+                role: 'Content Strategist',
+                bio: 'Storyteller and content creator dedicated to spreading awareness about environmental sustainability.',
+                image: 'https://via.placeholder.com/150x150/39b54a/ffffff?text=SL',
+                social: {
+                    linkedin: '#',
+                    twitter: '#',
+                    email: 'sophie@goodtosave.com'
+                }
             }
         ];
         
+        // Clear existing content
+        teamCarouselTrack.innerHTML = '';
+        
+        // Add team members to carousel
         teamMembers.forEach(member => {
             const memberCard = createTeamMemberCard(member);
-            teamGrid.appendChild(memberCard);
+            teamCarouselTrack.appendChild(memberCard);
         });
+        
+        totalSlides = teamMembers.length;
+        updateSlidesPerView();
+        setupCarouselControls();
+        createCarouselDots();
+        updateCarouselState();
     }
     
     function createTeamMemberCard(member) {
@@ -161,6 +255,194 @@ document.addEventListener('DOMContentLoaded', function() {
         
         return card;
     }
+    
+    // Carousel control functions
+    function updateSlidesPerView() {
+        const width = window.innerWidth;
+        if (width <= 480) {
+            slidesPerView = 1;
+        } else if (width <= 768) {
+            slidesPerView = 2;
+        } else {
+            slidesPerView = 3;
+        }
+    }
+    
+    function setupCarouselControls() {
+        const prevBtn = document.getElementById('team-prev-btn');
+        const nextBtn = document.getElementById('team-next-btn');
+        
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                pauseAutoPlay();
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    updateCarouselState();
+                }
+                // Resume auto-play after 5 seconds of inactivity
+                setTimeout(resumeAutoPlay, 5000);
+            });
+        }
+        
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                pauseAutoPlay();
+                const maxSlide = Math.max(0, totalSlides - slidesPerView);
+                if (currentSlide < maxSlide) {
+                    currentSlide++;
+                    updateCarouselState();
+                }
+                // Resume auto-play after 5 seconds of inactivity
+                setTimeout(resumeAutoPlay, 5000);
+            });
+        }
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            updateSlidesPerView();
+            updateCarouselState();
+        });
+        
+        // Add touch/swipe support for mobile
+        const carousel = document.getElementById('team-carousel');
+        if (carousel) {
+            let startX = 0;
+            let currentX = 0;
+            let isDragging = false;
+            
+            carousel.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+                isDragging = true;
+            });
+            
+            carousel.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                currentX = e.touches[0].clientX;
+                const diff = startX - currentX;
+                
+                // Prevent default scrolling when swiping
+                if (Math.abs(diff) > 10) {
+                    e.preventDefault();
+                }
+            });
+            
+            carousel.addEventListener('touchend', (e) => {
+                if (!isDragging) return;
+                
+                const diff = startX - currentX;
+                const threshold = 50; // minimum swipe distance
+                
+                if (Math.abs(diff) > threshold) {
+                    pauseAutoPlay();
+                    if (diff > 0) {
+                        // Swipe left - next slide
+                        const maxSlide = Math.max(0, totalSlides - slidesPerView);
+                        if (currentSlide < maxSlide) {
+                            currentSlide++;
+                            updateCarouselState();
+                        }
+                    } else {
+                        // Swipe right - previous slide
+                        if (currentSlide > 0) {
+                            currentSlide--;
+                            updateCarouselState();
+                        }
+                    }
+                    // Resume auto-play after 5 seconds of inactivity
+                    setTimeout(resumeAutoPlay, 5000);
+                }
+                
+                isDragging = false;
+            });
+        }
+    }
+    
+    function createCarouselDots() {
+        const dotsContainer = document.getElementById('team-carousel-dots');
+        if (!dotsContainer) return;
+        
+        dotsContainer.innerHTML = '';
+        const maxSlide = Math.max(0, totalSlides - slidesPerView);
+        
+        for (let i = 0; i <= maxSlide; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'carousel-dot';
+            dot.addEventListener('click', () => {
+                pauseAutoPlay();
+                currentSlide = i;
+                updateCarouselState();
+                // Resume auto-play after 5 seconds of inactivity
+                setTimeout(resumeAutoPlay, 5000);
+            });
+            dotsContainer.appendChild(dot);
+        }
+    }
+    
+    function updateCarouselState() {
+        const track = document.getElementById('team-carousel-track');
+        const prevBtn = document.getElementById('team-prev-btn');
+        const nextBtn = document.getElementById('team-next-btn');
+        const dots = document.querySelectorAll('.carousel-dot');
+        
+        if (!track) return;
+        
+        // Calculate slide width and gap
+        const slideWidth = 300; // min-width of each card
+        const gap = 32; // 2rem gap
+        const translateX = -(currentSlide * (slideWidth + gap));
+        
+        track.style.transform = `translateX(${translateX}px)`;
+        
+        // Update button states
+        if (prevBtn) {
+            prevBtn.disabled = currentSlide === 0;
+        }
+        
+        if (nextBtn) {
+            const maxSlide = Math.max(0, totalSlides - slidesPerView);
+            nextBtn.disabled = currentSlide >= maxSlide;
+        }
+        
+        // Update dots
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentSlide);
+        });
+    }
+    
+    // Auto-play carousel
+    function startAutoPlay() {
+        if (isAutoPlaying) return;
+        
+        isAutoPlaying = true;
+        autoPlayInterval = setInterval(() => {
+            const maxSlide = Math.max(0, totalSlides - slidesPerView);
+            if (currentSlide >= maxSlide) {
+                currentSlide = 0;
+            } else {
+                currentSlide++;
+            }
+            updateCarouselState();
+        }, 4000); // Change slide every 4 seconds
+    }
+    
+    function pauseAutoPlay() {
+        if (autoPlayInterval) {
+            clearInterval(autoPlayInterval);
+            autoPlayInterval = null;
+        }
+        isAutoPlaying = false;
+    }
+    
+    function resumeAutoPlay() {
+        if (!isAutoPlaying) {
+            startAutoPlay();
+        }
+    }
+    
+    // Start auto-play after a delay
+    setTimeout(() => {
+        startAutoPlay();
+    }, 2000);
     
     // Particle Animation
     function initializeParticles() {

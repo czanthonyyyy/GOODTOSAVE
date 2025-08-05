@@ -160,7 +160,7 @@
             const resumenItems = document.getElementById('resumen-items');
             
             // Obtener items del carrito desde localStorage
-            const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+            const cartItems = JSON.parse(localStorage.getItem('checkoutItems') || localStorage.getItem('cartItems') || '[]');
             
             if (cartItems.length === 0) {
                 alert('No hay items en el carrito');
@@ -180,7 +180,7 @@
                 const itemHTML = `
                     <div style="display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0; border-bottom:1px solid #f0f0f0;">
                         <div>
-                            <div style="font-weight:500; color:#333;">${item.name}</div>
+                            <div style="font-weight:500; color:#333;">${item.title}</div>
                             <div style="font-size:0.9rem; color:#666;">Qty: ${item.quantity} × $${item.price.toFixed(2)}</div>
                         </div>
                         <div style="font-weight:600; color:#27ae60;">$${itemTotal.toFixed(2)}</div>
@@ -190,7 +190,7 @@
             });
             
             // Calcular totales
-            const tax = subtotal * 0.08; // 8% tax
+            const tax = subtotal * 0.04; // 4% tax
             const total = subtotal + tax;
             
             document.getElementById('resumen-subtotal').textContent = `$${subtotal.toFixed(2)}`;
@@ -218,12 +218,18 @@
             
             // Redirigir automáticamente después de 3 segundos
             const timeout = setTimeout(() => {
+                // Limpiar localStorage después del pago exitoso
+                localStorage.removeItem('cartItems');
+                localStorage.removeItem('checkoutItems');
                 window.location.href = 'qr.html';
             }, 3000);
             
             // Si el usuario hace clic en el botón, redirige inmediatamente
             document.getElementById('btn-ver-qr').onclick = function() {
                 clearTimeout(timeout);
+                // Limpiar localStorage después del pago exitoso
+                localStorage.removeItem('cartItems');
+                localStorage.removeItem('checkoutItems');
                 window.location.href = 'qr.html';
             };
         }

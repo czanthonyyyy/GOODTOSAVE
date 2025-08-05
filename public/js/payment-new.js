@@ -307,7 +307,7 @@ class PaymentManager {
 
     calculateModalTotals() {
         const subtotal = this.cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        const tax = subtotal * 0.1; // 10% tax
+        const tax = subtotal * 0.04; // 4% tax
         const total = subtotal + tax;
 
         // Update modal totals
