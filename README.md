@@ -1,4 +1,4 @@
-# FoodSaver Marketplace - Plataforma de Reducción de Desperdicio de Alimentos
+# Good to Save Marketplace - Plataforma de Reducción de Desperdicio de Alimentos
 
 Una plataforma web moderna y responsive diseñada para reducir el desperdicio global de alimentos conectando consumidores con proveedores que venden excedentes o alimentos próximos a caducar a precios reducidos.
 
@@ -230,7 +230,7 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más det
 ## 📞 Soporte
 
 ### Contacto
-- **Email**: support@foodsaver.com
+- **Email**: support@goodtosave.com
 - **Teléfono**: +34 900 123 456
 - **Horario**: Lunes a Viernes, 9:00 - 18:00
 
@@ -248,4 +248,4 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más det
 
 ---
 
-**FoodSaver Marketplace** - Transformando el desperdicio de alimentos en oportunidades sostenibles. 🌱 
+**Good to Save Marketplace** - Transformando el desperdicio de alimentos en oportunidades sostenibles. 🌱 

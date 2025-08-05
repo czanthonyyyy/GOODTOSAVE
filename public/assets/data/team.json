@@ -7,7 +7,7 @@
       "bio": "Científica ambiental apasionada por los sistemas alimentarios sostenibles y la construcción de comunidades. Con más de 10 años de experiencia en sostenibilidad.",
       "image": "assets/images/team/sarah.jpg",
       "linkedin": "https://linkedin.com/in/sarahjohnson",
-      "email": "sarah@foodsaver.com"
+              "email": "sarah@goodtosave.com"
     },
     {
       "id": 2,
@@ -16,7 +16,7 @@
       "bio": "Ingeniero de software especializado en plataformas de comercio electrónico. Experto en tecnologías sostenibles y desarrollo de aplicaciones móviles.",
       "image": "assets/images/team/carlos.jpg",
       "linkedin": "https://linkedin.com/in/carlosrodriguez",
-      "email": "carlos@foodsaver.com"
+              "email": "carlos@goodtosave.com"
     },
     {
       "id": 3,
@@ -25,7 +25,7 @@
       "bio": "Especialista en logística y gestión de la cadena de suministro. Comprometida con la eficiencia operativa y la reducción del desperdicio.",
       "image": "assets/images/team/ana.jpg",
       "linkedin": "https://linkedin.com/in/anamartinez",
-      "email": "ana@foodsaver.com"
+              "email": "ana@goodtosave.com"
     },
     {
       "id": 4,
@@ -34,7 +34,7 @@
       "bio": "Experto en experiencia de usuario y diseño de productos digitales. Enfocado en crear soluciones intuitivas para problemas complejos.",
       "image": "assets/images/team/david.jpg",
       "linkedin": "https://linkedin.com/in/davidchen",
-      "email": "david@foodsaver.com"
+              "email": "david@goodtosave.com"
     },
     {
       "id": 5,
@@ -43,7 +43,7 @@
       "bio": "Estratega de marketing digital con experiencia en marcas sostenibles. Apasionada por comunicar el impacto ambiental positivo.",
       "image": "assets/images/team/maria.jpg",
       "linkedin": "https://linkedin.com/in/mariagonzalez",
-      "email": "maria@foodsaver.com"
+              "email": "maria@goodtosave.com"
     },
     {
       "id": 6,
@@ -52,7 +52,7 @@
       "bio": "Especialista en alianzas estratégicas y desarrollo de mercados. Experto en conectar proveedores con consumidores conscientes.",
       "image": "assets/images/team/luis.jpg",
       "linkedin": "https://linkedin.com/in/luisfernandez",
-      "email": "luis@foodsaver.com"
+              "email": "luis@goodtosave.com"
     },
     {
       "id": 7,
@@ -61,7 +61,7 @@
       "bio": "Consultora ambiental con experiencia en medición de impacto y políticas de sostenibilidad. Doctora en Ciencias Ambientales.",
       "image": "assets/images/team/elena.jpg",
       "linkedin": "https://linkedin.com/in/elenapetrova",
-      "email": "elena@foodsaver.com"
+              "email": "elena@goodtosave.com"
     },
     {
       "id": 8,
@@ -70,7 +70,7 @@
       "bio": "Arquitecto de software con experiencia en sistemas escalables. Especializado en tecnologías cloud y machine learning.",
       "image": "assets/images/team/roberto.jpg",
       "linkedin": "https://linkedin.com/in/robertosilva",
-      "email": "roberto@foodsaver.com"
+              "email": "roberto@goodtosave.com"
     }
   ]
 } 

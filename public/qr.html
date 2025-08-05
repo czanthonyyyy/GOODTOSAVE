@@ -1,185 +1,686 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirmación de Pago - GTS</title>
-    <meta name="description" content="Confirmación de tu pago exitoso con código QR único">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/pages.css">
-    <link rel="stylesheet" href="css/payment.css">
-    <link rel="stylesheet" href="css/components.css">
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-</head>
-<body>
-    <app-header></app-header>
+    <title>Payment Confirmation | Good to Save</title>
+    <meta name="description" content="Your payment has been confirmed successfully with unique QR code">
     
-    <main class="qr-confirmation-page">
-        <div class="container">
-            <!-- Success Header -->
-            <div class="success-header">
-                <div class="success-icon">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                        <polyline points="22,4 12,14.01 9,11.01"></polyline>
-                    </svg>
-                </div>
-                <h1>¡Pago Confirmado!</h1>
-                <p class="success-subtitle">Tu transacción ha sido procesada exitosamente</p>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+         <!-- QR Code libraries -->
+     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+     <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/4496fe260a.js" crossorigin="anonymous"></script>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/qr.css">
+</head>
+
+<body>
+    <!-- Loading Screen -->
+    <div id="qr-loader" class="qr-loader">
+        <div class="loader-spinner"></div>
+        <span class="loader-text">Generating your QR code...</span>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container" id="qr-content">
+        <!-- Success Header -->
+        <div class="success-header">
+            <div class="success-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22,4 12,14.01 9,11.01"></polyline>
+                </svg>
             </div>
+            <h1 class="title">Payment Confirmed!</h1>
+            <p class="subtitle">Your transaction has been processed successfully</p>
+        </div>
 
-            <!-- Main Content Grid -->
-            <div class="confirmation-grid">
-                <!-- Left Column: QR Code -->
-                <div class="qr-column">
-                    <div class="qr-card">
-                        <div class="qr-header">
-                            <h2>Código QR de Confirmación</h2>
-                            <p>Escanea este código para verificar tu pago</p>
-                        </div>
-                        <div class="qr-display">
-                            <canvas id="qr-canvas" width="200" height="200"></canvas>
-                        </div>
-                        <div class="qr-actions">
-                            <button id="download-qr" class="btn btn-outline">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                    <polyline points="7,10 12,15 17,10"></polyline>
-                                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                                </svg>
-                                Descargar
-                            </button>
-                            <button id="share-qr" class="btn btn-primary">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="18" cy="5" r="3"></circle>
-                                    <circle cx="6" cy="12" r="3"></circle>
-                                    <circle cx="18" cy="19" r="3"></circle>
-                                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-                                </svg>
-                                Compartir
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Column: Order Details -->
-                <div class="details-column">
-                    <!-- Order Info -->
-                    <div class="order-info-card">
-                        <div class="order-header">
-                            <h3>Información de la Orden</h3>
-                        </div>
-                        <div class="order-details">
-                            <div class="detail-row">
-                                <span class="label">Número de Orden:</span>
-                                <span class="value" id="order-number">GTS-<span id="order-id"></span></span>
-                            </div>
-                            <div class="detail-row">
-                                <span class="label">Fecha:</span>
-                                <span class="value" id="order-date"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Order Summary -->
-                    <div class="summary-card">
-                        <div class="summary-header">
-                            <h3>Resumen del Pedido</h3>
-                        </div>
-                        <div class="order-items" id="order-details">
-                            <!-- Order items will be populated by JavaScript -->
-                        </div>
-                        <div class="order-totals">
-                            <div class="total-row">
-                                <span>Subtotal:</span>
-                                <span id="subtotal">$0.00</span>
-                            </div>
-                            <div class="total-row">
-                                <span>Impuestos (4%):</span>
-                                <span id="tax">$0.00</span>
-                            </div>
-                            <div class="total-row total">
-                                <span>Total:</span>
-                                <span id="total">$0.00</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Pickup Info -->
-                    <div class="pickup-card">
-                        <div class="pickup-header">
-                            <h3>Información de Recogida</h3>
-                        </div>
-                        <div class="pickup-info">
-                            <div class="pickup-item">
-                                <div class="pickup-icon">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="10"></circle>
-                                        <polyline points="12,6 12,12 16,14"></polyline>
-                                    </svg>
-                                </div>
-                                <div class="pickup-content">
-                                    <h4>Tiempo de Preparación</h4>
-                                    <p>15-20 minutos</p>
-                                </div>
-                            </div>
-                            <div class="pickup-item">
-                                <div class="pickup-icon">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                        <circle cx="12" cy="10" r="3"></circle>
-                                    </svg>
-                                </div>
-                                <div class="pickup-content">
-                                    <h4>Ubicación</h4>
-                                    <p>Local principal</p>
-                                </div>
-                            </div>
-                            <div class="pickup-item">
-                                <div class="pickup-icon">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                        <line x1="16" y1="2" x2="16" y2="6"></line>
-                                        <line x1="8" y1="2" x2="8" y2="6"></line>
-                                        <line x1="3" y1="10" x2="21" y2="10"></line>
-                                    </svg>
-                                </div>
-                                <div class="pickup-content">
-                                    <h4>Horario</h4>
-                                    <p>8:00 AM - 10:00 PM</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <!-- QR Code Section -->
+        <div class="qr-section">
+            <div class="qr-container">
+                                 <div class="qr-header">
+                     <h2>Your QR Code</h2>
+                     <p>Scan this QR code to have your surprise box!</p>
+                 </div>
+                <div class="qr-display">
+                    <canvas id="qr-canvas" width="200" height="200"></canvas>
                 </div>
             </div>
 
-            <!-- Action Buttons -->
-            <div class="action-buttons">
-                <button id="back-to-home" class="btn btn-primary">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                        <polyline points="9,22 9,12 15,12 15,22"></polyline>
-                    </svg>
-                    Volver al Inicio
-                </button>
-                <button id="new-order" class="btn btn-outline">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="12" y1="5" x2="12" y2="19"></line>
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                    Nuevo Pedido
+            <!-- Order ID Box -->
+            <div class="order-id-box">
+                <span class="order-label">Order ID:</span>
+                <span id="order-id" class="order-id"></span>
+                <button id="copy-order-id" class="copy-btn" title="Copy Order ID">
+                    <i class="fas fa-copy"></i>
                 </button>
             </div>
         </div>
-    </main>
 
-    <app-footer></app-footer>
+        <!-- Order Summary -->
+        <div class="order-summary">
+            <h3>Order Summary</h3>
+            <div class="order-items" id="order-details">
+                <!-- Order items will be populated by JavaScript -->
+            </div>
+            <div class="order-totals">
+                <div class="total-row">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">$0.00</span>
+                </div>
+                <div class="total-row">
+                    <span>Tax (4%):</span>
+                    <span id="tax">$0.00</span>
+                </div>
+                <div class="total-row total">
+                    <span>Total:</span>
+                    <span id="total">$0.00</span>
+                </div>
+            </div>
+        </div>
 
-    <script src="js/web-components.js"></script>
-    <script src="js/components.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/qr-confirmation.js"></script>
+                          <!-- Action Buttons -->
+         <div class="buttons-container">
+             <button id="download-qr" class="action-btn download-btn">
+                 <i class="fas fa-download"></i>
+                 Download QR
+             </button>
+             <button id="share-qr" class="action-btn share-btn">
+                 <i class="fas fa-share-alt"></i>
+                 Share
+             </button>
+             <button id="back-to-home" class="action-btn home-btn">
+                 <i class="fas fa-home"></i>
+                 Back to Home
+             </button>
+             <button id="new-order" class="action-btn catalog-btn">
+                 <i class="fas fa-shopping-cart"></i>
+                 New Order
+             </button>
+         </div>
+     </div>
+
+     <!-- Notification System -->
+     <div id="notification-container"></div>
+
+     <!-- Inline Script for QR Generation -->
+     <script>
+         document.addEventListener('DOMContentLoaded', function() {
+             // Show loader first
+             const loader = document.getElementById('qr-loader');
+             const content = document.getElementById('qr-content');
+             if (loader) loader.style.display = 'flex';
+             if (content) content.style.display = 'none';
+
+             // Initialize after a delay to show the loading animation
+             setTimeout(() => {
+                 loadOrderData();
+                 bindEvents();
+                 generateOrderId();
+                 displayOrderDetails();
+                 setOrderDate();
+                 hideLoader();
+                 
+                 // Generate QR after a short delay to ensure library is loaded
+                 setTimeout(() => {
+                     generateQR();
+                 }, 500);
+             }, 1500);
+
+             function showLoader() {
+                 if (loader) loader.style.display = 'flex';
+                 if (content) content.style.display = 'none';
+             }
+
+             function hideLoader() {
+                 if (loader) loader.style.display = 'none';
+                 if (content) content.style.display = 'block';
+             }
+
+             function bindEvents() {
+                 // Download QR button
+                 document.getElementById('download-qr')?.addEventListener('click', () => {
+                     downloadQR();
+                 });
+
+                 // Share QR button
+                 document.getElementById('share-qr')?.addEventListener('click', () => {
+                     shareQR();
+                 });
+
+                 // Navigation buttons
+                 document.getElementById('back-to-home')?.addEventListener('click', () => {
+                     window.location.href = 'index.html';
+                 });
+
+                 document.getElementById('new-order')?.addEventListener('click', () => {
+                     window.location.href = 'marketplace.html';
+                 });
+
+                 // Copy Order ID button
+                 document.getElementById('copy-order-id')?.addEventListener('click', () => {
+                     copyOrderId();
+                 });
+             }
+
+             function loadOrderData() {
+                 // Try to get order data from localStorage
+                 const checkoutItems = localStorage.getItem('checkoutItems');
+                 const cartItems = localStorage.getItem('cartItems');
+                 
+                 let items = [];
+                 if (checkoutItems) {
+                     items = JSON.parse(checkoutItems);
+                 } else if (cartItems) {
+                     items = JSON.parse(cartItems);
+                 }
+
+                 // Calculate totals
+                 const subtotal = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                 const tax = subtotal * 0.04; // 4% tax
+                 const total = subtotal + tax;
+
+                 window.orderData = {
+                     items: items,
+                     subtotal: subtotal,
+                     tax: tax,
+                     total: total,
+                     orderId: generateOrderId(),
+                     timestamp: new Date().toISOString()
+                 };
+             }
+
+             function generateOrderId() {
+                 const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+                 let orderId = 'GTS-';
+                 for (let i = 0; i < 8; i++) {
+                     orderId += chars.charAt(Math.floor(Math.random() * chars.length));
+                 }
+                 
+                 // Update the order ID in the DOM
+                 const orderIdElement = document.getElementById('order-id');
+                 if (orderIdElement) {
+                     orderIdElement.textContent = orderId;
+                 }
+                 
+                 return orderId;
+             }
+
+             function setOrderDate() {
+                 const now = new Date();
+                 const options = { 
+                     year: 'numeric', 
+                     month: 'long', 
+                     day: 'numeric',
+                     hour: '2-digit',
+                     minute: '2-digit'
+                 };
+                 const formattedDate = now.toLocaleDateString('en-US', options);
+                 
+                 const orderDateElement = document.getElementById('order-date');
+                 if (orderDateElement) {
+                     orderDateElement.textContent = formattedDate;
+                 }
+             }
+
+             function displayOrderDetails() {
+                 const orderDetailsElement = document.getElementById('order-details');
+                 const subtotalElement = document.getElementById('subtotal');
+                 const taxElement = document.getElementById('tax');
+                 const totalElement = document.getElementById('total');
+
+                 if (!window.orderData || !orderDetailsElement) return;
+
+                 // Display order items
+                 let itemsHTML = '';
+                 window.orderData.items.forEach(item => {
+                     itemsHTML += `
+                         <div class="order-item">
+                             <div class="item-info">
+                                 <span class="item-name">${item.title}</span>
+                                 <span class="item-quantity">x${item.quantity}</span>
+                             </div>
+                             <span class="item-price">$${(item.price * item.quantity).toFixed(2)}</span>
+                         </div>
+                     `;
+                 });
+
+                 orderDetailsElement.innerHTML = itemsHTML;
+
+                 // Display totals
+                 if (subtotalElement) subtotalElement.textContent = `$${window.orderData.subtotal.toFixed(2)}`;
+                 if (taxElement) taxElement.textContent = `$${window.orderData.tax.toFixed(2)}`;
+                 if (totalElement) totalElement.textContent = `$${window.orderData.total.toFixed(2)}`;
+             }
+
+             async function generateQR() {
+                 console.log('Starting QR generation...');
+                 
+                 if (!window.orderData) {
+                     console.error('No order data available');
+                     return;
+                 }
+
+                 const qrCanvas = document.getElementById('qr-canvas');
+                 if (!qrCanvas) {
+                     console.error('QR canvas not found');
+                     return;
+                 }
+
+                 console.log('QR Canvas found:', qrCanvas);
+
+                 // Create a unique URL for this payment
+                 const baseUrl = 'https://goodtosave.com/surprise-box';
+                 const uniqueParams = new URLSearchParams({
+                     orderId: window.orderData.orderId,
+                     total: window.orderData.total.toFixed(2),
+                     timestamp: window.orderData.timestamp,
+                     merchant: 'GTS',
+                     type: 'surprise-box'
+                 });
+                 
+                 const qrUrl = `${baseUrl}?${uniqueParams.toString()}`;
+                 window.qrUrl = qrUrl;
+                 
+                 console.log('QR URL:', qrUrl);
+
+                 // Method 1: Try QRCode.toCanvas (primary method)
+                 if (typeof QRCode !== 'undefined' && typeof QRCode.toCanvas === 'function') {
+                     try {
+                         console.log('Using QRCode.toCanvas...');
+                         
+                         // Clear canvas first
+                         const ctx = qrCanvas.getContext('2d');
+                         ctx.fillStyle = '#ffffff';
+                         ctx.fillRect(0, 0, 200, 200);
+                         
+                         // Generate QR
+                         QRCode.toCanvas(qrCanvas, qrUrl, {
+                             width: 200,
+                             margin: 2,
+                             color: {
+                                 dark: '#39b54a',
+                                 light: '#ffffff'
+                             },
+                             errorCorrectionLevel: 'M'
+                         }, (error) => {
+                             if (error) {
+                                 console.error('QRCode.toCanvas error:', error);
+                                 // Try alternative method
+                                 generateQRWithAlternative(qrCanvas, qrUrl);
+                             } else {
+                                 console.log('QR generated successfully with QRCode.toCanvas');
+                                 window.qrCanvas = qrCanvas;
+                                 showNotification('QR generated successfully', 'success');
+                             }
+                         });
+                         return;
+                     } catch (error) {
+                         console.error('QRCode.toCanvas failed:', error);
+                     }
+                 }
+
+                 // Method 2: Try qrcode-generator library
+                 if (typeof qrcode !== 'undefined') {
+                     try {
+                         console.log('Using qrcode-generator library...');
+                         generateQRWithGenerator(qrCanvas, qrUrl);
+                         return;
+                     } catch (error) {
+                         console.error('qrcode-generator failed:', error);
+                     }
+                 }
+
+                 // Method 3: Try QRCode.toDataURL
+                 if (typeof QRCode !== 'undefined' && typeof QRCode.toDataURL === 'function') {
+                     try {
+                         console.log('Using QRCode.toDataURL...');
+                         generateQRWithDataURL(qrCanvas, qrUrl);
+                         return;
+                     } catch (error) {
+                         console.error('QRCode.toDataURL failed:', error);
+                     }
+                 }
+
+                 // Method 4: Try qrcodejs library (different syntax)
+                 if (typeof QRCode !== 'undefined' && typeof QRCode.CorrectLevel !== 'undefined') {
+                     try {
+                         console.log('Using qrcodejs library...');
+                         generateQRWithQRCodeJS(qrCanvas, qrUrl);
+                         return;
+                     } catch (error) {
+                         console.error('qrcodejs failed:', error);
+                     }
+                 }
+
+                 // Fallback: Simple visual representation
+                 console.log('All methods failed, using visual fallback');
+                 generateSimpleQR(qrCanvas, qrUrl);
+             }
+
+             function generateQRWithAlternative(canvas, url) {
+                 try {
+                     console.log('Trying alternative QR generation...');
+                     
+                     // Use a different approach with QRCode.toDataURL
+                     QRCode.toDataURL(url, {
+                         width: 200,
+                         margin: 2,
+                         color: {
+                             dark: '#39b54a',
+                             light: '#ffffff'
+                         },
+                         errorCorrectionLevel: 'M'
+                     }, (error, dataURL) => {
+                         if (error) {
+                             console.error('Alternative method failed:', error);
+                             generateSimpleQR(canvas, url);
+                         } else {
+                             // Draw the data URL to canvas
+                             const img = new Image();
+                             img.onload = () => {
+                                 const ctx = canvas.getContext('2d');
+                                 ctx.clearRect(0, 0, canvas.width, canvas.height);
+                                 ctx.drawImage(img, 0, 0);
+                                 console.log('QR generated successfully with alternative method');
+                                 window.qrCanvas = canvas;
+                                 showNotification('QR generated successfully', 'success');
+                             };
+                             img.src = dataURL;
+                         }
+                     });
+                 } catch (error) {
+                     console.error('Alternative method error:', error);
+                     generateSimpleQR(canvas, url);
+                 }
+             }
+
+             function generateQRWithGenerator(canvas, url) {
+                 try {
+                     console.log('Using qrcode-generator...');
+                     
+                     const qr = qrcode(0, 'M');
+                     qr.addData(url);
+                     qr.make();
+                     
+                     const ctx = canvas.getContext('2d');
+                     const size = 200;
+                     const cellSize = size / qr.getModuleCount();
+                     
+                     // Clear canvas
+                     ctx.fillStyle = '#ffffff';
+                     ctx.fillRect(0, 0, size, size);
+                     
+                     // Draw QR pattern
+                     ctx.fillStyle = '#39b54a';
+                     for (let row = 0; row < qr.getModuleCount(); row++) {
+                         for (let col = 0; col < qr.getModuleCount(); col++) {
+                             if (qr.isDark(row, col)) {
+                                 ctx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize);
+                             }
+                         }
+                     }
+                     
+                     console.log('QR generated successfully with qrcode-generator');
+                     window.qrCanvas = canvas;
+                     showNotification('QR generated successfully', 'success');
+                     
+                 } catch (error) {
+                     console.error('qrcode-generator error:', error);
+                     generateSimpleQR(canvas, url);
+                 }
+             }
+
+             function generateQRWithDataURL(canvas, url) {
+                 try {
+                     console.log('Using QRCode.toDataURL...');
+                     
+                     QRCode.toDataURL(url, {
+                         width: 200,
+                         margin: 2,
+                         color: {
+                             dark: '#39b54a',
+                             light: '#ffffff'
+                         },
+                         errorCorrectionLevel: 'M'
+                     }, (error, dataURL) => {
+                         if (error) {
+                             console.error('QRCode.toDataURL error:', error);
+                             generateSimpleQR(canvas, url);
+                         } else {
+                             // Draw the data URL to canvas
+                             const img = new Image();
+                             img.onload = () => {
+                                 const ctx = canvas.getContext('2d');
+                                 ctx.clearRect(0, 0, canvas.width, canvas.height);
+                                 ctx.drawImage(img, 0, 0);
+                                 console.log('QR generated successfully with toDataURL');
+                                 window.qrCanvas = canvas;
+                                 showNotification('QR generated successfully', 'success');
+                             };
+                             img.src = dataURL;
+                         }
+                     });
+                 } catch (error) {
+                     console.error('QRCode.toDataURL error:', error);
+                     generateSimpleQR(canvas, url);
+                 }
+             }
+
+             function generateQRWithQRCodeJS(canvas, url) {
+                 try {
+                     console.log('Using qrcodejs library...');
+                     
+                     // Clear canvas first
+                     const ctx = canvas.getContext('2d');
+                     ctx.fillStyle = '#ffffff';
+                     ctx.fillRect(0, 0, 200, 200);
+                     
+                     // Use qrcodejs library
+                     new QRCode(canvas, {
+                         text: url,
+                         width: 200,
+                         height: 200,
+                         colorDark: '#39b54a',
+                         colorLight: '#ffffff',
+                         correctLevel: QRCode.CorrectLevel.M
+                     });
+                     
+                     console.log('QR generated successfully with qrcodejs');
+                     window.qrCanvas = canvas;
+                     showNotification('QR generated successfully', 'success');
+                     
+                 } catch (error) {
+                     console.error('qrcodejs error:', error);
+                     generateSimpleQR(canvas, url);
+                 }
+             }
+
+             function generateSimpleQR(canvas, url) {
+                 console.log('Generating simple QR...');
+                 
+                 const ctx = canvas.getContext('2d');
+                 const size = 200;
+                 
+                 console.log('Canvas context:', ctx);
+                 console.log('Canvas size:', size);
+                 
+                 // Clear canvas with white background
+                 ctx.fillStyle = '#ffffff';
+                 ctx.fillRect(0, 0, size, size);
+                 
+                 // Create a QR-like pattern
+                 ctx.fillStyle = '#39b54a';
+                 ctx.strokeStyle = '#39b54a';
+                 ctx.lineWidth = 3;
+                 
+                 // Draw outer border
+                 ctx.strokeRect(15, 15, size - 30, size - 30);
+                 
+                 // Draw corner squares (like QR code)
+                 ctx.fillRect(25, 25, 25, 25);
+                 ctx.fillRect(size - 50, 25, 25, 25);
+                 ctx.fillRect(25, size - 50, 25, 25);
+                 
+                 // Draw some pattern squares in the middle
+                 const patternSize = 8;
+                 const startX = 60;
+                 const startY = 60;
+                 
+                 for (let i = 0; i < 10; i++) {
+                     for (let j = 0; j < 10; j++) {
+                         if (Math.random() > 0.5) {
+                             ctx.fillRect(startX + i * patternSize, startY + j * patternSize, patternSize - 1, patternSize - 1);
+                         }
+                     }
+                 }
+                 
+                 // Draw text
+                 ctx.fillStyle = '#333333';
+                 ctx.font = 'bold 14px Arial';
+                 ctx.textAlign = 'center';
+                 ctx.fillText('Payment Confirmed', size / 2, size / 2 - 15);
+                 
+                 ctx.font = '12px Arial';
+                 ctx.fillText('Order: ' + window.orderData.orderId, size / 2, size / 2 + 5);
+                 ctx.fillText('Total: $' + window.orderData.total.toFixed(2), size / 2, size / 2 + 25);
+                 
+                 // Store the URL for this QR
+                 window.qrUrl = url;
+                 
+                 console.log('Simple QR generated successfully');
+                 showNotification('QR generated (fallback)', 'info');
+             }
+
+             async function downloadQR() {
+                 if (!window.qrCanvas) {
+                     showNotification('No QR to download', 'error');
+                     return;
+                 }
+
+                 try {
+                     // Convert canvas to blob
+                     const blob = await new Promise(resolve => {
+                         window.qrCanvas.toBlob(resolve, 'image/png');
+                     });
+
+                     // Create download link
+                     const url = URL.createObjectURL(blob);
+                     const link = document.createElement('a');
+                     link.href = url;
+                     link.download = `GTS-Payment-${window.orderData.orderId}.png`;
+                     document.body.appendChild(link);
+                     link.click();
+                     document.body.removeChild(link);
+                     URL.revokeObjectURL(url);
+
+                     showNotification('QR downloaded successfully', 'success');
+                 } catch (error) {
+                     console.error('Error downloading QR:', error);
+                     showNotification('Error downloading QR', 'error');
+                 }
+             }
+
+             async function shareQR() {
+                 if (!window.orderData || !window.qrUrl) {
+                     showNotification('No QR data to share', 'error');
+                     return;
+                 }
+
+                 try {
+                     const shareData = {
+                         title: 'GTS Payment Confirmation',
+                         text: `My payment has been confirmed. Order: ${window.orderData.orderId} - Total: $${window.orderData.total.toFixed(2)}`,
+                         url: window.qrUrl
+                     };
+
+                     if (navigator.share) {
+                         await navigator.share(shareData);
+                         showNotification('Shared successfully', 'success');
+                     } else {
+                         // Fallback: copy to clipboard
+                         const shareText = `${shareData.title}\n${shareData.text}\n${shareData.url}`;
+                         await navigator.clipboard.writeText(shareText);
+                         showNotification('QR link copied to clipboard', 'success');
+                     }
+                 } catch (error) {
+                     console.error('Error sharing QR:', error);
+                     showNotification('Error sharing', 'error');
+                 }
+             }
+
+             function showNotification(message, type = 'info') {
+                 // Create notification element
+                 const notification = document.createElement('div');
+                 notification.className = `notification notification-${type}`;
+                 notification.innerHTML = `
+                     <div class="notification-content">
+                         <span class="notification-icon">${getNotificationIcon(type)}</span>
+                         <span class="notification-message">${message}</span>
+                     </div>
+                 `;
+
+                 // Add to page
+                 document.body.appendChild(notification);
+
+                 // Show notification
+                 setTimeout(() => {
+                     notification.classList.add('show');
+                 }, 100);
+
+                 // Remove notification after 3 seconds
+                 setTimeout(() => {
+                     notification.classList.remove('show');
+                     setTimeout(() => {
+                         if (document.body.contains(notification)) {
+                             document.body.removeChild(notification);
+                         }
+                     }, 300);
+                 }, 3000);
+             }
+
+             async function copyOrderId() {
+                 const orderId = document.getElementById('order-id')?.textContent;
+                 if (!orderId) return;
+
+                 try {
+                     await navigator.clipboard.writeText(orderId);
+                     
+                     // Update button icon temporarily
+                     const copyBtn = document.getElementById('copy-order-id');
+                     if (copyBtn) {
+                         const originalIcon = copyBtn.innerHTML;
+                         copyBtn.innerHTML = '<i class="fas fa-check"></i>';
+                         
+                         setTimeout(() => {
+                             copyBtn.innerHTML = originalIcon;
+                         }, 1200);
+                     }
+                     
+                     showNotification('Order ID copied to clipboard', 'success');
+                 } catch (error) {
+                     console.error('Error copying order ID:', error);
+                     showNotification('Error copying order ID', 'error');
+                 }
+             }
+
+             function getNotificationIcon(type) {
+                 const icons = {
+                     success: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22,4 12,14.01 9,11.01"></polyline></svg>',
+                     error: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>',
+                     info: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>'
+                 };
+                 return icons[type] || icons.info;
+             }
+         });
+     </script>
 </body>
 </html> 
