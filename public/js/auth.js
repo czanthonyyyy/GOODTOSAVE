@@ -1,6 +1,6 @@
 /**
  * Auth Page JavaScript
- * Handles Firebase authentication, form validation, and user management
+ * Handles authentication, form validation, and user management
  */
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const forms = document.querySelectorAll('form');
 
     // Verificar que Firebase esté disponible
-    if (!window.firebaseService) {
-        console.error('Firebase service not available');
+    if (!window.firebaseAuthService) {
+        console.error('Firebase Auth Service no está disponible');
         showError('Error de configuración: Firebase no está disponible');
         return;
     }
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Firebase Authentication Handlers
+    // Authentication Handlers
     async function handleFormSubmission(form) {
         const submitButton = form.querySelector('button[type="submit"]');
         const originalText = submitButton.innerHTML;
@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const password = form.querySelector('#signin-password').value;
 
         try {
-            const user = await window.firebaseService.signIn(email, password);
+            const user = await window.firebaseAuthService.signIn(email, password);
             console.log('Usuario autenticado:', user);
             
             // Guardar información del usuario en localStorage
@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 window.location.href = 'marketplace.html';
             }, 1000);
         } catch (error) {
-            throw new Error(window.firebaseService.getErrorMessage(error));
+            throw new Error(error);
         }
     }
 
@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         try {
-            const user = await window.firebaseService.signUp(formData);
+            const user = await window.firebaseAuthService.signUp(formData);
             console.log('Usuario registrado:', user);
             
             // Guardar información del usuario en localStorage
@@ -203,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 window.location.href = 'marketplace.html';
             }, 1000);
         } catch (error) {
-            throw new Error(window.firebaseService.getErrorMessage(error));
+            throw new Error(error);
         }
     }
 
@@ -319,7 +319,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const originalHTML = this.innerHTML;
             this.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
             
-            // TODO: Implementar autenticación social con Firebase
+            // TODO: Implementar autenticación social
             setTimeout(() => {
                 this.innerHTML = originalHTML;
                 showError(`Autenticación con ${provider} no implementada aún`);
@@ -340,16 +340,16 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             try {
-                await window.firebaseService.sendPasswordResetEmail(email);
+                await window.firebaseAuthService.sendPasswordResetEmail(email);
                 showSuccess('Email de recuperación enviado. Revisa tu bandeja de entrada.');
             } catch (error) {
-                showError(window.firebaseService.getErrorMessage(error));
+                showError(error);
             }
         });
     }
 
     // Verificar estado de autenticación al cargar la página
-    window.firebaseService.onAuthStateChanged((user) => {
+    window.firebaseAuthService.onAuthStateChanged((user) => {
         if (user) {
             console.log('Usuario ya autenticado:', user);
             // Si el usuario ya está autenticado, redirigir al marketplace

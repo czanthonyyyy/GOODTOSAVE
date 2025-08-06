@@ -650,8 +650,8 @@ class FoodMarketplaceApp {
    */
   async handleAuthSubmission(form) {
     // Verificar que Firebase esté disponible
-    if (!window.firebaseService) {
-      console.error('Firebase service not available');
+    if (!window.firebaseAuthService) {
+      console.error('Firebase Auth Service no está disponible');
       return;
     }
 
@@ -687,7 +687,7 @@ class FoodMarketplaceApp {
     const password = form.querySelector('#signin-password').value;
 
     try {
-      const user = await window.firebaseService.signIn(email, password);
+      const user = await window.firebaseAuthService.signIn(email, password);
       console.log('Usuario autenticado:', user);
       
       // Guardar información del usuario en localStorage
@@ -702,7 +702,7 @@ class FoodMarketplaceApp {
         window.location.href = 'marketplace.html';
       }, 1000);
     } catch (error) {
-      throw new Error(window.firebaseService.getErrorMessage(error));
+      throw new Error(error);
     }
   }
 
@@ -722,7 +722,7 @@ class FoodMarketplaceApp {
     };
 
     try {
-      const user = await window.firebaseService.signUp(formData);
+      const user = await window.firebaseAuthService.signUp(formData);
       console.log('Usuario registrado:', user);
       
       // Guardar información del usuario en localStorage
@@ -737,7 +737,7 @@ class FoodMarketplaceApp {
         window.location.href = 'marketplace.html';
       }, 1000);
     } catch (error) {
-      throw new Error(window.firebaseService.getErrorMessage(error));
+      throw new Error(error);
     }
   }
 
