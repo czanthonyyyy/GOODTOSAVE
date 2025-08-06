@@ -708,7 +708,7 @@ class AppCart extends HTMLElement {
         localStorage.setItem('checkoutItems', JSON.stringify(this.cartItems));
         
         // Navigate to payment page
-        window.location.href = 'payment.html';
+        window.location.href = 'pages/payment.html';
     }
 
     // Public method to be called from outside

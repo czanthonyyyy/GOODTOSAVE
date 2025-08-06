@@ -47,8 +47,8 @@ class ComponentLoader {
     
     // Solo cargar componentes HTML si no hay web components
     const componentPromises = [
-      this.loadComponent('#header-placeholder', 'components/header.html'),
-      this.loadComponent('#footer-placeholder', 'components/footer.html')
+              this.loadComponent('#header-placeholder', '../components/header.html'),
+              this.loadComponent('#footer-placeholder', '../components/footer.html')
     ];
     
     await Promise.all(componentPromises);
@@ -216,7 +216,7 @@ class ComponentLoader {
    */
   static async renderProducts(containerSelector, products, limit = null) {
     try {
-      const response = await fetch('components/product-card.html');
+              const response = await fetch('../components/product-card.html');
       const template = await response.text();
       
       const container = document.querySelector(containerSelector);

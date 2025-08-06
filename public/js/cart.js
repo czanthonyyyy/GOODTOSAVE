@@ -328,7 +328,7 @@ class ShoppingCart {
   toggleCart() {
     if (!this.shouldInitializeCart()) {
       // Si no estamos en una página con carrito, redirigir al marketplace
-      window.location.href = 'marketplace.html';
+      window.location.href = 'pages/marketplace.html';
       return;
     }
     
@@ -362,7 +362,7 @@ class ShoppingCart {
   openCart() {
     if (!this.shouldInitializeCart()) {
       // Si no estamos en una página con carrito, redirigir al marketplace
-      window.location.href = 'marketplace.html';
+      window.location.href = 'pages/marketplace.html';
       return;
     }
     
@@ -508,7 +508,7 @@ class ShoppingCart {
     sessionStorage.setItem('checkout_total', this.calculateTotal().toFixed(2));
     
     // Redirigir a la página de pago
-    window.location.href = 'payment.html';
+            window.location.href = 'pages/payment.html';
   }
 
   /**

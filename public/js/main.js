@@ -60,7 +60,7 @@ class FoodMarketplaceApp {
    */
   async loadProducts() {
     try {
-      const response = await fetch('assets/data/products.json');
+              const response = await fetch('../assets/data/products.json');
       const data = await response.json();
       this.products = data.products || [];
     } catch (error) {
@@ -97,11 +97,8 @@ class FoodMarketplaceApp {
       case 'qr.html':
         this.initializeQRPage();
         break;
-      case 'login.html':
-        this.initializeLoginPage();
-        break;
-      case 'register.html':
-        this.initializeRegisterPage();
+      case 'auth.html':
+        this.initializeAuthPage();
         break;
     }
   }
@@ -451,7 +448,7 @@ class FoodMarketplaceApp {
    */
   async loadTeamMembers() {
     try {
-      const response = await fetch('assets/data/team.json');
+              const response = await fetch('../assets/data/team.json');
       const data = await response.json();
       const teamGrid = document.getElementById('team-grid');
       
@@ -567,7 +564,7 @@ class FoodMarketplaceApp {
     
     setTimeout(() => {
       // Simular éxito de pago
-      window.location.href = 'qr.html';
+              window.location.href = 'pages/qr.html';
     }, 2000);
   }
 
@@ -625,17 +622,11 @@ class FoodMarketplaceApp {
   }
 
   /**
-   * Inicializa página de login
+   * Inicializa página de autenticación
    */
-  initializeLoginPage() {
-    this.setupAuthForm('login-form');
-  }
-
-  /**
-   * Inicializa página de registro
-   */
-  initializeRegisterPage() {
-    this.setupAuthForm('register-form');
+  initializeAuthPage() {
+    this.setupAuthForm('signinForm');
+    this.setupAuthForm('signupForm');
     this.setupPasswordValidation();
   }
 
@@ -657,23 +648,165 @@ class FoodMarketplaceApp {
    * Maneja envío de formulario de autenticación
    * @param {HTMLFormElement} form - Formulario
    */
-  handleAuthSubmission(form) {
-    const submitBtn = form.querySelector('.auth-submit-btn');
-    const btnText = submitBtn.querySelector('.btn-text');
-    const btnLoading = submitBtn.querySelector('.btn-loading');
+  async handleAuthSubmission(form) {
+    // Verificar que Firebase esté disponible
+    if (!window.firebaseService) {
+      console.error('Firebase service not available');
+      return;
+    }
+
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
     
-    btnText.style.display = 'none';
-    btnLoading.style.display = 'flex';
-    submitBtn.disabled = true;
+    try {
+      submitBtn.classList.add('loading');
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+      submitBtn.disabled = true;
+      
+      if (form.id === 'signinForm') {
+        await this.handleSignIn(form);
+      } else if (form.id === 'signupForm') {
+        await this.handleSignUp(form);
+      }
+    } catch (error) {
+      console.error('Authentication error:', error);
+      this.showAuthError(error.message);
+    } finally {
+      submitBtn.classList.remove('loading');
+      submitBtn.innerHTML = originalText;
+      submitBtn.disabled = false;
+    }
+  }
+
+  /**
+   * Maneja inicio de sesión
+   * @param {HTMLFormElement} form - Formulario de inicio de sesión
+   */
+  async handleSignIn(form) {
+    const email = form.querySelector('#signin-email').value;
+    const password = form.querySelector('#signin-password').value;
+
+    try {
+      const user = await window.firebaseService.signIn(email, password);
+      console.log('Usuario autenticado:', user);
+      
+      // Guardar información del usuario en localStorage
+      localStorage.setItem('user', JSON.stringify({
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName
+      }));
+      
+      this.showAuthSuccess('Inicio de sesión exitoso');
+      setTimeout(() => {
+        window.location.href = 'marketplace.html';
+      }, 1000);
+    } catch (error) {
+      throw new Error(window.firebaseService.getErrorMessage(error));
+    }
+  }
+
+  /**
+   * Maneja registro de usuario
+   * @param {HTMLFormElement} form - Formulario de registro
+   */
+  async handleSignUp(form) {
+    const formData = {
+      firstName: form.querySelector('#signup-firstname').value,
+      lastName: form.querySelector('#signup-lastname').value,
+      email: form.querySelector('#signup-email').value,
+      password: form.querySelector('#signup-password').value,
+      phone: form.querySelector('#signup-phone').value,
+      accountType: form.querySelector('#signup-account-type').value,
+      location: form.querySelector('#signup-location').value
+    };
+
+    try {
+      const user = await window.firebaseService.signUp(formData);
+      console.log('Usuario registrado:', user);
+      
+      // Guardar información del usuario en localStorage
+      localStorage.setItem('user', JSON.stringify({
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName
+      }));
+      
+      this.showAuthSuccess('Registro exitoso');
+      setTimeout(() => {
+        window.location.href = 'marketplace.html';
+      }, 1000);
+    } catch (error) {
+      throw new Error(window.firebaseService.getErrorMessage(error));
+    }
+  }
+
+  /**
+   * Muestra mensaje de error de autenticación
+   * @param {string} message - Mensaje de error
+   */
+  showAuthError(message) {
+    let errorDiv = document.getElementById('auth-error-message');
+    if (!errorDiv) {
+      errorDiv = document.createElement('div');
+      errorDiv.id = 'auth-error-message';
+      errorDiv.className = 'auth-error-message';
+      document.body.appendChild(errorDiv);
+    }
+    
+    errorDiv.textContent = message;
+    errorDiv.style.cssText = `
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: #ff4444;
+      color: white;
+      padding: 15px;
+      border-radius: 5px;
+      z-index: 10000;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      max-width: 300px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    `;
     
     setTimeout(() => {
-      // Simular éxito de autenticación
-      if (form.id === 'login-form') {
-        window.location.href = 'marketplace.html';
-      } else {
-        window.location.href = 'login.html';
-      }
-    }, 1500);
+      errorDiv.style.display = 'none';
+    }, 5000);
+  }
+
+  /**
+   * Muestra mensaje de éxito de autenticación
+   * @param {string} message - Mensaje de éxito
+   */
+  showAuthSuccess(message) {
+    let successDiv = document.getElementById('auth-success-message');
+    if (!successDiv) {
+      successDiv = document.createElement('div');
+      successDiv.id = 'auth-success-message';
+      successDiv.className = 'auth-success-message';
+      document.body.appendChild(successDiv);
+    }
+    
+    successDiv.textContent = message;
+    successDiv.style.cssText = `
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: #4CAF50;
+      color: white;
+      padding: 15px;
+      border-radius: 5px;
+      z-index: 10000;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      max-width: 300px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    `;
+    
+    setTimeout(() => {
+      successDiv.style.display = 'none';
+    }, 3000);
   }
 
   /**

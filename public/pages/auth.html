@@ -15,19 +15,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <!-- Global Styles -->
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/pages.css">
     
     <!-- Auth Styles - Loaded after global styles -->
-    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="../css/auth.css">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/logo.svg">
 </head>
 <body>
-    <!-- Header Web Component -->
-    <app-header></app-header>
+
 
     <!-- Auth Container - Completely Isolated -->
     <div class="auth-page">
@@ -93,15 +92,7 @@
                             <input type="text" id="signup-location" placeholder="City/Location (optional)" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$" aria-label="Location"/>
                             <span class="validation-message">Please enter a valid location</span>
                         </div>
-                        <div class="input-group">
-                            <textarea id="signup-bio" placeholder="Bio/About you (optional)" maxlength="300" aria-label="Bio"></textarea>
-                            <span class="validation-message">Bio must be less than 300 characters</span>
-                        </div>
-                        <div class="input-group">
-                            <label for="signup-profilepic" style="font-size: 0.9em; color: #888;">Profile Picture (optional, JPG/PNG/WebP, max 2MB)</label>
-                            <input type="file" id="signup-profilepic" accept="image/png, image/jpeg, image/webp" aria-label="Profile Picture"/>
-                            <span class="validation-message">Please select a valid image file (max 2MB)</span>
-                        </div>
+
                     </div>
                     <div class="form-error-message" id="signup-error-message" style="display:none;"></div>
                     <button type="submit" style="flex-shrink: 0; margin-top: 10px;">Sign Up</button>
@@ -162,14 +153,25 @@
         </div>
     </div>
 
-    <!-- Footer Web Component -->
-    <app-footer></app-footer>
-
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-storage-compat.js"></script>
+    
+    <!-- Firebase Configuration -->
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/firebase-service.js"></script>
+    
+    <!-- Cache Clear Script -->
+    <script src="../js/cache-clear.js"></script>
+    
+    <!-- Firebase Debug Script -->
+    <script src="../js/firebase-debug.js"></script>
+    
     <!-- Scripts -->
-    <script src="js/web-components.js"></script>
-    <script src="js/components.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/cart.js"></script>
-    <script src="js/auth.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/auth-verification.js"></script>
+    <script src="../js/test-firebase.js"></script>
 </body>
 </html> 

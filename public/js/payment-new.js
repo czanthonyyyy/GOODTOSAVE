@@ -19,7 +19,7 @@ class PaymentManager {
             this.cartItems = JSON.parse(checkoutItems);
         } else {
             // If no items, redirect back to marketplace
-            window.location.href = 'marketplace.html';
+            window.location.href = 'pages/marketplace.html';
         }
     }
 
@@ -340,7 +340,7 @@ class PaymentManager {
             localStorage.removeItem('checkoutItems');
             
             // Redirect to QR page
-            window.location.href = 'qr.html';
+            window.location.href = 'pages/qr.html';
             
         } catch (error) {
             console.error('Payment error:', error);

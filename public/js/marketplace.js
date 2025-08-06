@@ -176,7 +176,7 @@ function actualizarTotalCarrito() {
 
 // Función de pago
 function pagarClicked() {
-    window.location.href = 'payment.html';
+            window.location.href = 'pages/payment.html';
 }
 
 // ===== FUNCIONES DE PERSISTENCIA =====

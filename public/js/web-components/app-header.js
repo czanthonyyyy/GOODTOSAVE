@@ -341,10 +341,10 @@ class AppHeader extends HTMLElement {
                     
                     <nav>
                         <ul class="nav-menu">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="marketplace.html">Marketplace</a></li>
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="contact.html">Contact</a></li>
+                                                    <li><a href="index.html">Home</a></li>
+                        <li><a href="marketplace.html">Marketplace</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
                         </ul>
                     </nav>
                     

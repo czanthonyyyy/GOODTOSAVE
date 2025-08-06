@@ -75,6 +75,16 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 1rem;
 }
 
+/* Override for auth page forms */
+.auth-page .form-container form h1,
+.auth-page .form-container form h2,
+.auth-page .form-container form h3,
+.auth-page .form-container form h4,
+.auth-page .form-container form h5,
+.auth-page .form-container form h6 {
+    color: #333;
+}
+
 h1 { font-size: 2.5rem; }
 h2 { font-size: 2rem; }
 h3 { font-size: 1.75rem; }

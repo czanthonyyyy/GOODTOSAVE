@@ -1,6 +1,6 @@
 /**
  * Auth Page JavaScript
- * Handles form transitions, password validation, and authentication
+ * Handles Firebase authentication, form validation, and user management
  */
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -9,6 +9,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById('container');
     const togglePasswordButtons = document.querySelectorAll('.toggle-password');
     const forms = document.querySelectorAll('form');
+
+    // Verificar que Firebase esté disponible
+    if (!window.firebaseService) {
+        console.error('Firebase service not available');
+        showError('Error de configuración: Firebase no está disponible');
+        return;
+    }
 
     // Toggle between sign in and sign up
     signUpButton.addEventListener('click', () => {
@@ -106,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        form.addEventListener('submit', function(e) {
+        form.addEventListener('submit', async function(e) {
             e.preventDefault();
             let isValid = true;
             
@@ -117,18 +124,88 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             if (isValid) {
-                const submitButton = this.querySelector('button[type="submit"]');
-                submitButton.classList.add('loading');
-                
-                // Simulate form submission
-                setTimeout(() => {
-                    submitButton.classList.remove('loading');
-                    // Redirect to marketplace after successful submission
-                    window.location.href = 'marketplace.html';
-                }, 800);
+                await handleFormSubmission(this);
             }
         });
     });
+
+    // Firebase Authentication Handlers
+    async function handleFormSubmission(form) {
+        const submitButton = form.querySelector('button[type="submit"]');
+        const originalText = submitButton.innerHTML;
+        
+        try {
+            submitButton.classList.add('loading');
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+            
+            if (form.id === 'signinForm') {
+                await handleSignIn(form);
+            } else if (form.id === 'signupForm') {
+                await handleSignUp(form);
+            }
+        } catch (error) {
+            console.error('Authentication error:', error);
+            showError(error.message);
+        } finally {
+            submitButton.classList.remove('loading');
+            submitButton.innerHTML = originalText;
+        }
+    }
+
+    async function handleSignIn(form) {
+        const email = form.querySelector('#signin-email').value;
+        const password = form.querySelector('#signin-password').value;
+
+        try {
+            const user = await window.firebaseService.signIn(email, password);
+            console.log('Usuario autenticado:', user);
+            
+            // Guardar información del usuario en localStorage
+            localStorage.setItem('user', JSON.stringify({
+                uid: user.uid,
+                email: user.email,
+                displayName: user.displayName
+            }));
+            
+            showSuccess('Inicio de sesión exitoso');
+            setTimeout(() => {
+                window.location.href = 'marketplace.html';
+            }, 1000);
+        } catch (error) {
+            throw new Error(window.firebaseService.getErrorMessage(error));
+        }
+    }
+
+    async function handleSignUp(form) {
+        const formData = {
+            firstName: form.querySelector('#signup-firstname').value,
+            lastName: form.querySelector('#signup-lastname').value,
+            email: form.querySelector('#signup-email').value,
+            password: form.querySelector('#signup-password').value,
+            phone: form.querySelector('#signup-phone').value,
+            accountType: form.querySelector('#signup-account-type').value,
+            location: form.querySelector('#signup-location').value
+        };
+
+        try {
+            const user = await window.firebaseService.signUp(formData);
+            console.log('Usuario registrado:', user);
+            
+            // Guardar información del usuario en localStorage
+            localStorage.setItem('user', JSON.stringify({
+                uid: user.uid,
+                email: user.email,
+                displayName: user.displayName
+            }));
+            
+            showSuccess('Registro exitoso');
+            setTimeout(() => {
+                window.location.href = 'marketplace.html';
+            }, 1000);
+        } catch (error) {
+            throw new Error(window.firebaseService.getErrorMessage(error));
+        }
+    }
 
     function validateInput(input) {
         const parent = input.parentElement;
@@ -144,6 +221,12 @@ document.addEventListener('DOMContentLoaded', function() {
             errorMessage.textContent = `Por favor ingresa tu ${input.getAttribute('aria-label')}`;
             isValid = false;
         } 
+        // Email validation
+        else if (input.type === 'email' && input.value && !isValidEmail(input.value)) {
+            parent.classList.add('error');
+            errorMessage.textContent = 'Por favor ingresa un email válido';
+            isValid = false;
+        }
         // Pattern validation
         else if (input.pattern && input.value && !new RegExp(input.pattern).test(input.value)) {
             parent.classList.add('error');
@@ -156,36 +239,65 @@ document.addEventListener('DOMContentLoaded', function() {
             errorMessage.textContent = `El campo debe tener al menos ${input.minLength} caracteres`;
             isValid = false;
         }
-        // Maxlength validation for textarea
-        else if (input.maxLength && input.value.length > input.maxLength) {
-            parent.classList.add('error');
-            errorMessage.textContent = `El campo no puede tener más de ${input.maxLength} caracteres`;
-            isValid = false;
-        }
-        // File validation
-        else if (input.type === 'file' && input.files.length > 0) {
-            const file = input.files[0];
-            const maxSize = 2 * 1024 * 1024; // 2MB
-            const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
-            
-            if (file.size > maxSize) {
-                parent.classList.add('error');
-                errorMessage.textContent = 'El archivo no puede ser mayor a 2MB';
-                isValid = false;
-            } else if (!allowedTypes.includes(file.type)) {
-                parent.classList.add('error');
-                errorMessage.textContent = 'Solo se permiten archivos JPG, PNG o WebP';
-                isValid = false;
-            } else {
-                parent.classList.add('success');
-            }
-        }
         // Success state
         else if (input.value.trim()) {
             parent.classList.add('success');
         }
 
         return isValid;
+    }
+
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    function showError(message) {
+        // Crear o actualizar mensaje de error
+        let errorDiv = document.getElementById('auth-error-message');
+        if (!errorDiv) {
+            errorDiv = document.createElement('div');
+            errorDiv.id = 'auth-error-message';
+            errorDiv.className = 'auth-error-message';
+            document.body.appendChild(errorDiv);
+        }
+        
+        errorDiv.textContent = message;
+        errorDiv.style.display = 'block';
+        errorDiv.style.backgroundColor = '#ff4444';
+        errorDiv.style.color = 'white';
+        errorDiv.style.padding = '10px';
+        errorDiv.style.margin = '10px';
+        errorDiv.style.borderRadius = '5px';
+        errorDiv.style.textAlign = 'center';
+        
+        setTimeout(() => {
+            errorDiv.style.display = 'none';
+        }, 5000);
+    }
+
+    function showSuccess(message) {
+        // Crear o actualizar mensaje de éxito
+        let successDiv = document.getElementById('auth-success-message');
+        if (!successDiv) {
+            successDiv = document.createElement('div');
+            successDiv.id = 'auth-success-message';
+            successDiv.className = 'auth-success-message';
+            document.body.appendChild(successDiv);
+        }
+        
+        successDiv.textContent = message;
+        successDiv.style.display = 'block';
+        successDiv.style.backgroundColor = '#4CAF50';
+        successDiv.style.color = 'white';
+        successDiv.style.padding = '10px';
+        successDiv.style.margin = '10px';
+        successDiv.style.borderRadius = '5px';
+        successDiv.style.textAlign = 'center';
+        
+        setTimeout(() => {
+            successDiv.style.display = 'none';
+        }, 3000);
     }
 
     // Keyboard navigation improvements
@@ -207,11 +319,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const originalHTML = this.innerHTML;
             this.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
             
-            // Simulate social auth
+            // TODO: Implementar autenticación social con Firebase
             setTimeout(() => {
                 this.innerHTML = originalHTML;
-                alert(`Autenticación con ${provider} completada`);
-                window.location.href = 'marketplace.html';
+                showError(`Autenticación con ${provider} no implementada aún`);
             }, 1500);
         });
     });
@@ -219,45 +330,30 @@ document.addEventListener('DOMContentLoaded', function() {
     // Forgot password handler
     const forgotPasswordLink = document.querySelector('a[href="#"]');
     if (forgotPasswordLink) {
-        forgotPasswordLink.addEventListener('click', function(e) {
+        forgotPasswordLink.addEventListener('click', async function(e) {
             e.preventDefault();
-            alert('Funcionalidad de recuperación de contraseña en desarrollo');
-        });
-    }
-
-    // File input handler
-    const fileInput = document.getElementById('signup-profilepic');
-    if (fileInput) {
-        fileInput.addEventListener('change', function() {
-            const file = this.files[0];
-            if (file) {
-                // Show preview or file name
-                const parent = this.parentElement;
-                const label = parent.querySelector('label');
-                if (label) {
-                    label.textContent = `Archivo seleccionado: ${file.name}`;
-                }
-            }
-        });
-    }
-
-    // Textarea character counter
-    const textarea = document.getElementById('signup-bio');
-    if (textarea) {
-        textarea.addEventListener('input', function() {
-            const maxLength = this.maxLength;
-            const currentLength = this.value.length;
-            const remaining = maxLength - currentLength;
+            const email = document.getElementById('signin-email').value;
             
-            // Update character count if needed
-            const parent = this.parentElement;
-            const errorMessage = parent.querySelector('.validation-message');
-            if (remaining < 50) {
-                errorMessage.textContent = `${remaining} caracteres restantes`;
-                errorMessage.style.display = 'block';
-            } else {
-                errorMessage.style.display = 'none';
+            if (!email) {
+                showError('Por favor ingresa tu email para recuperar la contraseña');
+                return;
+            }
+            
+            try {
+                await window.firebaseService.sendPasswordResetEmail(email);
+                showSuccess('Email de recuperación enviado. Revisa tu bandeja de entrada.');
+            } catch (error) {
+                showError(window.firebaseService.getErrorMessage(error));
             }
         });
     }
+
+    // Verificar estado de autenticación al cargar la página
+    window.firebaseService.onAuthStateChanged((user) => {
+        if (user) {
+            console.log('Usuario ya autenticado:', user);
+            // Si el usuario ya está autenticado, redirigir al marketplace
+            window.location.href = 'marketplace.html';
+        }
+    });
 }); 
