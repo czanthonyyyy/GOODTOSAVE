@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication - Good to Save</title>
+    <meta name="description" content="Sign in or register with Good to Save to start reducing food waste">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    
+    <!-- Auth Styles - Loaded after global styles -->
+    <link rel="stylesheet" href="../css/auth.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../assets/images/logo.svg">
+</head>
+<body>
+
+
+    <!-- Auth Container - Completely Isolated -->
+    <div class="auth-page">
+        <div class="container" id="container">
+            <div class="form-container sign-up-container">
+                <form id="signupForm" novalidate enctype="multipart/form-data" style="display: flex; flex-direction: column; height: 100%;">
+                    <h1 style="flex-shrink: 0;">Create Account</h1>
+                    <div class="social-container" style="flex-shrink: 0;">
+                        <a href="#" class="social" aria-label="Sign up with Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social" aria-label="Sign up with Google">
+                            <i class="fab fa-google"></i>
+                        </a>
+                        <a href="#" class="social" aria-label="Sign up with LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                    <span style="flex-shrink: 0;">or use your email to register</span>
+                    <div id="signup-fields-scroll" style="flex: 1 1 auto; overflow-y: auto; min-height: 0; margin-bottom: 10px;">
+                        <div class="input-group">
+                            <input type="text" id="signup-firstname" placeholder="First Name" required pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,30}$" aria-label="First Name"/>
+                            <span class="validation-message">Please enter your first name</span>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" id="signup-lastname" placeholder="Last Name" required pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,30}$" aria-label="Last Name"/>
+                            <span class="validation-message">Please enter your last name</span>
+                        </div>
+                        <div class="input-group">
+                            <input type="email" id="signup-email" placeholder="Email Address" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" aria-label="Email Address"/>
+                            <span class="validation-message">Please enter a valid email address</span>
+                        </div>
+                        <div class="input-group">
+                            <input type="password" id="signup-password" placeholder="Password" required minlength="8" aria-label="Password"/>
+                            <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                                <i class="far fa-eye"></i>
+                            </button>
+                            <span class="validation-message">Password must be at least 8 characters long</span>
+                            <div class="password-strength">
+                                <div class="password-strength-bar"></div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <input type="password" id="signup-confirm-password" placeholder="Confirm Password" required aria-label="Confirm Password"/>
+                            <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                                <i class="far fa-eye"></i>
+                            </button>
+                            <span class="validation-message">Passwords do not match</span>
+                        </div>
+                        <div class="input-group">
+                            <input type="tel" id="signup-phone" placeholder="Phone (optional)" pattern="^\+?[0-9]{10,15}$" aria-label="Phone"/>
+                            <span class="validation-message">Please enter a valid phone number</span>
+                        </div>
+                        <div class="input-group">
+                            <select id="signup-account-type" required aria-label="Account Type">
+                                <option value="">Select your account type</option>
+                                <option value="buyer">Buyer</option>
+                                <option value="seller">Provider</option>
+                            </select>
+                            <span class="validation-message">Please select your account type</span>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" id="signup-location" placeholder="City/Location (optional)" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$" aria-label="Location"/>
+                            <span class="validation-message">Please enter a valid location</span>
+                        </div>
+
+                    </div>
+                    <div class="form-error-message" id="signup-error-message" style="display:none;"></div>
+                    <button type="submit" style="flex-shrink: 0; margin-top: 10px;">Sign Up</button>
+                </form>
+            </div>
+            <div class="form-container sign-in-container">
+                <form id="signinForm" novalidate>
+                    <h1>Sign In</h1>
+                    <div class="social-container">
+                        <a href="#" class="social" aria-label="Sign in with Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social" aria-label="Sign in with Google">
+                            <i class="fab fa-google"></i>
+                        </a>
+                        <a href="#" class="social" aria-label="Sign in with LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                    <span>or use your account</span>
+
+                    <div class="input-group">
+                        <input type="email" id="signin-email" placeholder="Email Address" required
+                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                            aria-label="Email Address"/>
+                        <span class="validation-message">Please enter a valid email address</span>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="password" id="signin-password" placeholder="Password" required
+                            aria-label="Password"/>
+                        <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                            <i class="far fa-eye"></i>
+                        </button>
+                        <span class="validation-message">Please enter your password</span>
+                    </div>
+
+                    <div class="form-error-message" id="signin-error-message" style="display:none;"></div>
+
+                    <a href="#" tabindex="0">Forgot your password?</a>
+                    <button type="submit">Sign In</button>
+                </form>
+            </div>
+            <div class="overlay-container">
+                <div class="overlay">
+                    <div class="overlay-panel overlay-left">
+                        <h1>Welcome Back!</h1>
+                        <p>To stay connected with us, sign in with your personal information</p>
+                        <button class="ghost" id="signIn">Sign In</button>
+                    </div>
+                    <div class="overlay-panel overlay-right">
+                        <h1>Hello, Friend!</h1>
+                        <p>Enter your personal details and start your journey with us</p>
+                        <button class="ghost" id="signUp">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-storage-compat.js"></script>
+    
+    <!-- Firebase Configuration -->
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/firebase-service.js"></script>
+    
+    <!-- Cache Clear Script -->
+    <script src="../js/cache-clear.js"></script>
+    
+    <!-- Firebase Debug Script -->
+    <script src="../js/firebase-debug.js"></script>
+    
+    <!-- Scripts -->
+    <script src="../js/auth.js"></script>
+    <script src="../js/auth-verification.js"></script>
+    <script src="../js/test-firebase.js"></script>
+</body>
+</html> 

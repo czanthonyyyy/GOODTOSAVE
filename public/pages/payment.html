@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="../css/payment.css">
+    <title>Secure Payment | Good to Save</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../assets/favicon/site.webmanifest">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/4496fe260a.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <form id="payment-form">
+            <div class="row">
+                <div class="col">
+                    <h3 class="title">
+                        <i class="fas fa-user"></i>
+                        Billing Information
+                    </h3>
+
+                    <div class="inputBox">
+                        <span>Full Name</span>
+                        <input type="text" placeholder="John Smith" required>
+                    </div>
+                    <div class="inputBox">
+                        <span>Email Address</span>
+                        <input type="email" placeholder="john@example.com" required>
+                    </div>
+                    <div class="inputBox">
+                        <span>Billing Address</span>
+                        <input type="text" placeholder="Street Address" required>
+                    </div>
+                    <div class="inputBox">
+                        <span>City</span>
+                        <input type="text" placeholder="City" required>
+                    </div>
+
+                    <div class="flex">
+                        <div class="inputBox">
+                            <span>State</span>
+                            <input type="text" placeholder="State" required>
+                        </div>
+                        <div class="inputBox">
+                            <span>ZIP Code</span>
+                            <input type="text" placeholder="123456" required pattern="[0-9]*">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <h3 class="title">
+                        <i class="fas fa-credit-card"></i>
+                        Payment Details
+                    </h3>
+
+                    <div class="inputBox">
+                        <span>Accepted Cards</span>
+                        <div class="card-icons">
+                            <img src="../assets/img/card_img.png" alt="accepted cards">
+                        </div>
+                    </div>
+                    <div class="inputBox">
+                        <span>Name on Card</span>
+                        <input type="text" placeholder="John Smith" required>
+                    </div>
+                    <div class="inputBox">
+                        <span>Card Number</span>
+                        <input type="text" placeholder="1234 5678 9012 3456" required pattern="[0-9\s]*" maxlength="19">
+                    </div>
+                    <div class="inputBox">
+                        <span>Expiration Date</span>
+                        <div class="flex">
+                            <input type="text" placeholder="MM" required pattern="[0-9]*" maxlength="2">
+                            <input type="text" placeholder="YY" required pattern="[0-9]*" maxlength="2">
+                        </div>
+                    </div>
+
+                    <div class="inputBox">
+                        <span>CVV</span>
+                        <input type="text" placeholder="123" required pattern="[0-9]*" maxlength="4">
+                    </div>
+                </div>
+            </div>
+
+            <div class="security-badge">
+                <i class="fas fa-shield-alt"></i>
+                Your payment information is encrypted and secure. We never store your credit card details.
+            </div>
+
+            <button type="submit" class="submit-btn" id="checkout-btn">
+                <i class="fas fa-lock"></i>
+                Complete Secure Payment
+            </button>
+        </form>
+    </div>
+
+    <!-- Modal de resumen de compra -->
+    <div id="modal-resumen" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
+        <div style="background:#fff; padding:2.5rem; border-radius:18px; text-align:center; max-width:90vw; min-width:400px; box-shadow:0 2px 16px rgba(0,0,0,0.18); position:relative;">
+            <h2 style="color:#1a472a; font-size:1.5rem; margin-bottom:1.5rem;">Order Summary</h2>
+            
+            <div id="resumen-items" style="text-align:left; margin-bottom:1.5rem; max-height:300px; overflow-y:auto;">
+                <!-- Los items del carrito se insertarán aquí dinámicamente -->
+            </div>
+            
+            <div style="border-top:1px solid #e0e0e0; padding-top:1rem; margin-bottom:1.5rem;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;">
+                    <span style="color:#666;">Subtotal:</span>
+                    <span id="resumen-subtotal" style="font-weight:600;">$0.00</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;">
+                    <span style="color:#666;">Tax:</span>
+                    <span id="resumen-tax" style="font-weight:600;">$0.00</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; font-size:1.1rem; font-weight:600; color:#27ae60;">
+                    <span>Total:</span>
+                    <span id="resumen-total">$0.00</span>
+                </div>
+            </div>
+            
+            <div style="display:flex; gap:1rem; justify-content:center;">
+                <button id="btn-cancelar" style="padding:0.8rem 1.5rem; background:#f8f9fa; color:#666; border:1px solid #ddd; border-radius:6px; font-size:1rem; cursor:pointer;">Cancel</button>
+                <button id="btn-confirmar" style="padding:0.8rem 1.5rem; background:#27ae60; color:#fff; border:none; border-radius:6px; font-size:1rem; cursor:pointer; box-shadow:0 1px 4px rgba(39,174,96,0.2);">Confirm Payment</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación final -->
+    <div id="modal-confirmacion" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
+        <div style="background:#fff; padding:2.5rem 2.5rem 2rem 2.5rem; border-radius:18px; text-align:center; max-width:90vw; min-width:320px; box-shadow:0 2px 16px rgba(0,0,0,0.18); position:relative;">
+            <div style="display:flex; justify-content:center; align-items:center; margin-bottom:1.2rem;">
+                <svg width="70" height="70" viewBox="0 0 70 70">
+                    <circle cx="35" cy="35" r="33" fill="#eafaf1" stroke="#27ae60" stroke-width="4"/>
+                    <polyline points="22,38 32,48 48,28" fill="none" stroke="#27ae60" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                        <animate attributeName="points" dur="0.5s" to="22,38 32,48 48,28" fill="freeze" />
+                    </polyline>
+                </svg>
+            </div>
+            <h2 style="color:#27ae60; font-size:1.7rem; margin-bottom:0.5rem;">¡Compra completada!</h2>
+            <p style="color:#222; font-size:1.1rem; margin-bottom:1.2rem;">La información es correcta y tu compra ha sido procesada exitosamente.</p>
+            <button id="btn-ver-qr" style="margin-top:0.5rem; padding:0.6rem 2rem; background:#27ae60; color:#fff; border:none; border-radius:6px; font-size:1.1rem; cursor:pointer; box-shadow:0 1px 4px rgba(39,174,96,0.08);">Ver QR</button>
+        </div>
+    </div>
+
+    <script>
+        // Función para mostrar el modal de resumen
+        function mostrarModalResumen() {
+            const modal = document.getElementById('modal-resumen');
+            const resumenItems = document.getElementById('resumen-items');
+            
+            // Obtener items del carrito desde localStorage
+            const cartItems = JSON.parse(localStorage.getItem('checkoutItems') || localStorage.getItem('cartItems') || '[]');
+            
+            if (cartItems.length === 0) {
+                alert('No hay items en el carrito');
+                return;
+            }
+            
+            // Limpiar contenido anterior
+            resumenItems.innerHTML = '';
+            
+            let subtotal = 0;
+            
+            // Generar HTML para cada item
+            cartItems.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                
+                const itemHTML = `
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0; border-bottom:1px solid #f0f0f0;">
+                        <div>
+                            <div style="font-weight:500; color:#333;">${item.title}</div>
+                            <div style="font-size:0.9rem; color:#666;">Qty: ${item.quantity} × $${item.price.toFixed(2)}</div>
+                        </div>
+                        <div style="font-weight:600; color:#27ae60;">$${itemTotal.toFixed(2)}</div>
+                    </div>
+                `;
+                resumenItems.innerHTML += itemHTML;
+            });
+            
+            // Calcular totales
+            const tax = subtotal * 0.04; // 4% tax
+            const total = subtotal + tax;
+            
+            document.getElementById('resumen-subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('resumen-tax').textContent = `$${tax.toFixed(2)}`;
+            document.getElementById('resumen-total').textContent = `$${total.toFixed(2)}`;
+            
+            modal.style.display = 'flex';
+        }
+
+        // Función para cerrar el modal de resumen
+        function cerrarModalResumen() {
+            document.getElementById('modal-resumen').style.display = 'none';
+        }
+
+        // Función para mostrar modal de confirmación final y redirigir al QR
+        function mostrarModalConfirmacion() {
+            const modalResumen = document.getElementById('modal-resumen');
+            const modalConfirmacion = document.getElementById('modal-confirmacion');
+            
+            // Cerrar modal de resumen
+            modalResumen.style.display = 'none';
+            
+            // Mostrar modal de confirmación
+            modalConfirmacion.style.display = 'flex';
+            
+            // Redirigir automáticamente después de 3 segundos
+            const timeout = setTimeout(() => {
+                // Limpiar localStorage después del pago exitoso
+                localStorage.removeItem('cartItems');
+                localStorage.removeItem('checkoutItems');
+                window.location.href = 'qr.html';
+            }, 3000);
+            
+            // Si el usuario hace clic en el botón, redirige inmediatamente
+            document.getElementById('btn-ver-qr').onclick = function() {
+                clearTimeout(timeout);
+                // Limpiar localStorage después del pago exitoso
+                localStorage.removeItem('cartItems');
+                localStorage.removeItem('checkoutItems');
+                window.location.href = 'qr.html';
+            };
+        }
+
+        // Format card number input with spaces
+        document.querySelector('input[placeholder="1234 5678 9012 3456"]').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+            let formattedValue = '';
+            for(let i = 0; i < value.length; i++) {
+                if(i > 0 && i % 4 === 0) {
+                    formattedValue += ' ';
+                }
+                formattedValue += value[i];
+            }
+            e.target.value = formattedValue;
+        });
+
+        // Handle form submission
+        document.getElementById('payment-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const button = document.getElementById('checkout-btn');
+            button.classList.add('loading');
+            
+            // Mostrar modal de resumen después de validar el formulario
+            setTimeout(() => {
+                mostrarModalResumen();
+                button.classList.remove('loading');
+            }, 800);
+        });
+
+        // Event listeners para los botones del modal
+        document.getElementById('btn-cancelar').addEventListener('click', cerrarModalResumen);
+        document.getElementById('btn-confirmar').addEventListener('click', mostrarModalConfirmacion);
+
+        // Cerrar modal al hacer clic fuera de él
+        document.getElementById('modal-resumen').addEventListener('click', function(e) {
+            if (e.target === this) {
+                cerrarModalResumen();
+            }
+        });
+
+        // Basic form validation
+        const inputs = document.querySelectorAll('input[required]');
+        inputs.forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.value.trim() === '') {
+                    this.parentElement.classList.add('error');
+                } else {
+                    this.parentElement.classList.remove('error');
+                    this.parentElement.classList.add('success');
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html> 

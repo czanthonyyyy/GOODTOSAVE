@@ -1,0 +1,259 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Roboto+Mono&display=swap');
+
+* {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    text-transform: none;
+    transition: all 0.3s ease-out;
+}
+
+body {
+    background: #f0f7f4;
+    min-height: 100vh;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    min-height: 100vh;
+}
+
+.container form {
+    padding: 40px;
+    width: 100%;
+    max-width: 1000px;
+    background: #ffffff;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border-radius: 16px;
+    position: relative;
+}
+
+.container form .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.container form .row .col {
+    flex: 1 1 400px;
+}
+
+.container form .row .col .title {
+    font-size: 20px;
+    color: #1a472a;
+    padding-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.container form .row .col .title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #c8e6d0;
+    margin-left: 8px;
+}
+
+.container form .row .col .inputBox {
+    margin: 24px 0;
+    position: relative;
+}
+
+.container form .row .col .inputBox span {
+    display: block;
+    color: #2d5a3c;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.container form .row .col .inputBox input {
+    width: 100%;
+    border: 1px solid #c8e6d0;
+    padding: 12px 16px;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    background: #ffffff;
+    transition: all 0.2s ease;
+    color: #1a472a;
+}
+
+.container form .row .col .inputBox input:hover {
+    border-color: #8fc9a3;
+}
+
+.container form .row .col .inputBox input:focus {
+    border-color: #27ae60;
+    box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.15);
+}
+
+.container form .row .col .flex {
+    display: flex;
+    gap: 16px;
+}
+
+.container form .row .col .flex .inputBox {
+    flex: 1;
+}
+
+.container form .row .col .inputBox .card-icons {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.container form .row .col .inputBox .card-icons img {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+.container form .row .col .inputBox .card-icons img:hover {
+    opacity: 1;
+}
+
+.container form .submit-btn {
+    width: 100%;
+    padding: 14px 24px;
+    font-size: 1rem;
+    background: #27ae60;
+    color: #ffffff;
+    margin-top: 32px;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: 500;
+    letter-spacing: 0.025em;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.container form .submit-btn:hover {
+    background: #219a52;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.container form .submit-btn:active {
+    transform: translateY(0);
+    background: #1e8449;
+}
+
+/* Input Placeholders */
+::placeholder {
+    color: #8fc9a3;
+    opacity: 1;
+}
+
+/* Credit Card Input Styling */
+.container form .row .col .inputBox input[type="number"] {
+    font-family: 'Roboto Mono', monospace;
+    letter-spacing: 0.025em;
+}
+
+/* Custom Styles for Autofill */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset;
+    -webkit-text-fill-color: #1a472a;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Form Section Divider */
+.container form .row .col .title:not(:first-child) {
+    margin-top: 32px;
+}
+
+/* Error State */
+.container form .row .col .inputBox.error input {
+    border-color: #e74c3c;
+    background-color: #fdf3f2;
+}
+
+.container form .row .col .inputBox.error span {
+    color: #e74c3c;
+}
+
+/* Success State */
+.container form .row .col .inputBox.success input {
+    border-color: #27ae60;
+    background-color: #f0f9f4;
+}
+
+/* Security Badge */
+.security-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    background: #f0f9f4;
+    border-radius: 8px;
+    margin-top: 24px;
+    color: #2d5a3c;
+    font-size: 0.875rem;
+}
+
+.security-badge i {
+    color: #27ae60;
+    font-size: 1.1rem;
+}
+
+/* Loading State for Submit Button */
+.submit-btn.loading {
+    position: relative;
+    color: transparent;
+    pointer-events: none;
+}
+
+.submit-btn.loading::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+    
+    .container form {
+        padding: 24px;
+    }
+    
+    .container form .row {
+        gap: 24px;
+    }
+    
+    .container form .row .col .inputBox {
+        margin: 16px 0;
+    }
+} 
