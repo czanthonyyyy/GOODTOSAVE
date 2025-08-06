@@ -81,124 +81,113 @@ document.addEventListener('DOMContentLoaded', function() {
         // Sample team data (in a real app, this would come from an API)
         const teamMembers = [
             {
-                name: 'Sarah Johnson',
+                name: 'Edgar Chacón',
                 role: 'CEO & Founder',
-                bio: 'Passionate about sustainability and creating positive environmental impact through technology.',
-                image: 'https://via.placeholder.com/150x150/39b54a/ffffff?text=SJ',
+                image: '../assets/images/team/edgar-chacon.jpg',
                 social: {
                     linkedin: '#',
                     twitter: '#',
-                    email: 'sarah@goodtosave.com'
+                    email: 'edgar.chacon2025@motta.superate.org.pa'
                 }
             },
             {
-                name: 'Michael Chen',
+                name: 'Anthony Cruz',
                 role: 'CTO',
-                bio: 'Technology enthusiast focused on building scalable solutions for social impact.',
-                image: 'https://via.placeholder.com/150x150/39b54a/ffffff?text=MC',
+                image: '../assets/images/team/anthony-cruz.jpg',
                 social: {
                     linkedin: '#',
                     twitter: '#',
-                    email: 'michael@goodtosave.com'
+                    email: 'anthony.cruz2025@motta.superate.org.pa'
                 }
             },
             {
-                name: 'Emma Rodriguez',
+                name: 'Brian Lee',
                 role: 'Head of Operations',
-                bio: 'Dedicated to optimizing processes and ensuring seamless user experiences.',
-                image: 'https://via.placeholder.com/150x150/39b54a/ffffff?text=ER',
+                image: '../assets/images/team/brian-lee.jpg',
                 social: {
                     linkedin: '#',
                     twitter: '#',
-                    email: 'emma@goodtosave.com'
+                    email: 'brian.lee2025@motta.superate.org.pa'
                 }
             },
             {
-                name: 'David Kim',
+                name: 'Nadia Tapia',
                 role: 'Head of Marketing',
-                bio: 'Creative strategist focused on spreading awareness about food waste reduction.',
-                image: 'https://via.placeholder.com/150x150/39b54a/ffffff?text=DK',
+                image: '../assets/images/team/nadia-tapia.jpg',
                 social: {
                     linkedin: '#',
                     twitter: '#',
-                    email: 'david@goodtosave.com'
+                    email: 'nadia.tapia2025@motta.superate.org.pa'
                 }
             },
             {
-                name: 'Lisa Wang',
+                name: 'Abel Alonzo',
                 role: 'Product Manager',
-                bio: 'User-centered designer focused on creating intuitive and impactful experiences.',
-                image: 'https://via.placeholder.com/150x150/39b54a/ffffff?text=LW',
+                image: '../assets/images/team/abel-alonzo.jpg',
                 social: {
                     linkedin: '#',
                     twitter: '#',
-                    email: 'lisa@goodtosave.com'
+                    email: 'abel.alonzo2025@motta.superate.org.pa'
                 }
             },
             {
-                name: 'Carlos Mendez',
+                name: 'Oscar López',
                 role: 'Lead Developer',
-                bio: 'Full-stack developer passionate about building robust and scalable applications.',
-                image: 'https://via.placeholder.com/150x150/39b54a/ffffff?text=CM',
+                image: '../assets/images/team/oscar-lopez.jpg',
                 social: {
                     linkedin: '#',
                     twitter: '#',
-                    email: 'carlos@goodtosave.com'
+                    email: 'oscar.lopez2025@motta.superate.org.pa'
                 }
             },
             {
-                name: 'Ana Garcia',
+                name: 'Ana Pereira',
                 role: 'UX/UI Designer',
-                bio: 'Creative designer focused on creating beautiful and intuitive user interfaces that enhance user experience.',
-                image: 'https://via.placeholder.com/150x150/39b54a/ffffff?text=AG',
+                image: '../assets/images/team/ana-pereira.jpg',
                 social: {
                     linkedin: '#',
                     twitter: '#',
-                    email: 'ana@goodtosave.com'
+                    email: 'ana.pereira2025@motta.superate.org.pa'
                 }
             },
             {
-                name: 'James Wilson',
+                name: 'Mirelys Garrido',
                 role: 'Data Scientist',
-                bio: 'Analytics expert dedicated to leveraging data insights to drive sustainable business decisions.',
-                image: 'https://via.placeholder.com/150x150/39b54a/ffffff?text=JW',
+                image: '../assets/images/team/mirelys-garrido.jpg',
                 social: {
                     linkedin: '#',
                     twitter: '#',
-                    email: 'james@goodtosave.com'
+                    email: 'mirelys.garrido2025@motta.superate.org.pa'
                 }
             },
             {
-                name: 'Maria Santos',
+                name: 'Mileny Riquelme',
                 role: 'Community Manager',
-                bio: 'Passionate about building and nurturing communities around sustainable living and food waste reduction.',
-                image: 'https://via.placeholder.com/150x150/39b54a/ffffff?text=MS',
+                image: '../assets/images/team/mileny-riquelme.jpg',
                 social: {
                     linkedin: '#',
                     twitter: '#',
-                    email: 'maria@goodtosave.com'
+                    email: 'mileny.riquelme2025@motta.superate.org.pa'
                 }
             },
             {
-                name: 'Alex Thompson',
+                name: 'Emanuel Ramos',
                 role: 'Business Development',
-                bio: 'Strategic partnerships expert focused on expanding our impact through meaningful collaborations.',
-                image: 'https://via.placeholder.com/150x150/39b54a/ffffff?text=AT',
+                image: '../assets/images/team/emanuel-ramos.jpg',
                 social: {
                     linkedin: '#',
                     twitter: '#',
-                    email: 'alex@goodtosave.com'
+                    email: 'emanuel.ramos2025@motta.superate.org.pa'
                 }
             },
             {
-                name: 'Sophie Lee',
+                name: 'Ivan Fuentes',
                 role: 'Content Strategist',
-                bio: 'Storyteller and content creator dedicated to spreading awareness about environmental sustainability.',
-                image: 'https://via.placeholder.com/150x150/39b54a/ffffff?text=SL',
+                image: '../assets/images/team/ivan-fuentes.jpg',
                 social: {
                     linkedin: '#',
                     twitter: '#',
-                    email: 'sophie@goodtosave.com'
+                    email: 'ivan.fuentes2025@motta.superate.org.pa'
                 }
             }
         ];
@@ -208,6 +197,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Add team members to carousel
         teamMembers.forEach(member => {
+            console.log(`Loading image for ${member.name}: ${member.image}`);
             const memberCard = createTeamMemberCard(member);
             teamCarouselTrack.appendChild(memberCard);
         });
@@ -224,7 +214,8 @@ document.addEventListener('DOMContentLoaded', function() {
         card.className = 'team-member-card';
         card.innerHTML = `
             <div class="member-photo">
-                <img src="${member.image}" alt="${member.name}" loading="lazy">
+                <img src="${member.image}" alt="${member.name}" loading="lazy" 
+                     onerror="this.src='../assets/images/logo.svg'; this.style.opacity='0.5';">
             </div>
             <div class="member-info">
                 <h3 class="member-name">${member.name}</h3>
@@ -596,7 +587,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const images = document.querySelectorAll('img');
     images.forEach(img => {
         img.addEventListener('load', function() {
+            console.log(`Image loaded successfully: ${this.src}`);
             this.style.opacity = '1';
+        });
+        img.addEventListener('error', function() {
+            console.error(`Failed to load image: ${this.src}`);
+            this.style.opacity = '0.5';
         });
         img.style.opacity = '0';
         img.style.transition = 'opacity 0.3s ease';
