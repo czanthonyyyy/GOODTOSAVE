@@ -1,0 +1,13 @@
+<svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Leaf Icon -->
+  <path d="M8 20C8 13.3726 13.3726 8 20 8C26.6274 8 32 13.3726 32 20C32 26.6274 26.6274 32 20 32C13.3726 32 8 26.6274 8 20Z" fill="#2D5A27"/>
+  <path d="M20 12C20 12 16 16 16 20C16 24 20 28 20 28C20 28 24 24 24 20C24 16 20 12 20 12Z" fill="#4A7C59"/>
+  <path d="M18 18C18 18 16 20 16 20C16 20 18 22 18 22C18 22 20 20 20 20C20 20 18 18 18 18Z" fill="#E9C46A"/>
+  
+  <!-- Text -->
+  <text x="45" y="15" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#2D5A27">Food</text>
+  <text x="45" y="28" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#4A7C59">Saver</text>
+  
+  <!-- Tagline -->
+  <text x="45" y="35" font-family="Inter, sans-serif" font-size="8" font-weight="400" fill="#6C757D">Marketplace</text>
+</svg> 
