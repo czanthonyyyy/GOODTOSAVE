@@ -95,6 +95,13 @@ function initializeWebComponents() {
         console.log('Agregando app-cart');
         const appCart = document.createElement('app-cart');
         document.body.appendChild(appCart);
+        
+        // Asegurar que el carrito esté cerrado por defecto
+        setTimeout(() => {
+            if (appCart.classList.contains('open')) {
+                appCart.classList.remove('open');
+            }
+        }, 100);
     }
 
     // Configurar event listeners para los componentes

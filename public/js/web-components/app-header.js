@@ -374,6 +374,9 @@ class AppHeader extends HTMLElement {
             const cartComponent = document.querySelector('app-cart');
             if (cartComponent) {
                 cartComponent.toggleCart();
+            } else {
+                // Si no existe el componente del carrito, emitir evento
+                document.dispatchEvent(new CustomEvent('cart-toggle'));
             }
         });
 

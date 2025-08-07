@@ -296,7 +296,7 @@ class PaymentManager {
                 <img src="${item.image}" alt="${item.title}" class="modal-order-item-image">
                 <div class="modal-order-item-details">
                     <div class="modal-order-item-title">${item.title}</div>
-                    <div class="modal-order-item-price">$${item.price}</div>
+                    <div class="modal-order-item-price">${item.price.toFixed(2)}</div>
                 </div>
                 <div class="modal-order-item-quantity">x${item.quantity}</div>
             </div>

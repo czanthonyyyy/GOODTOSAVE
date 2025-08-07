@@ -176,7 +176,13 @@ function actualizarTotalCarrito() {
 
 // Función de pago
 function pagarClicked() {
+            // Use the global navigation function
+        if (window.navigateToPayment) {
+            window.navigateToPayment();
+        } else {
+            // Fallback to direct navigation
             window.location.href = 'pages/payment.html';
+        }
 }
 
 // ===== FUNCIONES DE PERSISTENCIA =====

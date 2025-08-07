@@ -156,15 +156,19 @@ class MarketplaceManager {
         
         if (!item) return;
 
+        const productId = item.dataset.productId;
         const title = item.querySelector('.titulo-item').textContent;
         const priceText = item.querySelector('.precio-item').textContent;
         const price = parseFloat(priceText.replace('$', ''));
         const image = item.querySelector('.img-item').src;
         
         // Find product in our products array
-        const product = this.products.find(p => p.title === title);
+        const product = this.products.find(p => p.id === productId);
         
         if (product) {
+            // Update product with real image
+            product.image = image;
+            
             // Get the cart component
             const cartComponent = document.querySelector('app-cart');
             if (cartComponent) {
@@ -172,6 +176,14 @@ class MarketplaceManager {
                 
                 // Show success feedback
                 this.showAddToCartFeedback(button);
+                
+                // Abrir el carrito automáticamente después de 500ms
+                setTimeout(() => {
+                    if (cartComponent && !cartComponent.isOpen) {
+                        cartComponent.openCart();
+                        console.log('Carrito abierto automáticamente después de añadir producto');
+                    }
+                }, 500);
             }
         }
     }

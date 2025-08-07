@@ -613,6 +613,68 @@
     text-align: center;
 }
 
+/* Catalog Hero Styles */
+.catalog-hero {
+    position: relative;
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: var(--white);
+    overflow: hidden;
+}
+
+.catalog-hero .hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(57, 181, 74, 0.9) 0%, rgba(34, 154, 82, 0.9) 100%);
+}
+
+.catalog-hero .hero-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                      radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+    animation: float 6s ease-in-out infinite;
+}
+
+.catalog-hero .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+}
+
+.catalog-hero .hero-title {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--white);
+    line-height: 1.1;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+.catalog-hero .hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 3rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease 0.2s forwards;
+}
+
 .about-content {
     padding: 4rem 0;
     background-color: rgba(255, 255, 255, 0.03);
@@ -1686,6 +1748,14 @@
         flex-direction: column;
         align-items: center;
     }
+    
+    .catalog-hero .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .catalog-hero .hero-subtitle {
+        font-size: 1.25rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1714,6 +1784,14 @@
     .values-grid {
         grid-template-columns: repeat(4, 1fr);
         gap: 0.5rem;
+    }
+    
+    .catalog-hero .hero-title {
+        font-size: 2rem;
+    }
+    
+    .catalog-hero .hero-subtitle {
+        font-size: 1rem;
     }
 } 
 

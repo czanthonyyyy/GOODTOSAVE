@@ -508,7 +508,13 @@ class ShoppingCart {
     sessionStorage.setItem('checkout_total', this.calculateTotal().toFixed(2));
     
     // Redirigir a la página de pago
+            // Use the global navigation function
+        if (window.navigateToPayment) {
+            window.navigateToPayment();
+        } else {
+            // Fallback to direct navigation
             window.location.href = 'pages/payment.html';
+        }
   }
 
   /**
