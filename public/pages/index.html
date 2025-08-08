@@ -70,13 +70,93 @@
     </section>
 
     <!-- Featured / Trending Products -->
-    <section class="featured-products">
+    <section class="trending-section">
         <div class="container">
-            <h2 class="section-title">Trending Now</h2>
-            <p class="section-subtitle">Popular deals from local providers</p>
-            <div class="products-grid" id="trending-grid"></div>
-            <div class="section-actions">
-                <a href="marketplace.html" class="btn btn-primary">See all deals</a>
+            <div class="trending-header">
+                <div class="trending-badge">Hot Deals</div>
+                <h2 class="trending-title">Trending Now</h2>
+                <p class="trending-subtitle">Discover the most popular deals from local providers - updated in real-time</p>
+            </div>
+            
+            <div class="trending-stats">
+                <div class="trending-stat">
+                    <div class="stat-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number">150+</div>
+                        <div class="stat-label">Active Deals</div>
+                    </div>
+                </div>
+                
+                <div class="trending-stat">
+                    <div class="stat-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2V6M12 18V22M4.93 4.93L7.76 7.76M16.24 16.24L19.07 19.07M2 12H6M18 12H22M7.76 16.24L4.93 19.07M19.07 4.93L16.24 7.76" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number">€2.5K</div>
+                        <div class="stat-label">Total Savings</div>
+                    </div>
+                </div>
+                
+                <div class="trending-stat">
+                    <div class="stat-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                            <path d="M23 21V19C23 18.1137 22.7688 17.2358 22.3142 16.4442C21.8596 15.6526 21.1997 14.9782 20.3936 14.4832C19.5876 13.9882 18.6507 13.693 17.684 13.6314C16.7173 13.5698 15.7488 13.7442 14.88 14.14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16 3.13C16.8704 2.35038 17.9176 1.85498 19.0365 1.70851C20.1554 1.56204 21.2991 1.7699 22.3 2.3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number">2.8K</div>
+                        <div class="stat-label">Happy Customers</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="trending-categories">
+                <div class="category-filter active" data-category="all">
+                    <span class="category-icon">🔥</span>
+                    <span class="category-name">All Trending</span>
+                </div>
+                <div class="category-filter" data-category="food">
+                    <span class="category-icon">🍽️</span>
+                    <span class="category-name">Food</span>
+                </div>
+                <div class="category-filter" data-category="bakery">
+                    <span class="category-icon">🥖</span>
+                    <span class="category-name">Bakery</span>
+                </div>
+                <div class="category-filter" data-category="produce">
+                    <span class="category-icon">🥬</span>
+                    <span class="category-name">Produce</span>
+                </div>
+            </div>
+            
+            <div class="trending-grid" id="trending-grid">
+                <!-- Products will be loaded here dynamically -->
+            </div>
+            
+            <div class="trending-actions">
+                <a href="marketplace.html" class="btn btn-primary btn-lg">
+                    <span>Explore All Deals</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                <div class="trending-note">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 16V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Deals update every 30 minutes</span>
+                </div>
             </div>
         </div>
     </section>
@@ -95,38 +175,95 @@
     <!-- How It Works Section -->
     <section class="how-it-works">
         <div class="container">
-            <h2 class="section-title">How It Works</h2>
-            <p class="section-subtitle">A simple 3-step process to make a difference</p>
+            <div class="how-it-works-header">
+                <div class="process-badge">Simple Process</div>
+                <h2 class="process-title">How It Works</h2>
+                <p class="process-subtitle">Three simple steps to save money and reduce waste</p>
+            </div>
             
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-icon">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
-                            <path d="M21 21L16.514 16.506L21 21ZM19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
+            <div class="process-flow">
+                <div class="step-container">
+                    <div class="step-number">01</div>
+                    <div class="step-card">
+                        <div class="step-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 21L16.514 16.506L21 21ZM19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3 class="step-title">Discover</h3>
+                        <p class="step-description">Browse through our curated selection of surplus food from local restaurants, bakeries, and grocery stores</p>
+                        <div class="step-features">
+                            <span class="step-feature">Real-time availability</span>
+                            <span class="step-feature">Location-based search</span>
+                        </div>
                     </div>
-                    <h3 class="step-title">Discover</h3>
-                    <p class="step-description">Explore surplus food from local providers on our platform</p>
                 </div>
                 
-                <div class="step-card">
-                    <div class="step-icon">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
-                            <path d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.7 15.3C4.3 15.7 4.6 16.5 5.1 16.5H17M17 13V17C17 18.1 16.1 19 15 19H9C7.9 19 7 18.1 7 17V13H17Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <div class="step-connector">
+                    <div class="connector-line"></div>
+                    <div class="connector-arrow">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </div>
-                    <h3 class="step-title">Buy</h3>
-                    <p class="step-description">Purchase quality food at reduced prices</p>
                 </div>
                 
-                <div class="step-card">
-                    <div class="step-icon">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
-                            <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <div class="step-container">
+                    <div class="step-number">02</div>
+                    <div class="step-card">
+                        <div class="step-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.7 15.3C4.3 15.7 4.6 16.5 5.1 16.5H17M17 13V17C17 18.1 16.1 19 15 19H9C7.9 19 7 18.1 7 17V13H17Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3 class="step-title">Purchase</h3>
+                        <p class="step-description">Secure your items with instant payment and receive a unique QR code for pickup</p>
+                        <div class="step-features">
+                            <span class="step-feature">Secure payment</span>
+                            <span class="step-feature">Instant confirmation</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-connector">
+                    <div class="connector-line"></div>
+                    <div class="connector-arrow">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </div>
-                    <h3 class="step-title">Pick Up</h3>
-                    <p class="step-description">Collect your order using your unique QR code</p>
+                </div>
+                
+                <div class="step-container">
+                    <div class="step-number">03</div>
+                    <div class="step-card">
+                        <div class="step-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3 class="step-title">Collect</h3>
+                        <p class="step-description">Show your QR code at the pickup location and enjoy your fresh, discounted food</p>
+                        <div class="step-features">
+                            <span class="step-feature">QR code access</span>
+                            <span class="step-feature">Same-day pickup</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="process-stats">
+                <div class="stat-item">
+                    <div class="stat-number">2.5 min</div>
+                    <div class="stat-label">Average Order Time</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">60%</div>
+                    <div class="stat-label">Average Savings</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Available</div>
                 </div>
             </div>
         </div>
@@ -137,68 +274,260 @@
 
     <!-- For Businesses Section -->
     <section class="business-section">
-        <div class="container business-grid">
-            <div class="business-copy">
-                <h2 class="section-title">For Businesses & Providers</h2>
-                <p class="section-description">Reduce waste, create new revenue, and reach customers that value sustainability. Join our network and publish surplus items in minutes.</p>
-                <ul class="business-benefits">
-                    <li>Lower disposal costs and food waste</li>
-                    <li>New customers and local visibility</li>
-                    <li>Simple dashboard and quick publishing</li>
-                </ul>
-                <a href="sponsor-form.html" class="btn btn-primary">Become a partner</a>
+        <div class="container">
+            <div class="business-header">
+                <div class="business-badge">For Businesses & Providers</div>
+                <h2 class="business-title">Transform Your Surplus Into Success</h2>
+                <p class="business-subtitle">Join thousands of businesses already reducing waste, increasing revenue, and building sustainable communities.</p>
             </div>
-            <div class="business-cardlist">
-                <div class="biz-card">📦 Publish surplus items</div>
-                <div class="biz-card">⚡ Same‑day pickups</div>
-                <div class="biz-card">📈 Extra revenue stream</div>
-                <div class="biz-card">🌱 Positive impact story</div>
+            
+            <div class="business-content">
+                <div class="business-features">
+                    <div class="feature-card" onclick="toggleFeatureCard(this)">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3>Smart Inventory Management</h3>
+                        <div class="feature-description">
+                            <p>Automatically identify and list surplus items with our intelligent dashboard</p>
+                        </div>
+                        <div class="expand-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card" onclick="toggleFeatureCard(this)">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2V6M12 18V22M4.93 4.93L7.76 7.76M16.24 16.24L19.07 19.07M2 12H6M18 12H22M7.76 16.24L4.93 19.07M19.07 4.93L16.24 7.76" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3>Instant Revenue Generation</h3>
+                        <div class="feature-description">
+                            <p>Turn waste into profit with same-day sales and immediate cash flow</p>
+                        </div>
+                        <div class="expand-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card" onclick="toggleFeatureCard(this)">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                                <path d="M23 21V19C23 18.1137 22.7688 17.2358 22.3142 16.4442C21.8596 15.6526 21.1997 14.9782 20.3936 14.4832C19.5876 13.9882 18.6507 13.693 17.684 13.6314C16.7173 13.5698 15.7488 13.7442 14.88 14.14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M16 3.13C16.8704 2.35038 17.9176 1.85498 19.0365 1.70851C20.1554 1.56204 21.2991 1.7699 22.3 2.3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3>Community Connection</h3>
+                        <div class="feature-description">
+                            <p>Build relationships with local customers who value sustainability</p>
+                        </div>
+                        <div class="expand-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card" onclick="toggleFeatureCard(this)">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M22 12H18L15 21L9 3L6 12H2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3>Environmental Impact</h3>
+                        <div class="feature-description">
+                            <p>Reduce your carbon footprint while contributing to a circular economy</p>
+                        </div>
+                        <div class="expand-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="business-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">2,500+</div>
+                        <div class="stat-label">Active Partners</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">€45K</div>
+                        <div class="stat-label">Average Monthly Revenue</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">85%</div>
+                        <div class="stat-label">Waste Reduction</div>
+                    </div>
+                </div>
+                
+                <div class="business-cta">
+                    <a href="sponsor-form.html" class="btn btn-primary btn-lg">
+                        <span>Start Your Journey</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                    <p class="cta-note">Join in under 5 minutes • No setup fees</p>
+            </div>
             </div>
         </div>
     </section>
 
+    <!-- Elegant Divider -->
+    <div class="section-divider"></div>
+
     <!-- Testimonials Section -->
     <section class="testimonials">
         <div class="container">
-            <h2 class="section-title">What Our Users Say</h2>
+            <div class="testimonials-header">
+                <div class="testimonials-badge">Success Stories</div>
+                <h2 class="testimonials-title">What Our Users Say</h2>
+                <p class="testimonials-subtitle">Real stories from real people making a difference in their communities</p>
+            </div>
+            
             <div class="testimonials-grid">
                 <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                        </svg>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                        </svg>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                        </svg>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                        </svg>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                        </svg>
+                    </div>
                     <div class="testimonial-content">
-                        <p>"I've saved over €200 per month by buying quality food that would otherwise go to waste. Excellent initiative!"</p>
+                        <p>"I've saved over €200 per month by buying quality food that would otherwise go to waste. The platform is incredibly easy to use and the quality is always excellent!"</p>
                     </div>
                     <div class="testimonial-author">
-                        <div class="author-avatar-placeholder">MG</div>
+                        <div class="author-avatar">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
                         <div class="author-info">
                             <h4 class="author-name">Maria Gonzalez</h4>
                             <p class="author-location">Madrid, Spain</p>
+                            <div class="author-stats">
+                                <span class="stat">€200 saved/month</span>
+                                <span class="stat">15 orders</span>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                        </svg>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                        </svg>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                        </svg>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                        </svg>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                        </svg>
+                    </div>
                     <div class="testimonial-content">
-                        <p>"As a provider, I feel good knowing that my products don't go to waste and reach families who need them."</p>
+                        <p>"As a provider, I feel good knowing that my products don't go to waste and reach families who need them. The platform has helped me reduce costs and build community relationships."</p>
                     </div>
                     <div class="testimonial-author">
-                        <div class="author-avatar-placeholder">CR</div>
+                        <div class="author-avatar">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
                         <div class="author-info">
                             <h4 class="author-name">Carlos Ruiz</h4>
-                            <p class="author-location">Local Provider</p>
+                            <p class="author-location">Local Restaurant Owner</p>
+                            <div class="author-stats">
+                                <span class="stat">85% waste reduction</span>
+                                <span class="stat">€3K extra revenue</span>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                        </svg>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                        </svg>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                        </svg>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                        </svg>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                        </svg>
+                    </div>
                     <div class="testimonial-content">
-                        <p>"The platform is very easy to use and allows me to contribute to the environment while saving money."</p>
+                        <p>"The platform is very easy to use and allows me to contribute to the environment while saving money. I love the variety of options and the quality of the products."</p>
                     </div>
                     <div class="testimonial-author">
-                        <div class="author-avatar-placeholder">AM</div>
+                        <div class="author-avatar">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
                         <div class="author-info">
                             <h4 class="author-name">Ana Martinez</h4>
                             <p class="author-location">Barcelona, Spain</p>
+                            <div class="author-stats">
+                                <span class="stat">€150 saved/month</span>
+                                <span class="stat">12 orders</span>
+                            </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            
+            <div class="testimonials-stats">
+                <div class="stat-item">
+                    <div class="stat-number">4.9/5</div>
+                    <div class="stat-label">Average Rating</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">15K+</div>
+                    <div class="stat-label">Happy Users</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Satisfaction Rate</div>
                 </div>
             </div>
         </div>
@@ -207,30 +536,7 @@
     <!-- Elegant Divider -->
     <div class="section-divider"></div>
 
-    <!-- FAQ Section -->
-    <section class="faq">
-        <div class="container">
-            <h2 class="section-title">Frequently Asked Questions</h2>
-            <div class="faq-list" id="faq-list">
-                <div class="faq-item">
-                    <button class="faq-question" aria-expanded="false">How do pickups work?</button>
-                    <div class="faq-answer">After checkout you receive a QR code. Show it at the provider during the pickup window.</div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question" aria-expanded="false">What payment methods are supported?</button>
-                    <div class="faq-answer">We support major cards and secure payment providers. Your data is encrypted.</div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question" aria-expanded="false">Can I cancel or get a refund?</button>
-                    <div class="faq-answer">You can cancel before the pickup window. If something goes wrong, contact support for a refund.</div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question" aria-expanded="false">Is the food safe?</button>
-                    <div class="faq-answer">All providers are verified. Items are surplus but safe and within consumption windows.</div>
-                </div>
-            </div>
-        </div>
-    </section>
+    
 
     <!-- Call to Action Section -->
     <section class="cta-section">
@@ -291,22 +597,48 @@
             }
         } catch (e) {}
 
-        // Load trending products from products.json
+        // Load trending products directly from JavaScript
         (async function loadTrending(){
             try {
-                const res = await fetch('../assets/data/products.json');
-                const data = await res.json();
-                const items = data.products ? data.products.slice(0, 8) : [];
+                // Productos seleccionados del marketplace
+                const trendingProducts = [
+                    {
+                        id: "totumas",
+                        title: "Totumas",
+                        price: 3.25,
+                        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9udq4cB6xE1EaywR_4ZfOhlp3X616TqhB1g&s"
+                    },
+                    {
+                        id: "tasssty-box",
+                        title: "Tasssty Box",
+                        price: 3.00,
+                        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBOsmD2IOShml15A6nCpr-q1852gnTUyif5D045JPHjmLOByuvcJOY9iM5b7etLlrHvmA&usqp=CAU"
+                    },
+                    {
+                        id: "full-breakfast",
+                        title: "Little Caesars",
+                        price: 4.00,
+                        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoO5wUC893Lw9g0P1M_IT8rdVoLIswcXfJgQ&s"
+                    },
+                    {
+                        id: "taco-box",
+                        title: "Taco Box",
+                        price: 2.45,
+                        image: "https://quefranquicia.com/sitepanel/wp-content/uploads/2021/11/logo-TACO-BELL.png"
+                    }
+                ];
+
                 const grid = document.getElementById('trending-grid');
                 if (!grid) return;
-                grid.innerHTML = items.map(p => `
+                
+                grid.innerHTML = trendingProducts.map(p => `
                     <div class="featured-card">
                         <div class="featured-image-wrap">
-                            <img src="${p.image || p.img || ''}" alt="${p.title || p.name || 'Product'}" loading="lazy"/>
+                            <img src="${p.image}" alt="${p.title}" loading="lazy"/>
                         </div>
                         <div class="featured-body">
-                            <h3 class="featured-title">${p.title || p.name}</h3>
-                            <div class="featured-price">$${(p.discountedPrice || p.price || 0).toFixed ? (p.discountedPrice || p.price).toFixed(2) : (p.discountedPrice || p.price)}</div>
+                            <h3 class="featured-title">${p.title}</h3>
+                            <div class="featured-price">$${p.price.toFixed(2)}</div>
                             <a href="marketplace.html" class="btn btn-outline">View deal</a>
                         </div>
                     </div>
@@ -319,41 +651,11 @@
                     grid.innerHTML = `
                         <div class="featured-card">
                             <div class="featured-image-wrap">
-                                <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&h=300&fit=crop" alt="Fresh Vegetables" loading="lazy"/>
+                                <img src="../assets/images/products/placeholder.jpg" alt="Product" loading="lazy"/>
                             </div>
                             <div class="featured-body">
-                                <h3 class="featured-title">Fresh Organic Vegetables</h3>
-                                <div class="featured-price">$2.99</div>
-                                <a href="marketplace.html" class="btn btn-outline">View deal</a>
-                            </div>
-                        </div>
-                        <div class="featured-card">
-                            <div class="featured-image-wrap">
-                                <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&h=300&fit=crop" alt="Artisan Bread" loading="lazy"/>
-                            </div>
-                            <div class="featured-body">
-                                <h3 class="featured-title">Artisan Whole Grain Bread</h3>
-                                <div class="featured-price">$1.75</div>
-                                <a href="marketplace.html" class="btn btn-outline">View deal</a>
-                            </div>
-                        </div>
-                        <div class="featured-card">
-                            <div class="featured-image-wrap">
-                                <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&h=300&fit=crop" alt="Greek Yogurt" loading="lazy"/>
-                            </div>
-                            <div class="featured-body">
-                                <h3 class="featured-title">Natural Greek Yogurt</h3>
-                                <div class="featured-price">$1.49</div>
-                                <a href="marketplace.html" class="btn btn-outline">View deal</a>
-                            </div>
-                        </div>
-                        <div class="featured-card">
-                            <div class="featured-image-wrap">
-                                <img src="https://images.unsplash.com/photo-1556761223-4c4282c73f77?w=400&h=300&fit=crop" alt="Fresh Pasta" loading="lazy"/>
-                            </div>
-                            <div class="featured-body">
-                                <h3 class="featured-title">Fresh Homemade Pasta</h3>
-                                <div class="featured-price">$4.49</div>
+                                <h3 class="featured-title">Product Loading...</h3>
+                                <div class="featured-price">$0.00</div>
                                 <a href="marketplace.html" class="btn btn-outline">View deal</a>
                             </div>
                         </div>
@@ -361,6 +663,20 @@
                 }
             }
         })();
+
+        // Feature card expansion functionality
+        function toggleFeatureCard(card) {
+            // Close all other cards first
+            const allCards = document.querySelectorAll('.feature-card');
+            allCards.forEach(otherCard => {
+                if (otherCard !== card) {
+                    otherCard.classList.remove('expanded');
+                }
+            });
+            
+            // Toggle current card
+            card.classList.toggle('expanded');
+        }
 
         // FAQ accordion
         (function initFaq(){
