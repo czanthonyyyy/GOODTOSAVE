@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Navigation - Good to Save</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #39b54a;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .btn:hover {
+            background-color: #2e8b3a;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .success { background-color: #d4edda; color: #155724; }
+        .info { background-color: #d1ecf1; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Test de Navegación</h1>
+        
+        <div class="status info">
+            <strong>Página actual:</strong> <span id="current-page"></span><br>
+            <strong>Ruta de auth calculada:</strong> <span id="auth-path"></span>
+        </div>
+
+        <div class="test-section">
+            <h2>🔗 Enlaces de Prueba</h2>
+            <p>Haz clic en estos enlaces para probar la navegación:</p>
+            
+            <a href="auth.html" class="btn" data-auth-link>Test Auth Link</a>
+            <a href="pages/auth.html" class="btn" data-auth-link>Test Pages Auth Link</a>
+            
+            <h3>Enlaces directos:</h3>
+            <a href="auth.html" class="btn">Directo: auth.html</a>
+            <a href="pages/auth.html" class="btn">Directo: pages/auth.html</a>
+        </div>
+
+        <div class="test-section">
+            <h2>📋 Instrucciones de Prueba</h2>
+            <ol>
+                <li>Haz clic en "Test Auth Link" - debería llevarte a la página de auth</li>
+                <li>En la página de auth, haz clic en los botones de login/registro - deberían quedarse en la misma página</li>
+                <li>Verifica que no haya redirecciones al marketplace</li>
+            </ol>
+        </div>
+
+        <div class="test-section">
+            <h2>🔍 Verificar en Consola</h2>
+            <p>Abre la consola del navegador (F12) y verifica:</p>
+            <ul>
+                <li>Mensajes de "updateAuthLinks() ejecutado"</li>
+                <li>Rutas calculadas correctamente</li>
+                <li>Sin errores de JavaScript</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/components.js"></script>
+    <script src="js/web-components.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mostrar información de la página actual
+            document.getElementById('current-page').textContent = window.location.pathname;
+            
+            // Función para obtener la ruta correcta de autenticación
+            function getAuthPath() {
+                const currentPath = window.location.pathname;
+                
+                if (currentPath.includes('/pages/')) {
+                    return 'auth.html';
+                }
+                
+                return 'pages/auth.html';
+            }
+            
+            document.getElementById('auth-path').textContent = getAuthPath();
+            
+            console.log('✅ Test de navegación cargado');
+            console.log('📍 Página actual:', window.location.pathname);
+            console.log('🔗 Ruta de auth calculada:', getAuthPath());
+        });
+        
+        // Verificar que updateAuthLinks se ejecuta
+        const originalUpdateAuthLinks = window.updateAuthLinks;
+        window.updateAuthLinks = function() {
+            console.log('🔄 updateAuthLinks() ejecutado');
+            if (originalUpdateAuthLinks) {
+                originalUpdateAuthLinks();
+            }
+        };
+    </script>
+</body>
+</html>

@@ -39,69 +39,107 @@
 
     <div class="form-container">
         <h2>Sponsor Application</h2>
-        <form action="/submit-sponsor" method="POST" id="sponsorForm">
-            <div class="form-group">
-                <label for="name">Full Name</label>
-                <input type="text" id="name" name="name" required>
-            </div>
+        <p class="form-subtitle">Join our mission and partner with us to reduce food waste and uplift communities.</p>
 
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
-            </div>
+        <form action="/submit-sponsor" method="POST" id="sponsorForm" novalidate>
+            <div class="form-grid">
+                <div class="form-group" style="--i:0">
+                    <label for="name">Full Name</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon"><i class="fa-regular fa-user"></i></span>
+                        <input type="text" id="name" name="name" placeholder="e.g. Jane Doe" required>
+                    </div>
+                </div>
 
-            <div class="form-group">
-                <label for="reason">Why do you want to be a sponsor?</label>
-                <textarea id="reason" name="reason" required></textarea>
-            </div>
+                <div class="form-group" style="--i:1">
+                    <label for="company">Company / Organization (optional)</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon"><i class="fa-regular fa-building"></i></span>
+                        <input type="text" id="company" name="company" placeholder="e.g. Green Foods Co.">
+                    </div>
+                </div>
 
-            <div class="form-group">
-                <label for="help">How do you plan to help as a sponsor?</label>
-                <textarea id="help" name="help" required></textarea>
-            </div>
+                <div class="form-group" style="--i:2">
+                    <label for="email">Email</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon"><i class="fa-regular fa-envelope"></i></span>
+                        <input type="email" id="email" name="email" placeholder="you@company.com" required>
+                    </div>
+                </div>
 
-            <div class="form-group">
-                <label>Have you sponsored any events or projects before?</label>
-                <div class="radio-group">
-                    <input type="radio" id="yes" name="previous_sponsor" value="yes">
-                    <label for="yes">Yes</label>
-                    <input type="radio" id="no" name="previous_sponsor" value="no">
-                    <label for="no">No</label>
+                <div class="form-group" style="--i:3">
+                    <label for="phone">Phone (optional)</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon"><i class="fa-solid fa-phone"></i></span>
+                        <input type="tel" id="phone" name="phone" placeholder="+1 555 123 4567" pattern="[+0-9\s()-]{7,}">
+                    </div>
+                </div>
+
+                <div class="form-group full" style="--i:4">
+                    <label for="reason">Why do you want to be a sponsor?</label>
+                    <textarea id="reason" name="reason" placeholder="Tell us about your motivation and alignment with our mission" required></textarea>
+                    <small class="hint"><span id="reasonCount">0</span>/400</small>
+                </div>
+
+                <div class="form-group full" style="--i:5">
+                    <label for="help">How do you plan to help as a sponsor?</label>
+                    <textarea id="help" name="help" placeholder="Describe the ways you can contribute (e.g., funding, logistics, reach)" required></textarea>
+                    <small class="hint"><span id="helpCount">0</span>/400</small>
+                </div>
+
+                <div class="form-group full" style="--i:6">
+                    <label>Have you sponsored any events or projects before?</label>
+                    <div class="radio-group">
+                        <input type="radio" id="yes" name="previous_sponsor" value="yes">
+                        <label for="yes">Yes</label>
+                        <input type="radio" id="no" name="previous_sponsor" value="no" checked>
+                        <label for="no">No</label>
+                    </div>
+                </div>
+
+                <div class="form-group" id="yearsGroup" style="--i:7; display:none;">
+                    <label for="years">How long have you been a sponsor? (years)</label>
+                    <input type="number" id="years" name="years" min="0" step="1" placeholder="e.g. 2">
+                </div>
+
+                <div class="form-group" id="refsGroup" style="--i:8; display:none;">
+                    <label>Can you provide references from previous sponsorships or partnerships?</label>
+                    <div class="radio-group">
+                        <input type="radio" id="ref-yes" name="references" value="yes">
+                        <label for="ref-yes">Yes</label>
+                        <input type="radio" id="ref-no" name="references" value="no" checked>
+                        <label for="ref-no">No</label>
+                    </div>
+                </div>
+
+                <div class="form-group" style="--i:9">
+                    <label for="budget">Estimated Monthly Budget (USD)</label>
+                    <select id="budget" name="budget" required>
+                        <option value="">Select a range</option>
+                        <option value="0-500">$0 - $500</option>
+                        <option value="501-1000">$501 - $1,000</option>
+                        <option value="1001-5000">$1,001 - $5,000</option>
+                        <option value="5001+">$5,001+</option>
+                    </select>
+                </div>
+
+                <div class="form-group full" style="--i:10">
+                    <label for="comments">Additional Comments</label>
+                    <textarea id="comments" name="comments" placeholder="Anything else we should know?"></textarea>
+                </div>
+
+                <div class="form-group full terms" style="--i:11">
+                    <label class="checkbox">
+                        <input type="checkbox" id="terms" required>
+                        <span>I agree to be contacted and accept the processing of my data for this application.</span>
+                    </label>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label for="years">How long have you been a sponsor? (years)</label>
-                <input type="number" id="years" name="years" min="0" step="1">
-            </div>
-
-            <div class="form-group">
-                <label for="budget">Estimated Monthly Budget (USD)</label>
-                <select id="budget" name="budget" required>
-                    <option value="">Select a range</option>
-                    <option value="0-500">$0 - $500</option>
-                    <option value="501-1000">$501 - $1,000</option>
-                    <option value="1001-5000">$1,001 - $5,000</option>
-                    <option value="5001+">$5,001+</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Can you provide references from previous sponsorships or partnerships?</label>
-                <div class="radio-group">
-                    <input type="radio" id="ref-yes" name="references" value="yes">
-                    <label for="ref-yes">Yes</label>
-                    <input type="radio" id="ref-no" name="references" value="no">
-                    <label for="ref-no">No</label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="comments">Additional Comments</label>
-                <textarea id="comments" name="comments"></textarea>
-            </div>
-
-            <button type="submit" class="submit-btn">Submit Application</button>
+            <button type="submit" class="submit-btn" id="submitBtn">
+                <span class="btn-text">Submit Application</span>
+                <span class="btn-loader" aria-hidden="true"></span>
+            </button>
         </form>
     </div>
 
@@ -131,17 +169,62 @@
 
     <script src="../js/main.js"></script>
     <script>
-        document.getElementById('sponsorForm').addEventListener('submit', function(e) {
+        const form = document.getElementById('sponsorForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = submitBtn?.querySelector('.btn-text');
+        const modal = document.getElementById('successModal');
+
+        // Conditional visibility for previous sponsor details
+        const radiosPrev = document.getElementsByName('previous_sponsor');
+        const yearsGroup = document.getElementById('yearsGroup');
+        const refsGroup = document.getElementById('refsGroup');
+        const togglePrevSections = () => {
+            const value = Array.from(radiosPrev).find(r => r.checked)?.value;
+            const show = value === 'yes';
+            yearsGroup.style.display = show ? 'block' : 'none';
+            refsGroup.style.display = show ? 'block' : 'none';
+        };
+        Array.from(radiosPrev).forEach(r => r.addEventListener('change', togglePrevSections));
+        togglePrevSections();
+
+        // Live counters
+        const withCounter = (id, counterId, max = 400) => {
+            const el = document.getElementById(id);
+            const ct = document.getElementById(counterId);
+            if (!el || !ct) return;
+            const update = () => {
+                const len = el.value.length;
+                ct.textContent = String(len);
+                if (len > max) el.value = el.value.slice(0, max);
+            };
+            el.addEventListener('input', update);
+            update();
+        };
+        withCounter('reason', 'reasonCount');
+        withCounter('help', 'helpCount');
+
+        form.addEventListener('submit', (e) => {
             e.preventDefault();
-            
-            // Aquí iría la lógica de envío del formulario
-            // Por ahora solo mostraremos el modal
-            const modal = document.getElementById('successModal');
-            modal.style.display = 'flex';
-            
-            // Activar la animación del check
-            const checkIcon = document.querySelector('.check-icon');
-            checkIcon.classList.add('animate');
+            if (!form.checkValidity()) {
+                form.reportValidity?.();
+                return;
+            }
+            // Loading state
+            submitBtn.classList.add('loading');
+            btnText && (btnText.textContent = 'Sending...');
+
+            // Simulate async submit
+            setTimeout(() => {
+                submitBtn.classList.remove('loading');
+                btnText && (btnText.textContent = 'Submit Application');
+                modal.style.display = 'flex';
+                const checkIcon = document.querySelector('.check-icon');
+                checkIcon?.classList.add('animate');
+                form.reset();
+                togglePrevSections();
+                withCounter('reason', 'reasonCount');
+                withCounter('help', 'helpCount');
+            }, 900);
         });
     </script>
 </body>

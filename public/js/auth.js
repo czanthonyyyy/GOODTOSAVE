@@ -12,8 +12,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Verificar que Firebase esté disponible
     if (!window.firebaseAuthService) {
-        console.error('Firebase Auth Service no está disponible');
-        showError('Error de configuración: Firebase no está disponible');
+        console.error('Firebase Auth Service is not available');
+        showError('Configuration error: Firebase is not available');
         return;
     }
 
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (confirmPassword && password !== confirmPassword) {
                 parent.classList.add('error');
                 parent.classList.remove('success');
-                errorMessage.textContent = 'Las contraseñas no coinciden';
+                errorMessage.textContent = 'Passwords do not match';
             } else if (confirmPassword) {
                 parent.classList.remove('error');
                 parent.classList.add('success');
@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         try {
             const user = await window.firebaseAuthService.signIn(email, password);
-            console.log('Usuario autenticado:', user);
+            console.log('Authenticated user:', user);
             
             // Guardar información del usuario en localStorage
             localStorage.setItem('user', JSON.stringify({
@@ -167,7 +167,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 displayName: user.displayName
             }));
             
-            showSuccess('Inicio de sesión exitoso');
+            showSuccess('Signed in successfully');
+            
+            // Redirigir al marketplace tras login exitoso
             setTimeout(() => {
                 window.location.href = 'marketplace.html';
             }, 1000);
@@ -189,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         try {
             const user = await window.firebaseAuthService.signUp(formData);
-            console.log('Usuario registrado:', user);
+            console.log('Registered user:', user);
             
             // Guardar información del usuario en localStorage
             localStorage.setItem('user', JSON.stringify({
@@ -198,7 +200,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 displayName: user.displayName
             }));
             
-            showSuccess('Registro exitoso');
+            showSuccess('Registered successfully');
+            
+            // Redirect to marketplace after successful registration
             setTimeout(() => {
                 window.location.href = 'marketplace.html';
             }, 1000);
@@ -224,13 +228,13 @@ document.addEventListener('DOMContentLoaded', function() {
         // Email validation
         else if (input.type === 'email' && input.value && !isValidEmail(input.value)) {
             parent.classList.add('error');
-            errorMessage.textContent = 'Por favor ingresa un email válido';
+            errorMessage.textContent = 'Please enter a valid email';
             isValid = false;
         }
         // Pattern validation
         else if (input.pattern && input.value && !new RegExp(input.pattern).test(input.value)) {
             parent.classList.add('error');
-            errorMessage.textContent = `Por favor ingresa un ${input.getAttribute('aria-label')} válido`;
+            errorMessage.textContent = `Please enter a valid ${input.getAttribute('aria-label')}`;
             isValid = false;
         }
         // Minlength validation
@@ -277,7 +281,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function showSuccess(message) {
-        // Crear o actualizar mensaje de éxito
+        // Create or update success message
         let successDiv = document.getElementById('auth-success-message');
         if (!successDiv) {
             successDiv = document.createElement('div');
@@ -322,7 +326,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // TODO: Implementar autenticación social
             setTimeout(() => {
                 this.innerHTML = originalHTML;
-                showError(`Autenticación con ${provider} no implementada aún`);
+                showError(`Sign in with ${provider} not implemented yet`);
             }, 1500);
         });
     });
@@ -335,13 +339,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const email = document.getElementById('signin-email').value;
             
             if (!email) {
-                showError('Por favor ingresa tu email para recuperar la contraseña');
+                showError('Please enter your email to reset your password');
                 return;
             }
             
             try {
                 await window.firebaseAuthService.sendPasswordResetEmail(email);
-                showSuccess('Email de recuperación enviado. Revisa tu bandeja de entrada.');
+                showSuccess('Password reset email sent. Check your inbox.');
             } catch (error) {
                 showError(error);
             }
@@ -351,9 +355,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Verificar estado de autenticación al cargar la página
     window.firebaseAuthService.onAuthStateChanged((user) => {
         if (user) {
-            console.log('Usuario ya autenticado:', user);
-            // Si el usuario ya está autenticado, redirigir al marketplace
-            window.location.href = 'marketplace.html';
+            console.log('User already authenticated:', user);
+            // Redirection removed to allow staying on auth page
         }
     });
 }); 

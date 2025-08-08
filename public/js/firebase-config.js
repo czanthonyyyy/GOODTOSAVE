@@ -2,12 +2,14 @@
 // IMPORTANTE: Reemplaza estas credenciales con las tuyas de Firebase Console
 
 const firebaseConfig = {
-  apiKey: "TU_API_KEY_AQUI",
-  authDomain: "TU_PROJECT_ID.firebaseapp.com",
-  projectId: "TU_PROJECT_ID",
-  storageBucket: "TU_PROJECT_ID.appspot.com",
-  messagingSenderId: "TU_MESSAGING_SENDER_ID",
-  appId: "TU_APP_ID"
+  apiKey: "AIzaSyBg6f6zGTz4O13uMgzkBdslpq5AYK5Jy3Y",
+  authDomain: "proto-gts.firebaseapp.com",
+  databaseURL: "https://proto-gts-default-rtdb.firebaseio.com",
+  projectId: "proto-gts",
+  storageBucket: "proto-gts.firebasestorage.app",
+  messagingSenderId: "565196627065",
+  appId: "1:565196627065:web:0c4c946154874479fd48a8",
+  measurementId: "G-048PKJH5Y4"
 };
 
 // Initialize Firebase

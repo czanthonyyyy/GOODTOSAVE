@@ -1,6 +1,6 @@
 /**
  * Shopping Cart System
- * Maneja toda la funcionalidad del carrito de compras
+ * Handles all shopping cart functionality
  */
 class ShoppingCart {
   constructor() {
@@ -11,23 +11,23 @@ class ShoppingCart {
   }
 
   /**
-   * Inicializa el carrito
+   * Initializes the cart
    */
   init() {
-    // Solo inicializar en páginas que necesitan carrito
+    // Only initialize on pages that need the cart
     if (this.shouldInitializeCart()) {
       this.createCartElement();
       this.updateCartDisplay();
       this.bindEvents();
     } else {
-      // Solo actualizar el contador del header
+      // Only update header count
       this.updateCartCount();
     }
   }
 
   /**
-   * Determina si el carrito debe inicializarse en esta página
-   * @returns {boolean} - True si debe inicializarse
+   * Determines if the cart should be initialized on this page
+   * @returns {boolean} - True if it should initialize
    */
   shouldInitializeCart() {
     const currentPage = window.location.pathname;
@@ -37,7 +37,7 @@ class ShoppingCart {
       '/qr.html'
     ];
     
-    // También inicializar si estamos en el directorio raíz y no es index.html
+    // Also initialize if in root and not index.html
     if (currentPage === '/' || currentPage === '/index.html') {
       return false;
     }
@@ -46,7 +46,7 @@ class ShoppingCart {
   }
 
   /**
-   * Crea el elemento del carrito si no existe
+   * Creates the cart element if it doesn't exist
    */
   createCartElement() {
     if (!this.element) {
@@ -56,11 +56,11 @@ class ShoppingCart {
         document.body.appendChild(this.element);
       }
       
-      // Asegurar que el carrito esté cerrado por defecto
+      // Ensure the cart is closed by default
       this.isOpen = false;
       this.element.classList.remove('cart-open');
       
-      // Asegurar que el overlay esté cerrado por defecto
+      // Ensure the overlay is closed by default
       const overlay = document.getElementById('cart-overlay');
       if (overlay) {
         overlay.classList.remove('active');
@@ -69,14 +69,14 @@ class ShoppingCart {
   }
 
   /**
-   * Crea el HTML del carrito
-   * @returns {HTMLElement} - Elemento del carrito
+   * Creates cart HTML
+   * @returns {HTMLElement} - Cart element
    */
   createCartHTML() {
     const cartHTML = `
       <div class="cart-drawer" id="cart-drawer">
         <div class="cart-drawer__header">
-          <h3 class="cart-drawer__title">Carrito de Compras</h3>
+          <h3 class="cart-drawer__title">Shopping Cart</h3>
           <button class="cart-close-btn" id="cart-close-btn">×</button>
         </div>
         
@@ -90,8 +90,8 @@ class ShoppingCart {
             <span id="cart-total">€0.00</span>
           </div>
           <div class="cart-actions">
-            <button class="btn btn-outline" id="continue-shopping">Seguir Comprando</button>
-            <button class="btn btn-primary" id="checkout-btn">Proceder al Pago</button>
+            <button class="btn btn-outline" id="continue-shopping">Continue Shopping</button>
+            <button class="btn btn-primary" id="checkout-btn">Proceed to Payment</button>
           </div>
         </div>
       </div>
@@ -105,9 +105,9 @@ class ShoppingCart {
   }
 
   /**
-   * Agrega un producto al carrito
-   * @param {Object} product - Producto a agregar
-   * @param {number} quantity - Cantidad a agregar
+   * Adds a product to the cart
+   * @param {Object} product - Product to add
+   * @param {number} quantity - Quantity to add
    */
   addItem(product, quantity = 1) {
     const existingItem = this.items.find(item => item.id === product.id);
@@ -132,8 +132,8 @@ class ShoppingCart {
   }
 
   /**
-   * Remueve un producto del carrito
-   * @param {string|number} productId - ID del producto a remover
+   * Removes a product from the cart
+   * @param {string|number} productId - Product ID to remove
    */
   removeItem(productId) {
     this.items = this.items.filter(item => item.id !== productId);
@@ -142,9 +142,9 @@ class ShoppingCart {
   }
 
   /**
-   * Actualiza la cantidad de un producto
-   * @param {string|number} productId - ID del producto
-   * @param {number} newQuantity - Nueva cantidad
+   * Updates a product quantity
+   * @param {string|number} productId - Product ID
+   * @param {number} newQuantity - New quantity
    */
   updateQuantity(productId, newQuantity) {
     const item = this.items.find(item => item.id == productId);
@@ -160,8 +160,8 @@ class ShoppingCart {
   }
 
   /**
-   * Calcula el total del carrito
-   * @returns {number} - Total del carrito
+   * Calculates cart total
+   * @returns {number} - Cart total
    */
   calculateTotal() {
     return this.items.reduce((total, item) => {
@@ -170,15 +170,15 @@ class ShoppingCart {
   }
 
   /**
-   * Calcula el total de items en el carrito
-   * @returns {number} - Total de items
+   * Calculates total items in cart
+   * @returns {number} - Total items
    */
   getTotalItems() {
     return this.items.reduce((total, item) => total + item.quantity, 0);
   }
 
   /**
-   * Limpia el carrito
+   * Clears the cart
    */
   clear() {
     this.items = [];
@@ -187,7 +187,7 @@ class ShoppingCart {
   }
 
   /**
-   * Guarda el carrito en localStorage
+   * Saves cart to localStorage
    */
   saveToStorage() {
     try {
@@ -198,8 +198,8 @@ class ShoppingCart {
   }
 
   /**
-   * Carga el carrito desde localStorage
-   * @returns {Array} - Items del carrito
+   * Loads cart from localStorage
+   * @returns {Array} - Cart items
    */
   loadFromStorage() {
     try {
@@ -212,7 +212,7 @@ class ShoppingCart {
   }
 
   /**
-   * Actualiza la visualización del carrito
+   * Updates cart UI
    */
   updateCartDisplay() {
     this.updateCartCount();
@@ -223,7 +223,7 @@ class ShoppingCart {
   }
 
   /**
-   * Actualiza el contador de items en el header
+   * Updates the item count in header
    */
   updateCartCount() {
     const totalItems = this.getTotalItems();
@@ -242,7 +242,7 @@ class ShoppingCart {
   }
 
   /**
-   * Renderiza los items del carrito
+   * Renders cart items
    */
   renderCartItems() {
     const cartContent = document.getElementById('cart-content');
@@ -252,8 +252,8 @@ class ShoppingCart {
       cartContent.innerHTML = `
         <div class="cart-empty">
           <div class="cart-empty-icon">🛒</div>
-          <h3>Tu carrito está vacío</h3>
-          <p>Agrega algunos productos para comenzar</p>
+          <h3>Your cart is empty</h3>
+          <p>Add some products to get started</p>
         </div>
       `;
       return;
@@ -282,7 +282,7 @@ class ShoppingCart {
   }
 
   /**
-   * Actualiza el total del carrito
+   * Updates cart total
    */
   updateCartTotal() {
     const totalElement = document.getElementById('cart-total');
@@ -293,8 +293,8 @@ class ShoppingCart {
   }
 
   /**
-   * Muestra feedback cuando se agrega un producto
-   * @param {Object} product - Producto agregado
+   * Shows feedback when a product is added
+   * @param {Object} product - Added product
    */
   showAddedToCartFeedback(product) {
     // Crear notificación temporal
@@ -302,7 +302,7 @@ class ShoppingCart {
     notification.className = 'cart-notification';
     notification.innerHTML = `
       <div class="notification-content">
-        <span>✓ ${product.title} agregado al carrito</span>
+        <span>✓ ${product.title} added to cart</span>
       </div>
     `;
     
@@ -323,12 +323,12 @@ class ShoppingCart {
   }
 
   /**
-   * Abre/cierra el carrito
+   * Toggles the cart
    */
   toggleCart() {
     if (!this.shouldInitializeCart()) {
-      // Si no estamos en una página con carrito, redirigir al marketplace
-      window.location.href = 'pages/marketplace.html';
+      // If we're not on a cart page, don't redirect; just warn
+      console.warn('The cart is not available on this page');
       return;
     }
     
@@ -343,7 +343,7 @@ class ShoppingCart {
   }
 
   /**
-   * Cierra el carrito
+   * Closes the cart
    */
   closeCart() {
     this.isOpen = false;
@@ -357,12 +357,12 @@ class ShoppingCart {
   }
 
   /**
-   * Abre el carrito
+   * Opens the cart
    */
   openCart() {
     if (!this.shouldInitializeCart()) {
-      // Si no estamos en una página con carrito, redirigir al marketplace
-      window.location.href = 'pages/marketplace.html';
+      // If we're not on a cart page, don't redirect; just warn
+      console.warn('The cart is not available on this page');
       return;
     }
     
@@ -377,15 +377,15 @@ class ShoppingCart {
   }
 
   /**
-   * Vincula eventos del carrito
+   * Binds cart events
    */
   bindEvents() {
-    // Solo vincular eventos si el carrito está inicializado
+    // Only bind if cart is initialized
     if (!this.shouldInitializeCart()) {
       return;
     }
     
-    // Cerrar carrito
+    // Close cart
     const closeBtn = document.getElementById('cart-close-btn');
     const overlay = document.getElementById('cart-overlay');
     const continueBtn = document.getElementById('continue-shopping');
@@ -408,17 +408,17 @@ class ShoppingCart {
       checkoutBtn.addEventListener('click', () => this.proceedToCheckout());
     }
 
-    // Event listener para el toggle del carrito desde el web component
+    // Event listener for toggle from web component
     document.addEventListener('cart-toggle', () => {
       this.toggleCart();
     });
 
-    // Event listener para mostrar el carrito desde el web component
+    // Event listener to show the cart from web component
     document.addEventListener('show-cart', () => {
       this.openCart();
     });
 
-    // Eventos delegados para items del carrito
+    // Delegated events for cart items
     document.addEventListener('click', (e) => {
       if (e.target.classList.contains('quantity-btn--minus')) {
         const productId = e.target.dataset.productId;
@@ -441,7 +441,7 @@ class ShoppingCart {
         this.removeItem(productId);
       }
 
-      // Eventos para botones "Agregar al Carrito" en las cards de productos
+      // Events for "Add to Cart" buttons in product cards
       if (e.target.classList.contains('add-to-cart-btn')) {
         e.preventDefault();
         const productId = e.target.dataset.productId;
@@ -451,15 +451,15 @@ class ShoppingCart {
           const quantityInput = productCard.querySelector('.quantity-input');
           const quantity = parseInt(quantityInput?.value || 1);
           
-          // Obtener datos del producto desde la card
+          // Get product data from the card
           const product = this.getProductDataFromCard(productCard);
           
           if (product) {
             this.addItem(product, quantity);
             
-            // Feedback visual
+            // Visual feedback
             const originalText = e.target.textContent;
-            e.target.textContent = 'Agregado ✓';
+             e.target.textContent = 'Added ✓';
             e.target.disabled = true;
             
             setTimeout(() => {
@@ -470,7 +470,7 @@ class ShoppingCart {
         }
       }
 
-      // Eventos para controles de cantidad en las cards de productos
+      // Events for quantity controls in product cards
       if (e.target.classList.contains('quantity-btn')) {
         const productCard = e.target.closest('.product-card');
         if (productCard) {
@@ -495,11 +495,11 @@ class ShoppingCart {
   }
 
   /**
-   * Procede al checkout
+    * Proceeds to checkout
    */
   proceedToCheckout() {
     if (this.items.length === 0) {
-      alert('Tu carrito está vacío');
+      alert('Your cart is empty');
       return;
     }
     

@@ -698,9 +698,7 @@ class FoodMarketplaceApp {
       }));
       
       this.showAuthSuccess('Inicio de sesión exitoso');
-      setTimeout(() => {
-        window.location.href = 'marketplace.html';
-      }, 1000);
+      // Redirección eliminada para evitar navegación automática desde main.js
     } catch (error) {
       throw new Error(error);
     }
@@ -733,9 +731,7 @@ class FoodMarketplaceApp {
       }));
       
       this.showAuthSuccess('Registro exitoso');
-      setTimeout(() => {
-        window.location.href = 'marketplace.html';
-      }, 1000);
+      // Redirección eliminada para evitar navegación automática desde main.js
     } catch (error) {
       throw new Error(error);
     }

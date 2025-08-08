@@ -2,7 +2,18 @@ class AppCart extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        // Cargar desde cualquiera de las dos claves para compatibilidad
+        const itemsA = JSON.parse(localStorage.getItem('cartItems') || '[]');
+        const itemsB = JSON.parse(localStorage.getItem('foodmarketplace_cart') || '[]');
+        // Normalizar estructura: itemsB puede tener campos distintos
+        const normalizedB = itemsB.map(it => ({
+            id: it.id,
+            title: it.title,
+            price: it.price ?? it.discountedPrice ?? 0,
+            image: it.image || '',
+            quantity: it.quantity ?? 1
+        }));
+        this.cartItems = (itemsA && itemsA.length ? itemsA : normalizedB) || [];
         this.isOpen = false;
     }
 
@@ -588,32 +599,32 @@ class AppCart extends HTMLElement {
     }
 
     attachEventListeners() {
-        // Event delegation principal para todos los eventos del carrito
+        // Main event delegation for all cart events
         this.shadowRoot.addEventListener('click', (e) => {
             const target = e.target;
             
-            // Botón de cerrar carrito - múltiples selectores para mayor compatibilidad
+            // Close button - multiple selectors for compatibility
             if (target.id === 'closeCart' || 
                 target.classList.contains('close-btn') || 
                 target.closest('#closeCart') || 
                 target.closest('.close-btn')) {
                 e.preventDefault();
                 e.stopPropagation();
-                console.log('Botón cerrar carrito clickeado');
+                console.log('Close cart button clicked');
                 this.closeCart();
                 return;
             }
             
-            // Overlay para cerrar
+            // Overlay click to close
             if (target.classList.contains('cart-overlay')) {
                 e.preventDefault();
                 e.stopPropagation();
-                console.log('Overlay carrito clickeado');
+                console.log('Cart overlay clicked');
                 this.closeCart();
                 return;
             }
             
-            // Botones de cantidad
+            // Quantity buttons
             if (target.classList.contains('quantity-btn')) {
                 const itemId = target.dataset.itemId;
                 if (itemId) {
@@ -622,7 +633,7 @@ class AppCart extends HTMLElement {
                 }
             }
             
-            // Botón de eliminar
+            // Remove button
             if (target.classList.contains('remove-btn')) {
                 const itemId = target.dataset.itemId;
                 if (itemId) {
@@ -630,23 +641,23 @@ class AppCart extends HTMLElement {
                 }
             }
             
-            // Botón de checkout
+            // Checkout button
             if (target.classList.contains('checkout-btn')) {
                 this.checkout();
             }
         });
 
-        // Event listener para el toggle del carrito desde el header
+        // Event listener for cart toggle from header
         document.addEventListener('cart-toggle', () => {
             this.toggleCart();
         });
 
-        // Event listener para mostrar el carrito
+        // Event listener to show cart
         document.addEventListener('show-cart', () => {
             this.openCart();
         });
 
-        // Event listener para cerrar con Escape
+        // Event listener to close with Escape
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && this.isOpen) {
                 this.closeCart();
@@ -655,7 +666,7 @@ class AppCart extends HTMLElement {
     }
 
     openCart() {
-        console.log('Abriendo carrito...');
+        console.log('Opening cart...');
         this.isOpen = true;
         this.classList.add('open');
         
@@ -665,29 +676,29 @@ class AppCart extends HTMLElement {
             overlay.classList.add('active');
         }
         
-        // No bloquear el scroll del body para permitir interacción con el catálogo
+        // Do not block body scroll to allow catalog interaction
         // document.body.style.overflow = 'hidden';
         
-        console.log('Carrito abierto');
+        console.log('Cart opened');
     }
 
     closeCart() {
-        console.log('Cerrando carrito...');
+        console.log('Closing cart...');
         
         // Forzar el estado cerrado
         this.isOpen = false;
         this.classList.remove('open');
         
-        // Asegurar que el overlay también se cierre
+        // Ensure overlay closes too
         const overlay = this.shadowRoot.querySelector('.cart-overlay');
         if (overlay) {
             overlay.classList.remove('active');
         }
         
-        // Emitir evento de cierre
+        // Emit close event
         document.dispatchEvent(new CustomEvent('cart-closed'));
         
-        console.log('Carrito cerrado exitosamente');
+        console.log('Cart closed successfully');
     }
 
     addItem(product) {
@@ -714,7 +725,7 @@ class AppCart extends HTMLElement {
             detail: { cartItems: this.cartItems }
         }));
         
-        // Emitir evento específico de producto añadido
+        // Emit specific product-added event
         document.dispatchEvent(new CustomEvent('product-added', {
             detail: { product, cartItems: this.cartItems }
         }));
@@ -752,23 +763,28 @@ class AppCart extends HTMLElement {
     }
 
     saveCart() {
+        // Guardar en ambas claves para compatibilidad
         localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
+        try {
+            const legacy = this.cartItems.map(it => ({
+                id: it.id,
+                title: it.title,
+                price: it.price,
+                image: it.image,
+                quantity: it.quantity,
+                discountedPrice: it.price,
+                supplier: it.supplier || 'Proveedor',
+                originalPrice: it.price
+            }));
+            localStorage.setItem('foodmarketplace_cart', JSON.stringify(legacy));
+        } catch (e) { /* ignore */ }
     }
 
     updateCartCount() {
         const totalItems = this.cartItems.reduce((sum, item) => sum + item.quantity, 0);
-        
-        // Buscar el botón del carrito en el shadow DOM del header
-        const headerComponent = document.querySelector('app-header');
-        if (headerComponent && headerComponent.shadowRoot) {
-            const cartToggle = headerComponent.shadowRoot.querySelector('.cart-toggle');
-            if (cartToggle) {
-                const countElement = cartToggle.querySelector('.cart-count');
-                if (countElement) {
-                    countElement.textContent = totalItems;
-                    countElement.style.display = totalItems > 0 ? 'block' : 'none';
-                }
-            }
+        // Use global header updater for both header variants
+        if (typeof window.updateCartCount === 'function') {
+            window.updateCartCount(totalItems);
         }
     }
 
@@ -791,18 +807,18 @@ class AppCart extends HTMLElement {
     }
 
     setupPersistentEventListeners() {
-        // Observer para detectar cambios en el shadow DOM
+        // Observer to detect changes in shadow DOM
         const observer = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
                 if (mutation.type === 'childList') {
-                    // Re-conectar event listeners si es necesario
+                    // Reconnect event listeners if necessary
                     const closeBtn = this.shadowRoot.getElementById('closeCart');
                     if (closeBtn && !closeBtn.hasAttribute('data-listener-attached')) {
                         closeBtn.setAttribute('data-listener-attached', 'true');
                         closeBtn.addEventListener('click', (e) => {
                             e.preventDefault();
                             e.stopPropagation();
-                            console.log('Botón cerrar carrito clickeado (persistente)');
+                        console.log('Close cart button clicked (persistent)');
                             this.closeCart();
                         });
                     }
@@ -815,7 +831,7 @@ class AppCart extends HTMLElement {
             subtree: true
         });
 
-        // Método para forzar la re-inicialización del botón
+        // Method to force reinitialization of close button
         this.forceReinitializeCloseButton = () => {
             const closeBtn = this.shadowRoot.getElementById('closeCart');
             if (closeBtn) {
@@ -828,7 +844,7 @@ class AppCart extends HTMLElement {
                     newCloseBtn.addEventListener('click', (e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        console.log('Botón cerrar carrito re-inicializado');
+                        console.log('Close button re-initialized');
                         this.closeCart();
                     });
                 }
@@ -845,15 +861,15 @@ class AppCart extends HTMLElement {
         }
     }
 
-    // Método público para cerrar el carrito desde fuera
+    // Public method to close cart from outside
     forceClose() {
-        console.log('Forzando cierre del carrito...');
+        console.log('Forcing cart close...');
         this.closeCart();
     }
 
-    // Método público para re-inicializar el botón de cerrar
+    // Public method to reinitialize close button
     reinitializeCloseButton() {
-        console.log('Re-inicializando botón de cerrar...');
+        console.log('Reinitializing close button...');
         if (this.forceReinitializeCloseButton) {
             this.forceReinitializeCloseButton();
         }

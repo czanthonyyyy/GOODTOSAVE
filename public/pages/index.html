@@ -38,28 +38,59 @@
                 </p>
                 <div class="hero-actions">
                     <a href="marketplace.html" class="btn btn-primary btn-lg">Start Shopping</a>
-                    <a href="sponsor-form.html" class="btn btn-outline btn-lg">Join Now</a>
+                    <a href="auth.html" class="btn btn-outline btn-lg" data-auth-link>Join Now</a>
                 </div>
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <span class="stat-number" data-target="12500">0</span>
-                        <span class="stat-label">kg of food saved</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" data-target="8500">0</span>
-                        <span class="stat-label">kg CO2 reduced</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" data-target="3200">0</span>
-                        <span class="stat-label">families fed</span>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </section>
 
     <!-- Elegant Divider -->
     <div class="section-divider"></div>
+
+    <!-- Benefits Bar -->
+    <section class="benefits-bar">
+        <div class="container benefits-container">
+            <div class="benefit-item">
+                <div class="benefit-icon">💸</div>
+                <div class="benefit-title">Save up to 60%</div>
+                <div class="benefit-text">Quality food at reduced prices</div>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-icon">⏱️</div>
+                <div class="benefit-title">Same‑day pickup</div>
+                <div class="benefit-text">Fast, simple and convenient</div>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-icon">🔒</div>
+                <div class="benefit-title">Secure checkout</div>
+                <div class="benefit-text">Encrypted payments & privacy</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured / Trending Products -->
+    <section class="featured-products">
+        <div class="container">
+            <h2 class="section-title">Trending Now</h2>
+            <p class="section-subtitle">Popular deals from local providers</p>
+            <div class="products-grid" id="trending-grid"></div>
+            <div class="section-actions">
+                <a href="marketplace.html" class="btn btn-primary">See all deals</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners strip -->
+    <section class="partners-strip">
+        <div class="container partners-container">
+            <div class="partner-logo">Partner One</div>
+            <div class="partner-logo">Green Fresh</div>
+            <div class="partner-logo">Urban Bakery</div>
+            <div class="partner-logo">Daily Market</div>
+            <div class="partner-logo">Eco Foods</div>
+        </div>
+    </section>
 
     <!-- How It Works Section -->
     <section class="how-it-works">
@@ -104,37 +135,27 @@
     <!-- Elegant Divider -->
     <div class="section-divider"></div>
 
-    <!-- Impact Statistics Section -->
-    <section class="impact-stats">
-        <div class="container">
-            <h2 class="section-title">Our Impact</h2>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon">🌱</div>
-                    <div class="stat-number" data-target="15680">0</div>
-                    <div class="stat-label">kg of food saved</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">🌍</div>
-                    <div class="stat-number" data-target="12450">0</div>
-                    <div class="stat-label">kg CO2 reduced</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">👥</div>
-                    <div class="stat-number" data-target="4200">0</div>
-                    <div class="stat-label">families benefited</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">💰</div>
-                    <div class="stat-number" data-target="89000">0</div>
-                    <div class="stat-label">€ saved by consumers</div>
-                </div>
+    <!-- For Businesses Section -->
+    <section class="business-section">
+        <div class="container business-grid">
+            <div class="business-copy">
+                <h2 class="section-title">For Businesses & Providers</h2>
+                <p class="section-description">Reduce waste, create new revenue, and reach customers that value sustainability. Join our network and publish surplus items in minutes.</p>
+                <ul class="business-benefits">
+                    <li>Lower disposal costs and food waste</li>
+                    <li>New customers and local visibility</li>
+                    <li>Simple dashboard and quick publishing</li>
+                </ul>
+                <a href="sponsor-form.html" class="btn btn-primary">Become a partner</a>
+            </div>
+            <div class="business-cardlist">
+                <div class="biz-card">📦 Publish surplus items</div>
+                <div class="biz-card">⚡ Same‑day pickups</div>
+                <div class="biz-card">📈 Extra revenue stream</div>
+                <div class="biz-card">🌱 Positive impact story</div>
             </div>
         </div>
     </section>
-
-    <!-- Elegant Divider -->
-    <div class="section-divider"></div>
 
     <!-- Testimonials Section -->
     <section class="testimonials">
@@ -186,6 +207,31 @@
     <!-- Elegant Divider -->
     <div class="section-divider"></div>
 
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-list" id="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">How do pickups work?</button>
+                    <div class="faq-answer">After checkout you receive a QR code. Show it at the provider during the pickup window.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">What payment methods are supported?</button>
+                    <div class="faq-answer">We support major cards and secure payment providers. Your data is encrypted.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">Can I cancel or get a refund?</button>
+                    <div class="faq-answer">You can cancel before the pickup window. If something goes wrong, contact support for a refund.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">Is the food safe?</button>
+                    <div class="faq-answer">All providers are verified. Items are surplus but safe and within consumption windows.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Call to Action Section -->
     <section class="cta-section">
         <div class="container">
@@ -193,8 +239,8 @@
                 <h2 class="cta-title">Ready to Make a Difference?</h2>
                 <p class="cta-description">Join our community and start reducing food waste today</p>
                 <div class="cta-actions">
-                    <a href="auth.html" class="btn btn-primary btn-lg">Registrarse Gratis</a>
-                    <a href="about.html" class="btn btn-outline btn-lg">Conoce Más</a>
+                    <a href="auth.html" class="btn btn-primary btn-lg" data-auth-link>Sign Up Free</a>
+                    <a href="about.html" class="btn btn-outline btn-lg">Learn More</a>
                 </div>
                 
 
@@ -219,18 +265,116 @@
         
         document.addEventListener('web-components-ready', () => {
             console.log('Web components listos en index.html');
-            // Verificar que los componentes están en el DOM
+            // Verify components in DOM
             const header = document.querySelector('app-header');
             const footer = document.querySelector('app-footer');
             console.log('Header encontrado:', header);
             console.log('Footer encontrado:', footer);
         });
         
-        // Verificar después de un tiempo si los componentes se definieron
+        // Verify after a delay if components are defined
         setTimeout(() => {
             console.log('AppHeader definido:', customElements.get('app-header'));
             console.log('AppFooter definido:', customElements.get('app-footer'));
         }, 3000);
+
+        // Personalized greeting if session exists
+        try {
+            const rawUser = localStorage.getItem('user');
+            if (rawUser) {
+                const u = JSON.parse(rawUser);
+                const sub = document.querySelector('.hero-subtitle');
+                if (sub && u) {
+                    const name = (u.displayName || u.email || 'there').split('@')[0];
+                    sub.textContent = `Welcome back, ${name}. Pick your next deal today.`;
+                }
+            }
+        } catch (e) {}
+
+        // Load trending products from products.json
+        (async function loadTrending(){
+            try {
+                const res = await fetch('../assets/data/products.json');
+                const data = await res.json();
+                const items = data.products ? data.products.slice(0, 8) : [];
+                const grid = document.getElementById('trending-grid');
+                if (!grid) return;
+                grid.innerHTML = items.map(p => `
+                    <div class="featured-card">
+                        <div class="featured-image-wrap">
+                            <img src="${p.image || p.img || ''}" alt="${p.title || p.name || 'Product'}" loading="lazy"/>
+                        </div>
+                        <div class="featured-body">
+                            <h3 class="featured-title">${p.title || p.name}</h3>
+                            <div class="featured-price">$${(p.discountedPrice || p.price || 0).toFixed ? (p.discountedPrice || p.price).toFixed(2) : (p.discountedPrice || p.price)}</div>
+                            <a href="marketplace.html" class="btn btn-outline">View deal</a>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (e) { 
+                console.warn('Failed to load trending products', e); 
+                // Fallback: show placeholder cards
+                const grid = document.getElementById('trending-grid');
+                if (grid) {
+                    grid.innerHTML = `
+                        <div class="featured-card">
+                            <div class="featured-image-wrap">
+                                <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&h=300&fit=crop" alt="Fresh Vegetables" loading="lazy"/>
+                            </div>
+                            <div class="featured-body">
+                                <h3 class="featured-title">Fresh Organic Vegetables</h3>
+                                <div class="featured-price">$2.99</div>
+                                <a href="marketplace.html" class="btn btn-outline">View deal</a>
+                            </div>
+                        </div>
+                        <div class="featured-card">
+                            <div class="featured-image-wrap">
+                                <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&h=300&fit=crop" alt="Artisan Bread" loading="lazy"/>
+                            </div>
+                            <div class="featured-body">
+                                <h3 class="featured-title">Artisan Whole Grain Bread</h3>
+                                <div class="featured-price">$1.75</div>
+                                <a href="marketplace.html" class="btn btn-outline">View deal</a>
+                            </div>
+                        </div>
+                        <div class="featured-card">
+                            <div class="featured-image-wrap">
+                                <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&h=300&fit=crop" alt="Greek Yogurt" loading="lazy"/>
+                            </div>
+                            <div class="featured-body">
+                                <h3 class="featured-title">Natural Greek Yogurt</h3>
+                                <div class="featured-price">$1.49</div>
+                                <a href="marketplace.html" class="btn btn-outline">View deal</a>
+                            </div>
+                        </div>
+                        <div class="featured-card">
+                            <div class="featured-image-wrap">
+                                <img src="https://images.unsplash.com/photo-1556761223-4c4282c73f77?w=400&h=300&fit=crop" alt="Fresh Pasta" loading="lazy"/>
+                            </div>
+                            <div class="featured-body">
+                                <h3 class="featured-title">Fresh Homemade Pasta</h3>
+                                <div class="featured-price">$4.49</div>
+                                <a href="marketplace.html" class="btn btn-outline">View deal</a>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+        })();
+
+        // FAQ accordion
+        (function initFaq(){
+            const list = document.getElementById('faq-list');
+            if (!list) return;
+            list.addEventListener('click', (e) => {
+                const btn = e.target.closest('.faq-question');
+                if (!btn) return;
+                const open = btn.getAttribute('aria-expanded') === 'true';
+                btn.setAttribute('aria-expanded', String(!open));
+                const ans = btn.nextElementSibling;
+                if (ans) ans.classList.toggle('open', !open);
+            });
+        })();
     </script>
 </body>
 </html> 

@@ -37,7 +37,7 @@ class ComponentLoader {
     const hasWebComponents = document.querySelector('app-header') || document.querySelector('app-footer');
     
     if (hasWebComponents) {
-      console.log('Usando web components, saltando carga de componentes HTML');
+      console.log('Using web components, skipping HTML component loading');
       // Inicializar funcionalidad específica de componentes
       this.initializeNavigation();
       this.initializeCart();
@@ -60,7 +60,7 @@ class ComponentLoader {
   }
 
   /**
-   * Inicializa la funcionalidad de navegación
+   * Initializes navigation functionality
    */
   static initializeNavigation() {
     // Mobile menu toggle
@@ -102,7 +102,7 @@ class ComponentLoader {
   }
 
   /**
-   * Inicializa la funcionalidad del carrito
+   * Initializes cart functionality
    */
   static initializeCart() {
     const cartToggle = document.getElementById('cart-toggle');
@@ -114,7 +114,7 @@ class ComponentLoader {
   }
 
   /**
-   * Inicializa los formularios de newsletter
+   * Initializes newsletter forms
    */
   static initializeNewsletter() {
     const newsletterForms = document.querySelectorAll('.newsletter-form');
@@ -128,15 +128,15 @@ class ComponentLoader {
   }
 
   /**
-   * Maneja el envío de formularios de newsletter
-   * @param {HTMLFormElement} form - Formulario de newsletter
+   * Handles newsletter form submission
+   * @param {HTMLFormElement} form - Newsletter form
    */
   static handleNewsletterSubmission(form) {
     const emailInput = form.querySelector('input[type="email"]');
     const email = emailInput?.value.trim();
     
     if (!email || !this.isValidEmail(email)) {
-      this.showNewsletterError(form, 'Por favor ingresa un email válido');
+      this.showNewsletterError(form, 'Please enter a valid email');
       return;
     }
     
@@ -146,9 +146,9 @@ class ComponentLoader {
   }
 
   /**
-   * Valida formato de email
-   * @param {string} email - Email a validar
-   * @returns {boolean} - True si es válido
+   * Validates email format
+   * @param {string} email - Email to validate
+   * @returns {boolean} - True if valid
    */
   static isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -156,9 +156,9 @@ class ComponentLoader {
   }
 
   /**
-   * Muestra mensaje de error en newsletter
-   * @param {HTMLFormElement} form - Formulario
-   * @param {string} message - Mensaje de error
+   * Shows newsletter error message
+   * @param {HTMLFormElement} form - Form
+   * @param {string} message - Error message
    */
   static showNewsletterError(form, message) {
     let errorElement = form.querySelector('.newsletter-error');
@@ -177,8 +177,8 @@ class ComponentLoader {
   }
 
   /**
-   * Muestra mensaje de éxito en newsletter
-   * @param {HTMLFormElement} form - Formulario
+   * Shows newsletter success message
+   * @param {HTMLFormElement} form - Form
    */
   static showNewsletterSuccess(form) {
     let successElement = form.querySelector('.newsletter-success');
@@ -188,7 +188,7 @@ class ComponentLoader {
       form.appendChild(successElement);
     }
     
-    successElement.textContent = '¡Gracias por suscribirte!';
+    successElement.textContent = 'Thanks for subscribing!';
     successElement.style.display = 'block';
     
     setTimeout(() => {
@@ -197,10 +197,10 @@ class ComponentLoader {
   }
 
   /**
-   * Renderiza un template con datos dinámicos
-   * @param {string} template - Template HTML con placeholders
-   * @param {Object} data - Datos para reemplazar placeholders
-   * @returns {string} - HTML renderizado
+   * Renders a template with dynamic data
+   * @param {string} template - HTML template with placeholders
+   * @param {Object} data - Data for placeholders
+   * @returns {string} - Rendered HTML
    */
   static renderTemplate(template, data) {
     return template.replace(/\{\{(\w+)\}\}/g, (match, key) => {
@@ -209,10 +209,10 @@ class ComponentLoader {
   }
 
   /**
-   * Carga y renderiza productos dinámicamente
-   * @param {string} containerSelector - Selector del contenedor
-   * @param {Array} products - Array de productos
-   * @param {number} limit - Límite de productos a mostrar
+   * Loads and renders products dynamically
+   * @param {string} containerSelector - Container selector
+   * @param {Array} products - Product array
+   * @param {number} limit - Limit of products to show
    */
   static async renderProducts(containerSelector, products, limit = null) {
     try {
@@ -238,8 +238,8 @@ class ComponentLoader {
   }
 
   /**
-   * Inicializa eventos de productos (carrito, etc.)
-   * @param {HTMLElement} container - Contenedor de productos
+   * Initializes product events (cart, etc.)
+   * @param {HTMLElement} container - Product container
    */
   static initializeProductEvents(container) {
     // Add to cart buttons
@@ -265,20 +265,20 @@ class ComponentLoader {
   }
 
   /**
-   * Maneja agregar productos al carrito
-   * @param {string} productId - ID del producto
-   * @param {HTMLElement} button - Botón clickeado
+   * Handles add-to-cart
+   * @param {string} productId - Product ID
+   * @param {HTMLElement} button - Clicked button
    */
   static handleAddToCart(productId, button) {
     const quantityInput = button.closest('.product-card').querySelector('.quantity-input');
     const quantity = parseInt(quantityInput?.value || 1);
     
     // Simular agregar al carrito
-    button.textContent = 'Agregado ✓';
+    button.textContent = 'Added ✓';
     button.disabled = true;
     
     setTimeout(() => {
-      button.textContent = 'Agregar al Carrito';
+      button.textContent = 'Add to Cart';
       button.disabled = false;
     }, 2000);
     
@@ -287,10 +287,10 @@ class ComponentLoader {
   }
 
   /**
-   * Maneja cambios en cantidad de productos
-   * @param {string} productId - ID del producto
-   * @param {boolean} isPlus - Si es incremento o decremento
-   * @param {HTMLElement} button - Botón clickeado
+   * Handles quantity changes
+   * @param {string} productId - Product ID
+   * @param {boolean} isPlus - Increment or decrement
+   * @param {HTMLElement} button - Clicked button
    */
   static handleQuantityChange(productId, isPlus, button) {
     const quantityInput = button.closest('.product-card').querySelector('.quantity-input');
@@ -308,6 +308,43 @@ class ComponentLoader {
     quantityInput.value = currentValue;
   }
 }
+
+/**
+ * Función para obtener la ruta correcta de autenticación según la página actual
+ * @returns {string} Ruta correcta para auth.html
+ */
+function getAuthPath() {
+    const currentPath = window.location.pathname;
+    
+    // Si estamos en la carpeta pages/, usar auth.html (misma carpeta)
+    if (currentPath.includes('/pages/')) {
+        return 'auth.html';
+    }
+    
+    // Si estamos en la raíz o en otra carpeta, usar pages/auth.html
+    return 'pages/auth.html';
+}
+
+/**
+ * Actualiza todos los enlaces de autenticación con la ruta correcta
+ */
+function updateAuthLinks() {
+    const authLinks = document.querySelectorAll('a[href="auth.html"], a[href="pages/auth.html"], a[data-auth-link]');
+    
+    authLinks.forEach(link => {
+        link.href = getAuthPath();
+    });
+}
+
+// Ejecutar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', function() {
+    updateAuthLinks();
+});
+
+// También ejecutar cuando se carguen los web components
+document.addEventListener('web-components-ready', function() {
+    updateAuthLinks();
+});
 
 // Inicializar componentes cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {

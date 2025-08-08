@@ -18,8 +18,8 @@ class PaymentManager {
         if (checkoutItems) {
             this.cartItems = JSON.parse(checkoutItems);
         } else {
-            // If no items, redirect back to marketplace
-            window.location.href = 'pages/marketplace.html';
+            // If no items, show notification and stay on page
+            this.showNotification('No items in cart. Add items before proceeding to payment.', 'error');
         }
     }
 

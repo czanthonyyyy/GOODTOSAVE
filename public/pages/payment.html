@@ -105,13 +105,13 @@
         </form>
     </div>
 
-    <!-- Modal de resumen de compra -->
+    <!-- Order Summary Modal -->
     <div id="modal-resumen" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
         <div style="background:#fff; padding:2.5rem; border-radius:18px; text-align:center; max-width:90vw; min-width:400px; box-shadow:0 2px 16px rgba(0,0,0,0.18); position:relative;">
             <h2 style="color:#1a472a; font-size:1.5rem; margin-bottom:1.5rem;">Order Summary</h2>
             
             <div id="resumen-items" style="text-align:left; margin-bottom:1.5rem; max-height:300px; overflow-y:auto;">
-                <!-- Los items del carrito se insertarán aquí dinámicamente -->
+                <!-- Cart items will be injected here dynamically -->
             </div>
             
             <div style="border-top:1px solid #e0e0e0; padding-top:1rem; margin-bottom:1.5rem;">
@@ -136,7 +136,7 @@
         </div>
     </div>
 
-    <!-- Modal de confirmación final -->
+    <!-- Final Confirmation Modal -->
     <div id="modal-confirmacion" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
         <div style="background:#fff; padding:2.5rem 2.5rem 2rem 2.5rem; border-radius:18px; text-align:center; max-width:90vw; min-width:320px; box-shadow:0 2px 16px rgba(0,0,0,0.18); position:relative;">
             <div style="display:flex; justify-content:center; align-items:center; margin-bottom:1.2rem;">
@@ -147,32 +147,32 @@
                     </polyline>
                 </svg>
             </div>
-            <h2 style="color:#27ae60; font-size:1.7rem; margin-bottom:0.5rem;">¡Compra completada!</h2>
-            <p style="color:#222; font-size:1.1rem; margin-bottom:1.2rem;">La información es correcta y tu compra ha sido procesada exitosamente.</p>
-            <button id="btn-ver-qr" style="margin-top:0.5rem; padding:0.6rem 2rem; background:#27ae60; color:#fff; border:none; border-radius:6px; font-size:1.1rem; cursor:pointer; box-shadow:0 1px 4px rgba(39,174,96,0.08);">Ver QR</button>
+            <h2 style="color:#27ae60; font-size:1.7rem; margin-bottom:0.5rem;">Purchase Completed</h2>
+            <p style="color:#222; font-size:1.1rem; margin-bottom:1.2rem;">Your information is correct and your order has been processed successfully.</p>
+            <button id="btn-ver-qr" style="margin-top:0.5rem; padding:0.6rem 2rem; background:#27ae60; color:#fff; border:none; border-radius:6px; font-size:1.1rem; cursor:pointer; box-shadow:0 1px 4px rgba(39,174,96,0.08);">View QR</button>
         </div>
     </div>
 
     <script>
-        // Función para mostrar el modal de resumen
+        // Show order summary modal
         function mostrarModalResumen() {
             const modal = document.getElementById('modal-resumen');
             const resumenItems = document.getElementById('resumen-items');
             
-            // Obtener items del carrito desde localStorage
+            // Get items from localStorage
             const cartItems = JSON.parse(localStorage.getItem('checkoutItems') || localStorage.getItem('cartItems') || '[]');
             
             if (cartItems.length === 0) {
-                alert('No hay items en el carrito');
+                alert('There are no items in the cart');
                 return;
             }
             
-            // Limpiar contenido anterior
+            // Clear previous content
             resumenItems.innerHTML = '';
             
             let subtotal = 0;
             
-            // Generar HTML para cada item
+            // Generate HTML for each item
             cartItems.forEach(item => {
                 const itemTotal = item.price * item.quantity;
                 subtotal += itemTotal;
@@ -189,7 +189,7 @@
                 resumenItems.innerHTML += itemHTML;
             });
             
-            // Calcular totales
+            // Calculate totals
             const tax = subtotal * 0.04; // 4% tax
             const total = subtotal + tax;
             
@@ -200,34 +200,34 @@
             modal.style.display = 'flex';
         }
 
-        // Función para cerrar el modal de resumen
+        // Close summary modal
         function cerrarModalResumen() {
             document.getElementById('modal-resumen').style.display = 'none';
         }
 
-        // Función para mostrar modal de confirmación final y redirigir al QR
+        // Show final confirmation modal and redirect to QR
         function mostrarModalConfirmacion() {
             const modalResumen = document.getElementById('modal-resumen');
             const modalConfirmacion = document.getElementById('modal-confirmacion');
             
-            // Cerrar modal de resumen
+            // Close summary modal
             modalResumen.style.display = 'none';
             
-            // Mostrar modal de confirmación
+            // Show confirmation modal
             modalConfirmacion.style.display = 'flex';
             
-            // Redirigir automáticamente después de 3 segundos
+            // Auto-redirect after 3 seconds
             const timeout = setTimeout(() => {
-                // Limpiar localStorage después del pago exitoso
+                // Clear localStorage after successful payment
                 localStorage.removeItem('cartItems');
                 localStorage.removeItem('checkoutItems');
                 window.location.href = 'qr.html';
             }, 3000);
             
-            // Si el usuario hace clic en el botón, redirige inmediatamente
+            // If the user clicks the button, redirect immediately
             document.getElementById('btn-ver-qr').onclick = function() {
                 clearTimeout(timeout);
-                // Limpiar localStorage después del pago exitoso
+                // Clear localStorage after successful payment
                 localStorage.removeItem('cartItems');
                 localStorage.removeItem('checkoutItems');
                 window.location.href = 'qr.html';
@@ -260,11 +260,11 @@
             }, 800);
         });
 
-        // Event listeners para los botones del modal
+        // Event listeners for modal buttons
         document.getElementById('btn-cancelar').addEventListener('click', cerrarModalResumen);
         document.getElementById('btn-confirmar').addEventListener('click', mostrarModalConfirmacion);
 
-        // Cerrar modal al hacer clic fuera de él
+        // Close modal when clicking outside
         document.getElementById('modal-resumen').addEventListener('click', function(e) {
             if (e.target === this) {
                 cerrarModalResumen();

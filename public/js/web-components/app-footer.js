@@ -439,7 +439,7 @@ class AppFooter extends HTMLElement {
                         <ul class="footer-links">
                                                                                 <li><a href="marketplace.html">Marketplace</a></li>
                             <li><a href="about.html">About Us</a></li>
-                            <li><a href="auth.html">Sign In</a></li>
+                            <li><a href="auth.html" data-auth-link>Sign In</a></li>
                             <li><a href="#support">Support</a></li>
                         </ul>
                     </div>

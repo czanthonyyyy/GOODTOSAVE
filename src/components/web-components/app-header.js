@@ -218,8 +218,7 @@ class AppHeader extends HTMLElement {
                             <span class="cart-count" id="cart-count">0</span>
                         </button>
                         
-                        <a href="auth.html" class="btn btn-outline">Iniciar Sesión</a>
-                        <a href="auth.html" class="btn btn-primary">Registrarse</a>
+                        <a href="auth.html" class="btn btn-primary" data-auth-link>Login or Register</a>
                         
                         <button class="mobile-menu-toggle" id="mobile-menu-toggle">
                             <i class="fas fa-bars"></i>
