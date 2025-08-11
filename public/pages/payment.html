@@ -160,7 +160,11 @@
             const resumenItems = document.getElementById('resumen-items');
             
             // Get items from localStorage
-            const cartItems = JSON.parse(localStorage.getItem('checkoutItems') || localStorage.getItem('cartItems') || '[]');
+            // Try multiple sources for cart items (supports app-cart component storage)
+            const storedCheckout = localStorage.getItem('checkoutItems');
+            const storedCart = localStorage.getItem('cartItems');
+            const storedAppCart = localStorage.getItem('foodmarketplace_cart');
+            const cartItems = JSON.parse(storedCheckout || storedCart || storedAppCart || '[]');
             
             if (cartItems.length === 0) {
                 alert('There are no items in the cart');
@@ -174,14 +178,16 @@
             
             // Generate HTML for each item
             cartItems.forEach(item => {
-                const itemTotal = item.price * item.quantity;
+                const price = parseFloat(item.price);
+                const qty = parseFloat(item.quantity || 1);
+                const itemTotal = (isNaN(price) ? 0 : price) * (isNaN(qty) ? 1 : qty);
                 subtotal += itemTotal;
                 
                 const itemHTML = `
                     <div style="display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0; border-bottom:1px solid #f0f0f0;">
                         <div>
                             <div style="font-weight:500; color:#333;">${item.title}</div>
-                            <div style="font-size:0.9rem; color:#666;">Qty: ${item.quantity} × $${item.price.toFixed(2)}</div>
+                            <div style="font-size:0.9rem; color:#666;">Qty: ${qty} × $${(isNaN(price)?0:price).toFixed(2)}</div>
                         </div>
                         <div style="font-weight:600; color:#27ae60;">$${itemTotal.toFixed(2)}</div>
                     </div>
@@ -197,6 +203,15 @@
             document.getElementById('resumen-tax').textContent = `$${tax.toFixed(2)}`;
             document.getElementById('resumen-total').textContent = `$${total.toFixed(2)}`;
             
+            // Persist a snapshot for QR page
+            window.checkoutData = {
+                items: cartItems,
+                subtotal,
+                tax,
+                total,
+                timestamp: new Date().toISOString()
+            };
+
             modal.style.display = 'flex';
         }
 
@@ -218,18 +233,24 @@
             
             // Auto-redirect after 3 seconds
             const timeout = setTimeout(() => {
-                // Clear localStorage after successful payment
+                // Save order to database and localStorage
+                saveOrderToDatabase();
+                // Clear cart storages after successful payment
                 localStorage.removeItem('cartItems');
                 localStorage.removeItem('checkoutItems');
+                localStorage.removeItem('foodmarketplace_cart');
                 window.location.href = 'qr.html';
             }, 3000);
             
             // If the user clicks the button, redirect immediately
             document.getElementById('btn-ver-qr').onclick = function() {
                 clearTimeout(timeout);
-                // Clear localStorage after successful payment
+                // Save order to database and localStorage
+                saveOrderToDatabase();
+                // Clear cart storages after successful payment
                 localStorage.removeItem('cartItems');
                 localStorage.removeItem('checkoutItems');
+                localStorage.removeItem('foodmarketplace_cart');
                 window.location.href = 'qr.html';
             };
         }
@@ -260,6 +281,81 @@
             }, 800);
         });
 
+        // Save order to database function
+        async function saveOrderToDatabase() {
+            try {
+                if (!window.checkoutData) {
+                    console.error('No checkout data available');
+                    return;
+                }
+
+                // Get current user from localStorage or Firebase Auth
+                let currentUser = null;
+                try {
+                    const storedUser = localStorage.getItem('user');
+                    if (storedUser) {
+                        currentUser = JSON.parse(storedUser);
+                    }
+                } catch (e) {
+                    console.warn('Could not parse stored user:', e);
+                }
+
+                if (!currentUser || !currentUser.uid) {
+                    console.warn('No authenticated user found, saving to localStorage only');
+                    // Fallback: save to localStorage for non-authenticated users
+                    localStorage.setItem('lastOrder', JSON.stringify(window.checkoutData));
+                    return;
+                }
+
+                // Save to Firestore if available
+                let orderData = null;
+                if (window.firebaseServices && window.firebaseServices.db) {
+                    orderData = {
+                        uid: currentUser.uid,
+                        orderId: 'ORD-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+                        items: window.checkoutData.items,
+                        subtotal: window.checkoutData.subtotal,
+                        tax: window.checkoutData.tax,
+                        total: window.checkoutData.total,
+                        status: 'paid',
+                        createdAt: new Date().toISOString(),
+                        updatedAt: new Date().toISOString()
+                    };
+
+                    await window.firebaseServices.db.collection('orders').add(orderData);
+                    console.log('Order saved to database:', orderData.orderId);
+                }
+
+                // Also save to localStorage for QR page compatibility
+                localStorage.setItem('lastOrder', JSON.stringify(window.checkoutData));
+
+                // Update local orders history
+                try {
+                    const historyKey = `orders_history_${currentUser.uid}`;
+                    const existingHistory = localStorage.getItem(historyKey);
+                    const history = existingHistory ? JSON.parse(existingHistory) : [];
+                    
+                    const orderRecord = {
+                        id: orderData?.orderId || 'LOCAL-' + Date.now(),
+                        status: 'paid',
+                        total: window.checkoutData.total,
+                        items: window.checkoutData.items,
+                        createdAt: window.checkoutData.timestamp
+                    };
+                    
+                    history.unshift(orderRecord); // Add to beginning
+                    localStorage.setItem(historyKey, JSON.stringify(history));
+                } catch (e) {
+                    console.warn('Could not update local history:', e);
+                }
+
+            } catch (error) {
+                console.error('Error saving order to database:', error);
+                // Fallback: save to localStorage only
+                localStorage.setItem('lastOrder', JSON.stringify(window.checkoutData));
+            }
+        }
+
         // Event listeners for modal buttons
         document.getElementById('btn-cancelar').addEventListener('click', cerrarModalResumen);
         document.getElementById('btn-confirmar').addEventListener('click', mostrarModalConfirmacion);
@@ -285,6 +381,13 @@
         });
     </script>
 
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+    <!-- Firebase Configuration & Services -->
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/firebase-auth.js"></script>
 </body>
 
 </html> 

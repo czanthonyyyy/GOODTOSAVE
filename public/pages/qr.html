@@ -43,6 +43,39 @@
             <p class="subtitle">Your transaction has been processed successfully</p>
         </div>
 
+        <!-- Summary Chips -->
+        <div class="summary-chips">
+            <div class="chip" title="Order date and time">
+                <span class="chip-label">Date</span>
+                <span class="chip-value" id="order-date">—</span>
+            </div>
+            <div class="chip" title="Items in this order">
+                <span class="chip-label">Items</span>
+                <span class="chip-value" id="order-items-count">0</span>
+            </div>
+            <div class="chip chip-accent" title="Total paid">
+                <span class="chip-label">Total</span>
+                <span class="chip-value" id="order-total-chip">$0.00</span>
+            </div>
+        </div>
+
+        <!-- Status Steps -->
+        <div class="status-steps" aria-label="Order status">
+            <div class="step active">
+                <span class="step-dot"></span>
+                <span class="step-text">Payment</span>
+            </div>
+            <div class="step active">
+                <span class="step-dot"></span>
+                <span class="step-text">QR Ready</span>
+            </div>
+            <div class="step">
+                <span class="step-dot"></span>
+                <span class="step-text">Pickup</span>
+            </div>
+        </div>
+
+        <div class="main-grid">
         <!-- QR Code Section -->
         <div class="qr-section">
             <div class="qr-container">
@@ -86,6 +119,17 @@
                 </div>
             </div>
         </div>
+        </div>
+
+        <!-- Pickup Instructions -->
+        <div class="info-card">
+            <div class="info-title">Pickup instructions</div>
+            <ul class="info-list">
+                <li>Show this QR code at the counter within the next 24 hours.</li>
+                <li>Make sure the screen brightness is high for fast scanning.</li>
+                <li>Bring a valid ID that matches the name on the payment.</li>
+            </ul>
+        </div>
 
                           <!-- Action Buttons -->
          <div class="buttons-container">
@@ -96,6 +140,10 @@
              <button id="share-qr" class="action-btn share-btn">
                  <i class="fas fa-share-alt"></i>
                  Share
+             </button>
+             <button id="print-receipt" class="action-btn home-btn" title="Print">
+                 <i class="fas fa-print"></i>
+                 Print
              </button>
              <button id="back-to-home" class="action-btn home-btn">
                  <i class="fas fa-home"></i>
@@ -161,9 +209,14 @@
                      window.location.href = 'index.html';
                  });
 
-                 document.getElementById('new-order')?.addEventListener('click', () => {
+                  document.getElementById('new-order')?.addEventListener('click', () => {
                      window.location.href = 'marketplace.html';
                  });
+
+                  // Print
+                  document.getElementById('print-receipt')?.addEventListener('click', () => {
+                      window.print();
+                  });
 
                  // Copy Order ID button
                  document.getElementById('copy-order-id')?.addEventListener('click', () => {
@@ -172,27 +225,43 @@
              }
 
              function loadOrderData() {
-                 // Try to get order data from localStorage
-                 const checkoutItems = localStorage.getItem('checkoutItems');
-                 const cartItems = localStorage.getItem('cartItems');
-                 
-                 let items = [];
-                 if (checkoutItems) {
-                     items = JSON.parse(checkoutItems);
-                 } else if (cartItems) {
-                     items = JSON.parse(cartItems);
+                 // Prefer a snapshot saved at checkout
+                 const lastOrderRaw = localStorage.getItem('lastOrder');
+                 if (lastOrderRaw) {
+                     try {
+                         const parsed = JSON.parse(lastOrderRaw);
+                         if (parsed && Array.isArray(parsed.items)) {
+                             window.orderData = {
+                                 items: parsed.items,
+                                 subtotal: parsed.subtotal || 0,
+                                 tax: parsed.tax || 0,
+                                 total: parsed.total || 0,
+                                 orderId: generateOrderId(),
+                                 timestamp: parsed.timestamp || new Date().toISOString()
+                             };
+                             return;
+                         }
+                     } catch (e) {}
                  }
 
-                 // Calculate totals
+                 // Fallback to cart storages
+                 const checkoutItems = localStorage.getItem('checkoutItems');
+                 const cartItems = localStorage.getItem('cartItems');
+                 const appCart = localStorage.getItem('foodmarketplace_cart');
+                 let items = [];
+                 if (checkoutItems) items = JSON.parse(checkoutItems);
+                 else if (cartItems) items = JSON.parse(cartItems);
+                 else if (appCart) items = JSON.parse(appCart);
+
                  const subtotal = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-                 const tax = subtotal * 0.04; // 4% tax
+                 const tax = subtotal * 0.04;
                  const total = subtotal + tax;
 
                  window.orderData = {
-                     items: items,
-                     subtotal: subtotal,
-                     tax: tax,
-                     total: total,
+                     items,
+                     subtotal,
+                     tax,
+                     total,
                      orderId: generateOrderId(),
                      timestamp: new Date().toISOString()
                  };
@@ -233,7 +302,7 @@
 
              function displayOrderDetails() {
                  const orderDetailsElement = document.getElementById('order-details');
-                 const subtotalElement = document.getElementById('subtotal');
+                  const subtotalElement = document.getElementById('subtotal');
                  const taxElement = document.getElementById('tax');
                  const totalElement = document.getElementById('total');
 
@@ -255,10 +324,17 @@
 
                  orderDetailsElement.innerHTML = itemsHTML;
 
-                 // Display totals
+                  // Display totals
                  if (subtotalElement) subtotalElement.textContent = `$${window.orderData.subtotal.toFixed(2)}`;
                  if (taxElement) taxElement.textContent = `$${window.orderData.tax.toFixed(2)}`;
                  if (totalElement) totalElement.textContent = `$${window.orderData.total.toFixed(2)}`;
+
+                  // Update chips
+                  const itemsCount = window.orderData.items.reduce((sum, it) => sum + (it.quantity || 1), 0);
+                  const totalChip = document.getElementById('order-total-chip');
+                  const itemsChip = document.getElementById('order-items-count');
+                  if (totalChip) totalChip.textContent = `$${window.orderData.total.toFixed(2)}`;
+                  if (itemsChip) itemsChip.textContent = itemsCount.toString();
              }
 
              async function generateQR() {

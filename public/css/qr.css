@@ -10,7 +10,8 @@
 
 body {
     font-family: 'Montserrat', Arial, sans-serif;
-    background: linear-gradient(135deg, #54b070 0%, #3d8952 100%);
+    background: radial-gradient(1000px 600px at 20% 0%, rgba(255,255,255,0.12), rgba(255,255,255,0)),
+                linear-gradient(135deg, #54b070 0%, #3d8952 100%);
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -60,9 +61,9 @@ body {
     background-color: white;
     padding: 40px;
     border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
     text-align: center;
-    max-width: 500px;
+    max-width: 940px;
     width: 100%;
     animation: fadeInUp 0.6s ease-out;
 }
@@ -160,6 +161,43 @@ body {
     border: 1px solid #ddd;
     background: white;
 }
+
+/* Summary Chips */
+.summary-chips {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+.chip {
+    background: #f7faf8;
+    border: 1px solid #e6efe9;
+    border-radius: 999px;
+    padding: 8px 14px;
+    display: inline-flex;
+    gap: 8px;
+    align-items: baseline;
+}
+.chip .chip-label { color: #6b7280; font-size: 12px; font-weight: 600; letter-spacing: .2px; }
+.chip .chip-value { color: #1f2937; font-size: 13px; font-weight: 700; }
+.chip-accent { background: #eafaf1; border-color: #c8edd5; }
+
+/* Steps */
+.status-steps { display:flex; gap: 20px; justify-content:center; margin: 16px 0 24px; }
+.step { display:flex; align-items:center; gap:8px; color:#9aa3a9; font-weight:600; }
+.step .step-dot { width:10px; height:10px; border-radius:50%; background:#d1d5db; box-shadow: 0 0 0 3px rgba(39,174,96,0.12); }
+.step.active { color:#27ae60; }
+.step.active .step-dot { background:#27ae60; }
+
+/* Two-column layout */
+.main-grid { display:grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items:start; margin-bottom: 20px; }
+
+/* Info card */
+.info-card { background:#f8f9fa; border:1px solid #e9ecef; border-radius:12px; padding:16px; text-align:left; }
+.info-title { font-weight:700; color:#2c3e50; margin-bottom:8px; }
+.info-list { padding-left: 18px; color:#4b5563; font-size:14px; line-height:1.6; }
+.info-list li { margin-bottom: 4px; }
 
 /* Order ID Box */
 .order-id-box {

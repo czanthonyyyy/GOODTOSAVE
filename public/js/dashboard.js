@@ -36,6 +36,249 @@
     }
   }
 
+  async function fetchUserOrders(uid) {
+    // Strategy: prefer Firestore collection `orders` by uid; fallback to localStorage snapshots
+    const { db } = getAuthServices();
+    let orders = [];
+    try {
+      if (db) {
+        const snap = await db.collection('orders').where('uid','==',uid).orderBy('createdAt','desc').limit(100).get();
+        orders = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      }
+    } catch (e) { console.warn('No Firestore orders or query failed:', e); }
+
+    // Fallback: localStorage last orders history (client-side only demo)
+    if (!orders.length) {
+      try {
+        // Try the new user-specific history key first
+        const historyKey = `orders_history_${uid}`;
+        const historyRaw = localStorage.getItem(historyKey);
+        if (historyRaw) {
+          const hist = JSON.parse(historyRaw);
+          orders = Array.isArray(hist) ? hist : [];
+        } else {
+          // Fallback to old format
+          const historyRaw = localStorage.getItem('orders_history');
+          if (historyRaw) {
+            const hist = JSON.parse(historyRaw);
+            orders = Array.isArray(hist?.[uid]) ? hist[uid] : [];
+          } else {
+            // Also consider lastOrder snapshot as a single recent order
+            const last = localStorage.getItem('lastOrder');
+            if (last) {
+              const lo = JSON.parse(last);
+              orders = [{ id: 'LOCAL-' + Date.now(), status: 'paid', total: lo.total, items: lo.items, createdAt: lo.timestamp }];
+            }
+          }
+        }
+      } catch (e) {}
+    }
+    return orders;
+  }
+
+  function renderOrdersTable(orders, page = 1, pageSize = 10) {
+    const container = document.getElementById('orders-content');
+    if (!container) return;
+    if (!orders.length) {
+      container.innerHTML = '<div class="orders-empty">No orders yet</div>';
+      document.getElementById('pagination').style.display = 'none';
+      return;
+    }
+
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const pageOrders = orders.slice(startIndex, endIndex);
+    const totalPages = Math.ceil(orders.length / pageSize);
+
+    const rows = pageOrders.map(o => {
+      const created = o.createdAt ? new Date(o.createdAt).toLocaleString() : '-';
+      const status = (o.status || 'paid').toLowerCase();
+      const statusClass = status === 'paid' ? 'status-paid' : (status === 'pending' ? 'status-pending' : '');
+      const total = (typeof o.total === 'number' ? o.total : parseFloat(o.total || 0)).toFixed(2);
+      const itemsText = Array.isArray(o.items) ? o.items.map(it => it.title).slice(0,2).join(', ') : '-';
+      return `<tr>
+        <td>${o.id || '-'}</td>
+        <td>${created}</td>
+        <td><span class="status ${statusClass}">${status.toUpperCase()}</span></td>
+        <td class="pill-total">$${total}</td>
+        <td title="${itemsText}">${itemsText}</td>
+        <td><button class="btn" onclick="showOrderDetail('${o.id}')">View Details</button></td>
+      </tr>`;
+    }).join('');
+
+    container.innerHTML = `
+      <table class="orders-table" id="orders-table">
+        <thead>
+          <tr><th>Order ID</th><th>Date</th><th>Status</th><th>Total</th><th>Items</th><th>Actions</th></tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+
+    // Update pagination
+    const pagination = document.getElementById('pagination');
+    if (totalPages > 1) {
+      pagination.style.display = 'flex';
+      document.getElementById('page-info').textContent = `Page ${page} of ${totalPages}`;
+      document.getElementById('prev-page').disabled = page <= 1;
+      document.getElementById('next-page').disabled = page >= totalPages;
+    } else {
+      pagination.style.display = 'none';
+    }
+  }
+
+  function bindOrdersFilters(allOrders) {
+    const search = document.getElementById('orders-search');
+    const statusSel = document.getElementById('orders-status');
+    let currentPage = 1;
+    
+    const apply = () => {
+      const q = (search?.value || '').toLowerCase();
+      const st = statusSel?.value || 'all';
+      const filtered = allOrders.filter(o => {
+        const idMatch = (o.id || '').toLowerCase().includes(q);
+        const items = Array.isArray(o.items) ? o.items.map(it => it.title?.toLowerCase() || '').join(' ') : '';
+        const itemsMatch = items.includes(q);
+        const statusOk = st === 'all' || (o.status || 'paid').toLowerCase() === st;
+        return (idMatch || itemsMatch) && statusOk;
+      });
+      currentPage = 1; // Reset to first page when filtering
+      renderOrdersTable(filtered, currentPage);
+    };
+    
+    search?.addEventListener('input', apply);
+    statusSel?.addEventListener('change', apply);
+    
+    // Pagination controls
+    document.getElementById('prev-page')?.addEventListener('click', () => {
+      if (currentPage > 1) {
+        currentPage--;
+        const filtered = getCurrentFilteredOrders(allOrders, search?.value, statusSel?.value);
+        renderOrdersTable(filtered, currentPage);
+      }
+    });
+    
+    document.getElementById('next-page')?.addEventListener('click', () => {
+      const filtered = getCurrentFilteredOrders(allOrders, search?.value, statusSel?.value);
+      const totalPages = Math.ceil(filtered.length / 10);
+      if (currentPage < totalPages) {
+        currentPage++;
+        renderOrdersTable(filtered, currentPage);
+      }
+    });
+    
+    apply();
+  }
+
+  function getCurrentFilteredOrders(allOrders, searchValue, statusValue) {
+    const q = (searchValue || '').toLowerCase();
+    const st = (statusValue || 'all');
+    return allOrders.filter(o => {
+      const idMatch = (o.id || '').toLowerCase().includes(q);
+      const items = Array.isArray(o.items) ? o.items.map(it => it.title?.toLowerCase() || '').join(' ') : '';
+      const itemsMatch = items.includes(q);
+      const statusOk = st === 'all' || (o.status || 'paid').toLowerCase() === st;
+      return (idMatch || itemsMatch) && statusOk;
+    });
+  }
+
+  function exportToCSV(orders) {
+    if (!orders.length) {
+      alert('No orders to export');
+      return;
+    }
+
+    const headers = ['Order ID', 'Date', 'Status', 'Total', 'Items'];
+    const csvContent = [
+      headers.join(','),
+      ...orders.map(o => {
+        const created = o.createdAt ? new Date(o.createdAt).toLocaleString() : '-';
+        const status = (o.status || 'paid').toLowerCase();
+        const total = (typeof o.total === 'number' ? o.total : parseFloat(o.total || 0)).toFixed(2);
+        const itemsText = Array.isArray(o.items) ? o.items.map(it => it.title).join('; ') : '-';
+        return [o.id || '-', created, status, total, itemsText].join(',');
+      })
+    ].join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `orders_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  function showOrderDetail(orderId) {
+    const orders = getCurrentFilteredOrders(window.allOrders || [], 
+      document.getElementById('orders-search')?.value, 
+      document.getElementById('orders-status')?.value);
+    const order = orders.find(o => o.id === orderId);
+    
+    if (!order) {
+      alert('Order not found');
+      return;
+    }
+
+    const modal = document.getElementById('order-detail-modal');
+    const body = document.getElementById('order-detail-body');
+    
+    const created = order.createdAt ? new Date(order.createdAt).toLocaleString() : '-';
+    const status = (order.status || 'paid').toLowerCase();
+    const total = (typeof order.total === 'number' ? order.total : parseFloat(order.total || 0)).toFixed(2);
+    
+    const itemsHtml = Array.isArray(order.items) ? order.items.map(item => `
+      <div class="order-item">
+        <span class="order-item-name">${item.title || 'Unknown Item'}</span>
+        <span class="order-item-qty">x${item.quantity || 1}</span>
+        <span class="order-item-price">$${(item.price || 0).toFixed(2)}</span>
+      </div>
+    `).join('') : '<div class="order-item"><span class="order-item-name">No items found</span></div>';
+
+    body.innerHTML = `
+      <div class="order-detail">
+        <div class="order-detail-header">
+          <div class="order-detail-title">Order #${order.id}</div>
+          <button class="order-detail-close" onclick="closeOrderDetail()">✕</button>
+        </div>
+        <div class="order-detail-content">
+          <div><strong>Date:</strong> ${created}</div>
+          <div><strong>Status:</strong> <span class="status status-${status}">${status.toUpperCase()}</span></div>
+          <div><strong>Total:</strong> <span class="pill-total">$${total}</span></div>
+          <div style="margin-top: 12px;"><strong>Items:</strong></div>
+          ${itemsHtml}
+        </div>
+      </div>
+    `;
+    
+    modal.classList.add('show');
+  }
+
+  function closeOrderDetail() {
+    const modal = document.getElementById('order-detail-modal');
+    if (modal) modal.classList.remove('show');
+  }
+
+  function renderMetrics(orders) {
+    const elOrders = document.getElementById('m-orders');
+    const elSpent = document.getElementById('m-spent');
+    const elLastTotal = document.getElementById('m-last-total');
+    const elLastDate = document.getElementById('m-last-date');
+    const elAvg = document.getElementById('m-avg');
+
+    const totals = orders.map(o => (typeof o.total === 'number' ? o.total : parseFloat(o.total || 0)) || 0);
+    const sum = totals.reduce((a,b)=>a+b,0);
+    const count = orders.length;
+    const avg = count ? sum / count : 0;
+    const last = orders[0];
+    if (elOrders) elOrders.textContent = String(count);
+    if (elSpent) elSpent.textContent = `$${sum.toFixed(2)}`;
+    if (elLastTotal) elLastTotal.textContent = `$${(last? (typeof last.total==='number'?last.total:parseFloat(last.total||0)):0).toFixed(2)}`;
+    if (elLastDate) elLastDate.textContent = last?.createdAt ? new Date(last.createdAt).toLocaleString() : '-';
+    if (elAvg) elAvg.textContent = `$${avg.toFixed(2)}`;
+  }
+
   async function updateUserProfile(uid, updates) {
     const { db, auth } = getAuthServices();
     if (!db) throw new Error('Firestore no disponible');
@@ -169,7 +412,25 @@
         alert('Profile update failed');
       }
     });
+    // Orders section
+    const orders = await fetchUserOrders(user.uid);
+    window.allOrders = orders; // Store globally for CSV export and detail view
+    renderMetrics(orders);
+    renderOrdersTable(orders);
+    bindOrdersFilters(orders);
+
+    // Export CSV button
+    document.getElementById('export-csv')?.addEventListener('click', () => {
+      const filtered = getCurrentFilteredOrders(orders, 
+        document.getElementById('orders-search')?.value, 
+        document.getElementById('orders-status')?.value);
+      exportToCSV(filtered);
+    });
   }
 
   document.addEventListener('DOMContentLoaded', renderDashboard);
+
+  // Make functions globally available for onclick handlers
+  window.showOrderDetail = showOrderDetail;
+  window.closeOrderDetail = closeOrderDetail;
 })();

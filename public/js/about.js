@@ -217,32 +217,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 <img src="${member.image}" alt="${member.name}" loading="lazy" 
                      onerror="this.src='../assets/images/logo.svg'; this.style.opacity='0.5';">
             </div>
-            <div class="member-info">
-                <h3 class="member-name">${member.name}</h3>
-                <p class="member-role">${member.role}</p>
-                <p class="member-bio">${member.bio}</p>
-                <div class="member-social">
-                    <a href="${member.social.linkedin}" class="social-link" title="LinkedIn">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="${member.social.twitter}" class="social-link" title="Twitter">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="mailto:${member.social.email}" class="social-link" title="Email">
-                        <i class="fas fa-envelope"></i>
-                    </a>
+            <div class="member-overlay">
+                <div class="member-info">
+                    <h3 class="member-name">${member.name}</h3>
+                    <p class="member-role">${member.role}</p>
+                    <div class="member-social">
+                        <a href="${member.social.linkedin}" class="social-link" title="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="${member.social.twitter}" class="social-link" title="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="mailto:${member.social.email}" class="social-link" title="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         `;
         
-        // Add hover effects
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-8px) scale(1.02)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
-        });
+        // Hover effects are handled by CSS
         
         return card;
     }

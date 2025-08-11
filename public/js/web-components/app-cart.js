@@ -33,21 +33,23 @@ class AppCart extends HTMLElement {
                     display: block;
                     position: fixed;
                     top: 0;
-                    right: -400px;
-                    width: 400px;
+                    right: -450px;
+                    width: 450px;
                     height: 100vh;
-                    background: rgba(20, 21, 21, 0.95);
-                    backdrop-filter: blur(20px);
-                    border-left: 1px solid rgba(255, 255, 255, 0.1);
+                    background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 50%, #0f1419 100%);
+                    backdrop-filter: blur(10px);
+                    border-left: 1px solid rgba(255, 255, 255, 0.08);
                     z-index: 10001;
-                    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
                     overflow-y: auto;
                     overflow-x: hidden;
                     pointer-events: auto;
+                    box-shadow: -20px 0 60px rgba(0, 0, 0, 0.6);
                 }
 
                 :host(.open) {
                     right: 0;
+                    box-shadow: -25px 0 80px rgba(0, 0, 0, 0.8);
                 }
 
                 .cart-overlay {
@@ -56,12 +58,13 @@ class AppCart extends HTMLElement {
                     left: 0;
                     width: 100vw;
                     height: 100vh;
-                    background: rgba(0, 0, 0, 0.3);
+                    background: linear-gradient(135deg, rgba(15, 20, 25, 0.8), rgba(26, 31, 46, 0.6));
                     z-index: 9999;
                     opacity: 0;
                     visibility: hidden;
-                    transition: all 0.3s ease;
+                    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
                     pointer-events: none;
+                    backdrop-filter: blur(10px);
                 }
 
                 :host(.open) .cart-overlay {
@@ -71,95 +74,127 @@ class AppCart extends HTMLElement {
                 }
 
                 .cart-header {
-                    padding: 1.5rem;
-                    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                    padding: 2rem 2rem 1.5rem 2rem;
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
-                    background: linear-gradient(135deg, rgba(20, 21, 21, 0.95), rgba(20, 21, 21, 0.98));
-                    backdrop-filter: blur(20px);
-                    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05);
+                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+                    position: relative;
+                    overflow: hidden;
+                    z-index: 10003;
+                }
+
+                .cart-header::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 1px;
+                    background: linear-gradient(90deg, transparent 0%, rgba(64, 224, 208, 0.3) 50%, transparent 100%);
                 }
 
                 .cart-title {
-                    font-size: 1.5rem;
-                    font-weight: 700;
-                    color: var(--text-highlight, #ffffff);
+                    font-size: 1.75rem;
+                    font-weight: 800;
+                    color: #ffffff;
                     margin: 0;
                     display: flex;
                     align-items: center;
-                    gap: 0.75rem;
+                    gap: 1rem;
+                    letter-spacing: -0.02em;
+                    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+                    position: relative;
+                    z-index: 10004;
                 }
 
                 .cart-title::before {
                     content: '🛒';
-                    font-size: 1.5rem;
+                    font-size: 1.75rem;
+                    filter: drop-shadow(0 2px 8px rgba(64, 224, 208, 0.3));
                 }
 
                 .close-btn {
-                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
                     border: 1px solid rgba(255, 255, 255, 0.15);
-                    color: var(--text-light, #cccccc);
-                    font-size: 1.5rem;
-                    font-weight: bold;
+                    color: #ffffff;
+                    font-size: 1.75rem;
+                    font-weight: 300;
                     cursor: pointer;
-                    padding: 0.6rem;
-                    border-radius: 50%;
-                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                    width: 40px;
-                    height: 40px;
+                    padding: 0.75rem;
+                    border-radius: 16px;
+                    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                    width: 48px;
+                    height: 48px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
                     user-select: none;
-                    -webkit-user-select: none;
-                    -moz-user-select: none;
-                    -ms-user-select: none;
+                    position: relative;
+                    overflow: hidden;
+                    z-index: 10004;
+                }
+
+                .close-btn::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+                    transition: left 0.5s ease;
+                }
+
+                .close-btn:hover::before {
+                    left: 100%;
                 }
 
                 .close-btn:hover {
-                    background: linear-gradient(135deg, rgba(231, 76, 60, 0.25), rgba(231, 76, 60, 0.1));
-                    border-color: rgba(231, 76, 60, 0.6);
-                    color: #e74c3c;
-                    transform: scale(1.15);
-                    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+                    background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(239, 68, 68, 0.1) 100%);
+                    border-color: rgba(239, 68, 68, 0.5);
+                    color: #fca5a5;
+                    transform: scale(1.1) rotate(90deg);
+                    box-shadow: 0 8px 30px rgba(239, 68, 68, 0.4);
                 }
 
                 .close-btn:active {
-                    transform: scale(0.9);
+                    transform: scale(0.95) rotate(90deg);
                 }
 
                 .close-btn:focus {
                     outline: none;
-                    box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.5);
+                    box-shadow: 0 0 0 3px rgba(64, 224, 208, 0.5);
                 }
 
                 .cart-content {
-                    padding: 1.5rem;
+                    padding: 2rem;
                     pointer-events: auto;
                     position: relative;
                     z-index: 10002;
                 }
 
                 .cart-items {
-                    margin-bottom: 2rem;
+                    margin-bottom: 2.5rem;
                 }
 
                 .cart-item {
                     display: grid;
-                    grid-template-columns: 55px 1fr auto;
+                    grid-template-columns: 70px 1fr auto;
                     grid-template-rows: auto auto;
-                    gap: 1rem;
-                    padding: 1.25rem;
-                    border: 1px solid rgba(255, 255, 255, 0.08);
-                    border-radius: 16px;
-                    margin-bottom: 1rem;
-                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
-                    backdrop-filter: blur(15px);
-                    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                    gap: 1.25rem;
+                    padding: 1.5rem;
+                    border: 1px solid rgba(255, 255, 255, 0.04);
+                    border-radius: 20px;
+                    margin-bottom: 1.25rem;
+                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+                    backdrop-filter: blur(5px);
+                    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
                     position: relative;
                     overflow: hidden;
+                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
                 }
 
                 .cart-item::before {
@@ -169,66 +204,103 @@ class AppCart extends HTMLElement {
                     left: 0;
                     right: 0;
                     bottom: 0;
-                    background: linear-gradient(135deg, rgba(57, 181, 74, 0.05), transparent);
+                    background: linear-gradient(135deg, rgba(64, 224, 208, 0.03) 0%, transparent 100%);
                     opacity: 0;
-                    transition: opacity 0.3s ease;
+                    transition: opacity 0.4s ease;
                     pointer-events: none;
+                }
+
+                .cart-item::after {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 1px;
+                    background: linear-gradient(90deg, transparent 0%, rgba(64, 224, 208, 0.2) 50%, transparent 100%);
+                    opacity: 0;
+                    transition: opacity 0.4s ease;
                 }
 
                 .cart-item:hover::before {
                     opacity: 1;
                 }
 
+                .cart-item:hover::after {
+                    opacity: 1;
+                }
+
                 .cart-item:hover {
-                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06));
-                    border-color: rgba(57, 181, 74, 0.3);
-                    transform: translateY(-3px) scale(1.02);
-                    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4), 0 0 20px rgba(57, 181, 74, 0.1);
+                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+                    border-color: rgba(64, 224, 208, 0.2);
+                    transform: translateY(-4px) scale(1.02);
+                    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(64, 224, 208, 0.1);
                 }
 
                 .item-image {
-                    width: 55px;
-                    height: 55px;
-                    border-radius: 12px;
+                    width: 70px;
+                    height: 70px;
+                    border-radius: 16px;
                     object-fit: cover;
-                    border: 2px solid rgba(255, 255, 255, 0.15);
-                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-                    transition: all 0.3s ease;
+                    border: 2px solid rgba(255, 255, 255, 0.08);
+                    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+                    transition: all 0.4s ease;
                     grid-column: 1;
                     grid-row: 1 / span 2;
+                    position: relative;
+                    overflow: hidden;
+                }
+
+                .item-image::after {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: linear-gradient(135deg, rgba(64, 224, 208, 0.1) 0%, transparent 100%);
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
                 }
 
                 .cart-item:hover .item-image {
-                    border-color: rgba(57, 181, 74, 0.4);
-                    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3), 0 0 10px rgba(57, 181, 74, 0.2);
+                    border-color: rgba(64, 224, 208, 0.3);
+                    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4), 0 0 20px rgba(64, 224, 208, 0.2);
+                    transform: scale(1.05);
+                }
+
+                .cart-item:hover .item-image::after {
+                    opacity: 1;
                 }
 
                 .item-details {
                     display: flex;
                     flex-direction: column;
-                    gap: 0.5rem;
+                    gap: 0.75rem;
                     justify-content: center;
                     grid-column: 2;
                     grid-row: 1;
                 }
 
                 .item-title {
-                    font-size: 1.1rem;
+                    font-size: 1.2rem;
                     font-weight: 700;
-                    color: var(--text-highlight, #ffffff);
+                    color: #ffffff;
                     margin: 0;
-                    line-height: 1.2;
-                    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+                    line-height: 1.3;
+                    letter-spacing: -0.01em;
+                    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
                 }
 
                 .item-price {
-                    font-size: 1rem;
-                    color: var(--primary-color, #39b54a);
+                    font-size: 1.1rem;
+                    color: #10b981;
                     font-weight: 800;
                     display: flex;
                     align-items: center;
                     gap: 0.25rem;
-                    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+                    letter-spacing: -0.01em;
+                    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
                 }
 
                 .item-price::before {
@@ -240,7 +312,7 @@ class AppCart extends HTMLElement {
                 .item-controls {
                     display: flex;
                     flex-direction: column;
-                    gap: 0.75rem;
+                    gap: 1rem;
                     align-items: flex-end;
                     justify-content: center;
                     grid-column: 3;
@@ -250,40 +322,75 @@ class AppCart extends HTMLElement {
                 .item-quantity {
                     display: flex;
                     align-items: center;
-                    gap: 0.5rem;
-                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
-                    padding: 0.5rem;
-                    border-radius: 12px;
-                    border: 1px solid rgba(255, 255, 255, 0.12);
-                    backdrop-filter: blur(10px);
-                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                    gap: 0.75rem;
+                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+                    padding: 0.75rem;
+                    border-radius: 16px;
+                    border: 1px solid rgba(255, 255, 255, 0.08);
+                    backdrop-filter: blur(15px);
+                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
                     align-self: flex-end;
+                    position: relative;
+                    overflow: hidden;
+                }
+
+                .item-quantity::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: linear-gradient(135deg, rgba(64, 224, 208, 0.05) 0%, transparent 100%);
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                }
+
+                .item-quantity:hover::before {
+                    opacity: 1;
                 }
 
                 .quantity-btn {
-                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
-                    border: 1px solid rgba(255, 255, 255, 0.2);
-                    color: var(--text-light, #cccccc);
-                    width: 28px;
-                    height: 28px;
-                    border-radius: 8px;
+                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.03) 100%);
+                    border: 1px solid rgba(255, 255, 255, 0.12);
+                    color: #e0e7ff;
+                    width: 32px;
+                    height: 32px;
+                    border-radius: 12px;
                     cursor: pointer;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    font-size: 1rem;
+                    font-size: 1.1rem;
                     font-weight: 700;
-                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
                     pointer-events: auto;
-                    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                    position: relative;
+                    overflow: hidden;
+                }
+
+                .quantity-btn::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+                    transition: left 0.5s ease;
+                }
+
+                .quantity-btn:hover::before {
+                    left: 100%;
                 }
 
                 .quantity-btn:hover {
-                    background: linear-gradient(135deg, var(--primary-color, #39b54a), #2ecc71);
+                    background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
                     color: white;
                     transform: scale(1.15);
-                    box-shadow: 0 4px 12px rgba(57, 181, 74, 0.3);
-                    border-color: rgba(57, 181, 74, 0.5);
+                    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+                    border-color: rgba(16, 185, 129, 0.5);
                 }
 
                 .quantity-btn:active {
@@ -291,38 +398,56 @@ class AppCart extends HTMLElement {
                 }
 
                 .quantity-display {
-                    min-width: 35px;
+                    min-width: 40px;
                     text-align: center;
-                    color: var(--text-highlight, #ffffff);
-                    font-weight: 700;
-                    font-size: 1rem;
+                    color: #ffffff;
+                    font-weight: 800;
+                    font-size: 1.1rem;
+                    letter-spacing: -0.01em;
                     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
                 }
 
                 .remove-btn {
-                    background: linear-gradient(135deg, rgba(231, 76, 60, 0.15), rgba(231, 76, 60, 0.05));
-                    border: 1px solid rgba(231, 76, 60, 0.3);
-                    color: #e74c3c;
-                    padding: 0.4rem 0.8rem;
-                    border-radius: 10px;
+                    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.03) 100%);
+                    border: 1px solid rgba(239, 68, 68, 0.2);
+                    color: #fca5a5;
+                    padding: 0.6rem 1rem;
+                    border-radius: 14px;
                     cursor: pointer;
-                    font-size: 0.8rem;
+                    font-size: 0.85rem;
                     font-weight: 600;
-                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
                     pointer-events: auto;
                     white-space: nowrap;
                     align-self: flex-end;
-                    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
                     text-transform: uppercase;
-                    letter-spacing: 0.5px;
+                    letter-spacing: 0.8px;
+                    position: relative;
+                    overflow: hidden;
+                }
+
+                .remove-btn::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.1), transparent);
+                    transition: left 0.5s ease;
+                }
+
+                .remove-btn:hover::before {
+                    left: 100%;
                 }
 
                 .remove-btn:hover {
-                    background: linear-gradient(135deg, #e74c3c, #c0392b);
+                    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
                     color: white;
                     transform: translateY(-2px) scale(1.05);
-                    box-shadow: 0 6px 16px rgba(231, 76, 60, 0.4);
-                    border-color: rgba(231, 76, 60, 0.6);
+                    box-shadow: 0 8px 30px rgba(239, 68, 68, 0.4);
+                    border-color: rgba(239, 68, 68, 0.5);
                 }
 
                 .remove-btn:active {
@@ -330,23 +455,37 @@ class AppCart extends HTMLElement {
                 }
 
                 .cart-summary {
-                    border-top: 1px solid rgba(255, 255, 255, 0.1);
-                    padding-top: 1.5rem;
-                    background: linear-gradient(135deg, rgba(20, 21, 21, 0.95), rgba(20, 21, 21, 0.98));
-                    margin: 0 -1.5rem -1.5rem -1.5rem;
-                    padding: 1.5rem;
-                    border-radius: 16px 16px 0 0;
-                    backdrop-filter: blur(20px);
-                    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+                    border-top: 1px solid rgba(255, 255, 255, 0.06);
+                    padding-top: 2rem;
+                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+                    margin: 0 -2rem -2rem -2rem;
+                    padding: 2rem;
+                    border-radius: 24px 24px 0 0;
+                    backdrop-filter: blur(5px);
+                    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+                    position: relative;
+                    overflow: hidden;
+                }
+
+                .cart-summary::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 1px;
+                    background: linear-gradient(90deg, transparent 0%, rgba(64, 224, 208, 0.2) 50%, transparent 100%);
                 }
 
                 .summary-row {
                     display: flex;
                     justify-content: space-between;
-                    margin-bottom: 1rem;
-                    color: var(--text-secondary, #cccccc);
+                    margin-bottom: 1.25rem;
+                    color: #a1a1aa;
                     font-size: 1rem;
-                    padding: 0.5rem 0;
+                    padding: 0.75rem 0;
+                    font-weight: 500;
+                    letter-spacing: 0.01em;
                 }
 
                 .summary-row:last-of-type {
@@ -354,56 +493,78 @@ class AppCart extends HTMLElement {
                 }
 
                 .summary-total {
-                    font-size: 1.4rem;
-                    font-weight: 700;
-                    color: var(--text-highlight, #ffffff);
-                    border-top: 2px solid rgba(255, 255, 255, 0.1);
-                    padding-top: 1.5rem;
-                    margin-top: 1rem;
+                    font-size: 1.5rem;
+                    font-weight: 800;
+                    color: #ffffff;
+                    border-top: 2px solid rgba(255, 255, 255, 0.06);
+                    padding-top: 1.75rem;
+                    margin-top: 1.5rem;
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
+                    letter-spacing: -0.02em;
+                    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
                 }
 
                 .summary-total span:last-child {
-                    color: var(--primary-color, #39b54a);
-                    font-size: 1.6rem;
+                    color: #10b981;
+                    font-size: 1.8rem;
+                    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
                 }
 
                 .checkout-btn {
                     width: 100%;
-                    background: linear-gradient(135deg, var(--primary-color, #39b54a), var(--primary-light, #2ecc71));
+                    background: linear-gradient(135deg, #10b981 0%, #34d399 50%, #10b981 100%);
                     color: white;
                     border: none;
-                    padding: 1rem;
-                    border-radius: 14px;
+                    padding: 1.25rem;
+                    border-radius: 18px;
                     font-weight: 700;
-                    font-size: 1rem;
+                    font-size: 1.1rem;
                     cursor: pointer;
-                    transition: all 0.3s ease;
-                    margin-top: 1.25rem;
+                    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                    margin-top: 1.5rem;
                     pointer-events: auto;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    gap: 0.5rem;
+                    gap: 0.75rem;
                     text-transform: uppercase;
-                    letter-spacing: 0.5px;
+                    letter-spacing: 1px;
+                    position: relative;
+                    overflow: hidden;
+                    box-shadow: 0 8px 30px rgba(16, 185, 129, 0.3);
                 }
 
                 .checkout-btn::before {
                     content: '💳';
-                    font-size: 1.2rem;
+                    font-size: 1.3rem;
+                    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
+                }
+
+                .checkout-btn::after {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+                    transition: left 0.6s ease;
+                }
+
+                .checkout-btn:hover::after {
+                    left: 100%;
                 }
 
                 .checkout-btn:hover {
-                    transform: translateY(-3px);
-                    box-shadow: 0 15px 30px rgba(57, 181, 74, 0.4);
-                    background: linear-gradient(135deg, #2ecc71, #27ae60);
+                    transform: translateY(-4px);
+                    box-shadow: 0 20px 50px rgba(16, 185, 129, 0.5);
+                    background: linear-gradient(135deg, #34d399 0%, #10b981 50%, #059669 100%);
                 }
 
                 .checkout-btn:active {
-                    transform: translateY(-1px);
+                    transform: translateY(-2px);
                 }
 
                 .checkout-btn:disabled {
@@ -415,37 +576,61 @@ class AppCart extends HTMLElement {
 
                 .empty-cart {
                     text-align: center;
-                    padding: 4rem 2rem;
-                    color: var(--text-secondary, #cccccc);
+                    padding: 5rem 2rem;
+                    color: #a1a1aa;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-                    gap: 1.5rem;
+                    gap: 2rem;
                 }
 
                 .empty-cart::before {
                     content: '🛒';
-                    font-size: 4rem;
-                    opacity: 0.3;
-                    animation: float 3s ease-in-out infinite;
+                    font-size: 5rem;
+                    opacity: 0.2;
+                    animation: float 4s ease-in-out infinite;
+                    filter: drop-shadow(0 4px 20px rgba(64, 224, 208, 0.1));
                 }
 
                 .empty-cart p {
                     margin: 0;
-                    font-size: 1.2rem;
-                    font-weight: 500;
-                    color: var(--text-light, #cccccc);
+                    font-size: 1.3rem;
+                    font-weight: 600;
+                    color: #ffffff;
+                    letter-spacing: -0.01em;
+                    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
                 }
 
                 .empty-cart .subtitle {
-                    font-size: 1rem;
+                    font-size: 1.1rem;
                     opacity: 0.7;
                     margin-top: 0.5rem;
+                    color: #a1a1aa;
+                    font-weight: 400;
                 }
 
                 @keyframes float {
-                    0%, 100% { transform: translateY(0px); }
-                    50% { transform: translateY(-10px); }
+                    0%, 100% { 
+                        transform: translateY(0px) rotate(0deg); 
+                    }
+                    50% { 
+                        transform: translateY(-15px) rotate(5deg); 
+                    }
+                }
+
+                @keyframes slideIn {
+                    from {
+                        opacity: 0;
+                        transform: translateX(30px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateX(0);
+                    }
+                }
+
+                .cart-item {
+                    animation: slideIn 0.5s ease-out;
                 }
 
                 @media (max-width: 768px) {
@@ -455,73 +640,75 @@ class AppCart extends HTMLElement {
                     }
                     
                     .cart-item {
-                        grid-template-columns: 45px 1fr auto;
-                        gap: 0.75rem;
-                        padding: 1rem;
+                        grid-template-columns: 60px 1fr auto;
+                        gap: 1rem;
+                        padding: 1.25rem;
                     }
                     
                     .item-image {
-                        width: 45px;
-                        height: 45px;
+                        width: 60px;
+                        height: 60px;
                     }
                     
                     .item-title {
-                        font-size: 1rem;
+                        font-size: 1.1rem;
                     }
                     
                     .item-price {
-                        font-size: 0.9rem;
+                        font-size: 1rem;
                     }
                     
                     .item-controls {
-                        gap: 0.5rem;
+                        gap: 0.75rem;
                     }
                     
                     .quantity-btn {
-                        width: 24px;
-                        height: 24px;
-                        font-size: 0.9rem;
+                        width: 28px;
+                        height: 28px;
+                        font-size: 1rem;
                     }
                     
                     .remove-btn {
-                        padding: 0.3rem 0.5rem;
-                        font-size: 0.75rem;
+                        padding: 0.5rem 0.75rem;
+                        font-size: 0.8rem;
                     }
                     
                     .cart-header {
-                        padding: 1.25rem;
+                        padding: 1.5rem 1.5rem 1.25rem 1.5rem;
                     }
                     
                     .cart-title {
-                        font-size: 1.25rem;
+                        font-size: 1.5rem;
                     }
                     
                     .cart-content {
-                        padding: 1.25rem;
+                        padding: 1.5rem;
                     }
                     
                     .cart-summary {
-                        padding: 1.25rem;
-                        margin: 0 -1.25rem -1.25rem -1.25rem;
+                        padding: 1.5rem;
+                        margin: 0 -1.5rem -1.5rem -1.5rem;
                     }
                 }
 
                 /* Scrollbar styling */
                 :host::-webkit-scrollbar {
-                    width: 6px;
+                    width: 8px;
                 }
 
                 :host::-webkit-scrollbar-track {
-                    background: rgba(255, 255, 255, 0.05);
+                    background: rgba(255, 255, 255, 0.03);
+                    border-radius: 4px;
                 }
 
                 :host::-webkit-scrollbar-thumb {
-                    background: rgba(255, 255, 255, 0.2);
-                    border-radius: 3px;
+                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+                    border-radius: 4px;
+                    border: 1px solid rgba(255, 255, 255, 0.1);
                 }
 
                 :host::-webkit-scrollbar-thumb:hover {
-                    background: rgba(255, 255, 255, 0.3);
+                    background: linear-gradient(135deg, rgba(64, 224, 208, 0.2) 0%, rgba(64, 224, 208, 0.1) 100%);
                 }
             </style>
 
