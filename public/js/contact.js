@@ -240,26 +240,46 @@ class ContactPage {
     initializeFAQ() {
         const faqItems = document.querySelectorAll('.faq-item');
         
-        faqItems.forEach(item => {
+        console.log('FAQ items found:', faqItems.length);
+        
+        faqItems.forEach((item, index) => {
             const question = item.querySelector('.faq-question');
+            const answer = item.querySelector('.faq-answer');
             
-            question.addEventListener('click', () => {
-                const isActive = item.classList.contains('active');
-                
-                // Close all other FAQ items
-                faqItems.forEach(otherItem => {
-                    if (otherItem !== item) {
-                        otherItem.classList.remove('active');
+            console.log(`FAQ item ${index + 1}:`, item);
+            console.log(`Question element:`, question);
+            console.log(`Answer element:`, answer);
+            
+            if (question && answer) {
+                question.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const isActive = item.classList.contains('active');
+                    console.log(`FAQ item ${index + 1} clicked, currently active:`, isActive);
+                    
+                    // Close all other FAQ items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle current item
+                    if (isActive) {
+                        item.classList.remove('active');
+                        console.log(`FAQ item ${index + 1} closed`);
+                    } else {
+                        item.classList.add('active');
+                        console.log(`FAQ item ${index + 1} opened`);
                     }
                 });
                 
-                // Toggle current item
-                if (isActive) {
-                    item.classList.remove('active');
-                } else {
-                    item.classList.add('active');
-                }
-            });
+                // Add hover effect
+                question.style.cursor = 'pointer';
+            } else {
+                console.error(`FAQ item ${index + 1} missing question or answer element`);
+            }
         });
     }
 

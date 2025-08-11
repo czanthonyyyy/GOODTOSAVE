@@ -4,15 +4,7 @@
   "description": "Good to Save - Transform Food Waste into Food Security",
   "main": "index.js",
   "scripts": {
-    "dev": "live-server public",
-    "build": "echo 'Build process for static files'",
-    "start": "node backend/server.js"
-  },
-  "dependencies": {
-    "qrcode": "^1.5.4",
-    "express": "^4.18.2",
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1"
+    "dev": "live-server public"
   },
   "devDependencies": {
     "live-server": "^1.2.2"

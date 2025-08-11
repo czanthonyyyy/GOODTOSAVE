@@ -432,13 +432,7 @@
     font-weight: 500;
 }
 
-/* FAQ */
-.faq { padding: 4rem 0; background: rgba(255,255,255,0.03); }
-.faq-list { max-width: 900px; margin: 0 auto; display:grid; gap: .75rem; }
-.faq-item { border:1px solid rgba(255,255,255,0.1); border-radius:12px; background: rgba(255,255,255,0.06); overflow:hidden; }
-.faq-question { width:100%; text-align:left; padding:1rem 1.25rem; background:transparent; color: var(--text-highlight); font-weight:600; border:0; cursor:pointer; display:block; }
-.faq-answer { display:none; padding: 0 1.25rem 1.25rem 1.25rem; color: var(--text-primary); }
-.faq-answer.open { display:block; }
+/* FAQ - Styles moved to contact.css to avoid conflicts */
 
 @media (max-width: 900px){
   .business-title {
