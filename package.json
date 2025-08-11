@@ -15,5 +15,8 @@
     "marketplace"
   ],
   "author": "GTS Team",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "firebase": "^12.1.0"
+  }
 }
