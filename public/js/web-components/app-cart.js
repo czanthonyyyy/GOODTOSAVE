@@ -989,7 +989,7 @@ class AppCart extends HTMLElement {
             window.navigateToPayment();
         } else {
             // Fallback to direct navigation
-            window.location.href = 'pages/payment.html';
+            window.location.href = '../pages/payment.html';
         }
     }
 

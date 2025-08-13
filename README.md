@@ -61,7 +61,7 @@ Una plataforma web moderna y responsive diseñada para reducir el desperdicio gl
 /food-marketplace/
 ├── index.html                 # Página principal
 ├── about.html                 # Sobre nosotros
-├── marketplace.html           # Catálogo de productos
+├── marketplace/marketplace.html           # Catálogo de productos
 ├── payment.html              # Proceso de pago
 ├── qr.html                   # Confirmación QR
 ├── login.html                # Inicio de sesión
@@ -79,7 +79,7 @@ Una plataforma web moderna y responsive diseñada para reducir el desperdicio gl
 │   ├── main.js            # Funcionalidad principal
 │   ├── components.js      # Cargador de componentes
 │   ├── cart.js            # Lógica del carrito
-│   ├── auth.js            # Autenticación
+│   ├── auth/auth.js       # Autenticación
 │   └── qr-generator.js    # Generación de QR
 ├── assets/                 # Recursos
 │   ├── images/            # Imágenes

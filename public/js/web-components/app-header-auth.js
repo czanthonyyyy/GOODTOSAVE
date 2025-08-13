@@ -77,13 +77,13 @@ class AppHeaderAuth extends HTMLElement {
       </style>
       <header class="header">
         <div class="header-container">
-          <a href="index.html" class="logo"><img id="site-logo" src="" alt="Good to Save Logo"/></a>
+                          <a href="../pages/index.html" class="logo"><img id="site-logo" src="" alt="Good to Save Logo"/></a>
           <nav>
             <ul class="nav-menu">
-              <li><a href="index.html">Home</a></li>
-              <li><a href="marketplace.html">Marketplace</a></li>
-              <li><a href="about.html">About Us</a></li>
-              <li><a href="contact.html">Contact</a></li>
+                              <li><a href="../pages/index.html">Home</a></li>
+                              <li><a href="../marketplace/marketplace.html">Marketplace</a></li>
+                              <li><a href="../pages/about.html">About Us</a></li>
+                              <li><a href="../pages/contact.html">Contact</a></li>
             </ul>
           </nav>
           <div class="auth-area">
@@ -156,12 +156,12 @@ class AppHeaderAuth extends HTMLElement {
 
     profile?.addEventListener('click', () => {
       // Ir al dashboard de usuario
-      window.location.href = 'dashboard.html';
+                      window.location.href = '../pages/dashboard.html';
     });
 
     orders?.addEventListener('click', () => {
       // Placeholder: por ahora ir al marketplace o futura página de pedidos
-      window.location.href = 'marketplace.html';
+              window.location.href = '../marketplace/marketplace.html';
     });
 
     logout?.addEventListener('click', async () => {

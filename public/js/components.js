@@ -316,20 +316,20 @@ class ComponentLoader {
 function getAuthPath() {
     const currentPath = window.location.pathname;
     
-    // Si estamos en la carpeta pages/, usar auth.html (misma carpeta)
-    if (currentPath.includes('/pages/')) {
+    // Si estamos en la carpeta auth/, usar auth.html (misma carpeta)
+    if (currentPath.includes('/auth/')) {
         return 'auth.html';
     }
     
-    // Si estamos en la raíz o en otra carpeta, usar pages/auth.html
-    return 'pages/auth.html';
+    // Si estamos en la raíz o en otra carpeta, usar auth/auth.html
+    return 'auth/auth.html';
 }
 
 /**
  * Actualiza todos los enlaces de autenticación con la ruta correcta
  */
 function updateAuthLinks() {
-    const authLinks = document.querySelectorAll('a[href="auth.html"], a[href="pages/auth.html"], a[data-auth-link]');
+    const authLinks = document.querySelectorAll('a[href="auth.html"], a[href="pages/auth.html"], a[href="auth/auth.html"], a[data-auth-link]');
     
     authLinks.forEach(link => {
         link.href = getAuthPath();

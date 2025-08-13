@@ -362,16 +362,16 @@ class AppHeader extends HTMLElement {
             
             <header class="header">
                 <div class="header-container">
-                    <a href="index.html" class="logo">
+                    <a href="../pages/index.html" class="logo">
                         <img id="site-logo" src="" alt="Good to Save Logo" />
                     </a>
                     
                     <nav>
                         <ul class="nav-menu">
-                                                    <li><a href="index.html">Home</a></li>
-                        <li><a href="marketplace.html">Marketplace</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                                                    <li><a href="../pages/index.html">Home</a></li>
+                        <li><a href="../marketplace/marketplace.html">Marketplace</a></li>
+                        <li><a href="../pages/about.html">About Us</a></li>
+                        <li><a href="../pages/contact.html">Contact</a></li>
                         </ul>
                     </nav>
                     
@@ -381,7 +381,7 @@ class AppHeader extends HTMLElement {
                             <span class="cart-count" id="cart-count">0</span>
                         </button>
                         
-                        <a href="auth.html" class="btn btn-primary" data-auth-link>Login or Register</a>
+                        <a href="../auth/auth.html" class="btn btn-primary" data-auth-link>Login or Register</a>
                         
                         <button class="mobile-menu-toggle" id="mobile-menu-toggle">
                             <i class="fas fa-bars"></i>

@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Redirigir al marketplace tras login exitoso
             setTimeout(() => {
-                window.location.href = 'marketplace.html';
+                window.location.href = '../marketplace/marketplace.html';
             }, 1000);
         } catch (error) {
             throw new Error(error);
@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Redirect to marketplace after successful registration
             setTimeout(() => {
-                window.location.href = 'marketplace.html';
+                window.location.href = '../marketplace/marketplace.html';
             }, 1000);
         } catch (error) {
             throw new Error(error);

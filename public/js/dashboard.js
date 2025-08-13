@@ -21,7 +21,7 @@
     if (auth && auth.currentUser) return auth.currentUser; // live session
     if (stored && stored.uid) return stored; // fallback
     // No session -> go to auth
-    window.location.href = 'auth.html';
+            window.location.href = '../auth/auth.html';
   }
 
   async function fetchUserDoc(uid) {

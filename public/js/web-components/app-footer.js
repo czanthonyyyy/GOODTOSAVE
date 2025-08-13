@@ -437,9 +437,9 @@ class AppFooter extends HTMLElement {
                     <div class="footer-section">
                         <h3>Quick Links</h3>
                         <ul class="footer-links">
-                                                                                <li><a href="marketplace.html">Marketplace</a></li>
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="auth.html" data-auth-link>Sign In</a></li>
+                            <li><a href="../marketplace/marketplace.html">Marketplace</a></li>
+                            <li><a href="../pages/about.html">About Us</a></li>
+                            <li><a href="../auth/auth.html" data-auth-link>Sign In</a></li>
                             <li><a href="#support">Support</a></li>
                         </ul>
                     </div>
@@ -450,7 +450,7 @@ class AppFooter extends HTMLElement {
                             <li><a href="#blog">Blog</a></li>
                             <li><a href="#guides">Guides</a></li>
                             <li><a href="#faq">FAQ</a></li>
-                                                                                                                   <li><a href="contact.html">Contact</a></li>
+                            <li><a href="../pages/contact.html">Contact</a></li>
                         </ul>
                     </div>
                     

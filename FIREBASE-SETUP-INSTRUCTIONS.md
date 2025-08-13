@@ -34,7 +34,7 @@
 
 ### 5. Configurar Credenciales en el Proyecto
 
-**📍 UBICACIÓN: `public/js/firebase-config.js`**
+**📍 UBICACIÓN: `public/firebase/firebase-config.js`**
 
 Reemplaza las credenciales en la línea 4-10:
 
@@ -73,7 +73,7 @@ service cloud.firestore {
 
 ## 🧪 Probar la Configuración
 
-1. Abre `public/pages/auth.html` en tu navegador
+1. Abre `public/auth/auth.html` en tu navegador
 2. Abre la consola del navegador (F12)
 3. Deberías ver: `✅ Firebase configurado correctamente`
 4. Intenta registrar un usuario
@@ -115,7 +115,7 @@ service cloud.firestore {
 - [ ] Proyecto creado en Firebase Console
 - [ ] Authentication habilitado
 - [ ] Firestore Database habilitado
-- [ ] Credenciales configuradas en `firebase-config.js`
+- [ ] Credenciales configuradas en `firebase/firebase-config.js`
 - [ ] Reglas de Firestore configuradas
 - [ ] Prueba de registro exitosa
 - [ ] Prueba de login exitosa

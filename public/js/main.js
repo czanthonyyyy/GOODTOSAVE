@@ -85,7 +85,7 @@ class FoodMarketplaceApp {
       case 'index.html':
         this.initializeHomePage();
         break;
-      case 'marketplace.html':
+              case 'marketplace/marketplace.html':
         this.initializeMarketplacePage();
         break;
       case 'about.html':
