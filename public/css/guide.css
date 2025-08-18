@@ -1,0 +1,113 @@
+/* Tip styles specific to guide page. Keep light; rely on main/pages styles. */
+
+.guide-hero {
+    position: relative;
+    padding: 3rem 0 2rem;
+}
+
+.guide-hero .hero-content {
+    text-align: center;
+}
+
+.guide-hero .hero-title {
+    margin-bottom: 0.5rem;
+}
+
+.guide-hero .hero-subtitle {
+    max-width: 720px;
+    margin: 0 auto 1.25rem;
+}
+
+.guide-hero .hero-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+}
+
+.guide-hero .hero-note {
+    margin-top: 0.75rem;
+    color: var(--text-primary);
+}
+
+.guide-hero .link-inline {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.guide-hero .link-inline:hover {
+    text-decoration: underline;
+}
+
+.guide-hero + .section-divider,
+.how-it-works + .section-divider {
+    margin: 0.5rem 0;
+}
+
+.quick-start .qs-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.quick-start .qs-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+.quick-start .qs-number {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: var(--primary-color);
+    color: var(--white);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+/* Space tuning between Quick Start and CTA */
+.quick-start {
+    margin-bottom: 1rem;
+    padding-top: 0.5rem;
+}
+
+.quick-start + .cta-section {
+    margin-top: 1.25rem;
+}
+
+@media (max-width: 900px) {
+    .quick-start .qs-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Reduce bottom spacing after How It Works specifically on guide */
+.how-it-works {
+    padding-bottom: 1rem !important;
+}
+
+.how-it-works .process-flow {
+    margin-bottom: 0;
+}
+
+.quick-start .section-header {
+    margin-top: 0.25rem;
+}
+
+@media (max-width: 560px) {
+    .quick-start .qs-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Add extra spacing between Quick Start and final CTA */
+.quick-start {
+    margin-bottom: 2.5rem;
+}
+
+/* (Eliminado FAQ y Recursos en guide) */
+
