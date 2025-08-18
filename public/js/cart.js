@@ -32,7 +32,7 @@ class ShoppingCart {
   shouldInitializeCart() {
     const currentPage = window.location.pathname;
     const cartPages = [
-      '/marketplace.html',
+              '/marketplace/marketplace.html',
       '/payment.html',
       '/qr.html'
     ];

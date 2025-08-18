@@ -792,6 +792,113 @@
     .location-card {
         padding: 2rem;
     }
+    
+    /* Hero section mobile improvements */
+    .contact-hero {
+        min-height: 50vh;
+        padding: 3rem 0;
+    }
+    
+    .contact-hero .hero-content {
+        padding: 2rem 1rem;
+    }
+    
+    .contact-hero .hero-stats {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .contact-hero .stat-item {
+        min-width: 120px;
+    }
+    
+    /* Form improvements for mobile */
+    .form-section {
+        padding: 2rem 0;
+    }
+    
+    .form-container {
+        margin: 0 0.5rem;
+    }
+    
+    .form-group label {
+        font-size: 0.9rem;
+    }
+    
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        padding: 14px 16px;
+        font-size: 1rem;
+    }
+    
+    .priority-selector .priority-option {
+        padding: 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .form-actions .btn {
+        width: 100%;
+        padding: 16px 20px;
+        font-size: 1rem;
+        min-height: 52px;
+    }
+    
+    /* Contact methods mobile */
+    .methods-grid {
+        gap: 1.5rem;
+        padding: 0 1rem;
+    }
+    
+    .method-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .method-card h3 {
+        font-size: 1.25rem;
+    }
+    
+    .method-card p {
+        font-size: 0.9rem;
+    }
+    
+    /* Locations mobile */
+    .locations-grid {
+        gap: 1.5rem;
+        padding: 0 1rem;
+    }
+    
+    .location-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .location-card h3 {
+        font-size: 1.25rem;
+    }
+    
+    .location-card p {
+        font-size: 0.9rem;
+    }
+    
+    .location-btn {
+        padding: 1rem 1.5rem;
+        font-size: 0.9rem;
+    }
+    
+    /* Section headers small mobile */
+    .section-header {
+        margin-bottom: 2rem;
+    }
+    
+    .section-header h2 {
+        font-size: 1.75rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .section-header p {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
 }
 
 @media (max-width: 480px) {
@@ -818,5 +925,252 @@
     
     .section-header h2 {
         font-size: 2rem;
+    }
+    
+    /* Hero section small mobile */
+    .contact-hero {
+        min-height: 40vh;
+        padding: 2rem 0;
+    }
+    
+    .contact-hero .hero-content {
+        padding: 1.5rem 0.75rem;
+    }
+    
+    .contact-hero .hero-title {
+        font-size: 1.75rem;
+        margin-bottom: 1rem;
+    }
+    
+    .contact-hero .hero-subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .contact-hero .hero-stats {
+        gap: 1.5rem;
+    }
+    
+    .contact-hero .stat-item {
+        min-width: 100px;
+    }
+    
+    .contact-hero .stat-number {
+        font-size: 1.5rem;
+    }
+    
+    .contact-hero .stat-label {
+        font-size: 0.8rem;
+    }
+    
+    /* Form small mobile */
+    .form-section {
+        padding: 1.5rem 0;
+    }
+    
+    .form-container {
+        margin: 0 0.25rem;
+        padding: 1.25rem;
+    }
+    
+    .form-group {
+        margin-bottom: 1.25rem;
+    }
+    
+    .form-group label {
+        font-size: 0.875rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        padding: 16px 14px;
+        font-size: 1rem;
+        border-radius: 8px;
+    }
+    
+    .priority-selector {
+        gap: 0.75rem;
+    }
+    
+    .priority-selector .priority-option {
+        padding: 0.875rem;
+        font-size: 0.875rem;
+        border-radius: 8px;
+    }
+    
+    .form-actions {
+        gap: 1rem;
+    }
+    
+    .form-actions .btn {
+        padding: 18px 16px;
+        font-size: 0.95rem;
+        min-height: 56px;
+    }
+    
+    /* Contact methods small mobile */
+    .methods-grid {
+        padding: 0 0.5rem;
+        gap: 1rem;
+    }
+    
+    .method-card {
+        padding: 1.5rem;
+    }
+    
+    .method-card h3 {
+        font-size: 1.125rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .method-card p {
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+    
+    .method-card .method-icon {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+    
+    /* Locations small mobile */
+    .locations-grid {
+        padding: 0 0.5rem;
+        gap: 1rem;
+    }
+    
+    .location-card {
+        padding: 1.5rem;
+    }
+    
+    .location-card h3 {
+        font-size: 1.125rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .location-card p {
+        font-size: 0.875rem;
+        margin-bottom: 1rem;
+    }
+    
+    .location-btn {
+        padding: 1rem 1.25rem;
+        font-size: 0.875rem;
+        border-radius: 10px;
+    }
+    
+    /* Section headers small mobile */
+    .section-header {
+        margin-bottom: 2rem;
+    }
+    
+    .section-header h2 {
+        font-size: 1.75rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .section-header p {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 360px) {
+    /* Hero section extra small mobile */
+    .contact-hero {
+        min-height: 35vh;
+        padding: 1.5rem 0;
+    }
+    
+    .contact-hero .hero-content {
+        padding: 1rem 0.5rem;
+    }
+    
+    .contact-hero .hero-title {
+        font-size: 1.5rem;
+    }
+    
+    .contact-hero .hero-subtitle {
+        font-size: 0.85rem;
+    }
+    
+    .contact-hero .hero-stats {
+        gap: 1rem;
+    }
+    
+    .contact-hero .stat-item {
+        min-width: 90px;
+    }
+    
+    .contact-hero .stat-number {
+        font-size: 1.25rem;
+    }
+    
+    .contact-hero .stat-label {
+        font-size: 0.75rem;
+    }
+    
+    /* Form extra small mobile */
+    .form-container {
+        padding: 1rem;
+        margin: 0 0.125rem;
+    }
+    
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        padding: 18px 12px;
+        font-size: 0.95rem;
+    }
+    
+    .form-actions .btn {
+        padding: 20px 14px;
+        font-size: 0.9rem;
+        min-height: 60px;
+    }
+    
+    /* Contact methods extra small mobile */
+    .method-card {
+        padding: 1.25rem;
+    }
+    
+    .method-card h3 {
+        font-size: 1rem;
+    }
+    
+    .method-card p {
+        font-size: 0.8rem;
+    }
+    
+    .method-card .method-icon {
+        font-size: 1.75rem;
+    }
+    
+    /* Locations extra small mobile */
+    .location-card {
+        padding: 1.25rem;
+    }
+    
+    .location-card h3 {
+        font-size: 1rem;
+    }
+    
+    .location-card p {
+        font-size: 0.8rem;
+    }
+    
+    .location-btn {
+        padding: 1rem 1rem;
+        font-size: 0.8rem;
+    }
+    
+    /* Section headers extra small mobile */
+    .section-header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .section-header p {
+        font-size: 0.85rem;
     }
 } 
