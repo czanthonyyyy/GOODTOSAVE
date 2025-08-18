@@ -87,6 +87,27 @@ class AppFooter extends HTMLElement {
                     padding-right: 20px;
                 }
 
+                .legal-links {
+                    margin-top: 0.5rem;
+                    font-size: 0.9rem;
+                }
+
+                .legal-links a {
+                    color: var(--text-primary);
+                    text-decoration: none;
+                    transition: var(--transition);
+                    font-family: 'Inter', sans-serif;
+                }
+
+                .legal-links a:hover {
+                    color: var(--primary-color);
+                }
+
+                .legal-links .separator {
+                    color: var(--text-lighter);
+                    margin: 0 0.5rem;
+                }
+
                 .newsletter {
                     margin-top: 0.5rem;
                     background: linear-gradient(135deg, rgba(57, 181, 74, 0.05) 0%, rgba(46, 204, 113, 0.05) 100%);
@@ -495,6 +516,15 @@ class AppFooter extends HTMLElement {
                 
                 <div class="footer-bottom">
                     <p>&copy; 2025 Good to Save. All rights reserved. | <i class="fas fa-heart"></i> Made with love for the planet</p>
+                    <nav class="legal-links" aria-label="Legal links">
+                        <a href="../pages/privacy.html">Privacy Policy</a>
+                        <span class="separator">•</span>
+                        <a href="../pages/terms.html">Terms of Service</a>
+                        <span class="separator">•</span>
+                        <a href="../pages/data-protection.html">Data Protection</a>
+                        <span class="separator">•</span>
+                        <a href="../pages/accessibility.html">Accessibility</a>
+                    </nav>
                 </div>
             </footer>
         `;
