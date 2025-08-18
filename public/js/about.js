@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeScrollAnimations();
     loadTeamMembers();
     initializeParticles();
+    initializeFAQ();
     
     // Counter Animation
     function initializeCounters() {
@@ -652,6 +653,43 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     `;
     document.head.appendChild(rippleStyle);
+    
+    // FAQ Functionality
+    function initializeFAQ() {
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            const answer = item.querySelector('.faq-answer');
+            const icon = item.querySelector('.fa-chevron-down');
+            
+            if (question && answer && icon) {
+                question.addEventListener('click', () => {
+                    const isOpen = item.classList.contains('active');
+                    
+                    // Close all other FAQ items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                            const otherIcon = otherItem.querySelector('.fa-chevron-down');
+                            if (otherIcon) {
+                                otherIcon.style.transform = 'rotate(0deg)';
+                            }
+                        }
+                    });
+                    
+                    // Toggle current item
+                    if (isOpen) {
+                        item.classList.remove('active');
+                        icon.style.transform = 'rotate(0deg)';
+                    } else {
+                        item.classList.add('active');
+                        icon.style.transform = 'rotate(180deg)';
+                    }
+                });
+            }
+        });
+    }
     
     console.log('About Us page initialized successfully!');
 }); 
