@@ -1,9 +1,4 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
-import 'firebase/hosting';
-
-// Firebase Configuration
+// Firebase Configuration (Compat SDK)
 // IMPORTANTE: Reemplaza estas credenciales con las tuyas de Firebase Console
 
 const firebaseConfig = {
@@ -17,17 +12,30 @@ const firebaseConfig = {
   measurementId: "G-048PKJH5Y4"
 };
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+// Initialize Firebase using global compat SDK loaded in HTML
+(function initFirebaseCompat() {
+  try {
+    if (typeof firebase === 'undefined') {
+      console.error('❌ Firebase SDK (compat) no está cargado. Verifica las etiquetas <script> en auth.html.');
+      return;
+    }
 
-// Initialize Firebase services
-const auth = firebase.auth();
-const db = firebase.firestore();
+    // Prevent re-initialization
+    if (firebase.apps && firebase.apps.length > 0) {
+      console.debug('ℹ️ Firebase ya estaba inicializado');
+    } else {
+      firebase.initializeApp(firebaseConfig);
+      console.log('✅ Firebase inicializado');
+    }
 
-// Export services globally
-window.firebaseServices = {
-  auth: auth,
-  db: db
-};
+    // Initialize services (compat)
+    const auth = firebase.auth();
+    const db = firebase.firestore();
 
-console.log('✅ Firebase configurado correctamente'); 
+    // Expose globally for the auth service
+    window.firebaseServices = { auth, db };
+    console.log('✅ Firebase configurado correctamente');
+  } catch (e) {
+    console.error('❌ Error al inicializar Firebase:', e);
+  }
+})();

@@ -15,6 +15,47 @@
     overflow: hidden;
 }
 
+/* Back to Home floating button */
+.back-home-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 50;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #0f1419;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(6px);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.back-home-btn i {
+    color: var(--primary-color);
+}
+
+.back-home-btn:hover {
+    transform: translateY(-1px);
+    background: #ffffff;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.22);
+}
+
+@media (max-width: 768px) {
+    .back-home-btn {
+        top: 12px;
+        left: 12px;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 0.95rem;
+    }
+}
+
 /* Efectos de fondo modernos simplificados */
 .auth-page::before {
     content: '';
@@ -284,6 +325,8 @@
     font-size: 0.875rem;
     transition: var(--transition);
     background-color: var(--white);
+    position: relative;
+    z-index: 1; /* Asegura prioridad de clic sobre decoraciones */
 }
 
 .auth-page .input-group textarea {
@@ -346,6 +389,7 @@
     z-index: 2;
     background-color: var(--white);
     margin-bottom: 8px;
+    pointer-events: none; /* No bloquear clics en el input */
 }
 
 /* Ícono de error X pequeña */
@@ -361,6 +405,7 @@
     z-index: 3;
     opacity: 1;
     transition: var(--transition);
+    pointer-events: none; /* Evita cubrir el campo y dificultar el clic */
 }
 
 .auth-page .input-group:not(.error)::after {

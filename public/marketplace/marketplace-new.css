@@ -219,13 +219,15 @@
     margin: 2rem auto 1rem;
     max-width: 1400px;
     padding: 0 40px;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
+    background: linear-gradient(145deg, rgba(18, 22, 30, 0.92) 0%, rgba(12, 16, 24, 0.88) 100%);
+    backdrop-filter: blur(8px);
     border-radius: 20px;
     padding: 20px 30px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    position: sticky;
+    top: 72px;
+    z-index: 5;
 }
 
 .catalog-controls .controls-left {
@@ -265,9 +267,9 @@
 }
 
 .filter-pill {
-    border: 2px solid rgba(57, 181, 74, 0.3);
-    color: #39b54a;
-    background: rgba(57, 181, 74, 0.05);
+    border: 2px solid rgba(57, 181, 74, 0.35);
+    color: #78d08a;
+    background: rgba(57, 181, 74, 0.08);
     padding: 12px 20px;
     border-radius: 50px;
     font-weight: 600;
@@ -304,9 +306,9 @@
 
 .filter-pill.active { 
     background: linear-gradient(135deg, #39b54a 0%, #2ecc71 100%); 
-    color: #fff; 
-    border-color: #39b54a; 
-    box-shadow: 0 4px 15px rgba(57, 181, 74, 0.3);
+    color: #0e1a12; 
+    border-color: #2ecc71; 
+    box-shadow: 0 8px 24px rgba(57, 181, 74, 0.35);
 }
 
 .filter-pill i {
@@ -325,7 +327,7 @@
 }
 
 .sort-label { 
-    color: #555; 
+    color: #c5c5c5; 
     font-weight: 600; 
     font-size: 14px;
     display: flex;
@@ -339,11 +341,11 @@
 }
 
 #sort-select {
-    border: 2px solid rgba(57, 181, 74, 0.2);
+    border: 2px solid rgba(57, 181, 74, 0.25);
     border-radius: 12px;
     padding: 10px 15px;
-    background: white;
-    color: #333;
+    background: rgba(255,255,255,0.98);
+    color: #2d3436;
     font-weight: 500;
     font-size: 14px;
     cursor: pointer;
@@ -407,9 +409,9 @@
 }
 
 .contenedor-items.compact {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 220px));
-    justify-content: start;
-    grid-gap: 18px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    justify-content: center;
+    gap: 18px;
 }
 
 /* Container */
@@ -429,12 +431,11 @@
 .contenedor-items {
     margin-top: 30px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 260px));
-    justify-content: start;
-    grid-gap: 30px;
-    grid-row-gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    justify-content: center;
+    gap: 24px;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1320px;
     transition: all 0.3s ease;
 }
 
@@ -478,7 +479,8 @@
 
 .item .img-item {
     width: 100%;
-    height: 220px;
+    height: auto;
+    aspect-ratio: 4 / 3;
     object-fit: contain;
     object-position: center;
     border-radius: 12px;
@@ -613,9 +615,9 @@
     }
     
     .contenedor-items {
-        grid-template-columns: repeat(auto-fill, minmax(240px, 240px));
-        justify-content: start;
-        grid-gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        justify-content: center;
+        gap: 20px;
     }
     
     .catalog-controls {
@@ -630,9 +632,9 @@
     }
     
     .contenedor-items {
-        grid-template-columns: repeat(auto-fill, minmax(220px, 220px));
-        justify-content: start;
-        grid-gap: 15px;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        justify-content: center;
+        gap: 15px;
     }
     
     .catalog-controls {
@@ -707,9 +709,9 @@
     }
     
     .contenedor-items {
-        grid-template-columns: repeat(auto-fill, minmax(180px, 180px));
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
         justify-content: center;
-        grid-gap: 1rem;
+        gap: 1rem;
     }
     
     .item {
@@ -810,8 +812,8 @@
     }
     
     .contenedor-items {
-        grid-template-columns: repeat(auto-fill, minmax(160px, 160px));
-        grid-gap: 0.75rem;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 0.75rem;
     }
     
     .item {
@@ -904,8 +906,8 @@
     }
     
     .contenedor-items {
-        grid-template-columns: repeat(auto-fill, minmax(140px, 140px));
-        grid-gap: 0.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 0.5rem;
     }
     
     .item {
@@ -979,8 +981,8 @@
     }
     
     .contenedor-items {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 200px));
-        grid-gap: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
     }
     
     .catalog-controls {
