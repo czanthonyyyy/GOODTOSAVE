@@ -16,7 +16,7 @@ class AppFooter extends HTMLElement {
                     display: block;
                     background-color: var(--background-secondary);
                     color: var(--text-primary);
-                    padding: 4rem 0 1rem;
+                    padding: 4rem 0 calc(6rem + env(safe-area-inset-bottom, 0px));
                     margin-top: 6rem;
                 }
 
@@ -87,8 +87,12 @@ class AppFooter extends HTMLElement {
                     padding-right: 20px;
                 }
 
+                .footer-bottom p {
+                    margin: 0 0 0.25rem;
+                }
+
                 .legal-links {
-                    margin-top: 0.5rem;
+                    margin-top: 0.15rem;
                     font-size: 0.9rem;
                 }
 
