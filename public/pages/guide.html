@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting Started Guide - Good to Save</title>
+    <meta name="description" content="Quick start guide for Good to Save: how to sign up, buy surplus food at better prices, and help reduce food waste.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <link rel="stylesheet" href="../css/guide.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../assets/images/logo.svg">
+</head>
+<body>
+    <!-- Header Web Component -->
+    <app-header></app-header>
+
+    <!-- Hero / Intro -->
+    <section class="guide-hero">
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Welcome to Good to Save</h1>
+                <p class="hero-subtitle">We help restaurants prevent food waste and connect you with quality deals at better prices.</p>
+                <div class="hero-actions">
+                    <a href="../auth/auth.html" class="btn btn-primary" data-auth-link>Create Account / Sign In</a>
+                    <a href="../marketplace/marketplace.html" class="btn btn-outline">Browse Deals</a>
+                </div>
+                <div class="hero-note">Are you a restaurant? <a class="link-inline" href="sponsor-form.html">Become a provider</a></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="section-divider"></div>
+
+    <!-- How it works (3 steps) -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="how-it-works-header">
+                <div class="process-badge">Getting Started Is Easy</div>
+                <h2 class="process-title">How It Works</h2>
+                <p class="process-subtitle">Three simple steps to save money and reduce waste</p>
+            </div>
+
+            <div class="process-flow">
+                <div class="step-container">
+                    <div class="step-number">01</div>
+                    <div class="step-card">
+                        <div class="step-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 21V19C20 17.9 19.6 16.9 18.8 16.2C18.1 15.4 17.1 15 16 15H8C6.9 15 5.9 15.4 5.2 16.2C4.4 16.9 4 17.9 4 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/></svg>
+                        </div>
+                        <h3 class="step-title">Create your account</h3>
+                        <p class="step-description">Sign up in minutes to save your favorites and receive confirmations.</p>
+                        <div class="step-features"><a class="step-link" href="../auth/auth.html" data-auth-link>Sign up now</a></div>
+                    </div>
+                </div>
+
+                <div class="step-connector">
+                    <div class="connector-line"></div>
+                    <div class="connector-arrow">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                </div>
+
+                <div class="step-container">
+                    <div class="step-number">02</div>
+                    <div class="step-card">
+                        <div class="step-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 21L16.5 16.5M10.5 18C14.6421 18 18 14.6421 18 10.5C18 6.35786 14.6421 3 10.5 3C6.35786 3 3 6.35786 3 10.5C3 14.6421 6.35786 18 10.5 18Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </div>
+                        <h3 class="step-title">Explore and choose</h3>
+                        <p class="step-description">Find nearby restaurants and choose high‑quality surplus food at lower prices.</p>
+                        <div class="step-features"><a class="step-link" href="../marketplace/marketplace.html">Go to Marketplace</a></div>
+                    </div>
+                </div>
+
+                <div class="step-connector">
+                    <div class="connector-line"></div>
+                    <div class="connector-arrow">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                </div>
+
+                <div class="step-container">
+                    <div class="step-number">03</div>
+                    <div class="step-card">
+                        <div class="step-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </div>
+                        <h3 class="step-title">Purchase and collect</h3>
+                        <p class="step-description">Pay securely, receive a QR code, and collect at the scheduled time.</p>
+                        <div class="step-features"><span class="step-feature">Secure payment</span><span class="step-feature">Instant confirmation</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="section-divider"></div>
+
+    <!-- First-time checklist -->
+    <section class="quick-start">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">Quick Start</div>
+                <h2 class="section-title">Your first time in Good to Save</h2>
+                <p class="section-description">Follow this quick checklist and be ready in 2 minutes.</p>
+            </div>
+
+            <div class="qs-grid">
+                <div class="qs-card">
+                    <div class="qs-number">1</div>
+                    <h3>Sign up or sign in</h3>
+                    <p>Create your account with email or social login.</p>
+                    <a href="../auth/auth.html" class="btn btn-primary" data-auth-link>Create account</a>
+                </div>
+                <div class="qs-card">
+                    <div class="qs-number">2</div>
+                    <h3>Review your profile</h3>
+                    <p>Verify your email and add a display name for a better experience.</p>
+                </div>
+                <div class="qs-card">
+                    <div class="qs-number">3</div>
+                    <h3>Explore the Marketplace</h3>
+                    <p>Filter by distance and pick your favorite deal.</p>
+                    <a href="../marketplace/marketplace.html" class="btn btn-outline">View deals</a>
+                </div>
+                <div class="qs-card">
+                    <div class="qs-number">4</div>
+                    <h3>Confirm and pay</h3>
+                    <p>You'll receive a QR code with pickup details.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <!-- Final CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Ready to get started?</h2>
+                <p class="cta-description">Create your account and enjoy quality food at better prices while helping the planet.</p>
+                <div class="cta-actions">
+                    <a href="../auth/auth.html" class="btn btn-primary" data-auth-link>Create account</a>
+                    <a href="../marketplace/marketplace.html" class="btn btn-outline">Browse deals</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Web Component -->
+    <app-footer></app-footer>
+
+    <!-- Scripts -->
+    <script src="../js/web-components.js"></script>
+    <script src="../js/components.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/cart.js"></script>
+    
+</body>
+</html>
+
