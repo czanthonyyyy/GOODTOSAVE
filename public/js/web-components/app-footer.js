@@ -22,7 +22,7 @@ class AppFooter extends HTMLElement {
 
                 .footer-content {
                     display: grid;
-                    grid-template-columns: repeat(4, 1fr);
+                    grid-template-columns: 1fr 1fr 1fr 1.5fr;
                     gap: 2rem;
                     margin-bottom: 2rem;
                     max-width: 1200px;
@@ -40,6 +40,11 @@ class AppFooter extends HTMLElement {
                     word-wrap: break-word;
                     display: flex;
                     flex-direction: column;
+                }
+
+                .footer-section:last-child {
+                    grid-column: 4;
+                    overflow: visible;
                 }
 
                 .footer-section h3 {
@@ -93,6 +98,7 @@ class AppFooter extends HTMLElement {
                     max-width: 100%;
                     box-sizing: border-box;
                     width: 100%;
+                    margin-left: 0;
                 }
 
                 .newsletter::before {
@@ -131,7 +137,7 @@ class AppFooter extends HTMLElement {
                 }
 
                 .newsletter-input {
-                    flex: 1;
+                    flex: 1.2;
                     min-width: 0;
                     padding: 0.875rem 1rem;
                     border: 2px solid rgba(255, 255, 255, 0.1);
@@ -304,6 +310,11 @@ class AppFooter extends HTMLElement {
                         grid-template-columns: repeat(2, 1fr);
                         gap: 1.5rem;
                     }
+                    
+                    .footer-section:last-child {
+                        grid-column: auto;
+                        overflow: hidden;
+                    }
                 }
 
                 @media (max-width: 768px) {
@@ -314,16 +325,24 @@ class AppFooter extends HTMLElement {
                         padding-right: 15px;
                     }
                     
+                    .footer-section:last-child {
+                        grid-column: auto;
+                        overflow: hidden;
+                    }
+                    
                     .newsletter {
                         padding: 1rem;
                         margin-top: 0.25rem;
                         max-width: 100%;
+                        width: 100%;
+                        margin-left: 0;
                     }
 
                     .newsletter-input-group {
                         flex-direction: column;
                         gap: 0.5rem;
                         width: 100%;
+                        max-width: 100%;
                     }
 
                     .newsletter-btn {
@@ -339,6 +358,7 @@ class AppFooter extends HTMLElement {
                         font-size: 0.85rem;
                         min-width: auto;
                         width: 100%;
+                        flex: 1;
                     }
 
                     .social-links {
@@ -367,11 +387,16 @@ class AppFooter extends HTMLElement {
                     .newsletter {
                         padding: 0.875rem;
                         margin-top: 0.125rem;
+                        max-width: 100%;
+                        width: 100%;
+                        margin-left: 0;
                     }
                     
                     .newsletter-input-group {
                         gap: 0.375rem;
                         flex-direction: column;
+                        max-width: 100%;
+                        width: 100%;
                     }
                     
                     .newsletter-btn {
@@ -385,6 +410,7 @@ class AppFooter extends HTMLElement {
                         padding: 0.625rem 0.75rem;
                         font-size: 0.8rem;
                         width: 100%;
+                        flex: 1;
                     }
                 }
 
@@ -468,7 +494,7 @@ class AppFooter extends HTMLElement {
                 </div>
                 
                 <div class="footer-bottom">
-                    <p>&copy; 2024 Good to Save. All rights reserved. | <i class="fas fa-heart"></i> Made with love for the planet</p>
+                    <p>&copy; 2025 Good to Save. All rights reserved. | <i class="fas fa-heart"></i> Made with love for the planet</p>
                 </div>
             </footer>
         `;
