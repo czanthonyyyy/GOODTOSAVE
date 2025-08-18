@@ -396,10 +396,29 @@ class AppHeader extends HTMLElement {
         try {
             const img = this.shadowRoot.getElementById('site-logo');
             if (!img) return;
-            const inPages = window.location.pathname.includes('/pages/');
-            const src = (inPages ? '../' : '') + 'assets/img/GTSw.png';
-            img.src = src;
-        } catch (e) {}
+            
+            // Determinar la ruta correcta basada en la ubicación actual
+            const currentPath = window.location.pathname;
+            let logoPath;
+            
+            if (currentPath.includes('/marketplace/')) {
+                // Si estamos en el marketplace
+                logoPath = '../assets/img/GTSw.png';
+            } else if (currentPath.includes('/pages/')) {
+                // Si estamos en las páginas
+                logoPath = '../assets/img/GTSw.png';
+            } else if (currentPath.includes('/auth/')) {
+                // Si estamos en auth
+                logoPath = '../assets/img/GTSw.png';
+            } else {
+                // Si estamos en la raíz
+                logoPath = 'assets/img/GTSw.png';
+            }
+            
+            img.src = logoPath;
+        } catch (e) {
+            console.error('Error setting logo src:', e);
+        }
     }
 
     setupEventListeners() {
