@@ -439,21 +439,7 @@ class AppFooter extends HTMLElement {
                     }
                 }
 
-                :root {
-                    --background-secondary: #111111;
-                    --text-primary: #767676;
-                    --text-highlight: #2d3436;
-                    --text-light: #909090;
-                    --text-lighter: #c5c5c5;
-                    --primary-color: #39b54a;
-                    --primary-dark: #219a52;
-                    --success-color: #4caf50;
-                    --error-color: #e74c3c;
-                    --white: #ffffff;
-                    --shadow-green: rgba(46, 204, 113, 0.15);
-                    --border-radius: 8px;
-                    --transition: all 0.3s ease;
-                }
+                /* Heredar variables del documento */
             </style>
             
             <footer class="footer">

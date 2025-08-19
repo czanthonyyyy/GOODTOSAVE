@@ -59,6 +59,33 @@ class WebComponentsLoader {
     }
 }
 
+// Gestor de tema global (light/dark)
+const ThemeManager = {
+    getTheme() {
+        try { return localStorage.getItem('theme') || 'dark'; } catch (e) { return 'dark'; }
+    },
+    isLight() {
+        return this.getTheme() === 'light';
+    },
+    apply(theme) {
+        const root = document.documentElement;
+        if (theme === 'light') {
+            root.classList.add('light-theme');
+        } else {
+            root.classList.remove('light-theme');
+        }
+        try { localStorage.setItem('theme', theme); } catch (e) {}
+        document.dispatchEvent(new CustomEvent('theme-changed', { detail: { theme } }));
+    },
+    toggle() {
+        const current = this.getTheme();
+        this.apply(current === 'light' ? 'dark' : 'light');
+    },
+    init() {
+        this.apply(this.getTheme());
+    }
+};
+
 // Inicializar el cargador de componentes
 const componentsLoader = new WebComponentsLoader();
 
@@ -78,6 +105,8 @@ if (document.readyState === 'loading') {
 // Function to initialize components on a page
 function initializeWebComponents() {
     console.log('Inicializando web components...');
+    // Aplicar tema almacenado antes de insertar componentes
+    ThemeManager.init();
     
     // Reemplazar el header existente con el web component adecuado
     const existingHeader = document.querySelector('header.main-header');
@@ -206,3 +235,4 @@ window.WebComponentsLoader = WebComponentsLoader;
 window.initializeWebComponents = initializeWebComponents;
 window.updateCartCount = updateCartCount;
 window.updateFoodSaved = updateFoodSaved; 
+window.ThemeManager = ThemeManager;

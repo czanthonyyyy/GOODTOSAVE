@@ -9,6 +9,7 @@ class AppHeaderAuth extends HTMLElement {
     this.setLogoSrc();
     this.populateUser();
     this.setupEventListeners();
+    this.syncThemeButton();
     // Aplicar contador inicial del carrito
     try {
       const initial = (typeof window.__cartCount === 'number') ? window.__cartCount : this.readCartCountFromStorage();
@@ -51,26 +52,29 @@ class AppHeaderAuth extends HTMLElement {
         .logo:hover { color: var(--primary-dark); }
         .logo img { height: 32px; width: auto; display: block; }
         nav { display: flex; align-items: center; }
-        .nav-menu { display: flex; align-items: center; gap: 0; list-style: none; margin: 0; padding: 4px; background: rgba(255,255,255,.05); border-radius: 12px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.1); }
+        .nav-menu { display: flex; align-items: center; gap: 0; list-style: none; margin: 0; padding: 4px; background: var(--surface-translucent); border-radius: 12px; backdrop-filter: blur(10px); border: 1px solid var(--surface-border); }
         .nav-menu a { color: var(--text-primary); font-weight: 500; text-decoration: none; transition: all .3s cubic-bezier(.4,0,.2,1); font-family: 'Inter', sans-serif; padding: 12px 20px; border-radius: 8px; position: relative; display: block; font-size: .9rem; letter-spacing: .025em; }
         .nav-menu a:hover { color: var(--primary-color); background: rgba(57,181,74,.1); transform: translateY(-1px); }
         .auth-area { display: flex; gap: 1rem; align-items: center; }
-        .cart-toggle { position: relative; background: transparent; border: 2px solid rgba(255,255,255,.1); color: var(--text-primary); font-size: 1.1rem; cursor: pointer; padding: 8px; border-radius: 8px; transition: all .3s cubic-bezier(.4,0,.2,1); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
-        .cart-toggle:hover { color: var(--primary-color); background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.2); transform: translateY(-1px); }
+        .theme-toggle { position: relative; background: transparent; border: 2px solid var(--surface-border); color: var(--text-primary); font-size: 1.1rem; cursor: pointer; padding: 8px 10px; border-radius: 8px; transition: all .3s cubic-bezier(.4,0,.2,1); display:inline-flex; align-items:center; gap:.5rem; }
+        .theme-toggle:hover { color: var(--primary-color); background: var(--surface-translucent); border-color: var(--surface-border); transform: translateY(-1px); }
+        .theme-toggle .icon { font-style: normal; }
+        .cart-toggle { position: relative; background: transparent; border: 2px solid var(--surface-border); color: var(--text-primary); font-size: 1.1rem; cursor: pointer; padding: 8px; border-radius: 8px; transition: all .3s cubic-bezier(.4,0,.2,1); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
+        .cart-toggle:hover { color: var(--primary-color); background: var(--surface-translucent); border-color: var(--surface-border); transform: translateY(-1px); }
         .cart-count { position: absolute; top: -6px; right: -6px; background: linear-gradient(135deg, var(--error-color) 0%, #ff6b6b 100%); color: var(--white); font-size: .7rem; font-weight: 700; padding: 3px 6px; border-radius: 12px; min-width: 20px; text-align: center; display: none; box-shadow: 0 2px 8px rgba(231,76,60,.4); border: 2px solid var(--white); }
         .cart-count { transform-origin: center; transition: transform 0.2s ease; }
         @keyframes cart-bump { 0% { transform: scale(1);} 30% { transform: scale(1.25);} 60% { transform: scale(0.9);} 100% { transform: scale(1);} }
         .cart-count.bump { animation: cart-bump 300ms ease; }
         .profile { position: relative; }
-        .profile-button { display: inline-flex; align-items: center; gap: .6rem; padding: 6px 10px; border-radius: 10px; border: 2px solid rgba(255,255,255,.1); background: rgba(255,255,255,.05); color: var(--text-primary); cursor: pointer; font-family: 'Inter', sans-serif; transition: all .3s cubic-bezier(.4,0,.2,1); }
-        .profile-button:hover { background: rgba(255,255,255,.1); color: var(--white); border-color: rgba(255,255,255,.2); transform: translateY(-1px); }
+        .profile-button { display: inline-flex; align-items: center; gap: .6rem; padding: 6px 10px; border-radius: 10px; border: 2px solid var(--surface-border); background: var(--surface-translucent); color: var(--text-primary); cursor: pointer; font-family: 'Inter', sans-serif; transition: all .3s cubic-bezier(.4,0,.2,1); }
+        .profile-button:hover { background: var(--surface-hover); color: var(--text-on-elevated); border-color: var(--surface-border); transform: translateY(-1px); }
         .avatar { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-color), var(--primary-light)); color: white; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: .9rem; letter-spacing: .02em; }
         .name { color: var(--text-primary); font-weight: 600; font-size: .9rem; }
         .chev { width: 14px; height: 14px; opacity: .8; }
-        .menu { position: absolute; top: calc(100% + 8px); right: 0; background: #1a1a1a; border: 1px solid rgba(255,255,255,.08); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.25); min-width: 200px; padding: 8px; display: none; }
+        .menu { position: absolute; top: calc(100% + 8px); right: 0; background: var(--surface-elevated); border: 1px solid var(--surface-elevated-border); border-radius: 12px; box-shadow: var(--box-shadow-light); min-width: 200px; padding: 8px; display: none; }
         .menu.show { display: block; }
-        .menu-item { display: flex; align-items: center; gap: .6rem; padding: 10px 12px; color: var(--text-primary); text-decoration: none; border-radius: 8px; cursor: pointer; }
-        .menu-item:hover { background: rgba(255,255,255,.06); color: var(--white); }
+        .menu-item { display: flex; align-items: center; gap: .6rem; padding: 10px 12px; color: var(--text-on-elevated); text-decoration: none; border-radius: 8px; cursor: pointer; }
+        .menu-item:hover { background: var(--surface-hover); color: var(--text-on-elevated); }
         @media (max-width: 768px) {
           .name { display: none; }
         }
@@ -87,9 +91,16 @@ class AppHeaderAuth extends HTMLElement {
             </ul>
           </nav>
           <div class="auth-area">
+            <button class="theme-toggle" id="theme-toggle" title="Cambiar tema">
+              <span class="icon" id="theme-icon">🌙</span>
+              <span class="label" id="theme-label">Dark</span>
+            </button>
             <button class="cart-toggle" id="cart-toggle" title="Shopping Cart">
               <i class="fas fa-shopping-cart">🛒</i>
               <span class="cart-count" id="cart-count">0</span>
+            </button>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+              <i class="fas fa-bars"></i>
             </button>
             <div class="profile">
               <button class="profile-button" id="profile-button" title="Account">
@@ -114,9 +125,10 @@ class AppHeaderAuth extends HTMLElement {
     try {
       const img = this.shadowRoot.getElementById('site-logo');
       if (!img) return;
-      const inPages = window.location.pathname.includes('/pages/');
-      const src = (inPages ? '../' : '') + 'assets/img/GTSw.png';
-      img.src = src;
+      const current = window.location.pathname;
+      const base = (current.includes('/pages/') || current.includes('/marketplace/') || current.includes('/auth/')) ? '../' : '';
+      const logo = base + 'assets/img/GTSw.png';
+      img.src = logo;
     } catch (e) {}
   }
 
@@ -131,6 +143,9 @@ class AppHeaderAuth extends HTMLElement {
 
   setupEventListeners() {
     const cartToggle = this.shadowRoot.getElementById('cart-toggle');
+    const themeToggle = this.shadowRoot.getElementById('theme-toggle');
+    const mobileMenuToggle = this.shadowRoot.getElementById('mobile-menu-toggle');
+    const navMenu = this.shadowRoot.querySelector('.nav-menu');
     const profileBtn = this.shadowRoot.getElementById('profile-button');
     const menu = this.shadowRoot.getElementById('profile-menu');
     const logout = this.shadowRoot.getElementById('menu-logout');
@@ -146,6 +161,10 @@ class AppHeaderAuth extends HTMLElement {
     profileBtn?.addEventListener('click', (e) => {
       e.stopPropagation();
       menu?.classList.toggle('show');
+    });
+
+    mobileMenuToggle?.addEventListener('click', () => {
+      navMenu?.classList.toggle('open');
     });
 
     document.addEventListener('click', (e) => {
@@ -175,6 +194,18 @@ class AppHeaderAuth extends HTMLElement {
       window.location.href = 'index.html';
     });
 
+    themeToggle?.addEventListener('click', () => {
+      if (window.ThemeManager) {
+        window.ThemeManager.toggle();
+      } else {
+        const isLight = document.documentElement.classList.toggle('light-theme');
+        try { localStorage.setItem('theme', isLight ? 'light' : 'dark'); } catch (e) {}
+        document.dispatchEvent(new CustomEvent('theme-changed', { detail: { theme: isLight ? 'light' : 'dark' } }));
+      }
+    });
+
+    document.addEventListener('theme-changed', () => { this.syncThemeButton(); this.setLogoSrc(); });
+
     // Exponer método para actualizar contador del carrito
     this.updateCartCount = (count) => {
       const cartCount = this.shadowRoot.getElementById('cart-count');
@@ -188,6 +219,21 @@ class AppHeaderAuth extends HTMLElement {
         }
       }
     };
+  }
+
+  syncThemeButton() {
+    const icon = this.shadowRoot?.getElementById('theme-icon');
+    const label = this.shadowRoot?.getElementById('theme-label');
+    const theme = (window.ThemeManager?.getTheme && window.ThemeManager.getTheme()) || (document.documentElement.classList.contains('light-theme') ? 'light' : 'dark');
+    if (icon && label) {
+      if (theme === 'light') {
+        icon.textContent = '☀️';
+        label.textContent = 'Light';
+      } else {
+        icon.textContent = '🌙';
+        label.textContent = 'Dark';
+      }
+    }
   }
 
   readCartCountFromStorage() {

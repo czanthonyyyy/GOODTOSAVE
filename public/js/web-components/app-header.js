@@ -8,6 +8,7 @@ class AppHeader extends HTMLElement {
         this.render();
         this.setLogoSrc();
         this.setupEventListeners();
+        this.syncThemeButton();
         // Aplicar contador inicial del carrito
         try {
             const initial = (typeof window.__cartCount === 'number') ? window.__cartCount : this.readCartCountFromStorage();
@@ -92,10 +93,10 @@ class AppHeader extends HTMLElement {
                     list-style: none;
                     margin: 0;
                     padding: 4px;
-                    background: rgba(255, 255, 255, 0.05);
+                    background: var(--surface-translucent);
                     border-radius: 12px;
                     backdrop-filter: blur(10px);
-                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    border: 1px solid var(--surface-border);
                 }
 
                 .nav-menu li {
@@ -155,6 +156,31 @@ class AppHeader extends HTMLElement {
                     align-items: center;
                 }
 
+                .theme-toggle {
+                    position: relative;
+                    background: transparent;
+                    border: 2px solid rgba(255, 255, 255, 0.1);
+                    color: var(--text-primary);
+                    font-size: 1.1rem;
+                    cursor: pointer;
+                    padding: 8px 10px;
+                    border-radius: 8px;
+                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    min-height: 40px;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 8px;
+                }
+
+                .theme-toggle:hover {
+                    color: var(--primary-color);
+                    background: rgba(255, 255, 255, 0.05);
+                    border-color: rgba(255, 255, 255, 0.2);
+                    transform: translateY(-1px);
+                }
+
+                .theme-toggle .icon { font-style: normal; }
+
                 .btn {
                     display: inline-flex;
                     align-items: center;
@@ -203,23 +229,23 @@ class AppHeader extends HTMLElement {
                 }
 
                 .btn-outline {
-                    background: rgba(255, 255, 255, 0.05);
+                    background: var(--surface-translucent);
                     color: var(--text-primary);
-                    border: 2px solid rgba(255, 255, 255, 0.1);
+                    border: 2px solid var(--surface-border);
                     backdrop-filter: blur(10px);
                 }
 
                 .btn-outline:hover {
-                    background: rgba(255, 255, 255, 0.1);
-                    color: var(--white);
-                    border-color: rgba(255, 255, 255, 0.2);
+                    background: var(--surface-hover);
+                    color: var(--text-on-elevated);
+                    border-color: var(--surface-border);
                     transform: translateY(-1px);
                 }
 
                 .cart-toggle {
                     position: relative;
                     background: transparent;
-                    border: 2px solid rgba(255, 255, 255, 0.1);
+                    border: 2px solid var(--surface-border);
                     color: var(--text-primary);
                     font-size: 1.1rem;
                     cursor: pointer;
@@ -250,8 +276,8 @@ class AppHeader extends HTMLElement {
 
                 .cart-toggle:hover {
                     color: var(--primary-color);
-                    background: rgba(255, 255, 255, 0.05);
-                    border-color: rgba(255, 255, 255, 0.2);
+                    background: var(--surface-translucent);
+                    border-color: var(--surface-border);
                     transform: translateY(-1px);
                 }
 
@@ -287,8 +313,8 @@ class AppHeader extends HTMLElement {
 
                 .mobile-menu-toggle {
                     display: none;
-                    background: rgba(255, 255, 255, 0.05);
-                    border: 2px solid rgba(255, 255, 255, 0.1);
+                    background: var(--surface-translucent);
+                    border: 2px solid var(--surface-border);
                     color: var(--text-primary);
                     font-size: 1.3rem;
                     cursor: pointer;
@@ -325,13 +351,9 @@ class AppHeader extends HTMLElement {
                 }
 
                 @media (max-width: 768px) {
-                    .nav-menu {
-                        display: none;
-                    }
+                    .nav-menu { display: none; }
                     
-                    .mobile-menu-toggle {
-                        display: flex;
-                    }
+                    .mobile-menu-toggle { display: flex; }
                     
                     .auth-buttons {
                         gap: 0.5rem;
@@ -341,23 +363,27 @@ class AppHeader extends HTMLElement {
                         padding: 6px 12px;
                         font-size: 0.8rem;
                     }
+
+                    /* Mobile dropdown menu */
+                    .nav-menu.open {
+                        display: flex;
+                        flex-direction: column;
+                        position: fixed;
+                        top: 64px;
+                        left: 16px;
+                        right: 16px;
+                        padding: 8px;
+                        gap: 6px;
+                        background: var(--background-secondary);
+                        border: 1px solid var(--surface-border);
+                        border-radius: 12px;
+                        box-shadow: var(--box-shadow-light);
+                        z-index: 1001;
+                    }
+                    .nav-menu.open a { padding: 12px 14px; }
                 }
 
-                :root {
-                    --background-secondary: #111111;
-                    --text-primary: #767676;
-                    --text-light: #909090;
-                    --primary-color: #39b54a;
-                    --primary-light: #2ecc71;
-                    --primary-dark: #219a52;
-                    --error-color: #e74c3c;
-                    --white: #ffffff;
-                    --background-light: #f0f7f4;
-                    --border-radius: 8px;
-                    --transition: all 0.3s ease;
-                    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-                    --box-shadow-light: 0 2px 8px rgba(0, 0, 0, 0.1);
-                }
+                /* Variables se heredan del documento. */
             </style>
             
             <header class="header">
@@ -376,6 +402,10 @@ class AppHeader extends HTMLElement {
                     </nav>
                     
                     <div class="auth-buttons">
+                        <button class="theme-toggle" id="theme-toggle" title="Cambiar tema">
+                            <span class="icon" id="theme-icon">🌙</span>
+                            <span class="label" id="theme-label">Dark</span>
+                        </button>
                         <button class="cart-toggle" id="cart-toggle" title="Shopping Cart">
                             <i class="fas fa-shopping-cart">🛒</i>
                             <span class="cart-count" id="cart-count">0</span>
@@ -396,26 +426,10 @@ class AppHeader extends HTMLElement {
         try {
             const img = this.shadowRoot.getElementById('site-logo');
             if (!img) return;
-            
-            // Determinar la ruta correcta basada en la ubicación actual
             const currentPath = window.location.pathname;
-            let logoPath;
-            
-            if (currentPath.includes('/marketplace/')) {
-                // Si estamos en el marketplace
-                logoPath = '../assets/img/GTSw.png';
-            } else if (currentPath.includes('/pages/')) {
-                // Si estamos en las páginas
-                logoPath = '../assets/img/GTSw.png';
-            } else if (currentPath.includes('/auth/')) {
-                // Si estamos en auth
-                logoPath = '../assets/img/GTSw.png';
-            } else {
-                // Si estamos en la raíz
-                logoPath = 'assets/img/GTSw.png';
-            }
-            
-            img.src = logoPath;
+            const base = (currentPath.includes('/marketplace/') || currentPath.includes('/pages/') || currentPath.includes('/auth/')) ? '../' : '';
+            const logo = base + 'assets/img/GTSw.png';
+            img.src = logo;
         } catch (e) {
             console.error('Error setting logo src:', e);
         }
@@ -424,6 +438,8 @@ class AppHeader extends HTMLElement {
     setupEventListeners() {
         const cartToggle = this.shadowRoot.getElementById('cart-toggle');
         const mobileMenuToggle = this.shadowRoot.getElementById('mobile-menu-toggle');
+        const themeToggle = this.shadowRoot.getElementById('theme-toggle');
+        const navMenu = this.shadowRoot.querySelector('.nav-menu');
 
         cartToggle.addEventListener('click', () => {
             const cartComponent = document.querySelector('app-cart');
@@ -436,11 +452,40 @@ class AppHeader extends HTMLElement {
         });
 
         mobileMenuToggle.addEventListener('click', () => {
-            // Mobile menu functionality can be added here
-            console.log('Mobile menu toggle clicked');
+            if (navMenu) {
+                navMenu.classList.toggle('open');
+            }
         });
 
+        themeToggle.addEventListener('click', () => {
+            if (window.ThemeManager) {
+                window.ThemeManager.toggle();
+            } else {
+                // Fallback simple si ThemeManager no está disponible
+                const isLight = document.documentElement.classList.toggle('light-theme');
+                try { localStorage.setItem('theme', isLight ? 'light' : 'dark'); } catch (e) {}
+                document.dispatchEvent(new CustomEvent('theme-changed', { detail: { theme: isLight ? 'light' : 'dark' } }));
+            }
+        });
+
+        document.addEventListener('theme-changed', () => { this.syncThemeButton(); this.setLogoSrc(); });
+
         // Método de instancia disponible para que el loader global lo invoque
+    }
+
+    syncThemeButton() {
+        const icon = this.shadowRoot?.getElementById('theme-icon');
+        const label = this.shadowRoot?.getElementById('theme-label');
+        const theme = (window.ThemeManager?.getTheme && window.ThemeManager.getTheme()) || (document.documentElement.classList.contains('light-theme') ? 'light' : 'dark');
+        if (icon && label) {
+            if (theme === 'light') {
+                icon.textContent = '☀️';
+                label.textContent = 'Light';
+            } else {
+                icon.textContent = '🌙';
+                label.textContent = 'Dark';
+            }
+        }
     }
 
     updateCartCount(count) {
