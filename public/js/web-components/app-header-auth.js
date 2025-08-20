@@ -154,9 +154,15 @@ class AppHeaderAuth extends HTMLElement {
       }
     });
 
-    profile?.addEventListener('click', () => {
-      // Ir al dashboard de usuario
-                      window.location.href = '../pages/dashboard.html';
+    profile?.addEventListener('click', async () => {
+      try {
+        const role = await window.RolesHelper?.getCurrentUserRole?.();
+        if (role === 'provider') {
+          window.location.href = '../pages/provider-dashboard.html';
+          return;
+        }
+      } catch (e) {}
+      window.location.href = '../pages/buyer-dashboard.html';
     });
 
     orders?.addEventListener('click', () => {

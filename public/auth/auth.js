@@ -34,12 +34,12 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (input.type === 'password') {
                 input.type = 'text';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
+                icon.classList.remove('ri-eye-line');
+                icon.classList.add('ri-eye-off-line');
             } else {
                 input.type = 'password';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
+                icon.classList.remove('ri-eye-off-line');
+                icon.classList.add('ri-eye-line');
             }
         });
     });
@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         try {
             submitButton.classList.add('loading');
-            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+            submitButton.innerHTML = '<i class="ri-loader-4-line ri-spin"></i> Procesando...';
             
             if (form.id === 'signinForm') {
                 await handleSignIn(form);
@@ -153,10 +153,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function handleSignIn(form) {
-        const email = form.querySelector('#signin-email').value;
-        const password = form.querySelector('#signin-password').value;
+        const email = form.querySelector('#signin-email').value.trim();
+        const password = form.querySelector('#signin-password').value.trim();
 
         try {
+            // Si ya hay sesión iniciada y coincide el email, evitar re-login
+            const current = window.firebaseAuthService.getCurrentUser?.();
+            if (current && current.email && current.email.toLowerCase() === email.toLowerCase()) {
+                console.log('Usuario ya autenticado con este email, redirigiendo…');
+                localStorage.setItem('user', JSON.stringify({
+                    uid: current.uid,
+                    email: current.email,
+                    displayName: current.displayName
+                }));
+                showSuccess('Ya estabas autenticado');
+                setTimeout(() => { window.location.href = '../marketplace/marketplace.html'; }, 800);
+                return;
+            }
+
             const user = await window.firebaseAuthService.signIn(email, password);
             console.log('Authenticated user:', user);
             
@@ -174,7 +188,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 window.location.href = '../marketplace/marketplace.html';
             }, 1000);
         } catch (error) {
-            throw new Error(error);
+            // Feedback visual profesional según tipo de error
+            const code = error?.code || '';
+            const message = error?.message || 'Error al iniciar sesión';
+
+            if (code === 'auth/too-many-requests') {
+                showError('Hemos bloqueado temporalmente los intentos por actividad inusual. Inténtalo más tarde o restablece tu contraseña.');
+                return;
+            }
+            if (code === 'auth/wrong-password' || code === 'auth/user-not-found' || code === 'auth/invalid-credential') {
+                markFieldError('#signin-email');
+                markFieldError('#signin-password');
+                showInlineFormError('signin-error-message', 'Email o contraseña incorrectos. Verifica tus datos e inténtalo nuevamente.');
+                return;
+            }
+            showInlineFormError('signin-error-message', message);
         }
     }
 
@@ -280,6 +308,28 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000);
     }
 
+    function showInlineFormError(containerId, message) {
+        const el = document.getElementById(containerId);
+        if (!el) return;
+        el.textContent = message;
+        el.style.display = 'block';
+        el.style.backgroundColor = '#ffe8e6';
+        el.style.border = '1px solid #ffb3ab';
+        el.style.color = '#a40000';
+        el.style.padding = '10px 12px';
+        el.style.borderRadius = '8px';
+        el.style.marginTop = '8px';
+    }
+
+    function markFieldError(selector) {
+        const input = document.querySelector(selector);
+        if (!input) return;
+        const parent = input.parentElement;
+        if (parent) parent.classList.add('error');
+        input.classList.add('shake');
+        setTimeout(() => input.classList.remove('shake'), 400);
+    }
+
     function showSuccess(message) {
         // Create or update success message
         let successDiv = document.getElementById('auth-success-message');
@@ -321,7 +371,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Show loading state
             const originalHTML = this.innerHTML;
-            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            this.innerHTML = '<i class="ri-loader-4-line ri-spin"></i>';
             
             // TODO: Implementar autenticación social
             setTimeout(() => {

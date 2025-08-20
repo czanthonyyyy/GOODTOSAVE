@@ -1,5 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
+/* Animación y estados para feedback de errores en login */
+.shake {
+  animation: shake 0.35s ease;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-3px); }
+  100% { transform: translateX(0); }
+}
+
+.input-group.error input {
+  border-color: #ff6b6b !important;
+  background-color: rgba(255, 107, 107, 0.08) !important;
+}
+
+.form-error-message { display: none; }
+
 /* Auth Page Specific Styles - Isolated from global styles */
 .auth-page {
     font-family: 'Inter', sans-serif;

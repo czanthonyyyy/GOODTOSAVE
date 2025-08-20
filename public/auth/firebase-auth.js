@@ -45,6 +45,7 @@ class FirebaseAuthService {
         email: userData.email,
         phone: userData.phone || '',
         accountType: userData.accountType,
+        role: userData.accountType === 'seller' ? 'provider' : (userData.accountType || 'buyer'),
         location: userData.location || '',
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
@@ -77,7 +78,9 @@ class FirebaseAuthService {
       
     } catch (error) {
       console.error('❌ Error en inicio de sesión:', error);
-      throw this.getErrorMessage(error);
+      // Lanzar objeto rico para que la UI decida feedback según el código
+      const friendly = this.getErrorMessage(error);
+      throw { code: error.code || 'unknown', message: friendly };
     }
   }
 
@@ -158,6 +161,33 @@ class FirebaseAuthService {
       }
     } catch (error) {
       console.error('❌ Error al obtener datos de usuario:', error);
+      throw this.getErrorMessage(error);
+    }
+
+  /**
+   * Guarda un producto nuevo creado por un provider
+   * @param {string} uid - ID del proveedor
+   * @param {Object} product - { id, name/title, price, description, image, category }
+   */
+  async createProduct(uid, product) {
+    try {
+      const data = {
+        id: product.id || undefined,
+        title: product.title || product.name,
+        price: typeof product.price === 'number' ? product.price : parseFloat(product.price || '0') || 0,
+        description: product.description || '',
+        image: product.image || '',
+        category: product.category || 'local',
+        providerId: uid,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      const ref = data.id ? this.db.collection('products').doc(data.id) : this.db.collection('products').doc();
+      if (!data.id) data.id = ref.id;
+      await ref.set(data);
+      return data;
+    } catch (error) {
+      console.error('❌ Error al crear producto:', error);
       throw this.getErrorMessage(error);
     }
   }

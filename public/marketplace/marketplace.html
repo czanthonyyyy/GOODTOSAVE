@@ -11,8 +11,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <!-- Iconos planos: Remix Icon -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     
     <!-- Stylesheets -->
     <link rel="stylesheet" href="../css/main.css">
@@ -35,16 +35,16 @@
         </div>
         <div class="container">
             <div class="hero-content">
-                <h1 class="hero-title">OUR CATALOG</h1>
-                <p class="hero-subtitle">Discover the best food deals and help reduce food waste</p>
+                <h1 class="hero-title">NUESTRO CATÁLOGO</h1>
+                <p class="hero-subtitle">Descubre las mejores ofertas de comida y ayuda a reducir el desperdicio alimentario</p>
                 
                 <!-- Search Bar Integrated in Hero -->
                 <div class="hero-search-container">
                     <div class="search-input hero-search" role="search">
-                        <i class="fa fa-search" aria-hidden="true"></i>
+                        <i class="ri-search-line" aria-hidden="true"></i>
                         <input type="text" id="product-search" placeholder="Search products or stores..." aria-label="Search" />
                         <button class="search-btn" type="button">
-                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                            <i class="ri-arrow-right-line" aria-hidden="true"></i>
                         </button>
                     </div>
                 </div>
@@ -57,31 +57,31 @@
         <div class="controls-left">
             <div class="filters" aria-label="Categories">
                 <button class="filter-pill active" data-category="all">
-                    <i class="fa fa-th-large"></i>
+                    <i class="ri-layout-grid-line"></i>
                     <span>All</span>
                 </button>
                 <button class="filter-pill" data-category="fast-food">
-                    <i class="fa fa-hamburger"></i>
+                    <i class="ri-restaurant-2-line"></i>
                     <span>Fast Food</span>
                 </button>
                 <button class="filter-pill" data-category="bakery">
-                    <i class="fa fa-birthday-cake"></i>
+                    <i class="ri-cake-2-line"></i>
                     <span>Bakery</span>
                 </button>
                 <button class="filter-pill" data-category="pizza">
-                    <i class="fa fa-pizza-slice"></i>
+                    <i class="ri-pie-chart-2-line"></i>
                     <span>Pizza</span>
                 </button>
                 <button class="filter-pill" data-category="sushi">
-                    <i class="fa fa-fish"></i>
+                    <i class="ri-fish-line"></i>
                     <span>Sushi</span>
                 </button>
                 <button class="filter-pill" data-category="chicken">
-                    <i class="fa fa-drumstick-bite"></i>
+                    <i class="ri-restaurant-line"></i>
                     <span>Chicken</span>
                 </button>
                 <button class="filter-pill" data-category="local">
-                    <i class="fa fa-store"></i>
+                    <i class="ri-store-2-line"></i>
                     <span>Local</span>
                 </button>
             </div>
@@ -89,7 +89,7 @@
         <div class="controls-right">
             <div class="sort-container">
                 <label class="sort-label" for="sort-select">
-                    <i class="fa fa-sort-amount-down"></i>
+                    <i class="ri-sort-asc"></i>
                     Sort by:
                 </label>
                 <select id="sort-select" aria-label="Sort results">
@@ -102,10 +102,10 @@
             </div>
             <div class="view-toggle" role="group" aria-label="View mode">
                 <button class="view-btn active" data-view="comfortable" title="Comfort">
-                    <i class="fa fa-square" aria-hidden="true"></i>
+                    <i class="ri-square-line" aria-hidden="true"></i>
                 </button>
                 <button class="view-btn" data-view="compact" title="Compact">
-                    <i class="fa fa-th" aria-hidden="true"></i>
+                    <i class="ri-layout-grid-line" aria-hidden="true"></i>
                 </button>
             </div>
         </div>
@@ -241,6 +241,12 @@
     <app-footer></app-footer>
 
     <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+    <script src="../firebase/firebase-config.js"></script>
+    <script src="../auth/firebase-auth.js"></script>
+    <script src="../js/roles.js"></script>
     <script src="../js/web-components.js"></script>
     <script src="../js/components.js"></script>
     <script src="../js/main.js"></script>

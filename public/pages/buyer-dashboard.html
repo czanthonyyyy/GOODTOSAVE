@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Buyer Dashboard</title>
+	<link rel="stylesheet" href="../css/main.css">
+	<link rel="stylesheet" href="../css/components.css">
+	<link rel="stylesheet" href="../css/pages.css">
+</head>
+<body>
+	<app-header></app-header>
+	<section class="container" style="padding: 40px 20px;">
+		<h1 style="margin-bottom: 10px;">Bienvenido</h1>
+		<p>Estás autenticado como Buyer. Explora el marketplace.</p>
+		<div style="margin-top:20px;">
+			<a class="button" href="../marketplace/marketplace.html">Ir al Marketplace</a>
+		</div>
+	</section>
+	<app-footer></app-footer>
+
+	<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+	<script src="../firebase/firebase-config.js"></script>
+	<script src="../auth/firebase-auth.js"></script>
+	<script src="../js/roles.js"></script>
+	<script>
+		RolesHelper.requireRole(['buyer']);
+	</script>
+</body>
+</html>
+
+

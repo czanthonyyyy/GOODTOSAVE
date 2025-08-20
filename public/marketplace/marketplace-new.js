@@ -129,6 +129,7 @@ class MarketplaceManager {
         ];
         
         this.init();
+        this.loadProductsFromFirestore().catch(() => {});
     }
 
     init() {
@@ -136,6 +137,55 @@ class MarketplaceManager {
         this.setupEventListeners();
         this.updateProductButtons();
         this.setupSearchFunctionality();
+    }
+
+    async loadProductsFromFirestore() {
+        try {
+            const services = window.firebaseServices;
+            if (!services || !services.db) return;
+
+            const snapshot = await services.db.collection('products').orderBy('createdAt', 'desc').limit(100).get();
+            const loaded = [];
+            snapshot.forEach(doc => {
+                const p = doc.data() || {};
+                const id = p.id || doc.id;
+                const title = p.title || p.name || 'Product';
+                const price = typeof p.price === 'number' ? p.price : parseFloat(p.price || '0') || 0;
+                const image = p.image || 'https://via.placeholder.com/200x160/39b54a/ffffff?text=Product';
+                const category = p.category || 'local';
+                loaded.push({ id, title, price, image, category });
+            });
+
+            if (!loaded.length) return;
+
+            const existingIds = new Set(this.products.map(p => p.id));
+            loaded.forEach(p => {
+                if (!existingIds.has(p.id)) {
+                    this.products.push({ id: p.id, title: p.title, price: p.price, image: p.image });
+                    this.appendProductCard(p);
+                }
+            });
+
+            this.updateProductButtons();
+            this.applyFilters();
+        } catch (e) {
+            console.warn('No se pudieron cargar productos desde Firestore:', e);
+        }
+    }
+
+    appendProductCard(p) {
+        if (!this.container) return;
+        const item = document.createElement('div');
+        item.className = 'item';
+        item.dataset.productId = p.id;
+        item.dataset.category = p.category || 'local';
+        item.innerHTML = `
+            <span class="titulo-item">${p.title}</span>
+            <img src="${p.image}" alt="${p.title}" class="img-item">
+            <span class="precio-item">$${p.price.toFixed(2)}</span>
+            <button class="boton-item">Add to cart</button>
+        `;
+        this.container.prepend(item);
     }
 
     cacheElements() {
