@@ -225,7 +225,7 @@ class AppFooter extends HTMLElement {
                             <li><a href="marketplace.html">Marketplace</a></li>
                             <li><a href="about.html">Sobre Nosotros</a></li>
                             <li><a href="auth.html">Iniciar Sesión</a></li>
-                            <li><a href="#support">Soporte</a></li>
+                            <li><a href="support.html">Soporte</a></li>
                         </ul>
                     </div>
                     

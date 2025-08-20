@@ -4,8 +4,8 @@
 /* ===== VARIABLES CSS - NUEVA PALETA DE COLORES ===== */
 :root {
     /* Colores Base y de Fondo */
-    --background-primary: #141515;
-    --background-secondary: #111111;
+    --background-primary: #0f1419;
+    --background-secondary: #1a1f2e;
     --background-light: #f0f7f4;
     --white: #ffffff;
     
@@ -29,8 +29,8 @@
     --success-color: #4caf50;
     
     /* Colores Secundarios y de Enlace */
-    --link-color: #4fc3f7;
-    --link-hover: #81d4fa;
+    --link-color: var(--primary-color);
+    --link-hover: var(--primary-light);
     --warning-color: #f39c12;
     --error-color: #e74c3c;
     --alert-color: #f44336;
@@ -63,7 +63,9 @@ body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     line-height: 1.6;
     color: var(--text-primary);
-    background-color: var(--background-primary);
+    background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 50%, #0f1419 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
     overflow-x: hidden;
 }
 
@@ -262,9 +264,78 @@ input::placeholder, textarea::placeholder {
 }
 
 /* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
+/* Large Desktop */
+@media (min-width: 1200px) {
     .container {
-        padding: 0 15px;
+        padding: 0 40px;
+        max-width: 1400px;
+    }
+    
+    h1 { font-size: 3rem; }
+    h2 { font-size: 2.5rem; }
+    h3 { font-size: 2rem; }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+    .container {
+        padding: 0 32px;
+        max-width: 1200px;
+    }
+    
+    h1 { font-size: 2.75rem; }
+    h2 { font-size: 2.25rem; }
+    h3 { font-size: 1.875rem; }
+}
+
+/* Tablet Landscape */
+@media (min-width: 768px) {
+    .container {
+        padding: 0 24px;
+    }
+    
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 2rem; }
+    h3 { font-size: 1.75rem; }
+}
+
+/* Tablet Portrait */
+@media (max-width: 767px) {
+    .container {
+        padding: 0 20px;
+    }
+    
+    h1 { font-size: 2.25rem; }
+    h2 { font-size: 1.875rem; }
+    h3 { font-size: 1.625rem; }
+    
+    .btn {
+        padding: 12px 20px;
+        font-size: 0.875rem;
+        min-height: 48px;
+    }
+    
+    /* Mejorar espaciado en móviles */
+    .mb-1 { margin-bottom: 0.75rem; }
+    .mb-2 { margin-bottom: 1.25rem; }
+    .mb-3 { margin-bottom: 2rem; }
+    .mb-4 { margin-bottom: 2.5rem; }
+    
+    .mt-1 { margin-top: 0.75rem; }
+    .mt-2 { margin-top: 1.25rem; }
+    .mt-3 { margin-top: 2rem; }
+    .mt-4 { margin-top: 2.5rem; }
+    
+    .p-1 { padding: 0.75rem; }
+    .p-2 { padding: 1.25rem; }
+    .p-3 { padding: 2rem; }
+    .p-4 { padding: 2.5rem; }
+}
+
+/* Mobile Large */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 16px;
     }
     
     h1 { font-size: 2rem; }
@@ -272,8 +343,80 @@ input::placeholder, textarea::placeholder {
     h3 { font-size: 1.5rem; }
     
     .btn {
-        padding: 10px 20px;
-        font-size: 0.8rem;
+        padding: 14px 18px;
+        font-size: 0.9rem;
+        min-height: 52px;
+        width: 100%;
+        justify-content: center;
+    }
+    
+    /* Ajustar espaciado para móviles pequeños */
+    .mb-1 { margin-bottom: 1rem; }
+    .mb-2 { margin-bottom: 1.5rem; }
+    .mb-3 { margin-bottom: 2.5rem; }
+    .mb-4 { margin-bottom: 3rem; }
+    
+    .mt-1 { margin-top: 1rem; }
+    .mt-2 { margin-top: 1.5rem; }
+    .mt-3 { margin-top: 2.5rem; }
+    .mt-4 { margin-top: 3rem; }
+    
+    .p-1 { padding: 1rem; }
+    .p-2 { padding: 1.5rem; }
+    .p-3 { padding: 2.5rem; }
+    .p-4 { padding: 3rem; }
+}
+
+/* Mobile Small */
+@media (max-width: 360px) {
+    .container {
+        padding: 0 12px;
+    }
+    
+    h1 { font-size: 1.875rem; }
+    h2 { font-size: 1.625rem; }
+    h3 { font-size: 1.375rem; }
+    
+    .btn {
+        padding: 16px 16px;
+        font-size: 0.95rem;
+        min-height: 56px;
+    }
+}
+
+/* Orientación Landscape en móviles */
+@media (max-width: 767px) and (orientation: landscape) {
+    .container {
+        padding: 0 24px;
+    }
+    
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.75rem; }
+    h3 { font-size: 1.5rem; }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-primary: #0f1419;
+        --background-secondary: #1a1f2e;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
 }
 

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Center | Good to Save</title>
+    <meta name="description" content="Get help with your account, orders, payments, and technical support for Good to Save.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/svg+xml" href="../assets/images/logo.svg">
+
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <link rel="stylesheet" href="../css/support.css">
+</head>
+<body class="support-page">
+    <app-header></app-header>
+
+    <section class="support-hero">
+        <div class="container">
+            <div class="support-hero-content">
+                <div class="support-badge">We’re here to help</div>
+                <h1 class="support-title">Support Center</h1>
+                <p class="support-subtitle">Find quick answers, helpful guides, and ways to contact our team.</p>
+                <div class="support-quick-actions">
+                    <a href="#quicklinks" class="btn btn-primary">Self‑service</a>
+                    <a href="contact.html" class="btn btn-outline">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="support-search">
+        <div class="container">
+            <div class="support-search-box">
+                <input type="search" placeholder="Search help articles (e.g., reset password, refund)" aria-label="Search support" />
+                <button class="btn btn-primary" aria-label="Search">Search</button>
+            </div>
+            <p class="search-hint">Popular: password reset, refund status, change email, QR pickup</p>
+        </div>
+    </section>
+
+    <section class="support-quicklinks" id="quicklinks">
+        <div class="container">
+            <div class="quicklinks-grid">
+                <a class="quicklink" href="../auth/auth.html" data-auth-link>
+                    <span class="ql-icon">🔒</span>
+                    <span class="ql-title">Reset Password</span>
+                    <span class="ql-desc">Recover access to your account</span>
+                </a>
+                <a class="quicklink" href="mailto:support@goodtosave.com?subject=Invoice%20request">
+                    <span class="ql-icon">🧾</span>
+                    <span class="ql-title">Get Invoice</span>
+                    <span class="ql-desc">Request a receipt for your order</span>
+                </a>
+                <a class="quicklink" href="#payments">
+                    <span class="ql-icon">💳</span>
+                    <span class="ql-title">Refund Status</span>
+                    <span class="ql-desc">Understand timelines and policy</span>
+                </a>
+                <a class="quicklink" href="#orders">
+                    <span class="ql-icon">📦</span>
+                    <span class="ql-title">Change Order</span>
+                    <span class="ql-desc">Modify or cancel before pickup</span>
+                </a>
+                <a class="quicklink" href="#account">
+                    <span class="ql-icon">✉️</span>
+                    <span class="ql-title">Change Email</span>
+                    <span class="ql-desc">Update your login or contact email</span>
+                </a>
+                <a class="quicklink" href="contact.html">
+                    <span class="ql-icon">🐞</span>
+                    <span class="ql-title">Report a Bug</span>
+                    <span class="ql-desc">Tell us what isn’t working</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="support-section">
+        <div class="container support-container">
+            <div class="support-grid">
+                <a class="support-card" href="#account">
+                    <div class="support-icon">👤</div>
+                    <h3>Account</h3>
+                    <p>Sign in, verification, profile updates, and security.</p>
+                    <span class="support-link">View guides →</span>
+                </a>
+                <a class="support-card" href="#orders">
+                    <div class="support-icon">🛒</div>
+                    <h3>Orders</h3>
+                    <p>Reservations, order status, QR pickup, and changes.</p>
+                    <span class="support-link">View guides →</span>
+                </a>
+                <a class="support-card" href="#payments">
+                    <div class="support-icon">💳</div>
+                    <h3>Payments</h3>
+                    <p>Methods, receipts, refunds, and charge issues.</p>
+                    <span class="support-link">View guides →</span>
+                </a>
+                <a class="support-card" href="#technical">
+                    <div class="support-icon">🛠️</div>
+                    <h3>Technical</h3>
+                    <p>App errors, emails, notifications, and performance.</p>
+                    <span class="support-link">View guides →</span>
+                </a>
+                <a class="support-card" href="#business">
+                    <div class="support-icon">🏬</div>
+                    <h3>For Businesses</h3>
+                    <p>Partner onboarding, inventory, payouts, and billing.</p>
+                    <span class="support-link">View guides →</span>
+                </a>
+                <a class="support-card" href="#policies">
+                    <div class="support-icon">📜</div>
+                    <h3>Policies</h3>
+                    <p>Privacy, terms, accessibility, and data protection.</p>
+                    <span class="support-link">View guides →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="support-guides">
+        <div class="container guides-grid">
+            <div class="guide-card" id="account">
+                <h2>Account Help</h2>
+                <ul class="support-list">
+                    <li>Create and verify your account</li>
+                    <li>Reset password or passwordless sign-in</li>
+                    <li>Update name, email, and preferences</li>
+                    <li>Security and data protection</li>
+                </ul>
+            </div>
+            <div class="guide-card" id="orders">
+                <h2>Orders & Pickup</h2>
+                <ul class="support-list">
+                    <li>Track orders and statuses</li>
+                    <li>Use your QR code for pickup</li>
+                    <li>Modify or cancel an order</li>
+                    <li>Common issues and quick fixes</li>
+                </ul>
+            </div>
+            <div class="guide-card" id="payments">
+                <h2>Payments & Refunds</h2>
+                <ul class="support-list">
+                    <li>Accepted payment methods</li>
+                    <li>Receipts and invoices</li>
+                    <li>When a refund applies</li>
+                    <li>Fraud prevention and safety</li>
+                </ul>
+            </div>
+            <div class="guide-card" id="technical">
+                <h2>Technical Support</h2>
+                <ul class="support-list">
+                    <li>Sign-in troubleshooting</li>
+                    <li>Emails and notifications</li>
+                    <li>Performance and browser support</li>
+                    <li>Report bugs and improvements</li>
+                </ul>
+            </div>
+            <div class="guide-card" id="business">
+                <h2>Business Partners</h2>
+                <ul class="support-list">
+                    <li>Join as a provider</li>
+                    <li>List surplus and manage inventory</li>
+                    <li>Payouts and billing information</li>
+                    <li>Compliance and best practices</li>
+                </ul>
+            </div>
+            <div class="guide-card" id="policies">
+                <h2>Policies & Legal</h2>
+                <ul class="support-list">
+                    <li><a class="support-link" href="privacy.html">Privacy Policy</a></li>
+                    <li><a class="support-link" href="terms.html">Terms of Service</a></li>
+                    <li><a class="support-link" href="data-protection.html">Data Protection</a></li>
+                    <li><a class="support-link" href="accessibility.html">Accessibility</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="support-info">
+        <div class="container status-grid">
+            <div class="status-card">
+                <div class="status-header">
+                    <div class="status-indicator ok"></div>
+                    <h3>System Status</h3>
+                </div>
+                <p class="status-text">All systems operational</p>
+                <div class="status-actions">
+                    <a class="btn btn-outline" href="#">View details</a>
+                </div>
+            </div>
+            <div class="announcements">
+                <h3>Announcements</h3>
+                <ul class="ann-list">
+                    <li>
+                        <div class="ann-title">Improved refund timelines</div>
+                        <div class="ann-meta">Effective next week • Faster processing</div>
+                    </li>
+                    <li>
+                        <div class="ann-title">New pickup QR format</div>
+                        <div class="ann-meta">More reliable at partner locations</div>
+                    </li>
+                    <li>
+                        <div class="ann-title">Business dashboard updates</div>
+                        <div class="ann-meta">Inventory and payouts improvements</div>
+                    </li>
+                </ul>
+            </div>
+            <div class="hours-card">
+                <h3>Support Hours</h3>
+                <ul class="hours-list">
+                    <li><span>Mon–Fri</span><span>09:00–18:00</span></li>
+                    <li><span>Sat</span><span>10:00–14:00</span></li>
+                    <li><span>Sun</span><span>Closed</span></li>
+                </ul>
+                <p class="hours-note">Average response time: under 24 hours</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="support-contact">
+        <div class="container contact-grid">
+            <div class="contact-card">
+                <h3>Email</h3>
+                <p>Send us your question and we’ll get back to you asap.</p>
+                <a class="btn btn-outline" href="mailto:support@goodtosave.com">support@goodtosave.com</a>
+            </div>
+            <div class="contact-card">
+                <h3>Live Chat</h3>
+                <p>Get quick help for urgent issues.</p>
+                <button class="btn btn-primary" onclick="openChat()">Open Chat</button>
+            </div>
+            <div class="contact-card">
+                <h3>Contact Form</h3>
+                <p>Describe your case in detail for better assistance.</p>
+                <a class="btn" href="contact.html">Go to Form</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="container last-updated">
+        <p>Last updated: <span id="support-last-updated"></span></p>
+    </div>
+
+    <app-footer></app-footer>
+
+    <script src="../js/web-components.js"></script>
+    <script src="../js/components.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        function openChat() {
+            try {
+                const tidio = window.tidioChatApi || window.tidioChatIframeApi;
+                if (tidio && typeof tidio.open === 'function') { tidio.open(); return; }
+            } catch(e) {}
+            alert('Live chat is not available right now. Please email us.');
+        }
+        (function setLastUpdated(){
+            try {
+                const el = document.getElementById('support-last-updated');
+                if (!el) return;
+                const d = new Date();
+                const opts = { year:'numeric', month:'short', day:'2-digit' };
+                el.textContent = d.toLocaleDateString(undefined, opts);
+            } catch(e) {}
+        })();
+    </script>
+    <script src="//code.tidio.co/cmthgbegrccq5d2pps6kxycvte6cl1mu.js" async></script>
+</body>
+</html>
+
+

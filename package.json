@@ -5,30 +5,22 @@
   "main": "index.js",
   "scripts": {
     "dev": "live-server public",
-    "build": "echo 'Build process for static files'",
-    "start": "node backend/server.js",
-    "firebase:init": "firebase init",
-    "firebase:serve": "firebase serve",
-    "firebase:deploy": "firebase deploy"
-  },
-  "dependencies": {
-    "qrcode": "^1.5.4",
-    "firebase": "^10.7.0",
-    "firebase-admin": "^12.0.0",
-    "express": "^4.18.2",
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1"
+    "build": "echo 'No build step required for static files'",
+    "deploy": "firebase deploy --only hosting",
+    "deploy:preview": "firebase hosting:channel:deploy preview",
+    "serve": "firebase serve --only hosting"
   },
   "devDependencies": {
-    "firebase-tools": "^13.0.0",
     "live-server": "^1.2.2"
   },
   "keywords": [
     "food-waste",
     "sustainability",
-    "marketplace",
-    "firebase"
+    "marketplace"
   ],
   "author": "GTS Team",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "firebase": "^12.1.0"
+  }
 }

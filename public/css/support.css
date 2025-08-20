@@ -1,0 +1,256 @@
+/* Dark theme baseline */
+.support-page {
+    background: #0b0b0b;
+    color: #e6e6e6;
+}
+
+:root {
+    /* ensure primary color aligns with site */
+    --support-green: #39b54a;
+    --support-green-dark: #219a52;
+}
+
+/* Hero inspired by homepage */
+.support-hero {
+    padding: 96px 0 24px;
+    position: relative;
+}
+
+.support-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(1200px 400px at 50% -10%, rgba(57,181,74,0.18), rgba(33,154,82,0.10) 40%, rgba(0,0,0,0) 65%),
+                linear-gradient(135deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.35) 100%);
+    pointer-events: none;
+}
+
+.support-hero .container { position: relative; z-index: 1; }
+
+.support-hero-content { text-align: center; }
+
+.support-badge {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(57,181,74,0.18);
+    color: #d8f6df;
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+}
+
+.support-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 2.4rem;
+    margin-bottom: 8px;
+}
+
+.support-subtitle { color: #bdbdbd; margin-bottom: 20px; }
+
+.support-quick-actions { display: flex; gap: 12px; justify-content: center; }
+
+/* Search */
+.support-search { padding: 8px 0 28px; }
+.support-search-box {
+    max-width: 720px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+}
+.support-search-box input[type="search"] {
+    padding: 14px 16px;
+    border: 2px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    background: #111;
+    color: #e6e6e6;
+}
+.support-search-box input[type="search"]::placeholder { color: #8d8d8d; }
+.search-hint { text-align: center; color: #9a9a9a; margin-top: 8px; }
+
+/* Quicklinks */
+.support-quicklinks { padding: 8px 0 20px; }
+.quicklinks-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 12px;
+}
+@media (min-width: 640px) {
+    .quicklinks-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) {
+    .quicklinks-grid { grid-template-columns: repeat(3, 1fr); }
+}
+.quicklink {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 10px;
+    row-gap: 2px;
+    align-items: center;
+    padding: 12px 14px;
+    border: 1px dashed rgba(57,181,74,0.35);
+    border-radius: 14px;
+    background: transparent;
+    text-decoration: none;
+    color: #e6e6e6;
+    transition: background-color .2s ease, transform .2s ease;
+}
+.quicklink:hover { background: rgba(57,181,74,0.05); transform: translateY(-1px); }
+.ql-icon { grid-row: span 2; font-size: 20px; }
+.ql-title { font-weight: 700; }
+.ql-desc { color: #9a9a9a; font-size: 0.9rem; }
+
+/* Categories grid → row list style */
+.support-section { padding: 28px 0; }
+.support-container { max-width: 1100px; margin: 0 auto; }
+.support-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+.support-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.10);
+    text-decoration: none;
+    color: inherit;
+    background: transparent;
+    transition: background-color .2s ease, border-color .2s ease;
+}
+.support-card:hover { background: rgba(57,181,74,0.06); border-color: rgba(57,181,74,0.35); }
+.support-icon { font-size: 22px; margin: 0; width: 28px; text-align: center; }
+.support-card h3 { font-size: 1.05rem; margin: 0; }
+.support-card p { margin: 0; color: #bdbdbd; }
+.support-link { color: var(--support-green); font-weight: 600; margin-left: auto; }
+
+@media (min-width: 768px) {
+    .support-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* Guides grid like homepage sections, but with accent top border */
+.support-guides { padding: 8px 0 20px; }
+.guides-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+}
+.guide-card {
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px;
+    background: transparent;
+    padding: 18px 18px 14px;
+}
+.guide-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--support-green), var(--support-green-dark));
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+}
+.guide-card h2 { margin: 0 0 10px; font-size: 1.15rem; }
+.support-list { padding-left: 20px; color: #bdbdbd; }
+
+/* FAQ (kept base styles for potential reuse elsewhere) */
+.support-faq { padding: 28px 0 36px; background: #0a0a0a; }
+.faq-header { text-align: center; margin-bottom: 12px; }
+.faq-badge { display: inline-block; padding: 4px 10px; border-radius: 999px; background: rgba(57,181,74,0.2); color: #d8f6df; font-weight: 600; margin-bottom: 6px; }
+.faq-subtitle { color: #9a9a9a; }
+.faq-list { max-width: 800px; margin: 0 auto; }
+.faq-item { background: #0f0f0f; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 12px 16px; margin-bottom: 10px; }
+.faq-item summary { cursor: pointer; font-weight: 600; }
+
+/* Contact */
+.support-contact { padding: 28px 0 56px; }
+.contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.contact-card { border: 1px solid rgba(0,0,0,0.08); border-radius: 14px; padding: 18px; background: #fff; }
+.contact-card { border-color: rgba(255,255,255,0.08); background: #0f0f0f; }
+
+/* Status / Info */
+.support-info { padding: 8px 0 40px; }
+.status-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 16px;
+}
+.status-card, .announcements, .hours-card {
+    border: 1px solid rgba(255,255,255,0.06);
+    background: transparent;
+    border-radius: 14px;
+    padding: 16px;
+}
+.status-header { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.status-indicator { width: 10px; height: 10px; border-radius: 50%; background: #aaa; box-shadow: 0 0 12px rgba(0,0,0,0.35) inset; }
+.status-indicator.ok { background: var(--support-green); box-shadow: 0 0 14px rgba(57,181,74,0.5); }
+.status-text { color: #bdbdbd; }
+.status-actions { margin-top: 10px; }
+.ann-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.ann-title { font-weight: 700; }
+.ann-meta { color: #9a9a9a; font-size: 0.9rem; }
+.hours-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+.hours-list li { display: flex; justify-content: space-between; color: #bdbdbd; }
+.hours-note { color: #9a9a9a; margin-top: 8px; }
+
+.last-updated { text-align: center; color: #8a8a8a; padding-bottom: 40px; }
+
+/* Buttons accent */
+.btn.btn-primary { background: linear-gradient(135deg, var(--support-green), var(--support-green-dark)); border: none; color: #fff; }
+.btn.btn-outline { border: 2px solid var(--support-green); color: #d8f6df; }
+.btn { transition: transform .15s ease, box-shadow .15s ease; }
+.btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(57,181,74,0.25); }
+
+/* Visual reduction overrides */
+/* Hide descriptions in quicklinks to reduce text density */
+.ql-desc { display: none; }
+/* Show only first 4 category items */
+.support-grid a:nth-child(n+5) { display: none; }
+/* Show only first 3 guide cards */
+.guides-grid .guide-card:nth-child(n+4) { display: none; }
+/* Hide announcements panel and make status grid 2 columns */
+.announcements { display: none; }
+.status-grid { grid-template-columns: 1fr 1fr; }
+/* Hide last updated line */
+.last-updated { display: none; }
+
+/* Section spacing to separate blocks */
+.support-hero { margin-bottom: 16px; }
+.support-search,
+.support-quicklinks,
+.support-section,
+.support-guides,
+.support-info,
+.support-contact { margin-top: 12px; margin-bottom: 28px; }
+@media (min-width: 768px) {
+    .support-search,
+    .support-quicklinks,
+    .support-section,
+    .support-guides,
+    .support-info,
+    .support-contact { margin-top: 16px; margin-bottom: 40px; }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+    .support-search-box input[type="search"],
+    .support-card,
+    .guide-card,
+    .faq-item,
+    .contact-card { background: #1a1a1a; border-color: rgba(255,255,255,0.08); }
+    .support-faq, .support-info { background: #0f0f0f; }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .support-title { font-size: 1.85rem; }
+    .support-quick-actions { flex-direction: column; }
+    .status-grid { grid-template-columns: 1fr; }
+}
+
+

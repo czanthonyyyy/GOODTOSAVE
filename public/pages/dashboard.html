@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Dashboard | Good to Save</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <style>
+    :root {
+      --bg: #0f0f0f; --panel: #151515; --panel-2: #1b1b1b; --border: #242424; --muted: #9aa0a6; --txt: #e8eaed;
+      --primary: #39b54a; --primary-2: #2ecc71; --danger: #e74c3c; --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    body { background: var(--bg); color: var(--txt); font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial; }
+    .container { max-width: 1200px; margin: 24px auto; padding: 0 16px; }
+    .grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+    @media(min-width: 900px){ .grid { grid-template-columns: 320px 1fr; } }
+
+    .card { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; }
+    .card-header { padding: 16px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .card-title { font-size: 1rem; font-weight: 600; }
+    .card-content { padding: 18px; }
+
+    .profile { display: flex; gap: 16px; align-items: center; }
+    .avatar { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--primary-2)); display: grid; place-items: center; font-weight: 800; font-size: 1.25rem; color: white; }
+    .name { font-size: 1.2rem; font-weight: 700; }
+    .email { color: var(--muted); font-size: .9rem; }
+
+    .info { display: grid; gap: 10px; }
+    .info-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
+    .info-row:last-child { border-bottom: none; }
+    .info-label { color: var(--muted); }
+    .badge { padding: 6px 10px; border-radius: 999px; background: rgba(57,181,74,.12); color: #9af2a6; font-weight: 600; border: 1px solid rgba(57,181,74,.28); }
+
+    .actions { display: flex; gap: 10px; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--panel-2); color: var(--txt); cursor: pointer; font-weight: 600; transition: .2s; text-decoration: none; }
+    .btn:hover { transform: translateY(-1px); border-color: rgba(255,255,255,.12); }
+    .btn-primary { background: linear-gradient(135deg, var(--primary), var(--primary-2)); border: none; color: white; }
+    .btn-danger { background: linear-gradient(135deg, #e74c3c, #ff6b6b); border: none; color: white; }
+
+    .empty { text-align: center; color: var(--muted); padding: 24px; border: 1px dashed var(--border); border-radius: 12px; background: rgba(255,255,255,.02); }
+
+    /* Metrics */
+    .metrics { display: grid; gap: 12px; grid-template-columns: repeat(2,1fr); margin-top:16px; }
+    @media(min-width: 900px){ .metrics { grid-template-columns: repeat(4,1fr); } }
+    .metric { background: linear-gradient(180deg, rgba(57,181,74,.12), transparent), var(--panel-2); border:1px solid var(--border); border-radius: 12px; padding:16px; display:flex; flex-direction:column; gap:6px; }
+    .metric-label { color: var(--muted); font-size: .85rem; }
+    .metric-value { font-size: 1.4rem; font-weight: 800; }
+    .metric-trend { font-size:.8rem; color:#9af2a6; }
+
+    /* Orders table */
+    .orders-controls { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:12px; }
+    .input, .select { background: #121212; border:1px solid var(--border); color: var(--txt); border-radius: 10px; padding:10px 12px; }
+    .orders-table { width:100%; border-collapse: collapse; }
+    .orders-table th, .orders-table td { padding:12px 10px; border-bottom:1px solid var(--border); text-align:left; }
+    .orders-table th { color: var(--muted); font-weight:600; font-size:.9rem; }
+    .status { padding:6px 10px; border-radius:999px; font-weight:700; font-size:.75rem; border:1px solid; }
+    .status-paid { background: rgba(57,181,74,.12); color:#9af2a6; border-color: rgba(57,181,74,.28); }
+    .status-pending { background: rgba(255,200,0,.1); color:#ffd76a; border-color: rgba(255,200,0,.28); }
+    .pill-total { color:#9af2a6; font-weight:800; }
+    .orders-empty { text-align:center; color: var(--muted); padding:18px; }
+
+    /* Pagination */
+    .pagination { display:flex; gap:8px; align-items:center; justify-content:center; margin-top:16px; }
+    .page-btn { background: var(--panel-2); border:1px solid var(--border); color: var(--txt); padding:8px 12px; border-radius:8px; cursor:pointer; transition:.2s; }
+    .page-btn:hover { background: var(--panel); border-color: rgba(255,255,255,.12); }
+    .page-btn.active { background: var(--primary); color:white; border-color: var(--primary); }
+    .page-btn:disabled { opacity:.5; cursor:not-allowed; }
+
+    /* Order detail modal */
+    .order-detail { background: var(--panel-2); border:1px solid var(--border); border-radius:12px; padding:16px; margin:8px 0; }
+    .order-detail-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+    .order-detail-title { font-weight:700; color: var(--txt); }
+    .order-detail-close { background:none; border:none; color: var(--muted); cursor:pointer; font-size:1.2rem; }
+    .order-detail-content { display:grid; gap:8px; }
+    .order-item { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid rgba(255,255,255,.1); }
+    .order-item:last-child { border-bottom:none; }
+    .order-item-name { flex:1; }
+    .order-item-qty { color: var(--muted); margin:0 12px; }
+    .order-item-price { color: #9af2a6; font-weight:600; }
+
+    /* Export button */
+    .btn-export { background: linear-gradient(135deg, #667eea, #764ba2); border:none; color:white; }
+  </style>
+</head>
+<body>
+  <app-header></app-header>
+
+  <div class="container">
+    <div class="grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">My Profile</div>
+          <div class="actions">
+            <button id="edit-profile" class="btn">Edit</button>
+            <button id="logout" class="btn btn-danger">Log out</button>
+          </div>
+        </div>
+        <div class="card-content">
+          <div class="profile">
+            <div class="avatar" id="avatar">U</div>
+            <div>
+              <div class="name" id="name">User</div>
+              <div class="email" id="email">email@example.com</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Account Information</div>
+          <a href="../marketplace/marketplace.html" class="btn btn-primary">Go to Marketplace</a>
+        </div>
+        <div class="card-content">
+          <div class="info">
+            <div class="info-row"><span class="info-label">Account Type</span><span id="accountType" class="badge">-</span></div>
+            <div class="info-row"><span class="info-label">Location</span><span id="location">-</span></div>
+            <div class="info-row"><span class="info-label">UID</span><span id="uid">-</span></div>
+            <div class="info-row"><span class="info-label">Created</span><span id="createdAt">-</span></div>
+            <div class="info-row"><span class="info-label">Updated</span><span id="updatedAt">-</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Metrics Row -->
+    <div class="metrics" id="metrics">
+      <div class="metric"><div class="metric-label">Total Orders</div><div class="metric-value" id="m-orders">0</div><div class="metric-trend" id="m-orders-trend"></div></div>
+      <div class="metric"><div class="metric-label">Total Spent</div><div class="metric-value" id="m-spent">$0.00</div><div class="metric-trend" id="m-spent-trend"></div></div>
+      <div class="metric"><div class="metric-label">Last Order</div><div class="metric-value" id="m-last-total">$0.00</div><div class="metric-trend" id="m-last-date">-</div></div>
+      <div class="metric"><div class="metric-label">Avg. Ticket</div><div class="metric-value" id="m-avg">$0.00</div><div class="metric-trend" id="m-avg-trend"></div></div>
+    </div>
+
+    <!-- Orders Section -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-header">
+        <div class="card-title">My Orders</div>
+        <div class="actions">
+          <button id="export-csv" class="btn btn-export">Export CSV</button>
+          <input id="orders-search" class="input" placeholder="Search by order ID or item..." />
+          <select id="orders-status" class="select">
+            <option value="all">All statuses</option>
+            <option value="paid">Paid</option>
+            <option value="pending">Pending</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+      </div>
+      <div class="card-content" id="orders-content">
+        <div class="orders-empty">Loading orders...</div>
+      </div>
+      <div class="pagination" id="pagination" style="display:none">
+        <button class="page-btn" id="prev-page" disabled>← Previous</button>
+        <span id="page-info" style="color: var(--muted); margin: 0 12px;"></span>
+        <button class="page-btn" id="next-page">Next →</button>
+      </div>
+    </div>
+  </div>
+
+<!-- Edit Profile Modal -->
+<style>
+  .modal { position: fixed; inset: 0; background: rgba(0,0,0,.5); display: none; align-items: center; justify-content: center; z-index: 10000; }
+  .modal.show { display: flex; }
+  .modal-dialog { width: 100%; max-width: 520px; background: #121212; border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); }
+  .modal-header { padding: 16px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .modal-title { font-weight: 700; }
+  .modal-body { padding: 18px; display: grid; gap: 12px; }
+  .modal-row { display: grid; gap: 8px; }
+  .modal-row label { color: var(--muted); font-size: .9rem; }
+  .modal-row input, .modal-row select { padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); background: #1b1b1b; color: var(--txt); }
+  .modal-footer { padding: 16px 18px; border-top: 1px solid var(--border); display: flex; gap: 10px; justify-content: flex-end; }
+</style>
+<div class="modal" id="edit-modal" aria-hidden="true">
+  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="edit-title">
+    <div class="modal-header">
+      <div class="modal-title" id="edit-title">Edit Profile</div>
+      <button id="edit-close" class="btn" aria-label="Close">✕</button>
+    </div>
+    <form id="edit-form">
+      <div class="modal-body">
+        <div class="modal-row">
+          <label for="edit-firstName">First name</label>
+          <input id="edit-firstName" type="text" required />
+        </div>
+        <div class="modal-row">
+          <label for="edit-lastName">Last name</label>
+          <input id="edit-lastName" type="text" required />
+        </div>
+        <div class="modal-row">
+          <label for="edit-phone">Phone</label>
+          <input id="edit-phone" type="tel" placeholder="e.g. +1 555 123 4567" />
+        </div>
+        <div class="modal-row">
+          <label for="edit-accountType">Account type</label>
+          <select id="edit-accountType">
+            <option value="buyer">Buyer</option>
+            <option value="seller">Seller</option>
+          </select>
+        </div>
+        <div class="modal-row">
+          <label for="edit-location">Location</label>
+          <input id="edit-location" type="text" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="edit-cancel" class="btn">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Order Detail Modal -->
+<div class="modal" id="order-detail-modal" aria-hidden="true">
+  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="order-detail-title">
+    <div class="modal-header">
+      <div class="modal-title" id="order-detail-title">Order Details</div>
+      <button id="order-detail-close" class="btn" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" id="order-detail-body">
+      <!-- Order details will be populated here -->
+    </div>
+  </div>
+</div>
+
+  <app-footer></app-footer>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+          <!-- Firebase Configuration & Services -->
+        <script src="../firebase/firebase-config.js"></script>
+      <script src="../auth/firebase-auth.js"></script>
+  <!-- Web Components loader -->
+  <script src="../js/web-components.js"></script>
+  <!-- Dashboard Logic -->
+  <script src="../js/dashboard.js"></script>
+</body>
+</html>

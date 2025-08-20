@@ -6,7 +6,22 @@ class AppHeader extends HTMLElement {
 
     connectedCallback() {
         this.render();
+        this.setLogoSrc();
         this.setupEventListeners();
+        // Aplicar contador inicial del carrito
+        try {
+            const initial = (typeof window.__cartCount === 'number') ? window.__cartCount : this.readCartCountFromStorage();
+            this.updateCartCount(initial);
+        } catch (e) {}
+    }
+
+    readCartCountFromStorage() {
+        try {
+            const raw = localStorage.getItem('foodmarketplace_cart');
+            if (!raw) return 0;
+            const items = JSON.parse(raw) || [];
+            return items.reduce((acc, it) => acc + (it.quantity || 0), 0);
+        } catch (e) { return 0; }
     }
 
     render() {
@@ -255,6 +270,19 @@ class AppHeader extends HTMLElement {
                     display: none;
                     box-shadow: 0 2px 8px rgba(231, 76, 60, 0.4);
                     border: 2px solid var(--white);
+                    transform-origin: center;
+                    transition: transform 0.2s ease;
+                }
+
+                @keyframes cart-bump {
+                    0% { transform: scale(1); }
+                    30% { transform: scale(1.25); }
+                    60% { transform: scale(0.9); }
+                    100% { transform: scale(1); }
+                }
+
+                .cart-count.bump {
+                    animation: cart-bump 300ms ease;
                 }
 
                 .mobile-menu-toggle {
@@ -334,17 +362,16 @@ class AppHeader extends HTMLElement {
             
             <header class="header">
                 <div class="header-container">
-                    <a href="index.html" class="logo">
-                        <!-- <img src="assets/images/logo.svg" alt="Good to Save Logo"> -->
-                        Good to Save
+                    <a href="../pages/index.html" class="logo">
+                        <img id="site-logo" src="" alt="Good to Save Logo" />
                     </a>
                     
                     <nav>
                         <ul class="nav-menu">
-                                                    <li><a href="index.html">Home</a></li>
-                        <li><a href="marketplace.html">Marketplace</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                                                    <li><a href="../pages/index.html">Home</a></li>
+                        <li><a href="../marketplace/marketplace.html">Marketplace</a></li>
+                        <li><a href="../pages/about.html">About Us</a></li>
+                        <li><a href="../pages/contact.html">Contact</a></li>
                         </ul>
                     </nav>
                     
@@ -354,8 +381,7 @@ class AppHeader extends HTMLElement {
                             <span class="cart-count" id="cart-count">0</span>
                         </button>
                         
-                        <a href="auth.html" class="btn btn-outline">Sign In</a>
-                        <a href="auth.html" class="btn btn-primary">Sign Up</a>
+                        <a href="../auth/auth.html" class="btn btn-primary" data-auth-link>Login or Register</a>
                         
                         <button class="mobile-menu-toggle" id="mobile-menu-toggle">
                             <i class="fas fa-bars"></i>
@@ -366,6 +392,35 @@ class AppHeader extends HTMLElement {
         `;
     }
 
+    setLogoSrc() {
+        try {
+            const img = this.shadowRoot.getElementById('site-logo');
+            if (!img) return;
+            
+            // Determinar la ruta correcta basada en la ubicación actual
+            const currentPath = window.location.pathname;
+            let logoPath;
+            
+            if (currentPath.includes('/marketplace/')) {
+                // Si estamos en el marketplace
+                logoPath = '../assets/img/GTSw.png';
+            } else if (currentPath.includes('/pages/')) {
+                // Si estamos en las páginas
+                logoPath = '../assets/img/GTSw.png';
+            } else if (currentPath.includes('/auth/')) {
+                // Si estamos en auth
+                logoPath = '../assets/img/GTSw.png';
+            } else {
+                // Si estamos en la raíz
+                logoPath = 'assets/img/GTSw.png';
+            }
+            
+            img.src = logoPath;
+        } catch (e) {
+            console.error('Error setting logo src:', e);
+        }
+    }
+
     setupEventListeners() {
         const cartToggle = this.shadowRoot.getElementById('cart-toggle');
         const mobileMenuToggle = this.shadowRoot.getElementById('mobile-menu-toggle');
@@ -374,6 +429,9 @@ class AppHeader extends HTMLElement {
             const cartComponent = document.querySelector('app-cart');
             if (cartComponent) {
                 cartComponent.toggleCart();
+            } else {
+                // Si no existe el componente del carrito, emitir evento
+                document.dispatchEvent(new CustomEvent('cart-toggle'));
             }
         });
 
@@ -382,10 +440,7 @@ class AppHeader extends HTMLElement {
             console.log('Mobile menu toggle clicked');
         });
 
-        // Exponer método para actualizar contador del carrito
-        window.updateCartCount = (count) => {
-            this.updateCartCount(count);
-        };
+        // Método de instancia disponible para que el loader global lo invoque
     }
 
     updateCartCount(count) {
@@ -393,6 +448,12 @@ class AppHeader extends HTMLElement {
         if (cartCount) {
             cartCount.textContent = count;
             cartCount.style.display = count > 0 ? 'block' : 'none';
+            if (count > 0) {
+                cartCount.classList.remove('bump');
+                // reflow para reiniciar animación
+                void cartCount.offsetWidth;
+                cartCount.classList.add('bump');
+            }
         }
     }
 }
