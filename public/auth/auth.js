@@ -10,11 +10,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const togglePasswordButtons = document.querySelectorAll('.toggle-password');
     const forms = document.querySelectorAll('form');
 
-    // Verificar que Firebase esté disponible
+    // Verificar que Firebase esté disponible (no bloquear la UI)
     if (!window.firebaseAuthService) {
-        console.error('Firebase Auth Service is not available');
-        showError('Configuration error: Firebase is not available');
-        return;
+        console.warn('Firebase Auth Service no está disponible aún. La UI seguirá operativa.');
     }
 
     // Toggle between sign in and sign up
@@ -167,7 +165,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     displayName: current.displayName
                 }));
                 showSuccess('Ya estabas autenticado');
-                setTimeout(() => { window.location.href = '../marketplace/marketplace.html'; }, 800);
+                try {
+                    const role = await window.RolesHelper.fetchUserRole(current.uid);
+                    const target = role === 'provider' ? '../pages/provider-dashboard.html' : '../pages/buyer-dashboard.html';
+                    setTimeout(() => { window.location.href = target; }, 800);
+                } catch (e) {
+                    setTimeout(() => { window.location.href = '../marketplace/marketplace.html'; }, 800);
+                }
                 return;
             }
 
@@ -183,10 +187,14 @@ document.addEventListener('DOMContentLoaded', function() {
             
             showSuccess('Signed in successfully');
             
-            // Redirigir al marketplace tras login exitoso
-            setTimeout(() => {
-                window.location.href = '../marketplace/marketplace.html';
-            }, 1000);
+            // Redirigir según rol tras login exitoso
+            try {
+                const role = await window.RolesHelper.fetchUserRole(user.uid);
+                const target = role === 'provider' ? '../pages/provider-dashboard.html' : '../pages/buyer-dashboard.html';
+                setTimeout(() => { window.location.href = target; }, 800);
+            } catch (e) {
+                setTimeout(() => { window.location.href = '../marketplace/marketplace.html'; }, 800);
+            }
         } catch (error) {
             // Feedback visual profesional según tipo de error
             const code = error?.code || '';
@@ -230,10 +238,14 @@ document.addEventListener('DOMContentLoaded', function() {
             
             showSuccess('Registered successfully');
             
-            // Redirect to marketplace after successful registration
-            setTimeout(() => {
-                window.location.href = '../marketplace/marketplace.html';
-            }, 1000);
+            // Redirigir según rol tras registro exitoso
+            try {
+                const role = await window.RolesHelper.fetchUserRole(user.uid);
+                const target = role === 'provider' ? '../pages/provider-dashboard.html' : '../pages/buyer-dashboard.html';
+                setTimeout(() => { window.location.href = target; }, 800);
+            } catch (e) {
+                setTimeout(() => { window.location.href = '../marketplace/marketplace.html'; }, 800);
+            }
         } catch (error) {
             throw new Error(error);
         }

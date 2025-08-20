@@ -375,7 +375,7 @@ class MarketplaceManager {
             `;
             
             const icon = document.createElement('i');
-            icon.className = suggestion.type === 'category' ? 'fa fa-tags' : 'fa fa-utensils';
+            icon.className = suggestion.type === 'category' ? 'ri-price-tag-3-line' : 'ri-restaurant-2-line';
             icon.style.color = '#39b54a';
             
             const text = document.createElement('span');
@@ -565,7 +565,7 @@ class MarketplaceManager {
             noResultsMsg.className = 'no-results-message';
             noResultsMsg.innerHTML = `
                 <div style="text-align: center; padding: 40px 20px; color: #666;">
-                    <i class="fa fa-search" style="font-size: 48px; color: #ddd; margin-bottom: 20px;"></i>
+                    <i class="ri-search-line" style="font-size: 48px; color: #ddd; margin-bottom: 20px;"></i>
                     <h3 style="margin: 0 0 10px 0; color: #333;">No results found</h3>
                     <p style="margin: 0; color: #888;">Try different search terms or change the filters</p>
                 </div>

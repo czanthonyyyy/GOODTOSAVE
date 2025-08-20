@@ -519,7 +519,7 @@ class AppFooter extends HTMLElement {
                 </div>
                 
                 <div class="footer-bottom">
-                    <p>&copy; 2025 Good to Save. All rights reserved. | <i class="fas fa-heart"></i> Made with love for the planet</p>
+                    <p>&copy; 2025 Good to Save. All rights reserved. | <span aria-hidden="true" style="font-size:14px;">❤</span> Made with love for the planet</p>
                     <nav class="legal-links" aria-label="Legal links">
                         <a href="../pages/privacy.html">Privacy Policy</a>
                         <span class="separator">•</span>

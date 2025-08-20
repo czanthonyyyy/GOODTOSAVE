@@ -109,10 +109,10 @@ class AppCart extends HTMLElement {
                     z-index: 10004;
                 }
 
-                .cart-title::before {
-                    content: '🛒';
-                    font-size: 1.75rem;
-                    filter: drop-shadow(0 2px 8px rgba(64, 224, 208, 0.3));
+                .cart-title .icon {
+                    display: inline-flex;
+                    width: 24px;
+                    height: 24px;
                 }
 
                 .close-btn {
@@ -584,12 +584,10 @@ class AppCart extends HTMLElement {
                     gap: 2rem;
                 }
 
-                .empty-cart::before {
-                    content: '🛒';
-                    font-size: 5rem;
-                    opacity: 0.2;
-                    animation: float 4s ease-in-out infinite;
-                    filter: drop-shadow(0 4px 20px rgba(64, 224, 208, 0.1));
+                .empty-cart .empty-icon {
+                    width: 64px;
+                    height: 64px;
+                    opacity: 0.25;
                 }
 
                 .empty-cart p {
@@ -714,7 +712,13 @@ class AppCart extends HTMLElement {
 
             <div class="cart-overlay"></div>
             <div class="cart-header">
-                <h2 class="cart-title">Shopping Cart</h2>
+                <h2 class="cart-title"><span class="icon" aria-hidden="true">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M7 18C6.44772 18 6 18.4477 6 19C6 19.5523 6.44772 20 7 20C7.55228 20 8 19.5523 8 19C8 18.4477 7.55228 18 7 18Z" fill="currentColor"/>
+                      <path d="M17 18C16.4477 18 16 18.4477 16 19C16 19.5523 16.4477 20 17 20C17.5523 20 18 19.5523 18 19C18 18.4477 17.5523 18 17 18Z" fill="currentColor"/>
+                      <path d="M3 4H5L6.68 13.39C6.7717 13.9154 7.0463 14.3914 7.45406 14.7321C7.86183 15.0728 8.37583 15.2551 8.905 15.25H17.55C18.0792 15.2551 18.5932 15.0728 19.0009 14.7321C19.4087 14.3914 19.6833 13.9154 19.775 13.39L21 6H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span> Shopping Cart</h2>
                 <button class="close-btn" id="closeCart">×</button>
             </div>
             <div class="cart-content">
@@ -732,6 +736,11 @@ class AppCart extends HTMLElement {
         if (this.cartItems.length === 0) {
             return `
                 <div class="empty-cart">
+                    <svg class="empty-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <path d="M7 18C6.44772 18 6 18.4477 6 19C6 19.5523 6.44772 20 7 20C7.55228 20 8 19.5523 8 19C8 18.4477 7.55228 18 7 18Z" fill="currentColor"/>
+                      <path d="M17 18C16.4477 18 16 18.4477 16 19C16 19.5523 16.4477 20 17 20C17.5523 20 18 19.5523 18 19C18 18.4477 17.5523 18 17 18Z" fill="currentColor"/>
+                      <path d="M3 4H5L6.68 13.39C6.7717 13.9154 7.0463 14.3914 7.45406 14.7321C7.86183 15.0728 8.37583 15.2551 8.905 15.25H17.55C18.0792 15.2551 18.5932 15.0728 19.0009 14.7321C19.4087 14.3914 19.6833 13.9154 19.775 13.39L21 6H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                     <p>Your cart is empty</p>
                     <p class="subtitle">Add some items to get started!</p>
                 </div>
