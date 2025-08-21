@@ -83,19 +83,36 @@ class AppHeader extends HTMLElement {
                 nav {
                     display: flex;
                     align-items: center;
+                    position: relative;
                 }
 
                 .nav-menu {
                     display: flex;
                     align-items: center;
-                    gap: 0;
+                    gap: 6px;
                     list-style: none;
                     margin: 0;
-                    padding: 4px;
-                    background: rgba(255, 255, 255, 0.05);
-                    border-radius: 12px;
+                    padding: 6px;
+                    background: rgba(255, 255, 255, 0.04);
+                    border-radius: 16px;
                     backdrop-filter: blur(10px);
                     border: 1px solid rgba(255, 255, 255, 0.1);
+                    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+                }
+
+                /* Indicador activo deslizante */
+                .nav-indicator {
+                    position: absolute;
+                    height: 3px;
+                    left: 0;
+                    bottom: 6px;
+                    width: 0;
+                    border-radius: 3px;
+                    background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+                    box-shadow: 0 4px 12px rgba(57,181,74,0.35);
+                    transition: transform .28s cubic-bezier(.4,0,.2,1), width .28s cubic-bezier(.4,0,.2,1);
+                    transform: translateX(0px);
+                    pointer-events: none;
                 }
 
                 .nav-menu li {
@@ -104,16 +121,17 @@ class AppHeader extends HTMLElement {
 
                 .nav-menu a {
                     color: var(--text-primary);
-                    font-weight: 500;
+                    font-weight: 600;
                     text-decoration: none;
-                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
                     font-family: 'Inter', sans-serif;
-                    padding: 12px 20px;
-                    border-radius: 8px;
+                    padding: 10px 18px;
+                    border-radius: 12px;
                     position: relative;
                     display: block;
-                    font-size: 0.9rem;
-                    letter-spacing: 0.025em;
+                    font-size: 0.92rem;
+                    letter-spacing: 0.02em;
+                    isolation: isolate;
                 }
 
                 .nav-menu a:hover {
@@ -122,31 +140,67 @@ class AppHeader extends HTMLElement {
                     transform: translateY(-1px);
                 }
 
+                /* Fondo resaltado tipo "pill" */
                 .nav-menu a::before {
                     content: '';
                     position: absolute;
-                    bottom: 0;
-                    left: 50%;
-                    width: 0;
-                    height: 2px;
-                    background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
-                    transition: all 0.3s ease;
-                    transform: translateX(-50%);
-                    border-radius: 1px;
+                    inset: 2px;
+                    border-radius: 10px;
+                    background: radial-gradient(120% 120% at 50% 0%, rgba(57,181,74,0.16) 0%, rgba(46,204,113,0.12) 40%, rgba(255,255,255,0.04) 100%);
+                    box-shadow: 0 6px 16px rgba(57,181,74,0.15), inset 0 0 0 1px rgba(255,255,255,0.06);
+                    opacity: 0;
+                    transform: translateY(4px) scale(0.96);
+                    transition: opacity .25s ease, transform .25s ease;
+                    z-index: -1;
                 }
 
-                .nav-menu a:hover::before {
-                    width: 80%;
+                /* Subrayado fino para refuerzo visual */
+                .nav-menu a::after {
+                    content: '';
+                    position: absolute;
+                    left: 16px;
+                    right: 16px;
+                    bottom: 7px;
+                    height: 2px;
+                    background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+                    opacity: 0;
+                    transform: translateY(4px);
+                    transition: opacity .25s ease, transform .25s ease;
+                    border-radius: 2px;
+                }
+
+                .nav-menu a:hover,
+                .nav-menu a:focus-visible {
+                    color: #e8f5e9;
+                    transform: translateY(-1px);
+                }
+
+                .nav-menu a:hover::before,
+                .nav-menu a:focus-visible::before {
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                }
+
+                .nav-menu a:hover::after,
+                .nav-menu a:focus-visible::after {
+                    opacity: .9;
+                    transform: translateY(0);
                 }
 
                 .nav-menu a.active {
-                    color: var(--primary-color);
-                    background: rgba(57, 181, 74, 0.15);
-                    box-shadow: 0 2px 8px rgba(57, 181, 74, 0.2);
+                    color: #e8f5e9;
+                    text-shadow: 0 1px 8px rgba(57,181,74,0.35);
                 }
 
                 .nav-menu a.active::before {
-                    width: 80%;
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                    background: radial-gradient(140% 140% at 50% -10%, rgba(57,181,74,0.22) 0%, rgba(46,204,113,0.16) 40%, rgba(255,255,255,0.05) 100%);
+                }
+
+                .nav-menu a.active::after {
+                    opacity: 1;
+                    transform: translateY(0);
                 }
 
                 .auth-buttons {
@@ -367,6 +421,7 @@ class AppHeader extends HTMLElement {
                         <li><a href="../pages/about.html">About Us</a></li>
                         <li><a href="../pages/contact.html">Contact</a></li>
                         </ul>
+                        <span class="nav-indicator" id="nav-indicator"></span>
                     </nav>
                     
                     <div class="auth-buttons">
@@ -424,6 +479,9 @@ class AppHeader extends HTMLElement {
     setupEventListeners() {
         const cartToggle = this.shadowRoot.getElementById('cart-toggle');
         const mobileMenuToggle = this.shadowRoot.getElementById('mobile-menu-toggle');
+        const nav = this.shadowRoot.querySelector('nav');
+        const navMenu = this.shadowRoot.querySelector('.nav-menu');
+        const indicator = this.shadowRoot.getElementById('nav-indicator');
 
         cartToggle.addEventListener('click', () => {
             const cartComponent = document.querySelector('app-cart');
@@ -438,6 +496,45 @@ class AppHeader extends HTMLElement {
         mobileMenuToggle.addEventListener('click', () => {
             // Mobile menu functionality can be added here
             console.log('Mobile menu toggle clicked');
+        });
+
+        // Indicador activo: calcula posición/anchura según enlace activo
+        const updateIndicator = (activeLink) => {
+            if (!nav || !navMenu || !indicator || !activeLink) return;
+            const menuRect = navMenu.getBoundingClientRect();
+            const linkRect = activeLink.getBoundingClientRect();
+            const left = linkRect.left - menuRect.left + 16; // padding lateral visual
+            const width = Math.max(24, linkRect.width - 32);
+            indicator.style.width = `${width}px`;
+            indicator.style.transform = `translateX(${left}px)`;
+        };
+
+        const resolveActiveLink = () => {
+            const links = Array.from(this.shadowRoot.querySelectorAll('.nav-menu a'));
+            const current = window.location.pathname.replace(/\/index\.html$/, '/pages/index.html');
+            let active = links.find(a => new URL(a.href, window.location.origin).pathname === current);
+            if (!active) {
+                // heurística por segmento
+                active = links.find(a => current.includes(new URL(a.href, window.location.origin).pathname.replace(/\.html$/, '')));
+            }
+            if (!active) active = links[0];
+            links.forEach(a => a.classList.toggle('active', a === active));
+            updateIndicator(active);
+        };
+
+        // Inicializar al conectar
+        resolveActiveLink();
+
+        // Recalcular en resize
+        const onResize = () => resolveActiveLink();
+        window.addEventListener('resize', onResize);
+
+        // Mover indicador al hover para feedback
+        this.shadowRoot.querySelectorAll('.nav-menu a').forEach(a => {
+            a.addEventListener('mouseenter', () => updateIndicator(a));
+            a.addEventListener('mouseleave', resolveActiveLink);
+            a.addEventListener('focus', () => updateIndicator(a));
+            a.addEventListener('blur', resolveActiveLink);
         });
 
         // Método de instancia disponible para que el loader global lo invoque

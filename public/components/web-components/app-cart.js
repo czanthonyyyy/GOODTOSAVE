@@ -969,7 +969,7 @@ class AppCart extends HTMLElement {
                 image: it.image,
                 quantity: it.quantity,
                 discountedPrice: it.price,
-                supplier: it.supplier || 'Proveedor',
+                supplier: it.supplier || 'Supplier',
                 originalPrice: it.price
             }));
             localStorage.setItem('foodmarketplace_cart', JSON.stringify(legacy));

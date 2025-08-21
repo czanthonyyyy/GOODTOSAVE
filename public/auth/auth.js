@@ -10,9 +10,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const togglePasswordButtons = document.querySelectorAll('.toggle-password');
     const forms = document.querySelectorAll('form');
 
-    // Verificar que Firebase esté disponible (no bloquear la UI)
+    // Verify Firebase is available (do not block UI)
     if (!window.firebaseAuthService) {
-        console.warn('Firebase Auth Service no está disponible aún. La UI seguirá operativa.');
+        console.warn('Firebase Auth Service is not available yet. The UI will remain operational.');
     }
 
     // Toggle between sign in and sign up
@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         try {
             submitButton.classList.add('loading');
-            submitButton.innerHTML = '<i class="ri-loader-4-line ri-spin"></i> Procesando...';
+            submitButton.innerHTML = '<i class="ri-loader-4-line ri-spin"></i> Processing...';
             
             if (form.id === 'signinForm') {
                 await handleSignIn(form);
@@ -155,16 +155,16 @@ document.addEventListener('DOMContentLoaded', function() {
         const password = form.querySelector('#signin-password').value.trim();
 
         try {
-            // Si ya hay sesión iniciada y coincide el email, evitar re-login
+            // If already signed in with this email, avoid re-login
             const current = window.firebaseAuthService.getCurrentUser?.();
             if (current && current.email && current.email.toLowerCase() === email.toLowerCase()) {
-                console.log('Usuario ya autenticado con este email, redirigiendo…');
+                console.log('User already authenticated with this email, redirecting…');
                 localStorage.setItem('user', JSON.stringify({
                     uid: current.uid,
                     email: current.email,
                     displayName: current.displayName
                 }));
-                showSuccess('Ya estabas autenticado');
+                showSuccess('You were already signed in');
                 try {
                     const role = await window.RolesHelper.fetchUserRole(current.uid);
                     const target = role === 'provider' ? '../pages/provider-dashboard.html' : '../pages/buyer-dashboard.html';
@@ -196,18 +196,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 setTimeout(() => { window.location.href = '../marketplace/marketplace.html'; }, 800);
             }
         } catch (error) {
-            // Feedback visual profesional según tipo de error
+            // Professional visual feedback per error type
             const code = error?.code || '';
-            const message = error?.message || 'Error al iniciar sesión';
+            const message = error?.message || 'Error signing in';
 
             if (code === 'auth/too-many-requests') {
-                showError('Hemos bloqueado temporalmente los intentos por actividad inusual. Inténtalo más tarde o restablece tu contraseña.');
+                showError('We have temporarily blocked attempts due to unusual activity. Try again later or reset your password.');
                 return;
             }
             if (code === 'auth/wrong-password' || code === 'auth/user-not-found' || code === 'auth/invalid-credential') {
                 markFieldError('#signin-email');
                 markFieldError('#signin-password');
-                showInlineFormError('signin-error-message', 'Email o contraseña incorrectos. Verifica tus datos e inténtalo nuevamente.');
+                showInlineFormError('signin-error-message', 'Incorrect email or password. Check your details and try again.');
                 return;
             }
             showInlineFormError('signin-error-message', message);
@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Required field validation
         if (input.required && !input.value.trim()) {
             parent.classList.add('error');
-            errorMessage.textContent = `Por favor ingresa tu ${input.getAttribute('aria-label')}`;
+            errorMessage.textContent = `Please enter your ${input.getAttribute('aria-label')}`;
             isValid = false;
         } 
         // Email validation
@@ -280,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Minlength validation
         else if (input.minLength && input.value.length < input.minLength) {
             parent.classList.add('error');
-            errorMessage.textContent = `El campo debe tener al menos ${input.minLength} caracteres`;
+            errorMessage.textContent = `This field must have at least ${input.minLength} characters`;
             isValid = false;
         }
         // Success state

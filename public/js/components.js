@@ -216,7 +216,7 @@ class ComponentLoader {
    */
   static async renderProducts(containerSelector, products, limit = null) {
     try {
-              const response = await fetch('../components/product-card.html');
+              const response = await fetch('../components/cards/product-card.html');
       const template = await response.text();
       
       const container = document.querySelector(containerSelector);
