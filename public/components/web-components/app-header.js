@@ -64,7 +64,7 @@ class AppHeader extends HTMLElement {
                     gap: 0.5rem;
                     color: var(--primary-color);
                     font-weight: 600;
-                    font-size: 1.5rem;
+                    font-size: 2.2rem;
                     text-decoration: none;
                     font-family: 'Inter', sans-serif;
                     flex-shrink: 0;
@@ -75,7 +75,7 @@ class AppHeader extends HTMLElement {
                 }
 
                 .logo img {
-                    height: 32px;
+                    height: 64px;
                     width: auto;
                     display: block;
                 }

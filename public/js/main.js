@@ -2001,11 +2001,6 @@ class GTSThemeManager {
         document.dispatchEvent(new CustomEvent('gts-theme-changed', {
             detail: { theme: themeName }
         }));
-        
-        // Notificar cambio
-        if (window.gtsNotifications) {
-            window.gtsNotifications.info(`Tema cambiado a: ${this.getThemeDisplayName(themeName)}`);
-        }
     }
 
     setTheme(themeName) {

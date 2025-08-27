@@ -1,0 +1,50 @@
+{
+  "platform_stats": {
+    "active_deals": 150,
+    "total_savings": 2500,
+    "happy_customers": 2800,
+    "average_order_time": "2.5 min",
+    "average_savings": 60,
+    "availability": "24/7",
+    "active_partners": 2500,
+    "monthly_revenue": 45000,
+    "waste_reduction": 85,
+    "average_rating": "4.9/5",
+    "satisfied_users": 15000,
+    "satisfaction_rate": 98
+  },
+  "impact_stats": {
+    "food_saved_kg": 15680,
+    "co2_reduced_kg": 12450,
+    "families_helped": 4200,
+    "euros_saved": 89000
+  },
+  "global_problem": {
+    "food_waste_percentage": 33,
+    "co2_emissions_percentage": 8,
+    "annual_waste_tons": "1.3B"
+  },
+  "testimonials": {
+    "maria_gonzalez": {
+      "savings_per_month": 200,
+      "orders": 15
+    },
+    "ana_martinez": {
+      "savings_per_month": 150,
+      "orders": 12
+    }
+  },
+  "success_stories": {
+    "el_horno_bakery": {
+      "food_saved_per_day": "50kg",
+      "income_increase": 15
+    },
+    "central_market": {
+      "waste_reduction": 70,
+      "new_customers": 200
+    }
+  },
+  "benefits": {
+    "save_percentage": 60
+  }
+}
