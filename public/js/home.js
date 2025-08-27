@@ -13,6 +13,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     } catch {}
 
+    // Initialize dynamic stats after a short delay to ensure DOM is ready
+    setTimeout(() => {
+        if (window.dynamicStats && window.dynamicStats.loaded) {
+            window.dynamicStats.updateAllStats();
+            // Opcional: activar actualizaciones en tiempo real
+            // window.dynamicStats.simulateRealTimeUpdates();
+        }
+    }, 500);
+
     // Load featured products
     (async function loadTrending(){
         try {
