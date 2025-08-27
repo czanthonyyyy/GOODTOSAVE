@@ -616,7 +616,7 @@
 }
 
 .auth-page .auth-logo {
-    max-width: 240px; /* Logo aún más grande */
+    max-width: 320px; /* Logo más grande */
     height: auto;
     filter: brightness(0) invert(1); /* Hace el logo blanco para que se vea bien en el fondo verde */
     transition: transform 0.3s ease;
@@ -810,7 +810,7 @@
     
     /* Ajustes responsivos para el logo */
     .auth-page .auth-logo {
-        max-width: 180px; /* Logo más grande en móviles también */
+        max-width: 240px; /* Logo más grande en móviles también */
     }
     
     .auth-page .logo-container {
