@@ -256,13 +256,10 @@
 
 .auth-page button:hover {
     background-color: var(--primary-dark);
-    transform: translateY(-1px);
-    box-shadow: 0 8px 25px rgba(46, 204, 113, 0.3), 0 0 20px rgba(46, 204, 113, 0.2);
 }
 
 .auth-page button:active {
-    transform: translateY(0);
-    box-shadow: var(--box-shadow-light);
+    background-color: var(--primary-dark);
 }
 
 .auth-page button:focus {
@@ -347,6 +344,32 @@
     background-color: var(--white);
     position: relative;
     z-index: 1; /* Asegura prioridad de clic sobre decoraciones */
+    color: #333; /* Color de texto oscuro para mejor visibilidad */
+    font-weight: 500; /* Peso de fuente medio para mejor legibilidad */
+}
+
+/* Estilos específicos para el texto cuando se escribe */
+.auth-page .input-group input::placeholder,
+.auth-page .input-group select::placeholder,
+.auth-page .input-group textarea::placeholder {
+    color: #666; /* Color de placeholder más visible */
+    opacity: 0.8;
+}
+
+/* Estilos para el texto cuando se está escribiendo */
+.auth-page .input-group input:focus,
+.auth-page .input-group select:focus,
+.auth-page .input-group textarea:focus {
+    color: #000; /* Color de texto negro cuando está enfocado */
+    font-weight: 600; /* Peso de fuente más grueso cuando está enfocado */
+}
+
+/* Estilos para el texto cuando tiene contenido */
+.auth-page .input-group input:not(:placeholder-shown),
+.auth-page .input-group select:not([value=""]),
+.auth-page .input-group textarea:not(:placeholder-shown) {
+    color: #000; /* Color de texto negro cuando hay contenido */
+    font-weight: 600; /* Peso de fuente más grueso cuando hay contenido */
 }
 
 .auth-page .input-group textarea {
@@ -387,6 +410,66 @@
     width: 32px;
     height: 32px;
     z-index: 2;
+}
+
+/* Estilos específicos para campos de contraseña */
+.auth-page .input-group input[type="password"] {
+    color: #000 !important; /* Forzar color negro para contraseñas */
+    font-weight: 600 !important; /* Forzar peso de fuente grueso */
+    letter-spacing: 2px; /* Espaciado entre caracteres para mejor visibilidad */
+}
+
+/* Estilos para campos de email y texto */
+.auth-page .input-group input[type="email"],
+.auth-page .input-group input[type="text"],
+.auth-page .input-group input[type="tel"] {
+    color: #000 !important; /* Forzar color negro para mejor visibilidad */
+    font-weight: 600 !important; /* Forzar peso de fuente grueso */
+}
+
+/* Estilos para campos select */
+.auth-page .input-group select {
+    color: #000 !important; /* Forzar color negro para mejor visibilidad */
+    font-weight: 600 !important; /* Forzar peso de fuente grueso */
+}
+
+/* Estilos para cuando los campos tienen contenido */
+.auth-page .input-group input:not(:placeholder-shown),
+.auth-page .input-group select:not([value=""]),
+.auth-page .input-group textarea:not(:placeholder-shown) {
+    background-color: #f8f9fa; /* Fondo ligeramente gris para indicar que hay contenido */
+    border-color: var(--primary-color); /* Borde verde cuando hay contenido */
+    box-shadow: 0 0 0 1px var(--primary-color); /* Sombra sutil para destacar */
+}
+
+/* Estilos para mejorar la visibilidad en diferentes estados */
+.auth-page .input-group input:hover,
+.auth-page .input-group select:hover,
+.auth-page .input-group textarea:hover {
+    background-color: #ffffff; /* Fondo blanco al hacer hover */
+    border-color: var(--primary-light); /* Borde más claro al hacer hover */
+}
+
+/* Estilos para campos con autocompletado del navegador */
+.auth-page .input-group input:-webkit-autofill,
+.auth-page .input-group input:-webkit-autofill:hover,
+.auth-page .input-group input:-webkit-autofill:focus,
+.auth-page .input-group input:-webkit-autofill:active {
+    -webkit-text-fill-color: #000 !important; /* Color de texto negro para autocompletado */
+    -webkit-box-shadow: 0 0 0 30px #ffffff inset !important; /* Fondo blanco para autocompletado */
+    background-color: #ffffff !important;
+    color: #000 !important;
+    font-weight: 600 !important;
+}
+
+/* Estilos para mejorar la visibilidad en modo oscuro del sistema */
+@media (prefers-color-scheme: dark) {
+    .auth-page .input-group input,
+    .auth-page .input-group select,
+    .auth-page .input-group textarea {
+        background-color: #ffffff; /* Mantener fondo blanco incluso en modo oscuro */
+        color: #000 !important; /* Mantener texto negro */
+    }
 }
 
 .auth-page .input-group .toggle-password i {
@@ -539,6 +622,66 @@
     margin-bottom: 16px;
 }
 
+/* Estilos para el logo en el panel de autenticación */
+.auth-page .logo-container {
+    margin-bottom: 20px;
+    margin-top: -80px; /* Mover el logo más arriba */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+}
+
+.auth-page .auth-logo {
+    max-width: 320px; /* Logo más grande */
+    height: auto;
+    filter: brightness(0) invert(1); /* Hace el logo blanco para que se vea bien en el fondo verde */
+    transition: transform 0.3s ease;
+    cursor: pointer; /* Indicar que es clickeable */
+    display: block;
+    margin: 0 auto;
+}
+
+.auth-page .auth-logo:hover {
+    opacity: 0.9;
+}
+
+/* Estilos para el contenedor del logo como enlace */
+.auth-page .logo-container {
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.auth-page .logo-container:hover {
+    opacity: 0.9;
+}
+
+.auth-page .logo-container:hover .auth-logo {
+    opacity: 0.9;
+}
+
+/* Estilos para el enlace del logo */
+.auth-page .logo-link {
+    text-decoration: none;
+    display: block;
+    transition: opacity 0.2s ease;
+}
+
+.auth-page .logo-link:hover {
+    text-decoration: none;
+}
+
+.auth-page .logo-link:focus {
+    outline: none;
+}
+
+.auth-page .logo-link:focus .auth-logo {
+    opacity: 0.9;
+}
+
 .auth-page .overlay-panel p {
     color: var(--white);
     opacity: 0.9;
@@ -683,6 +826,16 @@
 
     .auth-page button {
         padding: 10px 35px;
+    }
+    
+    /* Ajustes responsivos para el logo */
+    .auth-page .auth-logo {
+        max-width: 240px; /* Logo más grande en móviles también */
+    }
+    
+    .auth-page .logo-container {
+        margin-bottom: 20px;
+        margin-top: -60px; /* Ajuste proporcional para móviles */
     }
 }
 
