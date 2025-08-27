@@ -67,9 +67,15 @@ Una plataforma web moderna y responsive diseñada para reducir el desperdicio gl
 ├── login.html                # Inicio de sesión
 ├── register.html             # Registro
 ├── components/               # Componentes reutilizables
-│   ├── header.html          # Navegación principal
-│   ├── footer.html          # Pie de página
-│   └── product-card.html    # Tarjeta de producto
+│   ├── header.html              # Navegación principal
+│   ├── footer.html              # Pie de página
+│   ├── cards/
+│   │   └── product-card.html    # Tarjeta de producto
+│   └── web-components/          # Web Components (JS)
+│       ├── app-header.js
+│       ├── app-header-auth.js
+│       ├── app-footer.js
+│       └── app-cart.js
 ├── styles/                  # Hojas de estilo
 │   ├── main.css            # Estilos principales
 │   ├── components.css      # Estilos de componentes

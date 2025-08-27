@@ -93,6 +93,23 @@ class AppCart extends HTMLElement {
                     right: 0;
                     height: 1px;
                     background: linear-gradient(90deg, transparent 0%, rgba(64, 224, 208, 0.3) 50%, transparent 100%);
+                    animation: shimmer 3s ease-in-out infinite;
+                }
+
+                .cart-header::after {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: linear-gradient(135deg, 
+                        rgba(64, 224, 208, 0.02) 0%, 
+                        transparent 30%, 
+                        rgba(16, 185, 129, 0.02) 70%, 
+                        transparent 100%);
+                    opacity: 0.3;
+                    pointer-events: none;
                 }
 
                 .cart-title {
@@ -109,10 +126,10 @@ class AppCart extends HTMLElement {
                     z-index: 10004;
                 }
 
-                .cart-title::before {
-                    content: '🛒';
-                    font-size: 1.75rem;
-                    filter: drop-shadow(0 2px 8px rgba(64, 224, 208, 0.3));
+                .cart-title .icon {
+                    display: inline-flex;
+                    width: 24px;
+                    height: 24px;
                 }
 
                 .close-btn {
@@ -195,6 +212,7 @@ class AppCart extends HTMLElement {
                     position: relative;
                     overflow: hidden;
                     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+                    transform: translateZ(0);
                 }
 
                 .cart-item::before {
@@ -233,8 +251,28 @@ class AppCart extends HTMLElement {
                 .cart-item:hover {
                     background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
                     border-color: rgba(64, 224, 208, 0.2);
-                    transform: translateY(-4px) scale(1.02);
+                    transform: translateY(-4px) scale(1.02) translateZ(0);
                     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(64, 224, 208, 0.1);
+                }
+
+                .cart-item .item-badge {
+                    position: absolute;
+                    top: -8px;
+                    right: -8px;
+                    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+                    color: white;
+                    font-size: 0.7rem;
+                    font-weight: 800;
+                    padding: 0.25rem 0.5rem;
+                    border-radius: 12px;
+                    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+                    transform: scale(0);
+                    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                    z-index: 10;
+                }
+
+                .cart-item:hover .item-badge {
+                    transform: scale(1);
                 }
 
                 .item-image {
@@ -249,6 +287,7 @@ class AppCart extends HTMLElement {
                     grid-row: 1 / span 2;
                     position: relative;
                     overflow: hidden;
+                    transform: translateZ(0);
                 }
 
                 .item-image::after {
@@ -266,7 +305,7 @@ class AppCart extends HTMLElement {
                 .cart-item:hover .item-image {
                     border-color: rgba(64, 224, 208, 0.3);
                     box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4), 0 0 20px rgba(64, 224, 208, 0.2);
-                    transform: scale(1.05);
+                    transform: scale(1.05) translateZ(0);
                 }
 
                 .cart-item:hover .item-image::after {
@@ -280,6 +319,7 @@ class AppCart extends HTMLElement {
                     justify-content: center;
                     grid-column: 2;
                     grid-row: 1;
+                    position: relative;
                 }
 
                 .item-title {
@@ -290,6 +330,11 @@ class AppCart extends HTMLElement {
                     line-height: 1.3;
                     letter-spacing: -0.01em;
                     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+                    transition: color 0.3s ease;
+                }
+
+                .cart-item:hover .item-title {
+                    color: #e0e7ff;
                 }
 
                 .item-price {
@@ -301,12 +346,23 @@ class AppCart extends HTMLElement {
                     gap: 0.25rem;
                     letter-spacing: -0.01em;
                     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+                    transition: all 0.3s ease;
                 }
 
                 .item-price::before {
                     content: '$';
                     font-size: 1rem;
                     opacity: 0.9;
+                    transition: transform 0.3s ease;
+                }
+
+                .cart-item:hover .item-price {
+                    color: #34d399;
+                    text-shadow: 0 2px 4px rgba(16, 185, 129, 0.4);
+                }
+
+                .cart-item:hover .item-price::before {
+                    transform: scale(1.2);
                 }
 
                 .item-controls {
@@ -317,6 +373,7 @@ class AppCart extends HTMLElement {
                     justify-content: center;
                     grid-column: 3;
                     grid-row: 1 / span 2;
+                    position: relative;
                 }
 
                 .item-quantity {
@@ -332,6 +389,7 @@ class AppCart extends HTMLElement {
                     align-self: flex-end;
                     position: relative;
                     overflow: hidden;
+                    transition: all 0.3s ease;
                 }
 
                 .item-quantity::before {
@@ -348,6 +406,13 @@ class AppCart extends HTMLElement {
 
                 .item-quantity:hover::before {
                     opacity: 1;
+                }
+
+                .item-quantity:hover {
+                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.04) 100%);
+                    border-color: rgba(64, 224, 208, 0.2);
+                    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(64, 224, 208, 0.1);
+                    transform: translateY(-2px);
                 }
 
                 .quantity-btn {
@@ -368,6 +433,7 @@ class AppCart extends HTMLElement {
                     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
                     position: relative;
                     overflow: hidden;
+                    transform: translateZ(0);
                 }
 
                 .quantity-btn::before {
@@ -388,13 +454,13 @@ class AppCart extends HTMLElement {
                 .quantity-btn:hover {
                     background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
                     color: white;
-                    transform: scale(1.15);
+                    transform: scale(1.15) translateZ(0);
                     box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
                     border-color: rgba(16, 185, 129, 0.5);
                 }
 
                 .quantity-btn:active {
-                    transform: scale(0.9);
+                    transform: scale(0.9) translateZ(0);
                 }
 
                 .quantity-display {
@@ -405,6 +471,13 @@ class AppCart extends HTMLElement {
                     font-size: 1.1rem;
                     letter-spacing: -0.01em;
                     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+                    transition: all 0.3s ease;
+                    position: relative;
+                }
+
+                .item-quantity:hover .quantity-display {
+                    color: #e0e7ff;
+                    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.2);
                 }
 
                 .remove-btn {
@@ -425,6 +498,7 @@ class AppCart extends HTMLElement {
                     letter-spacing: 0.8px;
                     position: relative;
                     overflow: hidden;
+                    transform: translateZ(0);
                 }
 
                 .remove-btn::before {
@@ -445,13 +519,13 @@ class AppCart extends HTMLElement {
                 .remove-btn:hover {
                     background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
                     color: white;
-                    transform: translateY(-2px) scale(1.05);
+                    transform: translateY(-2px) scale(1.05) translateZ(0);
                     box-shadow: 0 8px 30px rgba(239, 68, 68, 0.4);
                     border-color: rgba(239, 68, 68, 0.5);
                 }
 
                 .remove-btn:active {
-                    transform: translateY(0px) scale(0.95);
+                    transform: translateY(0px) scale(0.95) translateZ(0);
                 }
 
                 .cart-summary {
@@ -477,6 +551,18 @@ class AppCart extends HTMLElement {
                     background: linear-gradient(90deg, transparent 0%, rgba(64, 224, 208, 0.2) 50%, transparent 100%);
                 }
 
+                .cart-summary::after {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: radial-gradient(ellipse at center, rgba(64, 224, 208, 0.02) 0%, transparent 70%);
+                    opacity: 0.5;
+                    pointer-events: none;
+                }
+
                 .summary-row {
                     display: flex;
                     justify-content: space-between;
@@ -486,6 +572,13 @@ class AppCart extends HTMLElement {
                     padding: 0.75rem 0;
                     font-weight: 500;
                     letter-spacing: 0.01em;
+                    transition: all 0.3s ease;
+                    position: relative;
+                }
+
+                .summary-row:hover {
+                    color: #e0e7ff;
+                    transform: translateX(5px);
                 }
 
                 .summary-row:last-of-type {
@@ -504,12 +597,36 @@ class AppCart extends HTMLElement {
                     align-items: center;
                     letter-spacing: -0.02em;
                     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+                    position: relative;
+                }
+
+                .summary-total::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 2px;
+                    background: linear-gradient(90deg, transparent 0%, rgba(64, 224, 208, 0.4) 50%, transparent 100%);
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                }
+
+                .summary-total:hover::before {
+                    opacity: 1;
                 }
 
                 .summary-total span:last-child {
                     color: #10b981;
                     font-size: 1.8rem;
                     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+                    transition: all 0.3s ease;
+                }
+
+                .summary-total:hover span:last-child {
+                    color: #34d399;
+                    text-shadow: 0 4px 8px rgba(16, 185, 129, 0.4);
+                    transform: scale(1.05);
                 }
 
                 .checkout-btn {
@@ -534,12 +651,14 @@ class AppCart extends HTMLElement {
                     position: relative;
                     overflow: hidden;
                     box-shadow: 0 8px 30px rgba(16, 185, 129, 0.3);
+                    transform: translateZ(0);
                 }
 
                 .checkout-btn::before {
                     content: '💳';
                     font-size: 1.3rem;
                     filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
+                    transition: all 0.3s ease;
                 }
 
                 .checkout-btn::after {
@@ -558,13 +677,18 @@ class AppCart extends HTMLElement {
                 }
 
                 .checkout-btn:hover {
-                    transform: translateY(-4px);
+                    transform: translateY(-4px) translateZ(0);
                     box-shadow: 0 20px 50px rgba(16, 185, 129, 0.5);
                     background: linear-gradient(135deg, #34d399 0%, #10b981 50%, #059669 100%);
                 }
 
+                .checkout-btn:hover::before {
+                    transform: scale(1.2) rotate(5deg);
+                    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+                }
+
                 .checkout-btn:active {
-                    transform: translateY(-2px);
+                    transform: translateY(-2px) translateZ(0);
                 }
 
                 .checkout-btn:disabled {
@@ -574,39 +698,222 @@ class AppCart extends HTMLElement {
                     background: rgba(255, 255, 255, 0.1);
                 }
 
+                .checkout-btn .btn-shine {
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+                    transition: left 0.8s ease;
+                }
+
+                .checkout-btn:hover .btn-shine {
+                    left: 100%;
+                }
+
                 .empty-cart {
                     text-align: center;
-                    padding: 5rem 2rem;
+                    padding: 4rem 2rem;
                     color: #a1a1aa;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-                    gap: 2rem;
+                    gap: 2.5rem;
+                    position: relative;
+                    overflow: hidden;
+                    min-height: 400px;
+                    justify-content: center;
                 }
 
                 .empty-cart::before {
-                    content: '🛒';
-                    font-size: 5rem;
-                    opacity: 0.2;
-                    animation: float 4s ease-in-out infinite;
-                    filter: drop-shadow(0 4px 20px rgba(64, 224, 208, 0.1));
+                    content: '';
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    width: 200px;
+                    height: 200px;
+                    background: radial-gradient(circle, rgba(64, 224, 208, 0.03) 0%, transparent 70%);
+                    border-radius: 50%;
+                    transform: translate(-50%, -50%);
+                    animation: pulse 4s ease-in-out infinite;
                 }
 
-                .empty-cart p {
+                .empty-cart::after {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: linear-gradient(135deg, 
+                        rgba(64, 224, 208, 0.02) 0%, 
+                        transparent 30%, 
+                        rgba(16, 185, 129, 0.02) 70%, 
+                        transparent 100%);
+                    opacity: 0.6;
+                    pointer-events: none;
+                }
+
+                .empty-cart .empty-icon {
+                    width: 120px;
+                    height: 120px;
+                    opacity: 0.15;
+                    filter: drop-shadow(0 8px 32px rgba(64, 224, 208, 0.3));
+                    animation: float 6s ease-in-out infinite;
+                    position: relative;
+                    z-index: 2;
+                }
+
+                .empty-cart .empty-icon svg {
+                    width: 100%;
+                    height: 100%;
+                    filter: drop-shadow(0 4px 16px rgba(64, 224, 208, 0.2));
+                }
+
+                .empty-cart .empty-content {
+                    position: relative;
+                    z-index: 2;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1.5rem;
+                    align-items: center;
+                }
+
+                .empty-cart h3 {
                     margin: 0;
-                    font-size: 1.3rem;
-                    font-weight: 600;
+                    font-size: 2rem;
+                    font-weight: 800;
                     color: #ffffff;
-                    letter-spacing: -0.01em;
-                    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+                    letter-spacing: -0.02em;
+                    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+                    background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
                 }
 
                 .empty-cart .subtitle {
-                    font-size: 1.1rem;
-                    opacity: 0.7;
-                    margin-top: 0.5rem;
+                    font-size: 1.2rem;
+                    opacity: 0.8;
+                    margin: 0;
                     color: #a1a1aa;
-                    font-weight: 400;
+                    font-weight: 500;
+                    letter-spacing: 0.01em;
+                    max-width: 280px;
+                    line-height: 1.5;
+                }
+
+                .empty-cart .empty-actions {
+                    display: flex;
+                    gap: 1rem;
+                    margin-top: 1rem;
+                }
+
+                .empty-cart .browse-btn {
+                    background: linear-gradient(135deg, rgba(64, 224, 208, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
+                    border: 1px solid rgba(64, 224, 208, 0.3);
+                    color: #40e0d0;
+                    padding: 0.875rem 1.5rem;
+                    border-radius: 16px;
+                    font-weight: 600;
+                    font-size: 0.95rem;
+                    cursor: pointer;
+                    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                    position: relative;
+                    overflow: hidden;
+                    backdrop-filter: blur(10px);
+                }
+
+                .empty-cart .browse-btn::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(90deg, transparent, rgba(64, 224, 208, 0.2), transparent);
+                    transition: left 0.6s ease;
+                }
+
+                .empty-cart .browse-btn:hover::before {
+                    left: 100%;
+                }
+
+                .empty-cart .browse-btn:hover {
+                    background: linear-gradient(135deg, rgba(64, 224, 208, 0.2) 0%, rgba(16, 185, 129, 0.2) 100%);
+                    border-color: rgba(64, 224, 208, 0.5);
+                    transform: translateY(-2px);
+                    box-shadow: 0 8px 25px rgba(64, 224, 208, 0.3);
+                }
+
+                .empty-cart .browse-btn:active {
+                    transform: translateY(0);
+                }
+
+                .empty-cart .empty-decoration {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    pointer-events: none;
+                    z-index: 1;
+                }
+
+                .empty-cart .decoration-dot {
+                    position: absolute;
+                    width: 4px;
+                    height: 4px;
+                    background: rgba(64, 224, 208, 0.3);
+                    border-radius: 50%;
+                    animation: twinkle 3s ease-in-out infinite;
+                }
+
+                .empty-cart .decoration-dot:nth-child(1) {
+                    top: 20%;
+                    left: 15%;
+                    animation-delay: 0s;
+                }
+
+                .empty-cart .decoration-dot:nth-child(2) {
+                    top: 30%;
+                    right: 20%;
+                    animation-delay: 0.5s;
+                }
+
+                .empty-cart .decoration-dot:nth-child(3) {
+                    bottom: 25%;
+                    left: 25%;
+                    animation-delay: 1s;
+                }
+
+                .empty-cart .decoration-dot:nth-child(4) {
+                    bottom: 35%;
+                    right: 15%;
+                    animation-delay: 1.5s;
+                }
+
+                @keyframes pulse {
+                    0%, 100% { 
+                        transform: translate(-50%, -50%) scale(1);
+                        opacity: 0.3;
+                    }
+                    50% { 
+                        transform: translate(-50%, -50%) scale(1.2);
+                        opacity: 0.1;
+                    }
+                }
+
+                @keyframes twinkle {
+                    0%, 100% { 
+                        opacity: 0.3;
+                        transform: scale(1);
+                    }
+                    50% { 
+                        opacity: 1;
+                        transform: scale(1.5);
+                    }
                 }
 
                 @keyframes float {
@@ -614,7 +921,7 @@ class AppCart extends HTMLElement {
                         transform: translateY(0px) rotate(0deg); 
                     }
                     50% { 
-                        transform: translateY(-15px) rotate(5deg); 
+                        transform: translateY(-20px) rotate(3deg); 
                     }
                 }
 
@@ -633,6 +940,82 @@ class AppCart extends HTMLElement {
                     animation: slideIn 0.5s ease-out;
                 }
 
+                /* Efectos de partículas flotantes */
+                .cart-particles {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    pointer-events: none;
+                    z-index: 1;
+                    overflow: hidden;
+                }
+
+                .particle {
+                    position: absolute;
+                    width: 2px;
+                    height: 2px;
+                    background: rgba(64, 224, 208, 0.3);
+                    border-radius: 50%;
+                    animation: float-particle 8s ease-in-out infinite;
+                }
+
+                .particle:nth-child(1) {
+                    top: 10%;
+                    left: 10%;
+                    animation-delay: 0s;
+                    animation-duration: 6s;
+                }
+
+                .particle:nth-child(2) {
+                    top: 20%;
+                    right: 15%;
+                    animation-delay: 1s;
+                    animation-duration: 8s;
+                }
+
+                .particle:nth-child(3) {
+                    bottom: 15%;
+                    left: 20%;
+                    animation-delay: 2s;
+                    animation-duration: 7s;
+                }
+
+                .particle:nth-child(4) {
+                    bottom: 25%;
+                    right: 10%;
+                    animation-delay: 3s;
+                    animation-duration: 9s;
+                }
+
+                .particle:nth-child(5) {
+                    top: 50%;
+                    left: 5%;
+                    animation-delay: 4s;
+                    animation-duration: 5s;
+                }
+
+                @keyframes float-particle {
+                    0%, 100% { 
+                        transform: translateY(0px) translateX(0px);
+                        opacity: 0.3;
+                    }
+                    25% { 
+                        transform: translateY(-20px) translateX(10px);
+                        opacity: 0.7;
+                    }
+                    50% { 
+                        transform: translateY(-10px) translateX(-5px);
+                        opacity: 0.5;
+                    }
+                    75% { 
+                        transform: translateY(-15px) translateX(15px);
+                        opacity: 0.8;
+                    }
+                }
+
+                /* Mejoras en la responsividad */
                 @media (max-width: 768px) {
                     :host {
                         width: 100%;
@@ -689,9 +1072,76 @@ class AppCart extends HTMLElement {
                         padding: 1.5rem;
                         margin: 0 -1.5rem -1.5rem -1.5rem;
                     }
+
+                    .empty-cart {
+                        padding: 3rem 1.5rem;
+                        min-height: 350px;
+                    }
+
+                    .empty-cart .empty-icon {
+                        width: 100px;
+                        height: 100px;
+                    }
+
+                    .empty-cart h3 {
+                        font-size: 1.75rem;
+                    }
+
+                    .empty-cart .subtitle {
+                        font-size: 1.1rem;
+                        max-width: 250px;
+                    }
+
+                    .empty-cart .browse-btn {
+                        padding: 0.75rem 1.25rem;
+                        font-size: 0.9rem;
+                    }
                 }
 
-                /* Scrollbar styling */
+                @media (max-width: 480px) {
+                    .cart-header {
+                        padding: 1.25rem 1.25rem 1rem 1.25rem;
+                    }
+                    
+                    .cart-title {
+                        font-size: 1.375rem;
+                    }
+                    
+                    .cart-content {
+                        padding: 1.25rem;
+                    }
+                    
+                    .cart-summary {
+                        padding: 1.25rem;
+                        margin: 0 -1.25rem -1.25rem -1.25rem;
+                    }
+
+                    .empty-cart {
+                        padding: 2.5rem 1.25rem;
+                        min-height: 300px;
+                    }
+
+                    .empty-cart .empty-icon {
+                        width: 90px;
+                        height: 90px;
+                    }
+
+                    .empty-cart h3 {
+                        font-size: 1.5rem;
+                    }
+
+                    .empty-cart .subtitle {
+                        font-size: 1rem;
+                        max-width: 220px;
+                    }
+
+                    .empty-cart .browse-btn {
+                        padding: 0.625rem 1rem;
+                        font-size: 0.85rem;
+                    }
+                }
+
+                /* Mejoras en el scrollbar */
                 :host::-webkit-scrollbar {
                     width: 8px;
                 }
@@ -705,16 +1155,72 @@ class AppCart extends HTMLElement {
                     background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
                     border-radius: 4px;
                     border: 1px solid rgba(255, 255, 255, 0.1);
+                    transition: all 0.3s ease;
                 }
 
                 :host::-webkit-scrollbar-thumb:hover {
                     background: linear-gradient(135deg, rgba(64, 224, 208, 0.2) 0%, rgba(64, 224, 208, 0.1) 100%);
+                    border-color: rgba(64, 224, 208, 0.3);
+                }
+
+                /* Efectos de carga y transiciones */
+                .cart-item {
+                    animation: slideIn 0.5s ease-out;
+                }
+
+                .cart-item:nth-child(1) { animation-delay: 0.1s; }
+                .cart-item:nth-child(2) { animation-delay: 0.2s; }
+                .cart-item:nth-child(3) { animation-delay: 0.3s; }
+                .cart-item:nth-child(4) { animation-delay: 0.4s; }
+                .cart-item:nth-child(5) { animation-delay: 0.5s; }
+
+                @keyframes slideIn {
+                    from {
+                        opacity: 0;
+                        transform: translateX(30px) scale(0.95);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateX(0) scale(1);
+                    }
+                }
+
+                /* Efectos de hover mejorados para elementos del carrito */
+                .cart-item .item-image,
+                .cart-item .item-details,
+                .cart-item .item-controls {
+                    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                }
+
+                .cart-item:hover .item-image {
+                    transform: scale(1.05) translateZ(0) rotate(1deg);
+                }
+
+                .cart-item:hover .item-details {
+                    transform: translateX(5px);
+                }
+
+                .cart-item:hover .item-controls {
+                    transform: translateX(-5px);
                 }
             </style>
 
             <div class="cart-overlay"></div>
+            <div class="cart-particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
             <div class="cart-header">
-                <h2 class="cart-title">Shopping Cart</h2>
+                <h2 class="cart-title"><span class="icon" aria-hidden="true">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M7 18C6.44772 18 6 18.4477 6 19C6 19.5523 6.44772 20 7 20C7.55228 20 8 19.5523 8 19C8 18.4477 7.55228 18 7 18Z" fill="currentColor"/>
+                      <path d="M17 18C16.4477 18 16 18.4477 16 19C16 19.5523 16.4477 20 17 20C17.5523 20 18 19.5523 18 19C18 18.4477 17.5523 18 17 18Z" fill="currentColor"/>
+                      <path d="M3 4H5L6.68 13.39C6.7717 13.9154 7.0463 14.3914 7.45406 14.7321C7.86183 15.0728 8.37583 15.2551 8.905 15.25H17.55C18.0792 15.2551 18.5932 15.0728 19.0009 14.7321C19.4087 14.3914 19.6833 13.9154 19.775 13.39L21 6H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span> Shopping Cart</h2>
                 <button class="close-btn" id="closeCart">×</button>
             </div>
             <div class="cart-content">
@@ -732,8 +1238,26 @@ class AppCart extends HTMLElement {
         if (this.cartItems.length === 0) {
             return `
                 <div class="empty-cart">
-                    <p>Your cart is empty</p>
-                    <p class="subtitle">Add some items to get started!</p>
+                    <div class="empty-icon">
+                        <svg width="120" height="120" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M7 18C6.44772 18 6 18.4477 6 19C6 19.5523 6.44772 20 7 20C7.55228 20 8 19.5523 8 19C8 18.4477 7.55228 18 7 18Z" fill="currentColor"/>
+                            <path d="M17 18C16.4477 18 16 18.4477 16 19C16 19.5523 16.4477 20 17 20C17.5523 20 18 19.5523 18 19C18 18.4477 17.5523 18 17 18Z" fill="currentColor"/>
+                            <path d="M3 4H5L6.68 13.39C6.7717 13.9154 7.0463 14.3914 7.45406 14.7321C7.86183 15.0728 8.37583 15.2551 8.905 15.25H17.55C18.0792 15.2551 18.5932 15.0728 19.0009 14.7321C19.4087 14.3914 19.6833 13.9154 19.775 13.39L21 6H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="empty-content">
+                        <h3>Your cart is empty</h3>
+                        <p class="subtitle">Add some products to start your shopping experience!</p>
+                        <div class="empty-actions">
+                            <button class="browse-btn" id="browseProducts">Browse Products</button>
+                        </div>
+                    </div>
+                    <div class="empty-decoration">
+                        <div class="decoration-dot"></div>
+                        <div class="decoration-dot"></div>
+                        <div class="decoration-dot"></div>
+                        <div class="decoration-dot"></div>
+                    </div>
                 </div>
             `;
         }
@@ -780,6 +1304,7 @@ class AppCart extends HTMLElement {
                 <span>$${total.toFixed(2)}</span>
             </div>
             <button class="checkout-btn">
+                <span class="btn-shine"></span>
                 Proceed to Checkout
             </button>
         `;
@@ -831,6 +1356,14 @@ class AppCart extends HTMLElement {
             // Checkout button
             if (target.classList.contains('checkout-btn')) {
                 this.checkout();
+            }
+            
+            // Browse products button (empty cart)
+            if (target.id === 'browseProducts' || target.classList.contains('browse-btn')) {
+                this.closeCart();
+                // Navigate to marketplace
+                this.navigateToMarketplace();
+                return;
             }
         });
 
@@ -960,7 +1493,7 @@ class AppCart extends HTMLElement {
                 image: it.image,
                 quantity: it.quantity,
                 discountedPrice: it.price,
-                supplier: it.supplier || 'Proveedor',
+                supplier: it.supplier || 'Supplier',
                 originalPrice: it.price
             }));
             localStorage.setItem('foodmarketplace_cart', JSON.stringify(legacy));
@@ -990,6 +1523,17 @@ class AppCart extends HTMLElement {
         } else {
             // Fallback to direct navigation
             window.location.href = '../pages/payment.html';
+        }
+    }
+
+    navigateToMarketplace() {
+        // Use the global navigation function
+        if (window.navigateToMarketplace) {
+            window.navigateToMarketplace();
+        } else {
+            // Fallback to direct navigation
+            console.log('Global navigateToMarketplace not found, using fallback');
+            window.location.href = './marketplace/marketplace.html';
         }
     }
 
@@ -1063,4 +1607,36 @@ class AppCart extends HTMLElement {
     }
 }
 
-customElements.define('app-cart', AppCart); 
+customElements.define('app-cart', AppCart);
+
+// Global function for marketplace navigation
+window.navigateToMarketplace = function() {
+    const currentPath = window.location.pathname;
+    let marketplacePath;
+    
+    // Detect the current location and set appropriate path
+    if (currentPath.includes('/pages/')) {
+        marketplacePath = '../marketplace/marketplace.html';
+    } else if (currentPath.includes('/public/')) {
+        marketplacePath = 'marketplace/marketplace.html';
+    } else if (currentPath === '/' || currentPath === '/index.html') {
+        marketplacePath = 'marketplace/marketplace.html';
+    } else if (currentPath.includes('/marketplace/')) {
+        console.log('Already on marketplace page');
+        return;
+    } else {
+        // Try multiple fallback paths
+        const possiblePaths = [
+            './marketplace/marketplace.html',
+            '../marketplace/marketplace.html',
+            'marketplace/marketplace.html',
+            '/marketplace/marketplace.html'
+        ];
+        
+        // Use the most common case
+        marketplacePath = 'marketplace/marketplace.html';
+    }
+    
+    console.log('Navigating to marketplace:', marketplacePath);
+    window.location.href = marketplacePath;
+}; 

@@ -124,125 +124,120 @@
     <!-- Elegant Divider -->
     <div class="section-divider"></div>
 
-    <!-- Contact Form Section -->
-    <section class="contact-form-section">
+    <!-- Contact Section Start -->
+    <section class="contact-section">
         <div class="container">
-            <div class="form-container">
-                <div class="form-header">
-                    <h2>Send us a Message</h2>
-                    <p>Fill out the form below and we'll get back to you as soon as possible</p>
-                </div>
-                
-                <form class="contact-form" id="contactForm">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="firstName">First Name *</label>
-                            <input type="text" id="firstName" name="firstName" required>
-                            <div class="input-icon">
-                                <i class="fas fa-user"></i>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="lastName">Last Name *</label>
-                            <input type="text" id="lastName" name="lastName" required>
-                            <div class="input-icon">
-                                <i class="fas fa-user"></i>
-                            </div>
-                        </div>
+            <div class="contact-grid">
+                <!-- Contact Form -->
+                <div class="contact-form-container">
+                    <div class="form-header">
+                        <h2>Get in Touch</h2>
+                        <p>We'd love to hear from you – let's build a more sustainable future together.</p>
                     </div>
+                    
+                    <form class="contact-form" id="contactForm" action="https://formspree.io/f/xpzgqkqk" method="POST">
+                        <div class="form-group">
+                            <label for="fullName">Full Name *</label>
+                            <input 
+                                type="text" 
+                                id="fullName" 
+                                name="fullName" 
+                                required 
+                                aria-label="Enter your full name"
+                                placeholder="Enter your full name">
+                        </div>
 
-                    <div class="form-row">
                         <div class="form-group">
                             <label for="email">Email Address *</label>
-                            <input type="email" id="email" name="email" required>
-                            <div class="input-icon">
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email" 
+                                required 
+                                aria-label="Enter your email address"
+                                placeholder="Enter your email address">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input 
+                                type="text" 
+                                id="subject" 
+                                name="subject" 
+                                aria-label="Enter message subject"
+                                placeholder="What's this about?">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Message *</label>
+                            <textarea 
+                                id="message" 
+                                name="message" 
+                                rows="6" 
+                                required 
+                                minlength="20"
+                                aria-label="Enter your message"
+                                placeholder="Tell us how we can help you... (minimum 20 characters)"></textarea>
+                            <div class="char-counter">
+                                <span id="charCount">0</span>/1000
+                            </div>
+                        </div>
+
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="contact-info">
+                    <div class="info-header">
+                        <h3>Other Ways to Reach Us</h3>
+                        <p>Prefer a different method? Here are our contact details:</p>
+                    </div>
+                    
+                    <div class="info-items">
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="info-content">
+                                <h4>Address</h4>
+                                <p>Panama City, Panama</p>
+                            </div>
+                        </div>
+
+                        <div class="info-item">
+                            <div class="info-icon">
                                 <i class="fas fa-envelope"></i>
                             </div>
+                            <div class="info-content">
+                                <h4>Email</h4>
+                                <p>support@goodtosave.com</p>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" name="phone">
-                            <div class="input-icon">
+
+                        <div class="info-item">
+                            <div class="info-icon">
                                 <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="info-content">
+                                <h4>Phone</h4>
+                                <p>+507 6000-0000</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="subject">Subject *</label>
-                        <select id="subject" name="subject" required>
-                            <option value="">Select a subject</option>
-                            <option value="general">General Inquiry</option>
-                            <option value="support">Technical Support</option>
-                            <option value="partnership">Partnership</option>
-                            <option value="feedback">Feedback</option>
-                            <option value="bug">Report a Bug</option>
-                            <option value="feature">Feature Request</option>
-                        </select>
-                        <div class="input-icon">
-                            <i class="fas fa-tag"></i>
-                        </div>
+                    <div class="info-note">
+                        <i class="fas fa-clock"></i>
+                        <p>We typically respond within 24 hours during business days.</p>
                     </div>
-
-                    <div class="form-group">
-                        <label for="priority">Priority</label>
-                        <div class="priority-selector">
-                            <label class="priority-option">
-                                <input type="radio" name="priority" value="low">
-                                <span class="priority-label">
-                                    <i class="fas fa-circle"></i>
-                                    Low
-                                </span>
-                            </label>
-                            <label class="priority-option">
-                                <input type="radio" name="priority" value="medium" checked>
-                                <span class="priority-label">
-                                    <i class="fas fa-circle"></i>
-                                    Medium
-                                </span>
-                            </label>
-                            <label class="priority-option">
-                                <input type="radio" name="priority" value="high">
-                                <span class="priority-label">
-                                    <i class="fas fa-circle"></i>
-                                    High
-                                </span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="message">Message *</label>
-                        <textarea id="message" name="message" rows="6" required placeholder="Tell us how we can help you..."></textarea>
-                        <div class="textarea-counter">
-                            <span id="charCount">0</span>/1000
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="checkbox-label">
-                            <input type="checkbox" name="newsletter" id="newsletter">
-                            <span class="checkmark"></span>
-                            Subscribe to our newsletter for updates and tips
-                        </label>
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="submit" class="submit-btn">
-                            <span class="btn-text">Send Message</span>
-                            <span class="btn-icon">
-                                <i class="fas fa-paper-plane"></i>
-                            </span>
-                        </button>
-                        <button type="reset" class="reset-btn">
-                            <i class="fas fa-undo"></i>
-                            Reset Form
-                        </button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </section>
+    <!-- Contact Section End -->
 
     <!-- Elegant Divider -->
     <div class="section-divider"></div>

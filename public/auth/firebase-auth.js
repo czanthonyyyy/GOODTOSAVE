@@ -9,11 +9,11 @@ class FirebaseAuthService {
     this.db = window.firebaseServices?.db;
     
     if (!this.auth) {
-      console.error('❌ Firebase Auth no está disponible');
+      console.error('❌ Firebase Auth is not available');
       return;
     }
     
-    console.log('✅ Firebase Auth Service inicializado');
+    console.log('✅ Firebase Auth Service initialized');
   }
 
   /**
@@ -23,7 +23,7 @@ class FirebaseAuthService {
    */
   async signUp(userData) {
     try {
-      console.log('📝 Registrando usuario:', userData.email);
+      console.log('📝 Registering user:', userData.email);
       
       // Crear usuario en Firebase Auth
       const userCredential = await this.auth.createUserWithEmailAndPassword(
@@ -45,16 +45,17 @@ class FirebaseAuthService {
         email: userData.email,
         phone: userData.phone || '',
         accountType: userData.accountType,
+        role: userData.accountType === 'seller' ? 'provider' : (userData.accountType || 'buyer'),
         location: userData.location || '',
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
       });
       
-      console.log('✅ Usuario registrado exitosamente:', user.uid);
+      console.log('✅ User registered successfully:', user.uid);
       return user;
       
     } catch (error) {
-      console.error('❌ Error en registro:', error);
+      console.error('❌ Registration error:', error);
       throw this.getErrorMessage(error);
     }
   }
@@ -67,17 +68,19 @@ class FirebaseAuthService {
    */
   async signIn(email, password) {
     try {
-      console.log('🔐 Iniciando sesión:', email);
+      console.log('🔐 Signing in:', email);
       
       const userCredential = await this.auth.signInWithEmailAndPassword(email, password);
       const user = userCredential.user;
       
-      console.log('✅ Sesión iniciada exitosamente:', user.uid);
+      console.log('✅ Session started successfully:', user.uid);
       return user;
       
     } catch (error) {
-      console.error('❌ Error en inicio de sesión:', error);
-      throw this.getErrorMessage(error);
+      console.error('❌ Sign-in error:', error);
+      // Lanzar objeto rico para que la UI decida feedback según el código
+      const friendly = this.getErrorMessage(error);
+      throw { code: error.code || 'unknown', message: friendly };
     }
   }
 
@@ -88,9 +91,9 @@ class FirebaseAuthService {
   async signOut() {
     try {
       await this.auth.signOut();
-      console.log('✅ Sesión cerrada exitosamente');
+      console.log('✅ Signed out successfully');
     } catch (error) {
-      console.error('❌ Error al cerrar sesión:', error);
+      console.error('❌ Error signing out:', error);
       throw this.getErrorMessage(error);
     }
   }
@@ -103,9 +106,9 @@ class FirebaseAuthService {
   async sendPasswordResetEmail(email) {
     try {
       await this.auth.sendPasswordResetEmail(email);
-      console.log('✅ Email de recuperación enviado');
+      console.log('✅ Password recovery email sent');
     } catch (error) {
-      console.error('❌ Error al enviar email de recuperación:', error);
+      console.error('❌ Error sending recovery email:', error);
       throw this.getErrorMessage(error);
     }
   }
@@ -136,9 +139,9 @@ class FirebaseAuthService {
   async saveUserData(uid, userData) {
     try {
       await this.db.collection('users').doc(uid).set(userData);
-      console.log('✅ Datos de usuario guardados en Firestore');
+      console.log('✅ User data saved in Firestore');
     } catch (error) {
-      console.error('❌ Error al guardar datos de usuario:', error);
+      console.error('❌ Error saving user data:', error);
       throw this.getErrorMessage(error);
     }
   }
@@ -154,10 +157,37 @@ class FirebaseAuthService {
       if (doc.exists) {
         return doc.data();
       } else {
-        throw new Error('Usuario no encontrado en la base de datos');
+        throw new Error('User not found in the database');
       }
     } catch (error) {
-      console.error('❌ Error al obtener datos de usuario:', error);
+      console.error('❌ Error getting user data:', error);
+      throw this.getErrorMessage(error);
+    }
+
+  /**
+   * Guarda un producto nuevo creado por un provider
+   * @param {string} uid - ID del proveedor
+   * @param {Object} product - { id, name/title, price, description, image, category }
+   */
+  async createProduct(uid, product) {
+    try {
+      const data = {
+        id: product.id || undefined,
+        title: product.title || product.name,
+        price: typeof product.price === 'number' ? product.price : parseFloat(product.price || '0') || 0,
+        description: product.description || '',
+        image: product.image || '',
+        category: product.category || 'local',
+        providerId: uid,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      const ref = data.id ? this.db.collection('products').doc(data.id) : this.db.collection('products').doc();
+      if (!data.id) data.id = ref.id;
+      await ref.set(data);
+      return data;
+    } catch (error) {
+      console.error('❌ Error creating product:', error);
       throw this.getErrorMessage(error);
     }
   }
@@ -169,20 +199,20 @@ class FirebaseAuthService {
    */
   getErrorMessage(error) {
     const errorMessages = {
-      'auth/user-not-found': 'No existe una cuenta con este email',
-      'auth/wrong-password': 'Contraseña incorrecta',
-      'auth/email-already-in-use': 'Ya existe una cuenta con este email',
-      'auth/weak-password': 'La contraseña debe tener al menos 6 caracteres',
-      'auth/invalid-email': 'Email inválido',
-      'auth/too-many-requests': 'Demasiados intentos fallidos. Intenta más tarde',
-      'auth/network-request-failed': 'Error de conexión. Verifica tu internet',
-      'auth/user-disabled': 'Esta cuenta ha sido deshabilitada',
-      'auth/operation-not-allowed': 'Esta operación no está permitida',
-      'auth/invalid-credential': 'Credenciales inválidas'
+      'auth/user-not-found': 'No account exists with this email',
+      'auth/wrong-password': 'Incorrect password',
+      'auth/email-already-in-use': 'An account with this email already exists',
+      'auth/weak-password': 'Password must be at least 6 characters',
+      'auth/invalid-email': 'Invalid email',
+      'auth/too-many-requests': 'Too many failed attempts. Try again later',
+      'auth/network-request-failed': 'Connection error. Check your internet',
+      'auth/user-disabled': 'This account has been disabled',
+      'auth/operation-not-allowed': 'This operation is not allowed',
+      'auth/invalid-credential': 'Invalid credentials'
     };
 
     const errorCode = error.code || 'unknown';
-    return errorMessages[errorCode] || error.message || 'Error desconocido';
+    return errorMessages[errorCode] || error.message || 'Unknown error';
   }
 }
 

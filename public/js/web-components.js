@@ -12,22 +12,22 @@ class WebComponentsLoader {
             
             // Cargar el header component
             console.log('Cargando app-header.js...');
-            await this.loadScript('../js/web-components/app-header.js');
+            await this.loadScript('../components/web-components/app-header.js');
             console.log('app-header.js cargado exitosamente');
             
             // Cargar header autenticado
             console.log('Cargando app-header-auth.js...');
-            await this.loadScript('../js/web-components/app-header-auth.js');
+            await this.loadScript('../components/web-components/app-header-auth.js');
             console.log('app-header-auth.js cargado exitosamente');
             
             // Cargar el footer component
             console.log('Cargando app-footer.js...');
-            await this.loadScript('../js/web-components/app-footer.js');
+            await this.loadScript('../components/web-components/app-footer.js');
             console.log('app-footer.js cargado exitosamente');
             
             // Cargar el cart component
             console.log('Cargando app-cart.js...');
-            await this.loadScript('../js/web-components/app-cart.js');
+            await this.loadScript('../components/web-components/app-cart.js');
             console.log('app-cart.js cargado exitosamente');
             
             this.componentsLoaded = true;

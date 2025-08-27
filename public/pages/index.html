@@ -3,14 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Good to Save - Transform Food Waste into Food Security</title>
-    <meta name="description" content="Join thousands of people fighting food waste by buying surplus food at reduced prices">
+    <title>Good to Save - Transform waste into food security</title>
+    <meta name="description" content="Join thousands of people fighting food waste by buying surplus at reduced prices">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- Iconos planos: Remix Icon -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" crossorigin>
+
     <!-- Stylesheets -->
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/components.css">
@@ -31,14 +34,14 @@
         <div class="container">
             <div class="hero-content">
                 <h1 class="hero-title">
-                    Transform Food Waste into Food Security
+                    Transform waste into food security
                 </h1>
                 <p class="hero-subtitle">
-                    Join thousands of people fighting food waste by buying surplus food at reduced prices
+                    Join thousands combating food waste by buying surplus at reduced prices
                 </p>
                 <div class="hero-actions">
-                    <a href="../marketplace/marketplace.html" class="btn btn-primary btn-lg">Start Shopping</a>
-                    <a href="../auth/auth.html" class="btn btn-outline btn-lg" data-auth-link>Join Now</a>
+                    <a href="../marketplace/marketplace.html" class="btn btn-primary btn-lg" aria-label="Explore deals">Explore deals</a>
+                    <a href="../auth/auth.html" class="btn btn-outline btn-lg" data-auth-link aria-label="Create account">Create account</a>
                 </div>
                 
             </div>
@@ -52,17 +55,17 @@
     <section class="benefits-bar">
         <div class="container benefits-container">
             <div class="benefit-item">
-                <div class="benefit-icon">💸</div>
+                <div class="benefit-icon"><i class="ri-money-dollar-circle-line"></i></div>
                 <div class="benefit-title">Save up to 60%</div>
                 <div class="benefit-text">Quality food at reduced prices</div>
             </div>
             <div class="benefit-item">
-                <div class="benefit-icon">⏱️</div>
+                <div class="benefit-icon"><i class="ri-time-line"></i></div>
                 <div class="benefit-title">Same‑day pickup</div>
                 <div class="benefit-text">Fast, simple and convenient</div>
             </div>
             <div class="benefit-item">
-                <div class="benefit-icon">🔒</div>
+                <div class="benefit-icon"><i class="ri-lock-2-line"></i></div>
                 <div class="benefit-title">Secure checkout</div>
                 <div class="benefit-text">Encrypted payments & privacy</div>
             </div>
@@ -73,9 +76,9 @@
     <section class="trending-section">
         <div class="container">
             <div class="trending-header">
-                <div class="trending-badge">Hot Deals</div>
-                <h2 class="trending-title">Trending Now</h2>
-                <p class="trending-subtitle">Discover the most popular deals from local providers - updated in real-time</p>
+                <div class="trending-badge">Deals</div>
+                <h2 class="trending-title">Trending</h2>
+                <p class="trending-subtitle">Discover the most popular offers from local suppliers</p>
             </div>
             
             <div class="trending-stats">
@@ -87,7 +90,7 @@
                     </div>
                     <div class="stat-content">
                         <div class="stat-number">150+</div>
-                        <div class="stat-label">Active Deals</div>
+                        <div class="stat-label">Active deals</div>
                     </div>
                 </div>
                 
@@ -99,7 +102,7 @@
                     </div>
                     <div class="stat-content">
                         <div class="stat-number">€2.5K</div>
-                        <div class="stat-label">Total Savings</div>
+                        <div class="stat-label">Total savings</div>
                     </div>
                 </div>
                 
@@ -114,26 +117,26 @@
                     </div>
                     <div class="stat-content">
                         <div class="stat-number">2.8K</div>
-                        <div class="stat-label">Happy Customers</div>
+                        <div class="stat-label">Happy customers</div>
                     </div>
                 </div>
             </div>
             
             <div class="trending-categories">
                 <div class="category-filter active" data-category="all">
-                    <span class="category-icon">🔥</span>
-                    <span class="category-name">All Trending</span>
+                    <span class="category-icon"><i class="ri-fire-line"></i></span>
+                    <span class="category-name">All</span>
                 </div>
                 <div class="category-filter" data-category="food">
-                    <span class="category-icon">🍽️</span>
+                    <span class="category-icon"><i class="ri-restaurant-2-line"></i></span>
                     <span class="category-name">Food</span>
                 </div>
                 <div class="category-filter" data-category="bakery">
-                    <span class="category-icon">🥖</span>
+                    <span class="category-icon"><i class="ri-cake-2-line"></i></span>
                     <span class="category-name">Bakery</span>
                 </div>
                 <div class="category-filter" data-category="produce">
-                    <span class="category-icon">🥬</span>
+                    <span class="category-icon"><i class="ri-leaf-line"></i></span>
                     <span class="category-name">Produce</span>
                 </div>
             </div>
@@ -143,11 +146,9 @@
             </div>
             
             <div class="trending-actions">
-                <a href="../marketplace/marketplace.html" class="btn btn-primary btn-lg">
-                    <span>Explore All Deals</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                <a href="../marketplace/marketplace.html" class="btn btn-primary btn-lg" aria-label="View all deals">
+                    <span>View all deals</span>
+                    <i class="ri-arrow-right-line"></i>
                 </a>
                 <div class="trending-note">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -155,7 +156,7 @@
                         <path d="M12 16V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    <span>Deals update every 30 minutes</span>
+                    <span>Deals are updated regularly</span>
                 </div>
             </div>
         </div>
@@ -176,9 +177,9 @@
     <section class="how-it-works">
         <div class="container">
             <div class="how-it-works-header">
-                <div class="process-badge">Simple Process</div>
-                <h2 class="process-title">How It Works</h2>
-                <p class="process-subtitle">Three simple steps to save money and reduce waste</p>
+                <div class="process-badge">Simple process</div>
+                <h2 class="process-title">How it works</h2>
+                <p class="process-subtitle">Three steps to save and reduce waste</p>
             </div>
             
             <div class="process-flow">
@@ -191,21 +192,17 @@
                             </svg>
                         </div>
                         <h3 class="step-title">Discover</h3>
-                        <p class="step-description">Browse through our curated selection of surplus food from local restaurants, bakeries, and grocery stores</p>
+                        <p class="step-description">Explore our selection of surplus from restaurants, bakeries and markets</p>
                         <div class="step-features">
                             <span class="step-feature">Real-time availability</span>
-                            <span class="step-feature">Location-based search</span>
+                            <span class="step-feature">Location search</span>
                         </div>
                     </div>
                 </div>
                 
                 <div class="step-connector">
                     <div class="connector-line"></div>
-                    <div class="connector-arrow">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
+                    <div class="connector-arrow"><i class="ri-arrow-right-line"></i></div>
                 </div>
                 
                 <div class="step-container">
@@ -216,8 +213,8 @@
                                 <path d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.7 15.3C4.3 15.7 4.6 16.5 5.1 16.5H17M17 13V17C17 18.1 16.1 19 15 19H9C7.9 19 7 18.1 7 17V13H17Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </div>
-                        <h3 class="step-title">Purchase</h3>
-                        <p class="step-description">Secure your items with instant payment and receive a unique QR code for pickup</p>
+                        <h3 class="step-title">Buy</h3>
+                        <p class="step-description">Secure your items with instant payment and receive a QR for pickup</p>
                         <div class="step-features">
                             <span class="step-feature">Secure payment</span>
                             <span class="step-feature">Instant confirmation</span>
@@ -227,11 +224,7 @@
                 
                 <div class="step-connector">
                     <div class="connector-line"></div>
-                    <div class="connector-arrow">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
+                    <div class="connector-arrow"><i class="ri-arrow-right-line"></i></div>
                 </div>
                 
                 <div class="step-container">
@@ -242,8 +235,8 @@
                                 <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </div>
-                        <h3 class="step-title">Collect</h3>
-                        <p class="step-description">Show your QR code at the pickup location and enjoy your fresh, discounted food</p>
+                        <h3 class="step-title">Pick up</h3>
+                        <p class="step-description">Show your QR at the pickup point and enjoy your order</p>
                         <div class="step-features">
                             <span class="step-feature">QR code access</span>
                             <span class="step-feature">Same-day pickup</span>
@@ -255,15 +248,15 @@
             <div class="process-stats">
                 <div class="stat-item">
                     <div class="stat-number">2.5 min</div>
-                    <div class="stat-label">Average Order Time</div>
+                    <div class="stat-label">Average order time</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-number">60%</div>
-                    <div class="stat-label">Average Savings</div>
+                    <div class="stat-label">Average savings</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-number">24/7</div>
-                    <div class="stat-label">Available</div>
+                    <div class="stat-label">Availability</div>
                 </div>
             </div>
         </div>
@@ -276,9 +269,9 @@
     <section class="business-section">
         <div class="container">
             <div class="business-header">
-                <div class="business-badge">For Businesses & Providers</div>
-                <h2 class="business-title">Transform Your Surplus Into Success</h2>
-                <p class="business-subtitle">Join thousands of businesses already reducing waste, increasing revenue, and building sustainable communities.</p>
+                <div class="business-badge">For businesses and suppliers</div>
+                <h2 class="business-title">Turn your surplus into success</h2>
+                <p class="business-subtitle">Reduce waste, increase revenue and strengthen your community.</p>
             </div>
             
             <div class="business-content">
@@ -291,9 +284,9 @@
                                 <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </div>
-                        <h3>Smart Inventory Management</h3>
+                        <h3>Smart inventory management</h3>
                         <div class="feature-description">
-                            <p>Automatically identify and list surplus items with our intelligent dashboard</p>
+                            <p>Identify and publish surplus automatically with our smart dashboard</p>
                         </div>
                         <div class="expand-icon">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -308,9 +301,9 @@
                                 <path d="M12 2V6M12 18V22M4.93 4.93L7.76 7.76M16.24 16.24L19.07 19.07M2 12H6M18 12H22M7.76 16.24L4.93 19.07M19.07 4.93L16.24 7.76" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </div>
-                        <h3>Instant Revenue Generation</h3>
+                        <h3>Immediate revenue</h3>
                         <div class="feature-description">
-                            <p>Turn waste into profit with same-day sales and immediate cash flow</p>
+                            <p>Turn waste into profit with quick sales and instant cash flow</p>
                         </div>
                         <div class="expand-icon">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -328,7 +321,7 @@
                                 <path d="M16 3.13C16.8704 2.35038 17.9176 1.85498 19.0365 1.70851C20.1554 1.56204 21.2991 1.7699 22.3 2.3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </div>
-                        <h3>Community Connection</h3>
+                        <h3>Community connection</h3>
                         <div class="feature-description">
                             <p>Build relationships with local customers who value sustainability</p>
                         </div>
@@ -345,9 +338,9 @@
                                 <path d="M22 12H18L15 21L9 3L6 12H2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </div>
-                        <h3>Environmental Impact</h3>
+                        <h3>Environmental impact</h3>
                         <div class="feature-description">
-                            <p>Reduce your carbon footprint while contributing to a circular economy</p>
+                            <p>Reduce your carbon footprint and contribute to a circular economy</p>
                         </div>
                         <div class="expand-icon">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -360,24 +353,22 @@
                 <div class="business-stats">
                     <div class="stat-item">
                         <div class="stat-number">2,500+</div>
-                        <div class="stat-label">Active Partners</div>
+                        <div class="stat-label">Active partners</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-number">€45K</div>
-                        <div class="stat-label">Average Monthly Revenue</div>
+                        <div class="stat-label">Monthly revenue</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-number">85%</div>
-                        <div class="stat-label">Waste Reduction</div>
+                        <div class="stat-label">Waste reduction</div>
                     </div>
                 </div>
                 
                 <div class="business-cta">
                     <a href="sponsor-form.html" class="btn btn-primary btn-lg">
-                        <span>Start Your Journey</span>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
+                        <span>Get started</span>
+                        <i class="ri-arrow-right-line"></i>
                     </a>
                     <p class="cta-note">Join in under 5 minutes • No setup fees</p>
             </div>
@@ -392,9 +383,9 @@
     <section class="testimonials">
         <div class="container">
             <div class="testimonials-header">
-                <div class="testimonials-badge">Success Stories</div>
-                <h2 class="testimonials-title">What Our Users Say</h2>
-                <p class="testimonials-subtitle">Real stories from real people making a difference in their communities</p>
+                <div class="testimonials-badge">Success stories</div>
+                <h2 class="testimonials-title">What our users say</h2>
+                <p class="testimonials-subtitle">Real stories from people making a difference</p>
             </div>
             
             <div class="testimonials-grid">
@@ -427,9 +418,9 @@
                             </svg>
                         </div>
                         <div class="author-info">
-                            <h4 class="author-name">Maria Gonzalez</h4>
+                            <h4 class="author-name">María González</h4>
                             <p class="author-location">Madrid, Spain</p>
-                            <div class="author-stats">
+                            <div class="author-stats" aria-label="Author statistics">
                                 <span class="stat">€200 saved/month</span>
                                 <span class="stat">15 orders</span>
                             </div>
@@ -467,9 +458,9 @@
                         </div>
                         <div class="author-info">
                             <h4 class="author-name">Carlos Ruiz</h4>
-                            <p class="author-location">Local Restaurant Owner</p>
+                            <p class="author-location">Local restaurant owner</p>
                             <div class="author-stats">
-                                <span class="stat">85% waste reduction</span>
+                                <span class="stat">85% less waste</span>
                                 <span class="stat">€3K extra revenue</span>
                             </div>
                         </div>
@@ -505,7 +496,7 @@
                             </svg>
                         </div>
                         <div class="author-info">
-                            <h4 class="author-name">Ana Martinez</h4>
+                            <h4 class="author-name">Ana Martínez</h4>
                             <p class="author-location">Barcelona, Spain</p>
                             <div class="author-stats">
                                 <span class="stat">€150 saved/month</span>
@@ -519,15 +510,15 @@
             <div class="testimonials-stats">
                 <div class="stat-item">
                     <div class="stat-number">4.9/5</div>
-                    <div class="stat-label">Average Rating</div>
+                    <div class="stat-label">Average rating</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-number">15K+</div>
-                    <div class="stat-label">Happy Users</div>
+                    <div class="stat-label">Satisfied users</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-number">98%</div>
-                    <div class="stat-label">Satisfaction Rate</div>
+                    <div class="stat-label">Satisfaction rate</div>
                 </div>
             </div>
         </div>
@@ -542,11 +533,11 @@
     <section class="cta-section">
         <div class="container">
             <div class="cta-content">
-                <h2 class="cta-title">Ready to Make a Difference?</h2>
-                <p class="cta-description">Join our community and start reducing food waste today</p>
+                <h2 class="cta-title">Ready to make a difference?</h2>
+                <p class="cta-description">Join our community and start reducing waste</p>
                 <div class="cta-actions">
-                    <a href="../auth/auth.html" class="btn btn-primary btn-lg" data-auth-link>Sign Up Free</a>
-                    <a href="about.html" class="btn btn-outline btn-lg">Learn More</a>
+                    <a href="../auth/auth.html" class="btn btn-primary btn-lg" data-auth-link aria-label="Sign up free">Sign up free</a>
+                    <a href="about.html" class="btn btn-outline btn-lg" aria-label="Learn more">Learn more</a>
                 </div>
                 
 
@@ -558,24 +549,27 @@
     <app-footer></app-footer>
 
     <!-- Scripts -->
-    <script src="../js/web-components.js"></script>
-                <script src="../js/components.js"></script>
-            <script src="../js/main.js"></script>
-            <script src="../js/cart.js"></script>
-    
+    <script src="../js/web-components.js" defer></script>
+    <script src="../js/components.js" defer></script>
+    <script src="../js/main.js" defer></script>
+    <script src="../js/cart.js" defer></script>
+    <script src="../js/home.js" defer></script>
+    <script src="../js/dynamic-stats.js" defer></script>
+    <script src="../js/real-time-updates.js" defer></script>
+
     <script>
-        // Debug adicional para verificar que los web components se cargan
+        // Additional debug to verify web components load
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('DOM cargado en index.html');
+            console.log('DOM loaded in index.html');
         });
         
         document.addEventListener('web-components-ready', () => {
-            console.log('Web components listos en index.html');
+            console.log('Web components ready in index.html');
             // Verify components in DOM
             const header = document.querySelector('app-header');
             const footer = document.querySelector('app-footer');
-            console.log('Header encontrado:', header);
-            console.log('Footer encontrado:', footer);
+            console.log('Header found:', header);
+            console.log('Footer found:', footer);
         });
         
         // Verify after a delay if components are defined
@@ -692,6 +686,6 @@
             });
         })();
     </script>
-    <script src="//code.tidio.co/cmthgbegrccq5d2pps6kxycvte6cl1mu.js" async></script>
+    <script src="https://code.tidio.co/cmthgbegrccq5d2pps6kxycvte6cl1mu.js" async></script>
 </body>
 </html> 

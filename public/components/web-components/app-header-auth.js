@@ -87,8 +87,14 @@ class AppHeaderAuth extends HTMLElement {
             </ul>
           </nav>
           <div class="auth-area">
-            <button class="cart-toggle" id="cart-toggle" title="Shopping Cart">
-              <i class="fas fa-shopping-cart">🛒</i>
+            <button class="cart-toggle" id="cart-toggle" title="Shopping Cart" aria-label="Shopping Cart">
+              <span class="icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7 18C6.44772 18 6 18.4477 6 19C6 19.5523 6.44772 20 7 20C7.55228 20 8 19.5523 8 19C8 18.4477 7.55228 18 7 18Z" fill="currentColor"/>
+                  <path d="M17 18C16.4477 18 16 18.4477 16 19C16 19.5523 16.4477 20 17 20C17.5523 20 18 19.5523 18 19C18 18.4477 17.5523 18 17 18Z" fill="currentColor"/>
+                  <path d="M3 4H5L6.68 13.39C6.7717 13.9154 7.0463 14.3914 7.45406 14.7321C7.86183 15.0728 8.37583 15.2551 8.905 15.25H17.55C18.0792 15.2551 18.5932 15.0728 19.0009 14.7321C19.4087 14.3914 19.6833 13.9154 19.775 13.39L21 6H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
               <span class="cart-count" id="cart-count">0</span>
             </button>
             <div class="profile">
@@ -154,9 +160,15 @@ class AppHeaderAuth extends HTMLElement {
       }
     });
 
-    profile?.addEventListener('click', () => {
-      // Ir al dashboard de usuario
-                      window.location.href = '../pages/dashboard.html';
+    profile?.addEventListener('click', async () => {
+      try {
+        const role = await window.RolesHelper?.getCurrentUserRole?.();
+        if (role === 'provider') {
+          window.location.href = '../pages/provider-dashboard.html';
+          return;
+        }
+      } catch (e) {}
+      window.location.href = '../pages/buyer-dashboard.html';
     });
 
     orders?.addEventListener('click', () => {

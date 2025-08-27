@@ -15,6 +15,13 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeParticles();
     initializeFAQ();
     
+    // Initialize dynamic stats after a short delay to ensure DOM is ready
+    setTimeout(() => {
+        if (window.dynamicStats && window.dynamicStats.loaded) {
+            window.dynamicStats.updateAllStats();
+        }
+    }, 500);
+    
     // Counter Animation
     function initializeCounters() {
         const counters = document.querySelectorAll('.metric-counter');
