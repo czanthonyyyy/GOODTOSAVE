@@ -49,7 +49,7 @@ class AppHeaderAuth extends HTMLElement {
         .header-container { display: flex; align-items: center; justify-content: space-between; padding: 1rem 20px; max-width: 1200px; margin: 0 auto; width: 100%; }
         .logo { display: flex; align-items: center; gap: .5rem; color: var(--primary-color); font-weight: 600; font-size: 1.5rem; text-decoration: none; font-family: 'Inter', sans-serif; }
         .logo:hover { color: var(--primary-dark); }
-        .logo img { height: 32px; width: auto; display: block; }
+        .logo img { height: 100px; width: auto; display: block; }
         nav { display: flex; align-items: center; }
         .nav-menu { display: flex; align-items: center; gap: 0; list-style: none; margin: 0; padding: 4px; background: rgba(255,255,255,.05); border-radius: 12px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.1); }
         .nav-menu a { color: var(--text-primary); font-weight: 500; text-decoration: none; transition: all .3s cubic-bezier(.4,0,.2,1); font-family: 'Inter', sans-serif; padding: 12px 20px; border-radius: 8px; position: relative; display: block; font-size: .9rem; letter-spacing: .025em; }
@@ -168,7 +168,8 @@ class AppHeaderAuth extends HTMLElement {
           return;
         }
       } catch (e) {}
-      window.location.href = '../pages/buyer-dashboard.html';
+      // Si no es proveedor o hay error, ir al homepage
+      window.location.href = '../pages/index.html';
     });
 
     orders?.addEventListener('click', () => {

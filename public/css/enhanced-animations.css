@@ -1,0 +1,472 @@
+/* ===== ANIMACIONES MEJORADAS PARA COMPONENTES ESPECÍFICOS ===== */
+
+/* ===== MEJORAS PARA EL HERO ===== */
+.hero {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(57, 181, 74, 0.1) 0%, transparent 70%);
+    animation: heroGlow 8s ease-in-out infinite alternate;
+    pointer-events: none;
+}
+
+@keyframes heroGlow {
+    0% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0.6;
+        transform: scale(1.1);
+    }
+}
+
+/* ===== MEJORAS PARA BENEFITS ===== */
+.benefit-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.benefit-item::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg, transparent, rgba(57, 181, 74, 0.1), transparent);
+    animation: rotateGradient 10s linear infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.benefit-item:hover::before {
+    opacity: 1;
+}
+
+@keyframes rotateGradient {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.benefit-icon {
+    position: relative;
+    z-index: 2;
+}
+
+/* ===== MEJORAS PARA STEP CARDS ===== */
+.step-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.step-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.6s ease;
+}
+
+.step-card:hover::after {
+    left: 100%;
+}
+
+.step-number {
+    position: relative;
+    z-index: 2;
+}
+
+.step-number::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(57, 181, 74, 0.2) 0%, transparent 70%);
+    transform: translate(-50%, -50%) scale(0);
+    border-radius: 50%;
+    animation: numberPulse 2s ease-in-out infinite;
+}
+
+@keyframes numberPulse {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.5);
+        opacity: 1;
+    }
+}
+
+/* ===== MEJORAS PARA CONNECTORS ===== */
+.step-connector {
+    position: relative;
+}
+
+.connector-line {
+    position: relative;
+    overflow: hidden;
+}
+
+.connector-line::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    animation: connectorFlow 3s ease-in-out infinite;
+}
+
+@keyframes connectorFlow {
+    0% {
+        left: -100%;
+    }
+    50% {
+        left: 100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+.connector-arrow {
+    position: relative;
+    z-index: 2;
+}
+
+/* ===== MEJORAS PARA STATS ===== */
+.stat-number {
+    position: relative;
+    display: inline-block;
+}
+
+.stat-number::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.stat-number:hover::after {
+    transform: scaleX(1);
+}
+
+/* ===== MEJORAS PARA PARTNERS ===== */
+.partner-logo {
+    position: relative;
+    overflow: hidden;
+}
+
+.partner-logo::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(57, 181, 74, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.partner-logo:hover::before {
+    left: 100%;
+}
+
+/* ===== MEJORAS PARA CTA SECTION ===== */
+.cta-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="%2339b54a" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+    animation: ctaPattern 20s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes ctaPattern {
+    0% {
+        transform: translateX(0) translateY(0);
+    }
+    100% {
+        transform: translateX(-20px) translateY(-20px);
+    }
+}
+
+/* ===== MEJORAS PARA BOTONES ===== */
+.btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+    border-radius: 50%;
+}
+
+.btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* ===== MEJORAS PARA FORMULARIOS ===== */
+input, textarea, select {
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+input:focus, textarea:focus, select:focus {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 3px rgba(57, 181, 74, 0.2), 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== MEJORAS PARA CARDS ===== */
+.featured-card, .step-card, .benefit-item {
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.featured-card:hover, .step-card:hover, .benefit-item:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 0 20px rgba(57, 181, 74, 0.1);
+}
+
+/* ===== MEJORAS PARA IMÁGENES ===== */
+.featured-image-wrap img {
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.featured-card:hover .featured-image-wrap img {
+    transform: scale(1.1);
+}
+
+/* ===== MEJORAS PARA ICONOS ===== */
+.step-icon svg, .benefit-icon i {
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.step-card:hover .step-icon svg,
+.benefit-item:hover .benefit-icon i {
+    transform: scale(1.2) rotate(5deg);
+    filter: drop-shadow(0 4px 8px rgba(57, 181, 74, 0.3));
+}
+
+/* ===== MEJORAS PARA TEXTO ===== */
+.step-title, .benefit-title, .featured-title {
+    transition: all 0.3s ease;
+}
+
+.step-card:hover .step-title,
+.benefit-item:hover .benefit-title,
+.featured-card:hover .featured-title {
+    color: var(--primary-color);
+    transform: translateX(5px);
+}
+
+/* ===== MEJORAS PARA PRECIOS ===== */
+.featured-price {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.featured-card:hover .featured-price {
+    transform: scale(1.1);
+    text-shadow: 0 0 10px rgba(57, 181, 74, 0.5);
+}
+
+/* ===== MEJORAS PARA BADGES ===== */
+.trending-badge, .process-badge, .business-badge {
+    position: relative;
+    overflow: hidden;
+}
+
+.trending-badge::before, .process-badge::before, .business-badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.trending-badge:hover::before, .process-badge:hover::before, .business-badge:hover::before {
+    left: 100%;
+}
+
+/* ===== MEJORAS PARA SECTION DIVIDER ===== */
+.section-divider {
+    position: relative;
+    overflow: hidden;
+}
+
+.section-divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    transform: translateY(-50%);
+    animation: dividerGlow 3s ease-in-out infinite;
+}
+
+@keyframes dividerGlow {
+    0%, 100% {
+        opacity: 0.3;
+        box-shadow: 0 0 5px rgba(57, 181, 74, 0.3);
+    }
+    50% {
+        opacity: 1;
+        box-shadow: 0 0 15px rgba(57, 181, 74, 0.6);
+    }
+}
+
+/* ===== MEJORAS PARA LOADING STATES ===== */
+.loading {
+    position: relative;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: loadingShimmer 1.5s infinite;
+}
+
+@keyframes loadingShimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* ===== MEJORAS PARA NOTIFICACIONES ===== */
+.notification {
+    position: relative;
+    overflow: hidden;
+}
+
+.notification::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--primary-color);
+    animation: notificationProgress 3s linear;
+}
+
+@keyframes notificationProgress {
+    0% {
+        width: 100%;
+    }
+    100% {
+        width: 0%;
+    }
+}
+
+/* ===== MEJORAS PARA SCROLL INDICATOR ===== */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+    z-index: 10000;
+    transition: width 0.1s ease;
+}
+
+/* ===== MEJORAS PARA MOBILE ===== */
+@media (max-width: 768px) {
+    .step-card:hover,
+    .benefit-item:hover,
+    .featured-card:hover {
+        transform: translateY(-4px) scale(1.01);
+    }
+    
+    .step-icon svg,
+    .benefit-icon i {
+        transition: all 0.2s ease;
+    }
+    
+    .step-card:hover .step-icon svg,
+    .benefit-item:hover .benefit-icon i {
+        transform: scale(1.1);
+    }
+}
+
+/* ===== MEJORAS PARA ACCESIBILIDAD ===== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .hero::before,
+    .cta-section::before {
+        display: none;
+    }
+}
+
+/* ===== MEJORAS PARA DARK MODE ===== */
+@media (prefers-color-scheme: dark) {
+    .featured-card:hover,
+    .step-card:hover,
+    .benefit-item:hover {
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(57, 181, 74, 0.2);
+    }
+}

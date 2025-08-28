@@ -18,11 +18,16 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/components.css">
     <link rel="stylesheet" href="../css/pages.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/enhanced-animations.css">
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="../assets/images/logo.svg">
 </head>
 <body>
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress"></div>
+    
     <!-- Header Web Component -->
     <app-header></app-header>
 
@@ -54,18 +59,18 @@
     <!-- Benefits Bar -->
     <section class="benefits-bar">
         <div class="container benefits-container">
-            <div class="benefit-item">
-                <div class="benefit-icon"><i class="ri-money-dollar-circle-line"></i></div>
+            <div class="benefit-item hover-lift animate-slide-in-bottom delay-100">
+                <div class="benefit-icon animate-float"><i class="ri-money-dollar-circle-line"></i></div>
                 <div class="benefit-title">Save up to 60%</div>
                 <div class="benefit-text">Quality food at reduced prices</div>
             </div>
-            <div class="benefit-item">
-                <div class="benefit-icon"><i class="ri-time-line"></i></div>
+            <div class="benefit-item hover-lift animate-slide-in-bottom delay-200">
+                <div class="benefit-icon animate-float"><i class="ri-time-line"></i></div>
                 <div class="benefit-title">Same‑day pickup</div>
                 <div class="benefit-text">Fast, simple and convenient</div>
             </div>
-            <div class="benefit-item">
-                <div class="benefit-icon"><i class="ri-lock-2-line"></i></div>
+            <div class="benefit-item hover-lift animate-slide-in-bottom delay-300">
+                <div class="benefit-icon animate-float"><i class="ri-lock-2-line"></i></div>
                 <div class="benefit-title">Secure checkout</div>
                 <div class="benefit-text">Encrypted payments & privacy</div>
             </div>
@@ -75,10 +80,10 @@
     <!-- Featured / Trending Products -->
     <section class="trending-section">
         <div class="container">
-            <div class="trending-header">
-                <div class="trending-badge">Deals</div>
-                <h2 class="trending-title">Trending</h2>
-                <p class="trending-subtitle">Discover the most popular offers from local suppliers</p>
+            <div class="trending-header scroll-reveal">
+                <div class="trending-badge animate-fade-in-scale">Deals</div>
+                <h2 class="trending-title animate-slide-in-left">Trending</h2>
+                <p class="trending-subtitle animate-slide-in-right">Discover the most popular offers from local suppliers</p>
             </div>
             
             <div class="trending-content">
@@ -90,28 +95,28 @@
     <!-- Partners strip -->
     <section class="partners-strip">
         <div class="container partners-container">
-            <div class="partner-logo">Partner One</div>
-            <div class="partner-logo">Green Fresh</div>
-            <div class="partner-logo">Urban Bakery</div>
-            <div class="partner-logo">Daily Market</div>
-            <div class="partner-logo">Eco Foods</div>
+            <div class="partner-logo hover-scale-rotate animate-slide-in-bottom delay-100">Partner One</div>
+            <div class="partner-logo hover-scale-rotate animate-slide-in-bottom delay-200">Green Fresh</div>
+            <div class="partner-logo hover-scale-rotate animate-slide-in-bottom delay-300">Urban Bakery</div>
+            <div class="partner-logo hover-scale-rotate animate-slide-in-bottom delay-400">Daily Market</div>
+            <div class="partner-logo hover-scale-rotate animate-slide-in-bottom delay-500">Eco Foods</div>
         </div>
     </section>
 
     <!-- How It Works Section -->
     <section class="how-it-works">
         <div class="container">
-            <div class="how-it-works-header">
-                <div class="process-badge">Simple process</div>
-                <h2 class="process-title">How it works</h2>
-                <p class="process-subtitle">Three steps to save and reduce waste</p>
+            <div class="how-it-works-header scroll-reveal">
+                <div class="process-badge animate-fade-in-scale">Simple process</div>
+                <h2 class="process-title animate-slide-in-left">How it works</h2>
+                <p class="process-subtitle animate-slide-in-right">Three steps to save and reduce waste</p>
             </div>
             
             <div class="process-flow">
-                <div class="step-container">
-                    <div class="step-number">01</div>
-                    <div class="step-card">
-                        <div class="step-icon">
+                <div class="step-container animate-slide-in-bottom delay-100">
+                    <div class="step-number animate-pulse">01</div>
+                    <div class="step-card hover-lift glass-effect">
+                        <div class="step-icon animate-float">
                             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M21 21L16.514 16.506L21 21ZM19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
@@ -125,15 +130,15 @@
                     </div>
                 </div>
                 
-                <div class="step-connector">
+                <div class="step-connector animate-slide-in-bottom delay-150">
                     <div class="connector-line"></div>
-                    <div class="connector-arrow"><i class="ri-arrow-right-line"></i></div>
+                    <div class="connector-arrow animate-pulse"><i class="ri-arrow-right-line"></i></div>
                 </div>
                 
-                <div class="step-container">
-                    <div class="step-number">02</div>
-                    <div class="step-card">
-                        <div class="step-icon">
+                <div class="step-container animate-slide-in-bottom delay-200">
+                    <div class="step-number animate-pulse">02</div>
+                    <div class="step-card hover-lift glass-effect">
+                        <div class="step-icon animate-float">
                             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.7 15.3C4.3 15.7 4.6 16.5 5.1 16.5H17M17 13V17C17 18.1 16.1 19 15 19H9C7.9 19 7 18.1 7 17V13H17Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
@@ -147,15 +152,15 @@
                     </div>
                 </div>
                 
-                <div class="step-connector">
+                <div class="step-connector animate-slide-in-bottom delay-250">
                     <div class="connector-line"></div>
-                    <div class="connector-arrow"><i class="ri-arrow-right-line"></i></div>
+                    <div class="connector-arrow animate-pulse"><i class="ri-arrow-right-line"></i></div>
                 </div>
                 
-                <div class="step-container">
-                    <div class="step-number">03</div>
-                    <div class="step-card">
-                        <div class="step-icon">
+                <div class="step-container animate-slide-in-bottom delay-300">
+                    <div class="step-number animate-pulse">03</div>
+                    <div class="step-card hover-lift glass-effect">
+                        <div class="step-icon animate-float">
                             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
@@ -171,16 +176,16 @@
             </div>
             
             <div class="process-stats">
-                <div class="stat-item">
-                    <div class="stat-number">2.5 min</div>
+                <div class="stat-item animate-slide-in-bottom delay-400">
+                    <div class="stat-number text-glow">2.5 min</div>
                     <div class="stat-label">Average order time</div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-number">60%</div>
+                <div class="stat-item animate-slide-in-bottom delay-500">
+                    <div class="stat-number text-glow">60%</div>
                     <div class="stat-label">Average savings</div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-number">24/7</div>
+                <div class="stat-item animate-slide-in-bottom delay-600">
+                    <div class="stat-number text-glow">24/7</div>
                     <div class="stat-label">Availability</div>
                 </div>
             </div>
@@ -455,14 +460,14 @@
     
 
     <!-- Call to Action Section -->
-    <section class="cta-section">
+    <section class="cta-section animated-gradient-bg">
         <div class="container">
-            <div class="cta-content">
-                <h2 class="cta-title">Ready to make a difference?</h2>
-                <p class="cta-description">Join our community and start reducing waste</p>
+            <div class="cta-content scroll-reveal">
+                <h2 class="cta-title animate-slide-in-bottom text-glow">Ready to make a difference?</h2>
+                <p class="cta-description animate-slide-in-bottom delay-200">Join our community and start reducing waste</p>
                 <div class="cta-actions">
-                    <a href="../auth/auth.html" class="btn btn-primary btn-lg" data-auth-link aria-label="Sign up free">Sign up free</a>
-                    <a href="about.html" class="btn btn-outline btn-lg" aria-label="Learn more">Learn more</a>
+                    <a href="../auth/auth.html" class="btn btn-primary btn-lg btn-ripple animate-slide-in-bottom delay-400" data-auth-link aria-label="Sign up free">Sign up free</a>
+                    <a href="about.html" class="btn btn-outline btn-lg btn-ripple animate-slide-in-bottom delay-600" aria-label="Learn more">Learn more</a>
                 </div>
                 
 
@@ -481,6 +486,7 @@
     <script src="../js/home.js" defer></script>
     <script src="../js/dynamic-stats.js" defer></script>
     <script src="../js/real-time-updates.js" defer></script>
+    <script src="../js/animations.js" defer></script>
 
     <script>
         // Additional debug to verify web components load

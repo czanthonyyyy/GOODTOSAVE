@@ -240,11 +240,14 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Redirigir según rol tras registro exitoso
             try {
-                const role = await window.RolesHelper.fetchUserRole(user.uid);
-                const target = role === 'provider' ? '../pages/provider-dashboard.html' : '../pages/buyer-dashboard.html';
-                setTimeout(() => { window.location.href = target; }, 800);
+                const role = await window.RolesHelper?.fetchUserRole?.(user.uid);
+                if (role === 'provider') {
+                    setTimeout(() => { window.location.href = '../pages/provider-dashboard.html'; }, 800);
+                } else {
+                    setTimeout(() => { window.location.href = '../pages/index.html'; }, 800);
+                }
             } catch (e) {
-                setTimeout(() => { window.location.href = '../marketplace/marketplace.html'; }, 800);
+                setTimeout(() => { window.location.href = '../pages/index.html'; }, 800);
             }
         } catch (error) {
             throw new Error(error);

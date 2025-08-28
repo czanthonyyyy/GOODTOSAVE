@@ -5,15 +5,51 @@
 
 class FirebaseAuthService {
   constructor() {
-    this.auth = window.firebaseServices?.auth;
-    this.db = window.firebaseServices?.db;
-    
-    if (!this.auth) {
-      console.error('❌ Firebase Auth is not available');
-      return;
+    this.auth = null;
+    this.db = null;
+    this.initialized = false;
+    this.initPromise = this.initialize();
+  }
+
+  async initialize() {
+    try {
+      // Esperar a que Firebase esté disponible
+      let attempts = 0;
+      const maxAttempts = 100; // 10 segundos máximo
+      
+      while (!window.firebaseServices && attempts < maxAttempts) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+        attempts++;
+      }
+
+      if (!window.firebaseServices) {
+        console.warn('⚠️ Firebase services not available after initialization timeout');
+        return;
+      }
+
+      this.auth = window.firebaseServices.auth;
+      this.db = window.firebaseServices.db;
+      
+      if (!this.auth || !this.db) {
+        console.warn('⚠️ Firebase Auth or Firestore not properly initialized');
+        return;
+      }
+      
+      this.initialized = true;
+      console.log('✅ Firebase Auth Service initialized successfully');
+    } catch (error) {
+      console.error('❌ Failed to initialize Firebase Auth Service:', error);
+      this.initialized = false;
     }
-    
-    console.log('✅ Firebase Auth Service initialized');
+  }
+
+  async ensureInitialized() {
+    if (!this.initialized) {
+      await this.initPromise;
+    }
+    if (!this.initialized) {
+      throw new Error('Firebase Auth Service is not available');
+    }
   }
 
   /**
@@ -23,6 +59,8 @@ class FirebaseAuthService {
    */
   async signUp(userData) {
     try {
+      await this.ensureInitialized();
+      
       console.log('📝 Registering user:', userData.email);
       
       // Crear usuario en Firebase Auth
@@ -45,7 +83,7 @@ class FirebaseAuthService {
         email: userData.email,
         phone: userData.phone || '',
         accountType: userData.accountType,
-        role: userData.accountType === 'seller' ? 'provider' : (userData.accountType || 'buyer'),
+        role: userData.accountType === 'provider' ? 'provider' : 'buyer',
         location: userData.location || '',
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
@@ -68,6 +106,8 @@ class FirebaseAuthService {
    */
   async signIn(email, password) {
     try {
+      await this.ensureInitialized();
+      
       console.log('🔐 Signing in:', email);
       
       const userCredential = await this.auth.signInWithEmailAndPassword(email, password);
@@ -90,6 +130,7 @@ class FirebaseAuthService {
    */
   async signOut() {
     try {
+      await this.ensureInitialized();
       await this.auth.signOut();
       console.log('✅ Signed out successfully');
     } catch (error) {
@@ -105,6 +146,7 @@ class FirebaseAuthService {
    */
   async sendPasswordResetEmail(email) {
     try {
+      await this.ensureInitialized();
       await this.auth.sendPasswordResetEmail(email);
       console.log('✅ Password recovery email sent');
     } catch (error) {
@@ -118,6 +160,9 @@ class FirebaseAuthService {
    * @returns {Object|null} Usuario actual o null
    */
   getCurrentUser() {
+    if (!this.initialized || !this.auth) {
+      return null;
+    }
     return this.auth.currentUser;
   }
 
@@ -127,6 +172,10 @@ class FirebaseAuthService {
    * @returns {Function} Función para cancelar la suscripción
    */
   onAuthStateChanged(callback) {
+    if (!this.initialized || !this.auth) {
+      console.warn('⚠️ Firebase Auth not initialized, cannot set up auth state listener');
+      return () => {}; // Return empty unsubscribe function
+    }
     return this.auth.onAuthStateChanged(callback);
   }
 
@@ -138,6 +187,7 @@ class FirebaseAuthService {
    */
   async saveUserData(uid, userData) {
     try {
+      await this.ensureInitialized();
       await this.db.collection('users').doc(uid).set(userData);
       console.log('✅ User data saved in Firestore');
     } catch (error) {
@@ -153,6 +203,7 @@ class FirebaseAuthService {
    */
   async getUserData(uid) {
     try {
+      await this.ensureInitialized();
       const doc = await this.db.collection('users').doc(uid).get();
       if (doc.exists) {
         return doc.data();
@@ -163,6 +214,7 @@ class FirebaseAuthService {
       console.error('❌ Error getting user data:', error);
       throw this.getErrorMessage(error);
     }
+  }
 
   /**
    * Guarda un producto nuevo creado por un provider
@@ -171,6 +223,8 @@ class FirebaseAuthService {
    */
   async createProduct(uid, product) {
     try {
+      await this.ensureInitialized();
+      
       const data = {
         id: product.id || undefined,
         title: product.title || product.name,
@@ -199,22 +253,28 @@ class FirebaseAuthService {
    */
   getErrorMessage(error) {
     const errorMessages = {
-      'auth/user-not-found': 'No account exists with this email',
-      'auth/wrong-password': 'Incorrect password',
-      'auth/email-already-in-use': 'An account with this email already exists',
-      'auth/weak-password': 'Password must be at least 6 characters',
-      'auth/invalid-email': 'Invalid email',
-      'auth/too-many-requests': 'Too many failed attempts. Try again later',
-      'auth/network-request-failed': 'Connection error. Check your internet',
-      'auth/user-disabled': 'This account has been disabled',
-      'auth/operation-not-allowed': 'This operation is not allowed',
-      'auth/invalid-credential': 'Invalid credentials'
+      'auth/user-not-found': 'No existe una cuenta con este email',
+      'auth/wrong-password': 'Contraseña incorrecta',
+      'auth/email-already-in-use': 'Ya existe una cuenta con este email',
+      'auth/weak-password': 'La contraseña debe tener al menos 6 caracteres',
+      'auth/invalid-email': 'Email inválido',
+      'auth/too-many-requests': 'Demasiados intentos fallidos. Intenta más tarde',
+      'auth/network-request-failed': 'Error de conexión. Verifica tu internet',
+      'auth/user-disabled': 'Esta cuenta ha sido deshabilitada',
+      'auth/operation-not-allowed': 'Esta operación no está permitida',
+      'auth/invalid-credential': 'Credenciales inválidas',
+      'auth/user-token-expired': 'Tu sesión ha expirado. Inicia sesión de nuevo',
+      'auth/requires-recent-login': 'Por seguridad, inicia sesión de nuevo',
+      'auth/account-exists-with-different-credential': 'Ya existe una cuenta con este email usando otro método de inicio de sesión'
     };
 
     const errorCode = error.code || 'unknown';
-    return errorMessages[errorCode] || error.message || 'Unknown error';
+    const message = errorMessages[errorCode] || error.message || 'Error desconocido';
+    
+    console.log(`Error de Firebase [${errorCode}]: ${message}`);
+    return message;
   }
 }
 
-// Crear instancia global
+// Crear instancia global con inicialización asíncrona
 window.firebaseAuthService = new FirebaseAuthService(); 
