@@ -75,7 +75,7 @@ class AppHeader extends HTMLElement {
                 }
 
                 .logo img {
-                    height: 64px;
+                    height: 100px;
                     width: auto;
                     display: block;
                 }
@@ -98,6 +98,15 @@ class AppHeader extends HTMLElement {
                     backdrop-filter: blur(10px);
                     border: 1px solid rgba(255, 255, 255, 0.1);
                     box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+                    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                }
+
+                .nav-menu:hover {
+                    background: rgba(255, 255, 255, 0.08);
+                    border-color: rgba(255, 255, 255, 0.2);
+                    transform: translateY(-2px);
+                    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+                }
                 }
 
                 /* Indicador activo deslizante */
@@ -137,7 +146,8 @@ class AppHeader extends HTMLElement {
                 .nav-menu a:hover {
                     color: var(--primary-color);
                     background: rgba(57, 181, 74, 0.1);
-                    transform: translateY(-1px);
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(57, 181, 74, 0.2);
                 }
 
                 /* Fondo resaltado tipo "pill" */

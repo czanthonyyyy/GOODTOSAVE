@@ -18,13 +18,20 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/components.css">
     <link rel="stylesheet" href="../css/pages.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/enhanced-animations.css">
+    <link rel="stylesheet" href="../css/marketplace-animations.css">
     <link rel="stylesheet" href="marketplace-new.css">
+    <link rel="stylesheet" href="marketplace-responsive-fix.css">
     <link rel="stylesheet" href="../css/cart.css">
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="../assets/images/logo.svg">
 </head>
 <body>
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress"></div>
+    
     <!-- Header Web Component -->
     <app-header></app-header>
 
@@ -52,31 +59,31 @@
     <section class="catalog-controls container">
         <div class="controls-left">
             <div class="filters" aria-label="Categories">
-                <button class="filter-pill active" data-category="all">
+                <button class="filter-pill active" data-category="all" title="All Categories">
                     <i class="ri-layout-grid-line"></i>
                     <span>All</span>
                 </button>
-                <button class="filter-pill" data-category="fast-food">
+                <button class="filter-pill" data-category="fast-food" title="Fast Food">
                     <i class="ri-restaurant-2-line"></i>
                     <span>Fast Food</span>
                 </button>
-                <button class="filter-pill" data-category="bakery">
+                <button class="filter-pill" data-category="bakery" title="Bakery">
                     <i class="ri-cake-2-line"></i>
                     <span>Bakery</span>
                 </button>
-                <button class="filter-pill" data-category="pizza">
+                <button class="filter-pill" data-category="pizza" title="Pizza">
                     <i class="ri-pie-chart-2-line"></i>
                     <span>Pizza</span>
                 </button>
-                <button class="filter-pill" data-category="sushi">
+                <button class="filter-pill" data-category="sushi" title="Sushi">
                     <i class="ri-fish-line"></i>
                     <span>Sushi</span>
                 </button>
-                <button class="filter-pill" data-category="chicken">
+                <button class="filter-pill" data-category="chicken" title="Chicken">
                     <i class="ri-restaurant-line"></i>
                     <span>Chicken</span>
                 </button>
-                <button class="filter-pill" data-category="local">
+                <button class="filter-pill" data-category="local" title="Local">
                     <i class="ri-store-2-line"></i>
                     <span>Local</span>
                 </button>
@@ -277,6 +284,7 @@
     <script src="../js/components.js"></script>
     <script src="../js/main.js"></script>
     <script src="../js/cart-integration.js"></script>
+    <script src="../js/animations.js"></script>
     <script src="marketplace-new.js"></script>
 </body>
 </html> 

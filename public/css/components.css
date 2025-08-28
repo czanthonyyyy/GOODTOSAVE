@@ -30,7 +30,7 @@
 }
 
 .logo img {
-    height: 32px;
+    height: 100px;
     width: auto;
 }
 
@@ -932,7 +932,7 @@
     }
     
     .logo img {
-        height: 28px;
+        height: 80px;
     }
     
     .nav-menu {
@@ -1015,7 +1015,7 @@
     }
     
     .logo img {
-        height: 24px;
+        height: 70px;
     }
     
     .nav-menu {
@@ -1055,7 +1055,7 @@
     }
     
     .logo img {
-        height: 22px;
+        height: 60px;
     }
     
     .nav-menu a {

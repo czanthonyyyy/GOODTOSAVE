@@ -45,9 +45,6 @@
     margin-bottom: 1.5rem;
     color: var(--white);
     line-height: 1.1;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 0.8s ease forwards;
 }
 
 .hero-subtitle {

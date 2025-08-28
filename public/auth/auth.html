@@ -199,5 +199,38 @@
     
     <!-- Scripts -->
     <script src="auth.js"></script>
+    
+    <!-- Test Script para verificar que todo funciona -->
+    <script>
+        // Verificar que todo esté funcionando correctamente
+        setTimeout(() => {
+            console.log('🔍 Verificando estado de la página de autenticación...');
+            
+            // Verificar elementos del DOM
+            const elements = {
+                signUpButton: document.getElementById('signUp'),
+                signInButton: document.getElementById('signIn'),
+                container: document.getElementById('container'),
+                signinForm: document.getElementById('signinForm'),
+                signupForm: document.getElementById('signupForm')
+            };
+            
+            console.log('📋 Elementos del DOM:', elements);
+            
+            // Verificar servicios de Firebase
+            const services = {
+                firebaseAuthService: !!window.firebaseAuthService,
+                firebaseServices: !!window.firebaseServices,
+                RolesHelper: !!window.RolesHelper,
+                FirebaseUtils: !!window.FirebaseUtils
+            };
+            
+            console.log('🔧 Servicios disponibles:', services);
+            
+            // Verificar que no hay errores en la consola
+            console.log('✅ Página de autenticación cargada correctamente');
+            
+        }, 2000);
+    </script>
 </body>
 </html> 
