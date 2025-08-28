@@ -7,7 +7,11 @@
             date: '2025-02-15',
             categories: ['Home', 'Sustainability'],
             excerpt: 'Simple actions to plan your shopping, store better, and turn leftovers into easy meals.',
+<<<<<<< HEAD
+            image: '../assets/articles/reduce-food-waste-at-home.png'
+=======
             image: '../assets/articles/image.png'
+>>>>>>> 6c4da90b064f16bebf323ab2276f103a3957623f
         },
         {
             title: 'Good to Save Marketplace Guide',
@@ -15,7 +19,11 @@
             date: '2025-02-22',
             categories: ['Marketplace', 'Savings'],
             excerpt: 'Step-by-step guide to find offers, follow providers, and make the most of opportunities.',
+<<<<<<< HEAD
+            image: '../assets/articles/marketplace-guide.png'
+=======
             image: '../assets/articles/image.png'
+>>>>>>> 6c4da90b064f16bebf323ab2276f103a3957623f
         },
         {
             title: 'Sustainable Providers: Our Selection Criteria',
@@ -23,7 +31,11 @@
             date: '2025-03-02',
             categories: ['Sustainability', 'Community'],
             excerpt: 'Quality, safety, and environmental criteria we require from our partners.',
+<<<<<<< HEAD
+            image: '../assets/articles/sustainable-providers.png'
+=======
             image: '../assets/articles/image.png'
+>>>>>>> 6c4da90b064f16bebf323ab2276f103a3957623f
         },
         {
             title: 'Understanding Date Labels: Expiration vs Best Before',
@@ -31,7 +43,11 @@
             date: '2025-03-10',
             categories: ['Education', 'Home'],
             excerpt: 'Learn the difference and avoid throwing away food that is still perfectly fine.',
+<<<<<<< HEAD
+            image: '../assets/articles/understanding-date-labels.png'
+=======
             image: '../assets/articles/image.png'
+>>>>>>> 6c4da90b064f16bebf323ab2276f103a3957623f
         },
         {
             title: 'Family Savings with Good to Save',
@@ -39,7 +55,11 @@
             date: '2025-03-18',
             categories: ['Savings', 'Community'],
             excerpt: 'Real stories of families reducing monthly expenses while supporting local businesses.',
+<<<<<<< HEAD
+            image: '../assets/articles/family-savings-with-gts.png'
+=======
             image: '../assets/articles/image.png'
+>>>>>>> 6c4da90b064f16bebf323ab2276f103a3957623f
         },
         {
             title: 'Zero-Waste Recipes',
@@ -47,7 +67,11 @@
             date: '2025-03-25',
             categories: ['Recipes', 'Home'],
             excerpt: 'Practical ideas to turn leftovers into delicious and nutritious meals.',
+<<<<<<< HEAD
+            image: '../assets/articles/zero-waste-recipes.png'
+=======
             image: '../assets/articles/image.png'
+>>>>>>> 6c4da90b064f16bebf323ab2276f103a3957623f
         }
     ];
 
@@ -94,7 +118,7 @@
             const card = document.createElement('article');
             card.className = 'article-card';
             card.innerHTML = `
-                <img class="article-thumb" src="${a.image}" alt="${a.title}">
+                <img class="article-thumb" src="${a.image}" alt="${a.title}" onerror="this.onerror=null;this.src='../assets/articles/image.png'">
                 <div class="article-content">
                     <h3 class="article-title">${a.title}</h3>
                     <p class="article-excerpt">${a.excerpt}</p>
