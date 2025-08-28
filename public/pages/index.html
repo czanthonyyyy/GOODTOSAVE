@@ -81,83 +81,8 @@
                 <p class="trending-subtitle">Discover the most popular offers from local suppliers</p>
             </div>
             
-            <div class="trending-stats">
-                <div class="trending-stat">
-                    <div class="stat-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <div class="stat-content">
-                        <div class="stat-number">150+</div>
-                        <div class="stat-label">Active deals</div>
-                    </div>
-                </div>
-                
-                <div class="trending-stat">
-                    <div class="stat-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2V6M12 18V22M4.93 4.93L7.76 7.76M16.24 16.24L19.07 19.07M2 12H6M18 12H22M7.76 16.24L4.93 19.07M19.07 4.93L16.24 7.76" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <div class="stat-content">
-                        <div class="stat-number">€2.5K</div>
-                        <div class="stat-label">Total savings</div>
-                    </div>
-                </div>
-                
-                <div class="trending-stat">
-                    <div class="stat-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
-                            <path d="M23 21V19C23 18.1137 22.7688 17.2358 22.3142 16.4442C21.8596 15.6526 21.1997 14.9782 20.3936 14.4832C19.5876 13.9882 18.6507 13.693 17.684 13.6314C16.7173 13.5698 15.7488 13.7442 14.88 14.14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M16 3.13C16.8704 2.35038 17.9176 1.85498 19.0365 1.70851C20.1554 1.56204 21.2991 1.7699 22.3 2.3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <div class="stat-content">
-                        <div class="stat-number">2.8K</div>
-                        <div class="stat-label">Happy customers</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="trending-categories">
-                <div class="category-filter active" data-category="all">
-                    <span class="category-icon"><i class="ri-fire-line"></i></span>
-                    <span class="category-name">All</span>
-                </div>
-                <div class="category-filter" data-category="food">
-                    <span class="category-icon"><i class="ri-restaurant-2-line"></i></span>
-                    <span class="category-name">Food</span>
-                </div>
-                <div class="category-filter" data-category="bakery">
-                    <span class="category-icon"><i class="ri-cake-2-line"></i></span>
-                    <span class="category-name">Bakery</span>
-                </div>
-                <div class="category-filter" data-category="produce">
-                    <span class="category-icon"><i class="ri-leaf-line"></i></span>
-                    <span class="category-name">Produce</span>
-                </div>
-            </div>
-            
-            <div class="trending-grid" id="trending-grid">
-                <!-- Products will be loaded here dynamically -->
-            </div>
-            
-            <div class="trending-actions">
-                <a href="../marketplace/marketplace.html" class="btn btn-primary btn-lg" aria-label="View all deals">
-                    <span>View all deals</span>
-                    <i class="ri-arrow-right-line"></i>
-                </a>
-                <div class="trending-note">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M12 16V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <span>Deals are updated regularly</span>
-                </div>
+            <div class="trending-content">
+                <!-- Content will be added here -->
             </div>
         </div>
     </section>
@@ -591,72 +516,7 @@
             }
         } catch (e) {}
 
-        // Load trending products directly from JavaScript
-        (async function loadTrending(){
-            try {
-                // Productos seleccionados del marketplace con imágenes de comida reales
-                const trendingProducts = [
-                    {
-                        id: "endless-lunch",
-                        title: "Endless Lunch",
-                        price: 3.50,
-                        image: "https://via.placeholder.com/200x160/39b54a/ffffff?text=Llenos+y+Carbon"
-                    },
-                    {
-                        id: "pio-pio",
-                        title: "Pio Pio",
-                        price: 1.20,
-                        image: "https://via.placeholder.com/200x160/39b54a/ffffff?text=Pio+Pio"
-                    },
-                    {
-                        id: "leonardo",
-                        title: "Leonardo",
-                        price: 2.90,
-                        image: "https://via.placeholder.com/200x160/39b54a/ffffff?text=Leonardo"
-                    },
-                    {
-                        id: "rio-oro",
-                        title: "Rio de oro",
-                        price: 6.50,
-                        image: "https://via.placeholder.com/200x160/39b54a/ffffff?text=Rio+de+Oro"
-                    }
-                ];
 
-                const grid = document.getElementById('trending-grid');
-                if (!grid) return;
-                
-                grid.innerHTML = trendingProducts.map(p => `
-                    <div class="featured-card">
-                        <div class="featured-image-wrap">
-                            <img src="${p.image}" alt="${p.title}" loading="lazy"/>
-                        </div>
-                        <div class="featured-body">
-                            <h3 class="featured-title">${p.title}</h3>
-                            <div class="featured-price">$${p.price.toFixed(2)}</div>
-                            <a href="../marketplace/marketplace.html" class="btn btn-outline">View deal</a>
-                        </div>
-                    </div>
-                `).join('');
-            } catch (e) { 
-                console.warn('Failed to load trending products', e); 
-                // Fallback: show placeholder cards
-                const grid = document.getElementById('trending-grid');
-                if (grid) {
-                    grid.innerHTML = `
-                        <div class="featured-card">
-                            <div class="featured-image-wrap">
-                                <img src="../assets/articles/image.png" alt="Product" loading="lazy"/>
-                            </div>
-                            <div class="featured-body">
-                                <h3 class="featured-title">Product Loading...</h3>
-                                <div class="featured-price">$0.00</div>
-                                <a href="../marketplace/marketplace.html" class="btn btn-outline">View deal</a>
-                            </div>
-                        </div>
-                    `;
-                }
-            }
-        })();
 
         // Feature card expansion functionality
         function toggleFeatureCard(card) {
