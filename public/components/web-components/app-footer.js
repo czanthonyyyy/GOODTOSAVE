@@ -498,7 +498,7 @@ class AppFooter extends HTMLElement {
                     <div class="footer-section">
                         <h3>Resources</h3>
                         <ul class="footer-links">
-                            <li><a href="#blog">Blog</a></li>
+                            <li><a href="../pages/blog.html">Blog</a></li>
                             <li><a href="#guides">Guides</a></li>
                             <li><a href="#faq">FAQ</a></li>
                             <li><a href="../pages/contact.html">Contact</a></li>

@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 id: p.id,
                 title: p.title,
                 price: p.discountedPrice || p.originalPrice || 0,
-                image: p.image && !p.image.startsWith('data:') ? p.image : '../assets/img/card_img.png'
+                image: p.image && !p.image.startsWith('data:') ? p.image : '../assets/articles/image.png'
             }));
 
             const grid = document.getElementById('trending-grid');
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 grid.innerHTML = `
                     <div class="featured-card" role="listitem">
                         <div class="featured-image-wrap">
-                            <img src="../assets/img/card_img.png" alt="Featured deal" loading="lazy"/>
+                            <img src="../assets/articles/image.png" alt="Featured deal" loading="lazy"/>
                         </div>
                         <div class="featured-body">
                             <h3 class="featured-title">Deal</h3>

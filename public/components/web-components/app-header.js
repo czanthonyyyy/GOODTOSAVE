@@ -456,17 +456,17 @@ class AppHeader extends HTMLElement {
             const currentPath = window.location.pathname;
             let logoPath;
             
-            if (currentPath.includes('/marketplace/')) {
-                // Si estamos en el marketplace
-                logoPath = '../assets/img/GTSw.png';
-            } else if (currentPath.includes('/pages/')) {
-                // Si estamos en las páginas
+            if (currentPath.includes('/pages/')) {
+                // Calcular profundidad dentro de /pages/ para armar la ruta relativa correcta
+                const after = currentPath.split('/pages/')[1] || '';
+                const depth = Math.max(0, (after.match(/\//g) || []).length); // subcarpetas dentro de pages
+                const up = '../'.repeat(depth + 1); // subir a la raíz pública y llegar a /assets/
+                logoPath = `${up}assets/img/GTSw.png`;
+            } else if (currentPath.includes('/marketplace/')) {
                 logoPath = '../assets/img/GTSw.png';
             } else if (currentPath.includes('/auth/')) {
-                // Si estamos en auth
                 logoPath = '../assets/img/GTSw.png';
             } else {
-                // Si estamos en la raíz
                 logoPath = 'assets/img/GTSw.png';
             }
             
