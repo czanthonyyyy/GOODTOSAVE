@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load featured products
     (async function loadTrending(){
         try {
-            const res = await fetch('../assets/data/products.json');
+            const res = await fetch('/assets/data/products.json');
             const data = await res.json();
             const picks = (data.products || []).slice(0, 4).map(p => ({
                 id: p.id,

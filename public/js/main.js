@@ -60,7 +60,7 @@ class FoodMarketplaceApp {
    */
   async loadProducts() {
     try {
-              const response = await fetch('../assets/data/products.json');
+              const response = await fetch('/assets/data/products.json');
       const data = await response.json();
       this.products = data.products || [];
     } catch (error) {

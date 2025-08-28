@@ -15,7 +15,7 @@
             date: '2025-02-22',
             categories: ['Marketplace', 'Savings'],
             excerpt: 'Step-by-step guide to find offers, follow providers, and make the most of opportunities.',
-            image: '../assets/articles/marketplace-guide.png'
+            image: '../assets/articles/image.png'
         },
         {
             title: 'Sustainable Providers: Our Selection Criteria',
@@ -144,7 +144,38 @@
         renderCategories();
         setupInteractions();
         renderArticles();
+        setupBackLinkScroll();
     });
+
+    // Función para manejar la visibilidad de la flecha de regreso
+    function setupBackLinkScroll() {
+        const backLink = document.querySelector('.back-link');
+        if (!backLink) return;
+
+        let lastScrollTop = 0;
+        let isScrolling = false;
+
+        window.addEventListener('scroll', () => {
+            if (!isScrolling) {
+                isScrolling = true;
+                requestAnimationFrame(() => {
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    
+                    // Si el scroll es hacia abajo y hemos pasado los primeros 100px, ocultar la flecha
+                    if (scrollTop > lastScrollTop && scrollTop > 100) {
+                        backLink.classList.add('hidden');
+                    } 
+                    // Si el scroll es hacia arriba, mostrar la flecha
+                    else if (scrollTop < lastScrollTop) {
+                        backLink.classList.remove('hidden');
+                    }
+                    
+                    lastScrollTop = scrollTop;
+                    isScrolling = false;
+                });
+            }
+        });
+    }
 })();
 
 
