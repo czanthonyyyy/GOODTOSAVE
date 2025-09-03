@@ -3,6 +3,7 @@
 .guide-hero {
     position: relative;
     padding: 3rem 0 2rem;
+    background: linear-gradient(180deg, rgba(57, 181, 74, 0.12) 0%, rgba(46, 204, 113, 0.08) 100%);
 }
 
 .guide-hero .hero-content {
@@ -38,36 +39,32 @@
     text-decoration: underline;
 }
 
+
+
+/* Override default background/overlay for guide hero */
+.guide-hero .hero-background {
+    background: none !important;
+}
+
+.guide-hero .hero-overlay {
+    background: transparent !important;
+}
+
+/* Custom background for the Welcome hero */
+.guide-hero .hero-background {
+    background: linear-gradient(135deg, rgba(57, 181, 74, 0.12) 0%, rgba(46, 204, 113, 0.10) 100%) !important;
+}
+
+.guide-hero .hero-overlay {
+    background: rgba(255, 255, 255, 0.0) !important;
+}
+
 .guide-hero + .section-divider,
 .how-it-works + .section-divider {
     margin: 0.5rem 0;
 }
 
-.quick-start .qs-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-}
-
-.quick-start .qs-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 1rem;
-}
-
-.quick-start .qs-number {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    background: var(--primary-color);
-    color: var(--white);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-}
+/* Remove spacing reserved for Quick Start now replaced by FAQ */
 
 /* Space tuning between Quick Start and CTA */
 .quick-start {
@@ -80,7 +77,7 @@
 }
 
 @media (max-width: 900px) {
-    .quick-start .qs-grid {
+    .quick-start--compact .qs-steps {
         grid-template-columns: repeat(2, 1fr);
     }
 }
@@ -98,8 +95,51 @@
     margin-top: 0.25rem;
 }
 
+/* Guide-specific: make step feature labels look like inline links (match Sign up / Go to Marketplace) */
+.how-it-works .step-features {
+    gap: 0.75rem;
+    justify-content: center;
+    text-align: center;
+}
+
+.how-it-works .step-features .step-link,
+.how-it-works .step-feature {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    color: var(--primary-color) !important;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.how-it-works .step-features .step-link:hover,
+.how-it-works .step-feature:hover {
+    color: var(--primary-dark) !important;
+    text-decoration: underline;
+}
+
+/* Guide-specific: normalize step card height so all boxes look equal */
+.how-it-works .step-card {
+    min-height: 420px;
+}
+
+@media (max-width: 1024px) {
+    .how-it-works .step-card {
+        min-height: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .how-it-works .step-card {
+        min-height: 360px;
+    }
+}
+
 @media (max-width: 560px) {
-    .quick-start .qs-grid {
+    .quick-start--compact .qs-steps {
         grid-template-columns: 1fr;
     }
 }
