@@ -498,13 +498,8 @@ class AppFooter extends HTMLElement {
                     <div class="footer-section">
                         <h3>Resources</h3>
                         <ul class="footer-links">
-<<<<<<< HEAD:public/js/web-components/app-footer.js
-                            <li><a href="#blog">Blog</a></li>
-                            <li><a href="../pages/guide.html">Guides</a></li>
-=======
                             <li><a href="../pages/blog.html">Blog</a></li>
-                            <li><a href="#guides">Guides</a></li>
->>>>>>> b42767ffbdd604cdd365bdf308d2ed2af0307a2f:public/components/web-components/app-footer.js
+                            <li><a href="../pages/guide.html">Guides</a></li>
                             <li><a href="#faq">FAQ</a></li>
                             <li><a href="../pages/contact.html">Contact</a></li>
                         </ul>
