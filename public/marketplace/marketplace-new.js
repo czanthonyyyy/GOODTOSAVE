@@ -129,6 +129,7 @@ class MarketplaceManager {
         ];
         
         this.init();
+        this.loadProductsFromFirestore().catch(() => {});
     }
 
     init() {
@@ -136,6 +137,55 @@ class MarketplaceManager {
         this.setupEventListeners();
         this.updateProductButtons();
         this.setupSearchFunctionality();
+    }
+
+    async loadProductsFromFirestore() {
+        try {
+            const services = window.firebaseServices;
+            if (!services || !services.db) return;
+
+            const snapshot = await services.db.collection('products').orderBy('createdAt', 'desc').limit(100).get();
+            const loaded = [];
+            snapshot.forEach(doc => {
+                const p = doc.data() || {};
+                const id = p.id || doc.id;
+                const title = p.title || p.name || 'Product';
+                const price = typeof p.price === 'number' ? p.price : parseFloat(p.price || '0') || 0;
+                const image = p.image || 'https://via.placeholder.com/200x160/39b54a/ffffff?text=Product';
+                const category = p.category || 'local';
+                loaded.push({ id, title, price, image, category });
+            });
+
+            if (!loaded.length) return;
+
+            const existingIds = new Set(this.products.map(p => p.id));
+            loaded.forEach(p => {
+                if (!existingIds.has(p.id)) {
+                    this.products.push({ id: p.id, title: p.title, price: p.price, image: p.image });
+                    this.appendProductCard(p);
+                }
+            });
+
+            this.updateProductButtons();
+            this.applyFilters();
+        } catch (e) {
+            console.warn('No se pudieron cargar productos desde Firestore:', e);
+        }
+    }
+
+    appendProductCard(p) {
+        if (!this.container) return;
+        const item = document.createElement('div');
+        item.className = 'item';
+        item.dataset.productId = p.id;
+        item.dataset.category = p.category || 'local';
+        item.innerHTML = `
+            <span class="titulo-item">${p.title}</span>
+            <img src="${p.image}" alt="${p.title}" class="img-item">
+            <span class="precio-item">$${p.price.toFixed(2)}</span>
+            <button class="boton-item">Add to cart</button>
+        `;
+        this.container.prepend(item);
     }
 
     cacheElements() {
@@ -325,7 +375,7 @@ class MarketplaceManager {
             `;
             
             const icon = document.createElement('i');
-            icon.className = suggestion.type === 'category' ? 'fa fa-tags' : 'fa fa-utensils';
+            icon.className = suggestion.type === 'category' ? 'ri-price-tag-3-line' : 'ri-restaurant-2-line';
             icon.style.color = '#39b54a';
             
             const text = document.createElement('span');
@@ -515,7 +565,7 @@ class MarketplaceManager {
             noResultsMsg.className = 'no-results-message';
             noResultsMsg.innerHTML = `
                 <div style="text-align: center; padding: 40px 20px; color: #666;">
-                    <i class="fa fa-search" style="font-size: 48px; color: #ddd; margin-bottom: 20px;"></i>
+                    <i class="ri-search-line" style="font-size: 48px; color: #ddd; margin-bottom: 20px;"></i>
                     <h3 style="margin: 0 0 10px 0; color: #333;">No results found</h3>
                     <p style="margin: 0; color: #888;">Try different search terms or change the filters</p>
                 </div>

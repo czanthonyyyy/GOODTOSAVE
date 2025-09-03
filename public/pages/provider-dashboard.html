@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Provider Dashboard | Good to Save</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <style>
+    :root {
+      --bg: #0f0f0f; --panel: #151515; --panel-2: #1b1b1b; --border: #242424; --muted: #9aa0a6; --txt: #e8eaed;
+      --primary: #39b54a; --primary-2: #2ecc71; --danger: #e74c3c; --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    body { background: var(--bg); color: var(--txt); font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial; }
+    .container { max-width: 1400px; margin: 24px auto; padding: 0 16px; }
+    .grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+    @media(min-width: 900px){ .grid { grid-template-columns: 320px 1fr; } }
+
+    .card { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; }
+    .card-header { padding: 16px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .card-title { font-size: 1rem; font-weight: 600; }
+    .card-content { padding: 18px; }
+
+    .profile { display: flex; gap: 16px; align-items: center; }
+    .avatar { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--primary-2)); display: grid; place-items: center; font-weight: 800; font-size: 1.25rem; color: white; }
+    .name { font-size: 1.2rem; font-weight: 700; }
+    .email { color: var(--muted); font-size: .9rem; }
+
+    .info { display: grid; gap: 10px; }
+    .info-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
+    .info-row:last-child { border-bottom: none; }
+    .info-label { color: var(--muted); }
+    .badge { padding: 6px 10px; border-radius: 999px; background: rgba(57,181,74,.12); color: #9af2a6; font-weight: 600; border: 1px solid rgba(57,181,74,.28); }
+
+    .actions { display: flex; gap: 10px; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--panel-2); color: var(--txt); cursor: pointer; font-weight: 600; transition: .2s; text-decoration: none; }
+    .btn:hover { transform: translateY(-1px); border-color: rgba(255,255,255,.12); }
+    .btn-primary { background: linear-gradient(135deg, var(--primary), var(--primary-2)); border: none; color: white; }
+    .btn-danger { background: linear-gradient(135deg, #e74c3c, #ff6b6b); border: none; color: white; }
+
+    .empty { text-align: center; color: var(--muted); padding: 24px; border: 1px dashed var(--border); border-radius: 12px; background: rgba(255,255,255,.02); }
+
+    /* Metrics */
+    .metrics { display: grid; gap: 12px; grid-template-columns: repeat(2,1fr); margin-top:16px; }
+    @media(min-width: 900px){ .metrics { grid-template-columns: repeat(4,1fr); } }
+    .metric { background: linear-gradient(180deg, rgba(57,181,74,.12), transparent), var(--panel-2); border:1px solid var(--border); border-radius: 12px; padding:16px; display:flex; flex-direction:column; gap:6px; }
+    .metric-label { color: var(--muted); font-size: .85rem; }
+    .metric-value { font-size: 1.4rem; font-weight: 800; }
+    .metric-trend { font-size:.8rem; color:#9af2a6; }
+
+    /* Products table */
+    .products-controls { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:12px; }
+    .input, .select { background: #121212; border:1px solid var(--border); color: var(--txt); border-radius: 10px; padding:10px 12px; }
+    .products-table { width:100%; border-collapse: collapse; }
+    .products-table th, .products-table td { padding:12px 10px; border-bottom:1px solid var(--border); text-align:left; }
+    .products-table th { color: var(--muted); font-weight:600; font-size:.9rem; }
+    .status { padding:6px 10px; border-radius:999px; font-weight:700; font-size:.75rem; border:1px solid; }
+    .status-active { background: rgba(57,181,74,.12); color:#9af2a6; border-color: rgba(57,181,74,.28); }
+    .status-inactive { background: rgba(255,200,0,.1); color:#ffd76a; border-color: rgba(255,200,0,.28); }
+    .pill-price { color:#9af2a6; font-weight:800; }
+    .products-empty { text-align:center; color: var(--muted); padding:18px; }
+
+    /* Product form modal */
+    .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,.8); display: none; align-items: center; justify-content: center; z-index: 1000; }
+    .modal.show { display: flex; }
+    .modal-content { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 24px; width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .modal-title { font-size: 1.2rem; font-weight: 600; }
+    .modal-close { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1.5rem; }
+    .form-group { margin-bottom: 16px; }
+    .form-label { display: block; margin-bottom: 8px; color: var(--muted); font-weight: 500; }
+    .form-input, .form-textarea, .form-select { width: 100%; background: #121212; border: 1px solid var(--border); color: var(--txt); border-radius: 10px; padding: 12px; font-size: 1rem; }
+    .form-input:focus, .form-textarea:focus, .form-select:focus { outline: none; border-color: var(--primary); }
+    .form-textarea { resize: vertical; min-height: 100px; }
+    .form-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px; }
+
+    /* Sales table */
+    .sales-table { width:100%; border-collapse: collapse; }
+    .sales-table th, .sales-table td { padding:12px 10px; border-bottom:1px solid var(--border); text-align:left; }
+    .sales-table th { color: var(--muted); font-weight:600; font-size:.9rem; }
+
+    /* Tabs */
+    .tabs { display: flex; gap: 2px; background: var(--panel-2); border-radius: 12px; padding: 4px; margin-bottom: 20px; }
+    .tab { flex: 1; padding: 12px 16px; background: transparent; border: none; color: var(--muted); cursor: pointer; border-radius: 8px; font-weight: 500; transition: .2s; }
+    .tab.active { background: var(--primary); color: white; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* Product image preview */
+    .product-image { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; background: var(--panel-2); }
+    .image-preview { width: 100px; height: 100px; border-radius: 8px; object-fit: cover; background: var(--panel-2); margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <app-header></app-header>
+
+  <div class="container">
+    <div class="grid">
+      <!-- Profile Card -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Provider Profile</div>
+          <div class="actions">
+            <button id="edit-profile" class="btn">Edit</button>
+            <button id="logout" class="btn btn-danger">Log out</button>
+          </div>
+        </div>
+        <div class="card-content">
+          <div class="profile">
+            <div id="avatar" class="avatar">U</div>
+            <div>
+              <div id="name" class="name">User Name</div>
+              <div id="email" class="email">user@example.com</div>
+            </div>
+          </div>
+          <div class="info">
+            <div class="info-row">
+              <span class="info-label">Account Type</span>
+              <span id="accountType" class="badge">Provider</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Location</span>
+              <span id="location">-</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Member Since</span>
+              <span id="createdAt">-</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Last Updated</span>
+              <span id="updatedAt">-</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div>
+        <!-- Tabs -->
+        <div class="tabs">
+          <button class="tab active" data-tab="overview">Overview</button>
+          <button class="tab" data-tab="products">Products</button>
+          <button class="tab" data-tab="sales">Sales</button>
+        </div>
+
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Business Overview</div>
+            </div>
+            <div class="card-content">
+              <div class="metrics">
+                <div class="metric">
+                  <div class="metric-label">Total Products</div>
+                  <div class="metric-value" id="m-products">0</div>
+                  <div class="metric-trend">Active listings</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-label">Total Sales</div>
+                  <div class="metric-value" id="m-sales">$0.00</div>
+                  <div class="metric-trend">This month</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-label">Orders</div>
+                  <div class="metric-value" id="m-orders">0</div>
+                  <div class="metric-trend">Completed</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-label">Revenue</div>
+                  <div class="metric-value" id="m-revenue">$0.00</div>
+                  <div class="metric-trend">Total earnings</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Products Tab -->
+        <div id="products" class="tab-content">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">My Products</div>
+              <button id="add-product" class="btn btn-primary">+ Add Product</button>
+            </div>
+            <div class="card-content">
+              <div class="products-controls">
+                <input type="text" id="products-search" class="input" placeholder="Search products...">
+                <select id="products-status" class="select">
+                  <option value="all">All Status</option>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                </select>
+                <button id="export-products" class="btn btn-export">Export CSV</button>
+              </div>
+              <div id="products-content">
+                <div class="products-empty">No products yet. Add your first product!</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sales Tab -->
+        <div id="sales" class="tab-content">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Sales History</div>
+            </div>
+            <div class="card-content">
+              <div class="products-controls">
+                <input type="text" id="sales-search" class="input" placeholder="Search orders...">
+                <select id="sales-status" class="select">
+                  <option value="all">All Status</option>
+                  <option value="completed">Completed</option>
+                  <option value="pending">Pending</option>
+                </select>
+                <button id="export-sales" class="btn btn-export">Export CSV</button>
+              </div>
+              <div id="sales-content">
+                <div class="products-empty">No sales yet.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Form Modal -->
+  <div id="product-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" id="modal-title">Add New Product</div>
+        <button class="modal-close" onclick="closeProductModal()">×</button>
+      </div>
+      <form id="product-form">
+        <div class="form-group">
+          <label class="form-label">Product Name *</label>
+          <input type="text" id="product-title" class="form-input" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea id="product-description" class="form-textarea"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Price *</label>
+          <input type="number" id="product-price" class="form-input" step="0.01" min="0" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select id="product-category" class="form-select">
+            <option value="local">Local</option>
+            <option value="organic">Organic</option>
+            <option value="dairy">Dairy</option>
+            <option value="bakery">Bakery</option>
+            <option value="vegetables">Vegetables</option>
+            <option value="fruits">Fruits</option>
+            <option value="meat">Meat</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Image URL</label>
+          <input type="url" id="product-image" class="form-input" placeholder="https://example.com/image.jpg">
+          <img id="image-preview" class="image-preview" style="display: none;">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Status</label>
+          <select id="product-status" class="form-select">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn" onclick="closeProductModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Edit Profile Modal -->
+  <div id="edit-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">Edit Profile</div>
+        <button class="modal-close" onclick="closeEditModal()">×</button>
+      </div>
+      <form id="edit-form">
+        <div class="form-group">
+          <label class="form-label">First Name</label>
+          <input type="text" id="edit-firstName" class="form-input">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Last Name</label>
+          <input type="text" id="edit-lastName" class="form-input">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone</label>
+          <input type="tel" id="edit-phone" class="form-input">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Location</label>
+          <input type="text" id="edit-location" class="form-input">
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn" onclick="closeEditModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+  <script src="../firebase/firebase-config.js"></script>
+  <script src="../auth/firebase-auth.js"></script>
+  <script src="../js/roles.js"></script>
+  <script src="../js/provider-dashboard.js"></script>
+</body>
+</html>
+
+
