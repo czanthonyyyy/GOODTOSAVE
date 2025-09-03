@@ -75,9 +75,10 @@ class AppHeader extends HTMLElement {
                 }
 
                 .logo img {
-                    height: 100px;
+                    height: 120px;
                     width: auto;
                     display: block;
+                    margin: -20px 0;
                 }
 
                 nav {

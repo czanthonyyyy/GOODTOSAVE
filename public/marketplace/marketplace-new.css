@@ -149,3 +149,32 @@ body {
         height: 180px;
     }
 } 
+
+/* Estilos para asegurar visibilidad inmediata del hero */
+.hero-title, .hero-subtitle, .hero-search-container {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+}
+
+.hero-title {
+    font-size: 4rem;
+    font-weight: 800;
+    color: white;
+    text-align: center;
+    margin-bottom: 1rem;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.hero-search-container {
+    max-width: 600px;
+    margin: 0 auto;
+} 

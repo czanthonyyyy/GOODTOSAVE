@@ -21,6 +21,18 @@
     <link rel="stylesheet" href="../css/animations.css">
     <link rel="stylesheet" href="../css/enhanced-animations.css">
     
+    <!-- Estilos para asegurar visibilidad inmediata -->
+    <style>
+        .hero-title, .hero-subtitle, .hero-actions {
+            opacity: 1 !important;
+            transform: none !important;
+        }
+        
+        app-header, app-footer {
+            display: block !important;
+        }
+    </style>
+    
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="../assets/images/logo.svg">
 </head>
@@ -479,7 +491,7 @@
     <app-footer></app-footer>
 
     <!-- Scripts -->
-    <script src="../js/web-components.js" defer></script>
+    <script src="../js/simple-web-components.js"></script>
     <script src="../js/components.js" defer></script>
     <script src="../js/main.js" defer></script>
     <script src="../js/cart.js" defer></script>

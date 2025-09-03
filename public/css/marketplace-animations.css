@@ -508,3 +508,28 @@
         transform: none;
     }
 }
+
+.hero-title {
+    font-size: 4rem;
+    font-weight: 800;
+    color: white;
+    text-align: center;
+    margin-bottom: 1rem;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    opacity: 1;
+    transform: none;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    text-align: center;
+    margin-bottom: 2rem;
+    opacity: 1;
+    transform: none;
+}
+
+.hero-search-container {
+    opacity: 1;
+    transform: none;
+}
