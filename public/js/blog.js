@@ -15,7 +15,7 @@
             date: '2025-02-22',
             categories: ['Marketplace', 'Savings'],
             excerpt: 'Step-by-step guide to find offers, follow providers, and make the most of opportunities.',
-            image: '../assets/articles/image.png'
+            image: '../assets/articles/Marketplace.png'
         },
         {
             title: 'Sustainable Providers: Our Selection Criteria',
@@ -23,7 +23,7 @@
             date: '2025-03-02',
             categories: ['Sustainability', 'Community'],
             excerpt: 'Quality, safety, and environmental criteria we require from our partners.',
-            image: '../assets/articles/sustainable-providers.png'
+            image: '../assets/articles/Sustainable providers.png'
         },
         {
             title: 'Understanding Date Labels: Expiration vs Best Before',
@@ -31,7 +31,7 @@
             date: '2025-03-10',
             categories: ['Education', 'Home'],
             excerpt: 'Learn the difference and avoid throwing away food that is still perfectly fine.',
-            image: '../assets/articles/understanding-date-labels.png'
+            image: '../assets/articles/Understanding datalabel.png'
         },
         {
             title: 'Family Savings with Good to Save',
@@ -39,7 +39,7 @@
             date: '2025-03-18',
             categories: ['Savings', 'Community'],
             excerpt: 'Real stories of families reducing monthly expenses while supporting local businesses.',
-            image: '../assets/articles/family-savings-with-gts.png'
+            image: '../assets/articles/Family savings.png'
         },
         {
             title: 'Zero-Waste Recipes',
@@ -47,7 +47,7 @@
             date: '2025-03-25',
             categories: ['Recipes', 'Home'],
             excerpt: 'Practical ideas to turn leftovers into delicious and nutritious meals.',
-            image: '../assets/articles/zero-waste-recipes.png'
+            image: '../assets/articles/zero-waste recipes.png'
         }
     ];
 
