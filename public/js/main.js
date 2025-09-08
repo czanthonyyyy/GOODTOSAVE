@@ -135,13 +135,13 @@ class FoodMarketplaceApp {
     const heroActions = document.querySelector('.hero-actions');
     
     if (heroTitle) {
-      setTimeout(() => heroTitle.classList.add('fade-in'), 100);
+      setTimeout(() => heroTitle.classList.add('fade-in'), 50);
     }
     if (heroSubtitle) {
-      setTimeout(() => heroSubtitle.classList.add('fade-in'), 300);
+      setTimeout(() => heroSubtitle.classList.add('fade-in'), 100);
     }
     if (heroActions) {
-      setTimeout(() => heroActions.classList.add('fade-in'), 500);
+      setTimeout(() => heroActions.classList.add('fade-in'), 150);
     }
   }
 

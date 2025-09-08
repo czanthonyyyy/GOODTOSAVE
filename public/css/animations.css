@@ -352,23 +352,6 @@
 
 /* ===== EFECTOS DE TEXTO ===== */
 
-/* Texto con efecto de escritura */
-.typewriter {
-    overflow: hidden;
-    border-right: 2px solid var(--primary-color);
-    white-space: nowrap;
-    animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
-}
-
-@keyframes typing {
-    from { width: 0; }
-    to { width: 100%; }
-}
-
-@keyframes blink-caret {
-    from, to { border-color: transparent; }
-    50% { border-color: var(--primary-color); }
-}
 
 /* Texto con efecto de resplandor */
 .text-glow {
@@ -547,18 +530,91 @@
     }
 }
 
+/* ELIMINAR COMPLETAMENTE TODOS LOS EFECTOS TYPEWRITER */
+.typewriter,
+.typewriter *,
+[class*="typewriter"],
+[class*="typing"] {
+    animation: none !important;
+    border-right: none !important;
+    overflow: visible !important;
+    white-space: normal !important;
+    width: auto !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+/* Optimización global de rendimiento */
+* {
+    will-change: auto;
+}
+
+/* Desactivar animaciones pesadas por defecto */
+.animate-float,
+.animate-pulse,
+.animate-glow,
+.particle,
+.particle-container {
+    animation: none !important;
+    display: none !important;
+}
+
+/* Optimizar transiciones */
+.hover-lift,
+.hover-scale-rotate,
+.hover-glow,
+.hover-border-animate {
+    transition: none !important;
+}
+
+.hover-lift:hover,
+.hover-scale-rotate:hover,
+.hover-glow:hover,
+.hover-border-animate:hover {
+    transform: none !important;
+}
+
+/* Optimizar efectos de fondo */
+.animated-gradient-bg {
+    background: linear-gradient(135deg, #39b54a 0%, #2ecc71 100%) !important;
+    animation: none !important;
+}
+
+/* Optimizar efectos glass */
+.glass-effect {
+    backdrop-filter: none !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Optimizar botones */
+.btn-ripple::before {
+    display: none !important;
+}
+
+/* Optimizar scroll reveal */
+.scroll-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+}
+
 /* Optimizar animaciones para dispositivos móviles */
 @media (max-width: 768px) {
     .animate-float {
-        animation-duration: 4s;
+        animation: none !important;
     }
     
     .particle {
-        display: none;
+        display: none !important;
     }
     
     .perspective-card:hover {
-        transform: none;
+        transform: none !important;
+    }
+    
+    .glass-effect {
+        backdrop-filter: none !important;
     }
 }
 

@@ -55,81 +55,218 @@
     </section>
 
     <!-- Enhanced Catalog Controls -->
-    <section class="catalog-controls container">
-        <div class="controls-left">
-            <div class="filters" aria-label="Categories">
-                <button class="filter-pill active animate-slide-in-bottom delay-100" data-category="all" title="All Categories">
-                    <i class="ri-layout-grid-line"></i>
-                    <span>All</span>
-                </button>
-                <button class="filter-pill animate-slide-in-bottom delay-200" data-category="fast-food" title="Fast Food">
-                    <i class="ri-restaurant-2-line"></i>
-                    <span>Fast Food</span>
-                </button>
-                <button class="filter-pill animate-slide-in-bottom delay-300" data-category="bakery" title="Bakery">
-                    <i class="ri-cake-2-line"></i>
-                    <span>Bakery</span>
-                </button>
-                <button class="filter-pill animate-slide-in-bottom delay-400" data-category="pizza" title="Pizza">
-                    <i class="ri-pie-chart-2-line"></i>
-                    <span>Pizza</span>
-                </button>
-                <button class="filter-pill animate-slide-in-bottom delay-500" data-category="sushi" title="Sushi">
-                    <i class="ri-fish-line"></i>
-                    <span>Sushi</span>
-                </button>
-                <button class="filter-pill animate-slide-in-bottom delay-600" data-category="chicken" title="Chicken">
-                    <i class="ri-restaurant-line"></i>
-                    <span>Chicken</span>
-                </button>
-                <button class="filter-pill animate-slide-in-bottom delay-700" data-category="local" title="Local">
-                    <i class="ri-store-2-line"></i>
-                    <span>Local</span>
-                </button>
+    <section class="catalog-controls">
+        <div class="container">
+            <div class="controls-left">
+                <div class="filters" aria-label="Categories">
+                    <button class="filter-pill active animate-slide-in-bottom delay-100" data-category="all" title="All Categories">
+                        <i class="ri-layout-grid-line"></i>
+                        <span>All</span>
+                    </button>
+                    <button class="filter-pill animate-slide-in-bottom delay-200" data-category="fast-food" title="Fast Food">
+                        <i class="ri-restaurant-2-line"></i>
+                        <span>Fast Food</span>
+                    </button>
+                    <button class="filter-pill animate-slide-in-bottom delay-300" data-category="bakery" title="Bakery">
+                        <i class="ri-cake-2-line"></i>
+                        <span>Bakery</span>
+                    </button>
+                    <button class="filter-pill animate-slide-in-bottom delay-400" data-category="pizza" title="Pizza">
+                        <i class="ri-pie-chart-2-line"></i>
+                        <span>Pizza</span>
+                    </button>
+                    <button class="filter-pill animate-slide-in-bottom delay-500" data-category="sushi" title="Sushi">
+                        <i class="ri-fish-line"></i>
+                        <span>Sushi</span>
+                    </button>
+                    <button class="filter-pill animate-slide-in-bottom delay-600" data-category="chicken" title="Chicken">
+                        <i class="ri-restaurant-line"></i>
+                        <span>Chicken</span>
+                    </button>
+                    <button class="filter-pill animate-slide-in-bottom delay-700" data-category="local" title="Local">
+                        <i class="ri-store-2-line"></i>
+                        <span>Local</span>
+                    </button>
+                </div>
             </div>
-        </div>
-        <div class="controls-right">
-            <div class="sort-container animate-slide-in-bottom delay-800">
-                <label class="sort-label" for="sort-select">
-                    <i class="ri-sort-asc"></i>
-                    Sort by:
-                </label>
-                <select id="sort-select" aria-label="Sort results">
-                    <option value="featured">Featured</option>
-                    <option value="price-low">Price: Low to High</option>
-                    <option value="price-high">Price: High to Low</option>
-                    <option value="newest">Newest</option>
-                    <option value="popular">Most Popular</option>
-                </select>
-            </div>
-            <div class="view-toggle animate-slide-in-bottom delay-900">
-                <button class="view-btn active" data-view="grid" title="Grid View">
-                    <i class="ri-layout-grid-line"></i>
-                </button>
-                <button class="view-btn" data-view="list" title="List View">
-                    <i class="ri-list-check"></i>
-                </button>
+            <div class="controls-right">
+                <div class="sort-container animate-slide-in-bottom delay-800">
+                    <label class="sort-label" for="sort-select">
+                        <i class="ri-sort-asc"></i>
+                        Sort by:
+                    </label>
+                    <select id="sort-select" aria-label="Sort results">
+                        <option value="featured">Featured</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="newest">Newest</option>
+                        <option value="popular">Most Popular</option>
+                    </select>
+                </div>
+                <div class="view-toggle animate-slide-in-bottom delay-900">
+                    <button class="view-btn active" data-view="grid" title="Grid View">
+                        <i class="ri-layout-grid-line"></i>
+                    </button>
+                    <button class="view-btn" data-view="list" title="List View">
+                        <i class="ri-list-check"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Products Grid -->
     <section class="products-section container">
+        <div class="products-header">
+            <div class="products-count">
+                <span id="products-count">20</span> products available
+            </div>
+            <div class="products-sort-info">
+                Showing all products
+            </div>
+        </div>
         <div class="products-grid" id="products-grid">
-            <!-- Products will be loaded here dynamically -->
-        </div>
-        
-        <!-- Loading State -->
-        <div class="loading-state" id="loading-state">
-            <div class="loading-spinner"></div>
-            <p>Loading amazing deals...</p>
-        </div>
-        
-        <!-- Empty State -->
-        <div class="empty-state" id="empty-state" style="display: none;">
-            <i class="ri-search-line"></i>
-            <h3>No products found</h3>
-            <p>Try adjusting your search or filters</p>
+            <!-- Product Cards -->
+            <div class="item" data-category="fast-food">
+                <div class="item-badge">Fast Food</div>
+                <span class="titulo-item">King's box</span>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Burger_King_logo_%281999%29.svg/1200px-Burger_King_logo_%281999%29.svg.png" alt="King's box" class="img-item">
+                <span class="precio-item">$2.50</span>
+                <button class="boton-item">Add to cart</button>
+            </div>
+            <div class="item" data-category="fast-food">
+                <div class="item-badge">Fast Food</div>
+                <span class="titulo-item">Smile and Enjoy</span>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/1200px-McDonald%27s_Golden_Arches.svg.png" alt="Smile and Enjoy" class="img-item">
+                <span class="precio-item">$3.15</span>
+                <button class="boton-item">Add to cart</button>
+            </div>
+            <div class="item" data-category="bakery">
+                <div class="item-badge">Bakery</div>
+                <span class="titulo-item">Tasssty box</span>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Krispy_Kreme_logo.svg/1200px-Krispy_Kreme_logo.svg.png" alt="Tasssty box" class="img-item">
+                <span class="precio-item">$3.00</span>
+                <button class="boton-item">Add to cart</button>
+            </div>
+            <div class="item" data-category="fast-food">
+                <div class="item-badge">Fast Food</div>
+                <span class="titulo-item">Taco Box</span>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Taco_Bell_2016_logo.svg/1200px-Taco_Bell_2016_logo.svg.png" alt="Taco Box" class="img-item">
+                <span class="precio-item">$2.45</span>
+                <button class="boton-item">Add to cart</button>
+            </div>
+            <div class="item" data-category="local">
+                <div class="item-badge">Local</div>
+                <span class="titulo-item">Totumas</span>
+                <img src="https://via.placeholder.com/200x150/39b54a/ffffff?text=Totumas" alt="Totumas" class="img-item">
+                <span class="precio-item">$3.25</span>
+                <button class="boton-item">Add to cart</button>
+            </div>
+            <div class="item" data-category="local">
+                <div class="item-badge">Local</div>
+                <span class="titulo-item">Meat and more</span>
+                <img src="https://via.placeholder.com/200x150/39b54a/ffffff?text=Brazzeiro" alt="Meat and more" class="img-item">
+                <span class="precio-item">$5.80</span>
+                <button class="boton-item">Add to cart</button>
+            </div>
+            <div class="item" data-category="local">
+                <div class="item-badge">Local</div>
+                <span class="titulo-item">Full breakfast</span>
+                <img src="https://via.placeholder.com/200x150/39b54a/ffffff?text=En+La+Fonda" alt="Full breakfast" class="img-item">
+                <span class="precio-item">$4.00</span>
+                <button class="boton-item">Add to cart</button>
+            </div>
+            <div class="item" data-category="local">
+                <div class="item-badge">Local</div>
+                <span class="titulo-item">Delicious box</span>
+                <img src="https://via.placeholder.com/200x150/39b54a/ffffff?text=Sabroso+Panama" alt="Delicious box" class="img-item">
+                <span class="precio-item">$2.80</span>
+                <button class="boton-item">Add to cart</button>
+            </div>
+            <div class="item" data-category="local">
+                <div class="item-badge">Local</div>
+                <span class="titulo-item">Marañon box</span>
+                <img src="https://via.placeholder.com/200x150/39b54a/ffffff?text=Marañon" alt="Marañon box" class="img-item">
+                <span class="precio-item">$1.60</span>
+                <button class="boton-item">Add to cart</button>
+            </div>
+            <div class="item" data-category="local">
+                <div class="item-badge">Local</div>
+                <span class="titulo-item">Charged meal</span>
+                <img src="https://via.placeholder.com/200x150/39b54a/ffffff?text=La+Fonda" alt="Charged meal" class="img-item">
+                <span class="precio-item">$1.45</span>
+                <button class="boton-item">Add to cart</button>
+            </div>
+            <div class="item" data-category="local">
+                <div class="item-badge">Local</div>
+                <span class="titulo-item">Panamanian box</span>
+                <img src="https://via.placeholder.com/200x150/39b54a/ffffff?text=El+Motete" alt="Panamanian box" class="img-item">
+                <span class="precio-item">$2.10</span>
+                <button class="boton-item">Add to cart</button>
+            </div>
+            <div class="item" data-category="local">
+                <div class="item-badge">Local</div>
+                <span class="titulo-item">Endless Lunch</span>
+                <img src="https://via.placeholder.com/200x150/39b54a/ffffff?text=Leños+y+Carbón" alt="Endless Lunch" class="img-item">
+                <span class="precio-item">$3.50</span>
+                <button class="boton-item">Add to cart</button>
+            </div>
+            <div class="item" data-category="chicken">
+                <div class="item-badge">Chicken</div>
+                <span class="titulo-item">Pio Pio</span>
+                <img src="https://cdn.shopify.com/s/files/1/0275/0342/7626/files/PIOPIO-Logo_37063f98-33a9-46c6-9bc1-d9b1b519aef0.png?height=628&pad_color=fff&v=1614407782&width=1200" alt="Pio Pio" class="img-item">
+                <span class="precio-item">$1.20</span>
+                <button class="boton-item">Add to cart</button>
+            </div>
+            <div class="item" data-category="pizza">
+                <div class="item-badge">Pizza</div>
+                <span class="titulo-item">Leonardo</span>
+                <img src="https://leonardo.com.pa/wp-content/uploads/2022/11/Logos-.png" alt="Leonardo" class="img-item">
+                <span class="precio-item">$2.90</span>
+                <button class="boton-item">Add to cart</button>
+            </div>
+            <div class="item" data-category="local">
+                <div class="item-badge">Local</div>
+                <span class="titulo-item">Rio de oro</span>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTc1qviMof9iyaBhmmGwJjlpCcJ6O0Z5UXHg&s" alt="Rio de oro" class="img-item">
+                <span class="precio-item">$6.50</span>
+                <button class="boton-item">Add to cart</button>
+            </div>
+            <div class="item" data-category="local">
+                <div class="item-badge">Local</div>
+                <span class="titulo-item">La migueria</span>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToTzukBByshhiVnLbbYTNZVwx_MKSJiG21Uw&s" alt="La migueria" class="img-item">
+                <span class="precio-item">$2.10</span>
+                <button class="boton-item">Add to cart</button>
+            </div>
+            <div class="item" data-category="pizza">
+                <div class="item-badge">Pizza</div>
+                <span class="titulo-item">Dominos Pizza</span>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Domino%27s_pizza_logo.svg/1200px-Domino%27s_pizza_logo.svg.png" alt="Dominos Pizza" class="img-item">
+                <span class="precio-item">$3.75</span>
+                <button class="boton-item">Add to cart</button>
+            </div>
+            <div class="item" data-category="sushi">
+                <div class="item-badge">Sushi</div>
+                <span class="titulo-item">Nacion Sushi</span>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNVc6-i7herZg7K8f51eYaSNnHd_dOj3MnAGrlD0D2ibEwZvYYTBYZYNNAEvMcmHH40Lg&usqp=CAU" alt="Nacion Sushi" class="img-item">
+                <span class="precio-item">$2.80</span>
+                <button class="boton-item">Add to cart</button>
+            </div>
+            <div class="item" data-category="chicken">
+                <div class="item-badge">Chicken</div>
+                <span class="titulo-item">Popeyes</span>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcoTO4JxWA8LwjjoYzrKky7xocV4iQhw6sOg&s" alt="Popeyes" class="img-item">
+                <span class="precio-item">$1.20</span>
+                <button class="boton-item">Add to cart</button>
+            </div>
+            <div class="item" data-category="fast-food">
+                <div class="item-badge">Fast Food</div>
+                <span class="titulo-item">Subway</span>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOPijoG844pbOXk0iwaBEmd81Y0ybW6UDxVg&s" alt="Subway" class="img-item">
+                <span class="precio-item">$1.20</span>
+                <button class="boton-item">Add to cart</button>
+            </div>
         </div>
     </section>
 
