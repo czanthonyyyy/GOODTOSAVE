@@ -164,14 +164,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     email: current.email,
                     displayName: current.displayName
                 }));
-                showSuccess('You were already signed in');
+                // Try to enrich with Firestore profile name
                 try {
-                    const role = await window.RolesHelper.fetchUserRole(current.uid);
-                    const target = role === 'provider' ? '../pages/provider-dashboard.html' : '../pages/buyer-dashboard.html';
-                    setTimeout(() => { window.location.href = target; }, 800);
-                } catch (e) {
-                    setTimeout(() => { window.location.href = '../marketplace/marketplace.html'; }, 800);
-                }
+                    const doc = await window.firebaseAuthService?.getUserData?.(current.uid);
+                    const fullName = [doc?.firstName, doc?.lastName].filter(Boolean).join(' ').trim();
+                    if (fullName) {
+                        const saved = JSON.parse(localStorage.getItem('user') || '{}');
+                        saved.displayName = fullName;
+                        localStorage.setItem('user', JSON.stringify(saved));
+                    }
+                } catch (e) {}
+                showSuccess('You were already signed in');
+                // Ir siempre al home después de autenticar
+                setTimeout(() => { window.location.href = '../pages/index.html'; }, 800);
                 return;
             }
 
@@ -184,17 +189,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 email: user.email,
                 displayName: user.displayName
             }));
+            // Enriquecer con nombre desde Firestore si existe
+            try {
+                const doc = await window.firebaseAuthService?.getUserData?.(user.uid);
+                const fullName = [doc?.firstName, doc?.lastName].filter(Boolean).join(' ').trim();
+                if (fullName) {
+                    const saved = JSON.parse(localStorage.getItem('user') || '{}');
+                    saved.displayName = fullName;
+                    localStorage.setItem('user', JSON.stringify(saved));
+                }
+            } catch (e) {}
             
             showSuccess('Signed in successfully');
             
-            // Redirigir según rol tras login exitoso
-            try {
-                const role = await window.RolesHelper.fetchUserRole(user.uid);
-                const target = role === 'provider' ? '../pages/provider-dashboard.html' : '../pages/buyer-dashboard.html';
-                setTimeout(() => { window.location.href = target; }, 800);
-            } catch (e) {
-                setTimeout(() => { window.location.href = '../marketplace/marketplace.html'; }, 800);
-            }
+            // Ir siempre al home después de login exitoso
+            setTimeout(() => { window.location.href = '../pages/index.html'; }, 800);
         } catch (error) {
             // Professional visual feedback per error type
             const code = error?.code || '';
@@ -396,23 +405,29 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Forgot password handler
-    const forgotPasswordLink = document.querySelector('a[href="#"]');
+    // Forgot password handler (sign-in form)
+    const forgotPasswordLink = document.getElementById('forgot-password-link');
     if (forgotPasswordLink) {
         forgotPasswordLink.addEventListener('click', async function(e) {
             e.preventDefault();
-            const email = document.getElementById('signin-email').value;
+            const email = document.getElementById('signin-email').value.trim();
             
             if (!email) {
-                showError('Please enter your email to reset your password');
+                showInlineFormError('signin-error-message', 'Please enter your email to reset your password');
                 return;
             }
             
             try {
                 await window.firebaseAuthService.sendPasswordResetEmail(email);
-                showSuccess('Password reset email sent. Check your inbox.');
+                showInlineFormError('signin-error-message', 'We sent you a reset link. Check your inbox.');
+                const el = document.getElementById('signin-error-message');
+                if (el) {
+                    el.style.backgroundColor = '#e6ffed';
+                    el.style.border = '1px solid #b7f5c3';
+                    el.style.color = '#0a6a2b';
+                }
             } catch (error) {
-                showError(error);
+                showInlineFormError('signin-error-message', error?.message || String(error));
             }
         });
     }

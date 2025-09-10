@@ -624,8 +624,8 @@
 
 /* Estilos para el logo en el panel de autenticación */
 .auth-page .logo-container {
-    margin-bottom: 20px;
-    margin-top: -80px; /* Mover el logo más arriba */
+    margin-bottom: 10px;
+    margin-top: -120px; /* Subir más el logo para dejar texto y botón visibles */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -636,11 +636,12 @@
 }
 
 .auth-page .auth-logo {
-    max-width: 500px; /* Logo más grande */
+    max-width: 560px; /* Logo más grande y centrado */
+    width: 80%;
     height: auto;
-    filter: brightness(0) invert(1); /* Hace el logo blanco para que se vea bien en el fondo verde */
+    filter: brightness(0) invert(1); /* Forzar el logo a blanco manteniendo la transparencia */
     transition: transform 0.3s ease;
-    cursor: pointer; /* Indicar que es clickeable */
+    cursor: pointer;
     display: block;
     margin: 0 auto;
 }
@@ -830,12 +831,13 @@
     
     /* Ajustes responsivos para el logo */
     .auth-page .auth-logo {
-        max-width: 400px; /* Logo más grande en móviles también */
+        max-width: 420px; /* Tamaño grande pero responsivo en móviles */
+        width: 85%;
     }
     
     .auth-page .logo-container {
-        margin-bottom: 20px;
-        margin-top: -60px; /* Ajuste proporcional para móviles */
+        margin-bottom: 16px;
+        margin-top: -80px; /* Mantenerlo alto en pantallas pequeñas */
     }
 }
 

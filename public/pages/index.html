@@ -31,6 +31,12 @@
         app-header, app-footer {
             display: block !important;
         }
+        /* Highlight for user name in hero subtitle */
+        .hero-subtitle .highlight-name {
+            color: var(--primary-light);
+            font-weight: 800;
+            text-shadow: 0 0 8px rgba(57,181,74,0.25);
+        }
     </style>
     
     <!-- Favicon -->
@@ -42,6 +48,7 @@
     
     <!-- Header Web Component -->
     <app-header></app-header>
+    
 
     <!-- Hero Section -->
     <section class="hero">

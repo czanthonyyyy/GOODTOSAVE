@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const sub = document.querySelector('.hero-subtitle');
             if (sub && u) {
                 const name = (u.displayName || u.email || 'there').split('@')[0];
-                sub.textContent = `Welcome back, ${name}. Pick your next deal.`;
+                sub.innerHTML = `Welcome back, <span class="highlight-name">${name}</span>. Pick your next deal.`;
             }
         }
     } catch {}
