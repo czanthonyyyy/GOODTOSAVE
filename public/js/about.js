@@ -379,10 +379,15 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (!track) return;
         
-        // Calculate slide width and gap
-        const slideWidth = 300; // min-width of each card
-        const gap = 32; // 2rem gap
-        const translateX = -(currentSlide * (slideWidth + gap));
+        // Calculate slide width and gap dynamically to avoid clipping on last slide
+        // Read the first card's actual width and the track's gap at current breakpoint
+        const firstCard = track.querySelector('.team-member-card');
+        const cardRect = firstCard ? firstCard.getBoundingClientRect() : null;
+        const computed = window.getComputedStyle(track);
+        // Flex gap can be exposed as columnGap or gap depending on browser
+        const parsedGap = parseFloat(computed.columnGap || computed.gap || '0') || 0;
+        const slideWidth = cardRect ? cardRect.width : 320;
+        const translateX = -(currentSlide * (slideWidth + parsedGap));
         
         track.style.transform = `translateX(${translateX}px)`;
         
