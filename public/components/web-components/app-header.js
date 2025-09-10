@@ -105,10 +105,10 @@ class AppHeader extends HTMLElement {
                 .nav-menu:hover {
                     background: rgba(255, 255, 255, 0.08);
                     border-color: rgba(255, 255, 255, 0.2);
-                    transform: translateY(-2px);
+                    /* Avoid layout shift on hover */
                     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
                 }
-                }
+                
 
                 /* Indicador activo deslizante */
                 .nav-indicator {
@@ -147,7 +147,7 @@ class AppHeader extends HTMLElement {
                 .nav-menu a:hover {
                     color: var(--primary-color);
                     background: rgba(57, 181, 74, 0.1);
-                    transform: translateY(-2px);
+                    /* Avoid vertical movement to prevent menu jump */
                     box-shadow: 0 4px 12px rgba(57, 181, 74, 0.2);
                 }
 
@@ -183,7 +183,6 @@ class AppHeader extends HTMLElement {
                 .nav-menu a:hover,
                 .nav-menu a:focus-visible {
                     color: #e8f5e9;
-                    transform: translateY(-1px);
                 }
 
                 .nav-menu a:hover::before,
@@ -495,12 +494,16 @@ class AppHeader extends HTMLElement {
         const indicator = this.shadowRoot.getElementById('nav-indicator');
 
         cartToggle.addEventListener('click', () => {
+            // Usar helper global robusto que garantiza existencia del carrito
+            if (typeof window.toggleCart === 'function') {
+                window.toggleCart();
+                return;
+            }
             const cartComponent = document.querySelector('app-cart');
-            if (cartComponent) {
+            if (cartComponent?.toggleCart) {
                 cartComponent.toggleCart();
             } else {
-                // Si no existe el componente del carrito, emitir evento
-                document.dispatchEvent(new CustomEvent('cart-toggle'));
+                document.dispatchEvent(new CustomEvent('show-cart'));
             }
         });
 

@@ -24,6 +24,12 @@ class AppCart extends HTMLElement {
         
         // Asegurar que los event listeners se mantengan después de re-renderizar
         this.setupPersistentEventListeners();
+
+        // Exponer helpers globales para que el header pueda invocar de forma segura
+        window.toggleCart = () => this.toggleCart();
+        window.openCart = () => this.openCart();
+        window.closeCart = () => this.closeCart();
+        window.addToCart = (product) => this.addItem(product);
     }
 
     render() {
@@ -1235,7 +1241,7 @@ class AppCart extends HTMLElement {
     }
 
     renderCartItems() {
-        if (this.cartItems.length === 0) {
+        if (!Array.isArray(this.cartItems) || this.cartItems.length === 0) {
             return `
                 <div class="empty-cart">
                     <div class="empty-icon">
@@ -1262,7 +1268,16 @@ class AppCart extends HTMLElement {
             `;
         }
 
-        return this.cartItems.map(item => `
+        return this.cartItems.map(raw => {
+            const item = {
+                id: raw.id,
+                title: raw.title || '',
+                price: Number(raw.price ?? raw.discountedPrice ?? 0) || 0,
+                image: raw.image || '',
+                quantity: Number(raw.quantity ?? 1) || 1
+            };
+            const lineTotal = (item.price * item.quantity);
+            return `
             <div class="cart-item" data-id="${item.id}">
                 <img src="${item.image}" alt="${item.title}" class="item-image">
                 <div class="item-details">
@@ -1275,10 +1290,11 @@ class AppCart extends HTMLElement {
                         <span class="quantity-display">${item.quantity}</span>
                         <button class="quantity-btn plus-btn" data-item-id="${item.id}">+</button>
                     </div>
+                    <div class="cart-item-line">$${lineTotal.toFixed(2)}</div>
                     <button class="remove-btn" data-item-id="${item.id}">Remove</button>
                 </div>
             </div>
-        `).join('');
+        `;}).join('');
     }
 
     renderCartSummary() {
@@ -1286,7 +1302,11 @@ class AppCart extends HTMLElement {
             return '';
         }
 
-        const subtotal = this.cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const subtotal = this.cartItems.reduce((sum, raw) => {
+            const price = Number(raw.price ?? raw.discountedPrice ?? 0) || 0;
+            const qty = Number(raw.quantity ?? 1) || 1;
+            return sum + (price * qty);
+        }, 0);
         const tax = subtotal * 0.04; // 4% tax
         const total = subtotal + tax;
 
@@ -1338,7 +1358,7 @@ class AppCart extends HTMLElement {
             
             // Quantity buttons
             if (target.classList.contains('quantity-btn')) {
-                const itemId = target.dataset.itemId;
+                const itemId = String(target.dataset.itemId || '');
                 if (itemId) {
                     const change = target.classList.contains('minus-btn') ? -1 : 1;
                     this.updateQuantity(itemId, change);
@@ -1347,7 +1367,7 @@ class AppCart extends HTMLElement {
             
             // Remove button
             if (target.classList.contains('remove-btn')) {
-                const itemId = target.dataset.itemId;
+                const itemId = String(target.dataset.itemId || '');
                 if (itemId) {
                     this.removeItem(itemId);
                 }
@@ -1374,6 +1394,8 @@ class AppCart extends HTMLElement {
 
         // Event listener to show cart
         document.addEventListener('show-cart', () => {
+            // Sync items from storage before opening
+            this.syncFromStorage();
             this.openCart();
         });
 
@@ -1382,6 +1404,11 @@ class AppCart extends HTMLElement {
             if (e.key === 'Escape' && this.isOpen) {
                 this.closeCart();
             }
+        });
+
+        // Listen to legacy cart updates to keep this cart in sync
+        document.addEventListener('cart-updated', () => {
+            this.syncFromStorage();
         });
     }
 
@@ -1422,15 +1449,16 @@ class AppCart extends HTMLElement {
     }
 
     addItem(product) {
-        const existingItem = this.cartItems.find(item => item.id === product.id);
+        const normalizedId = String(product.id);
+        const existingItem = this.cartItems.find(item => String(item.id) === normalizedId);
         
         if (existingItem) {
             existingItem.quantity += 1;
         } else {
             this.cartItems.push({
-                id: product.id,
+                id: normalizedId,
                 title: product.title,
-                price: product.price,
+                price: Number(product.price ?? product.discountedPrice ?? 0) || 0,
                 image: product.image,
                 quantity: 1
             });
@@ -1452,11 +1480,12 @@ class AppCart extends HTMLElement {
     }
 
     updateQuantity(itemId, change) {
-        const item = this.cartItems.find(item => item.id === itemId);
+        const lookupId = String(itemId);
+        const item = this.cartItems.find(it => String(it.id) === lookupId);
         if (item) {
             item.quantity += change;
             if (item.quantity <= 0) {
-                this.removeItem(itemId);
+                this.removeItem(lookupId);
             } else {
                 this.saveCart();
                 this.updateCartCount();
@@ -1471,7 +1500,8 @@ class AppCart extends HTMLElement {
     }
 
     removeItem(itemId) {
-        this.cartItems = this.cartItems.filter(item => item.id !== itemId);
+        const lookupId = String(itemId);
+        this.cartItems = this.cartItems.filter(item => String(item.id) !== lookupId);
         this.saveCart();
         this.updateCartCount();
         this.render();
@@ -1484,14 +1514,22 @@ class AppCart extends HTMLElement {
 
     saveCart() {
         // Guardar en ambas claves para compatibilidad
-        localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
+        // Ensure ids are strings in storage
+        const sanitized = this.cartItems.map(it => ({
+            id: String(it.id),
+            title: it.title,
+            price: Number(it.price ?? 0) || 0,
+            image: it.image || '',
+            quantity: Number(it.quantity ?? 1) || 1
+        }));
+        localStorage.setItem('cartItems', JSON.stringify(sanitized));
         try {
-            const legacy = this.cartItems.map(it => ({
-                id: it.id,
+            const legacy = sanitized.map(it => ({
+                id: String(it.id),
                 title: it.title,
-                price: it.price,
-                image: it.image,
-                quantity: it.quantity,
+                price: Number(it.price ?? 0) || 0,
+                image: it.image || '',
+                quantity: Number(it.quantity ?? 1) || 1,
                 discountedPrice: it.price,
                 supplier: it.supplier || 'Supplier',
                 originalPrice: it.price
@@ -1506,6 +1544,24 @@ class AppCart extends HTMLElement {
         if (typeof window.updateCartCount === 'function') {
             window.updateCartCount(totalItems);
         }
+    }
+
+    syncFromStorage() {
+        try {
+            const itemsA = JSON.parse(localStorage.getItem('cartItems') || '[]');
+            const itemsB = JSON.parse(localStorage.getItem('foodmarketplace_cart') || '[]');
+            const normalizedB = (itemsB || []).map(it => ({
+                id: it.id,
+                title: it.title,
+                price: it.price ?? it.discountedPrice ?? 0,
+                image: it.image || '',
+                quantity: it.quantity ?? 1
+            }));
+            const latest = itemsA && itemsA.length ? itemsA : normalizedB;
+            this.cartItems = latest || [];
+            this.updateCartCount();
+            this.render();
+        } catch (e) { /* ignore */ }
     }
 
     checkout() {

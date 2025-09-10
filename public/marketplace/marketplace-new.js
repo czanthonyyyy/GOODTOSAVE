@@ -1,195 +1,40 @@
 /**
- * Marketplace JavaScript - New Cart System
- * Works with the new app-cart web component
+ * Marketplace JavaScript - Simplified Version
+ * Ready for new product card system
  */
 
 class MarketplaceManager {
     constructor() {
-        this.products = [
-            {
-                id: 'kings-box',
-                title: "King's box",
-                price: 2.50,
-                image: "https://via.placeholder.com/200x160/39b54a/ffffff?text=Burger+King"
-            },
-            {
-                id: 'smile-enjoy',
-                title: "Smile and Enjoy",
-                price: 3.15,
-                image: "https://via.placeholder.com/200x160/39b54a/ffffff?text=McDonald's"
-            },
-            {
-                id: 'tasssty-box',
-                title: "Tasssty box",
-                price: 3.00,
-                image: "https://via.placeholder.com/200x160/39b54a/ffffff?text=Krispy+Kreme"
-            },
-            {
-                id: 'taco-box',
-                title: "Taco Box",
-                price: 2.45,
-                image: "https://via.placeholder.com/200x160/39b54a/ffffff?text=Taco+Bell"
-            },
-            {
-                id: 'totumas',
-                title: "Totumas",
-                price: 3.25,
-                image: "https://via.placeholder.com/200x160/39b54a/ffffff?text=Las+Totumas"
-            },
-            {
-                id: 'meat-more',
-                title: "Meat and more",
-                price: 5.80,
-                image: "https://via.placeholder.com/200x160/39b54a/ffffff?text=Brazzeiro"
-            },
-            {
-                id: 'full-breakfast',
-                title: "Full breakfast",
-                price: 4.00,
-                image: "https://via.placeholder.com/200x160/39b54a/ffffff?text=En+La+Fonda"
-            },
-            {
-                id: 'delicious-box',
-                title: "Delicious box",
-                price: 2.80,
-                image: "https://via.placeholder.com/200x160/39b54a/ffffff?text=Sabroso+Panama"
-            },
-            {
-                id: 'maranon-box',
-                title: "Marañon box",
-                price: 1.60,
-                image: "https://via.placeholder.com/200x160/39b54a/ffffff?text=Marañon"
-            },
-            {
-                id: 'charged-meal',
-                title: "Charged meal",
-                price: 1.45,
-                image: "https://via.placeholder.com/200x160/39b54a/ffffff?text=La+Fonda"
-            },
-            {
-                id: 'panamanian-box',
-                title: "Panamanian box",
-                price: 2.10,
-                image: "https://via.placeholder.com/200x160/39b54a/ffffff?text=El+Motete"
-            },
-            {
-                id: 'endless-lunch',
-                title: "Endless Lunch",
-                price: 3.50,
-                image: "https://via.placeholder.com/200x160/39b54a/ffffff?text=Llenos+y+Carbon"
-            },
-            {
-                id: 'pio-pio',
-                title: "Pio Pio",
-                price: 1.20,
-                image: "https://via.placeholder.com/200x160/39b54a/ffffff?text=Pio+Pio"
-            },
-            {
-                id: 'leonardo',
-                title: "Leonardo",
-                price: 2.90,
-                image: "https://via.placeholder.com/200x160/39b54a/ffffff?text=Leonardo"
-            },
-            {
-                id: 'rio-oro',
-                title: "Rio de oro",
-                price: 6.50,
-                image: "https://via.placeholder.com/200x160/39b54a/ffffff?text=Rio+de+Oro"
-            },
-            {
-                id: 'la-migueria',
-                title: "La migueria",
-                price: 2.10,
-                image: "https://via.placeholder.com/200x160/39b54a/ffffff?text=La+Migueria"
-            },
-            {
-                id: 'dominos-pizza',
-                title: "Dominos Pizza",
-                price: 3.75,
-                image: "https://via.placeholder.com/200x160/39b54a/ffffff?text=Domino's+Pizza"
-            },
-            {
-                id: 'nacion-sushi',
-                title: "Nacion Sushi",
-                price: 2.80,
-                image: "https://via.placeholder.com/200x160/39b54a/ffffff?text=Nacion+Sushi"
-            },
-            {
-                id: 'popeyes',
-                title: "Popeyes",
-                price: 1.20,
-                image: "https://via.placeholder.com/200x160/39b54a/ffffff?text=Popeyes"
-            },
-            {
-                id: 'subway',
-                title: "Subway",
-                price: 1.20,
-                image: "https://via.placeholder.com/200x160/39b54a/ffffff?text=Subway"
-            }
-        ];
-        
         this.init();
-        this.loadProductsFromFirestore().catch(() => {});
     }
 
     init() {
         this.cacheElements();
         this.setupEventListeners();
-        this.updateProductButtons();
         this.setupSearchFunctionality();
+        this.setupCartIntegration();
+        this.initializeProducts();
     }
-
-    async loadProductsFromFirestore() {
-        try {
-            const services = window.firebaseServices;
-            if (!services || !services.db) return;
-
-            const snapshot = await services.db.collection('products').orderBy('createdAt', 'desc').limit(100).get();
-            const loaded = [];
-            snapshot.forEach(doc => {
-                const p = doc.data() || {};
-                const id = p.id || doc.id;
-                const title = p.title || p.name || 'Product';
-                const price = typeof p.price === 'number' ? p.price : parseFloat(p.price || '0') || 0;
-                const image = p.image || 'https://via.placeholder.com/200x160/39b54a/ffffff?text=Product';
-                const category = p.category || 'local';
-                loaded.push({ id, title, price, image, category });
-            });
-
-            if (!loaded.length) return;
-
-            const existingIds = new Set(this.products.map(p => p.id));
-            loaded.forEach(p => {
-                if (!existingIds.has(p.id)) {
-                    this.products.push({ id: p.id, title: p.title, price: p.price, image: p.image });
-                    this.appendProductCard(p);
-                }
-            });
-
-            this.updateProductButtons();
-            this.applyFilters();
-        } catch (e) {
-            console.warn('No se pudieron cargar productos desde Firestore:', e);
-        }
-    }
-
-    appendProductCard(p) {
-        if (!this.container) return;
-        const item = document.createElement('div');
-        item.className = 'item';
-        item.dataset.productId = p.id;
-        item.dataset.category = p.category || 'local';
-        item.innerHTML = `
-            <span class="titulo-item">${p.title}</span>
-            <img src="${p.image}" alt="${p.title}" class="img-item">
-            <span class="precio-item">$${p.price.toFixed(2)}</span>
-            <button class="boton-item">Add to cart</button>
-        `;
-        this.container.prepend(item);
+    
+    // Initialize products visibility
+    initializeProducts() {
+        const items = document.querySelectorAll('.item');
+        
+        items.forEach((item, index) => {
+            // Ensure all items are visible initially
+            item.classList.remove('hidden');
+            item.style.display = 'flex';
+            item.style.opacity = '1';
+            item.style.visibility = 'visible';
+            
+            // Add a small delay for animation
+            setTimeout(() => {
+                item.style.animationDelay = `${index * 0.1}s`;
+            }, 100);
+        });
     }
 
     cacheElements() {
-        this.container = document.querySelector('.contenedor-items');
         this.searchInput = document.getElementById('product-search');
         this.sortSelect = document.getElementById('sort-select');
         this.filterPills = document.querySelectorAll('.filter-pill');
@@ -198,18 +43,6 @@ class MarketplaceManager {
     }
 
     setupEventListeners() {
-        // Event delegation for add to cart buttons
-        document.addEventListener('click', (e) => {
-            if (e.target.classList.contains('boton-item')) {
-                this.addToCart(e);
-            }
-        });
-
-        // Listen for cart updates
-        document.addEventListener('cart-updated', () => {
-            this.updateProductButtons();
-        });
-
         // Search input events
         if (this.searchInput) {
             this.searchInput.addEventListener('input', () => this.applyFilters());
@@ -251,10 +84,7 @@ class MarketplaceManager {
                     this.viewButtons.forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
                     const view = btn.dataset.view;
-                    if (this.container) {
-                        if (view === 'compact') this.container.classList.add('compact');
-                        else this.container.classList.remove('compact');
-                    }
+                    this.toggleView(view);
                     
                     // Add visual feedback
                     this.showViewToggleFeedback(btn);
@@ -324,17 +154,6 @@ class MarketplaceManager {
                     type: 'category',
                     text: this.getCategoryDisplayName(category),
                     value: category
-                });
-            }
-        });
-        
-        // Add product suggestions
-        this.products.forEach(product => {
-            if (product.title.toLowerCase().includes(query)) {
-                suggestions.push({
-                    type: 'product',
-                    text: product.title,
-                    value: product.id
                 });
             }
         });
@@ -451,10 +270,11 @@ class MarketplaceManager {
     }
 
     showFilterFeedback(pill) {
-        pill.style.transform = 'scale(1.05)';
+        // Simple visual feedback without changing transform
+        pill.style.boxShadow = '0 6px 20px rgba(57, 181, 74, 0.4)';
         setTimeout(() => {
-            pill.style.transform = '';
-        }, 200);
+            pill.style.boxShadow = '';
+        }, 300);
     }
 
     showViewToggleFeedback(btn) {
@@ -464,190 +284,212 @@ class MarketplaceManager {
         }, 200);
     }
 
-    addToCart(event) {
-        const button = event.target;
-        const item = button.closest('.item');
-        
-        if (!item) return;
-
-        const productId = item.dataset.productId;
-        const title = item.querySelector('.titulo-item').textContent;
-        const priceText = item.querySelector('.precio-item').textContent;
-        const price = parseFloat(priceText.replace('$', ''));
-        const image = item.querySelector('.img-item').src;
-        
-        // Find product in our products array
-        const product = this.products.find(p => p.id === productId);
-        
-        if (product) {
-            // Update product with real image
-            product.image = image;
-            
-            // Get the cart component
-            const cartComponent = document.querySelector('app-cart');
-            if (cartComponent) {
-                cartComponent.addItem(product);
-                
-                // Show success feedback
-                this.showAddToCartFeedback(button);
-                
-                // Abrir el carrito automáticamente después de 500ms
-                setTimeout(() => {
-                    if (cartComponent && !cartComponent.isOpen) {
-                        cartComponent.openCart();
-                        console.log('Cart opened automatically after adding product');
-                    }
-                }, 500);
+    toggleView(view) {
+        const productsGrid = document.getElementById('products-grid');
+        if (productsGrid) {
+            console.log('Toggling view to:', view);
+            if (view === 'list') {
+                productsGrid.classList.add('list-view');
+                console.log('Added list-view class');
+            } else {
+                productsGrid.classList.remove('list-view');
+                console.log('Removed list-view class');
             }
+            
+            // Force reflow to ensure the change takes effect
+            productsGrid.offsetHeight;
+        } else {
+            console.error('Products grid not found');
         }
     }
 
-    // Enhanced filtering, searching and sorting
+    // Product filtering and search functionality
     applyFilters() {
         const query = (this.searchInput?.value || '').trim().toLowerCase();
         const activePill = document.querySelector('.filter-pill.active');
         const activeCategory = activePill ? activePill.dataset.category : 'all';
         const sort = this.sortSelect ? this.sortSelect.value : 'featured';
 
-        const items = Array.from(document.querySelectorAll('.contenedor-items .item'));
+        // Get all product items
+        const items = document.querySelectorAll('.item');
+        
         let visibleCount = 0;
-
-        // Filter by search and category
+        
         items.forEach(item => {
             const title = item.querySelector('.titulo-item')?.textContent.toLowerCase() || '';
-            const category = item.dataset.category || 'all';
-            const matchesQuery = !query || title.includes(query);
-            const matchesCategory = activeCategory === 'all' || category === activeCategory;
+            const category = item.dataset.category || '';
             
-            if (matchesQuery && matchesCategory) {
-                item.style.display = '';
+            let shouldShow = true;
+            
+            // Filter by category
+            if (activeCategory !== 'all' && category !== activeCategory) {
+                shouldShow = false;
+            }
+            
+            // Filter by search query
+            if (query && !title.includes(query)) {
+                shouldShow = false;
+            }
+            
+            // Show/hide item with smooth transition
+            if (shouldShow) {
+                item.classList.remove('hidden');
+                item.style.display = 'flex';
+                item.style.opacity = '1';
+                item.style.visibility = 'visible';
+                item.style.transform = 'scale(1)';
                 visibleCount++;
             } else {
-                item.style.display = 'none';
+                item.classList.add('hidden');
+                item.style.opacity = '0';
+                item.style.transform = 'scale(0.8)';
+                // Hide after transition
+                setTimeout(() => {
+                    if (item.classList.contains('hidden')) {
+                        item.style.display = 'none';
+                    }
+                }, 300);
             }
         });
-
-        // Show/hide no results message
-        this.showNoResultsMessage(visibleCount === 0);
-
-        // Sorting visible items
-        const visibleItems = items.filter(it => it.style.display !== 'none');
-        const byText = (a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' });
         
-        visibleItems.sort((a, b) => {
-            if (sort === 'price-asc' || sort === 'price-desc') {
-                const pa = parseFloat(a.querySelector('.precio-item').textContent.replace('$',''));
-                const pb = parseFloat(b.querySelector('.precio-item').textContent.replace('$',''));
-                return sort === 'price-asc' ? pa - pb : pb - pa;
-            }
-            if (sort === 'az' || sort === 'za') {
-                const ta = a.querySelector('.titulo-item').textContent.trim();
-                const tb = b.querySelector('.titulo-item').textContent.trim();
-                return sort === 'az' ? byText(ta, tb) : byText(tb, ta);
-            }
-            return 0; // featured: no change
-        });
-
-        // Re-append in new order
-        if (this.container) {
-            visibleItems.forEach(it => this.container.appendChild(it));
+        // Update products count
+        this.updateProductsCount(visibleCount, activeCategory);
+        
+        // Apply sorting only if there are visible items
+        if (visibleCount > 0) {
+            this.applySorting(sort);
         }
-
-        // Update results count
-        this.updateResultsCount(visibleCount);
     }
-
-    showNoResultsMessage(show) {
-        let noResultsMsg = document.querySelector('.no-results-message');
+    
+    // Update products count display
+    updateProductsCount(count, category) {
+        const countElement = document.getElementById('products-count');
+        const sortInfoElement = document.querySelector('.products-sort-info');
         
-        if (show && !noResultsMsg) {
-            noResultsMsg = document.createElement('div');
-            noResultsMsg.className = 'no-results-message';
-            noResultsMsg.innerHTML = `
-                <div style="text-align: center; padding: 40px 20px; color: #666;">
-                    <i class="ri-search-line" style="font-size: 48px; color: #ddd; margin-bottom: 20px;"></i>
-                    <h3 style="margin: 0 0 10px 0; color: #333;">No results found</h3>
-                    <p style="margin: 0; color: #888;">Try different search terms or change the filters</p>
-                </div>
-            `;
+        if (countElement) {
+            countElement.textContent = count;
+        }
+        
+        if (sortInfoElement) {
+            if (category === 'all') {
+                sortInfoElement.textContent = 'Showing all products';
+            } else {
+                const categoryName = this.getCategoryDisplayName(category);
+                sortInfoElement.textContent = `Showing ${categoryName} products`;
+            }
+        }
+    }
+    
+    // Apply sorting to visible items
+    applySorting(sort) {
+        const container = document.getElementById('products-grid');
+        if (!container) return;
+        
+        const items = Array.from(container.querySelectorAll('.item:not(.hidden)'));
+        
+        items.sort((a, b) => {
+            const priceA = this.extractPrice(a.querySelector('.precio-item')?.textContent);
+            const priceB = this.extractPrice(b.querySelector('.precio-item')?.textContent);
+            const titleA = a.querySelector('.titulo-item')?.textContent.toLowerCase() || '';
+            const titleB = b.querySelector('.titulo-item')?.textContent.toLowerCase() || '';
             
-            if (this.container) {
-                this.container.appendChild(noResultsMsg);
-            }
-        } else if (!show && noResultsMsg) {
-            noResultsMsg.remove();
-        }
-    }
-
-    updateResultsCount(count) {
-        // Comentamos esta función para evitar mostrar el contador de productos
-        // que no es necesario y causa problemas visuales
-        return;
-        
-        /*
-        let countElement = document.querySelector('.results-count');
-        
-        if (!countElement) {
-            countElement = document.createElement('div');
-            countElement.className = 'results-count';
-            countElement.style.cssText = `
-                text-align: center;
-                padding: 15px;
-                color: #666;
-                font-size: 14px;
-                font-weight: 500;
-            `;
-            
-            const controlsSection = document.querySelector('.catalog-controls');
-            if (controlsSection) {
-                controlsSection.appendChild(countElement);
-            }
-        }
-        
-        countElement.textContent = `${count} producto${count !== 1 ? 's' : ''} encontrado${count !== 1 ? 's' : ''}`;
-        */
-    }
-
-    showAddToCartFeedback(button) {
-        const originalText = button.textContent;
-        const originalBackground = button.style.background;
-        
-        button.textContent = 'Added!';
-        button.style.background = '#27ae60';
-        button.style.color = 'white';
-        button.style.transform = 'scale(1.05)';
-        
-        setTimeout(() => {
-            button.textContent = originalText;
-            button.style.background = originalBackground;
-            button.style.color = '';
-            button.style.transform = '';
-        }, 1500);
-    }
-
-    updateProductButtons() {
-        const cartComponent = document.querySelector('app-cart');
-        if (!cartComponent) return;
-
-        const cartItems = cartComponent.cartItems || [];
-        
-        this.products.forEach(product => {
-            const itemElement = document.querySelector(`[data-product-id="${product.id}"]`);
-            if (itemElement) {
-                const button = itemElement.querySelector('.boton-item');
-                const inCart = cartItems.some(item => item.id === product.id);
-                
-                if (inCart) {
-                    button.textContent = 'In Cart';
-                    button.style.background = '#27ae60';
-                    button.style.color = 'white';
-                } else {
-                    button.textContent = 'Add to Cart';
-                    button.style.background = '';
-                    button.style.color = '';
-                }
+            switch (sort) {
+                case 'price-low':
+                    return priceA - priceB;
+                case 'price-high':
+                    return priceB - priceA;
+                case 'newest':
+                    // For now, just sort by title alphabetically
+                    return titleA.localeCompare(titleB);
+                case 'popular':
+                    // For now, just sort by title alphabetically
+                    return titleA.localeCompare(titleB);
+                case 'featured':
+                default:
+                    return 0; // Keep original order
             }
         });
+        
+        // Re-append sorted items
+        items.forEach(item => container.appendChild(item));
+    }
+    
+    // Extract price from string (e.g., "$2.50" -> 2.50)
+    extractPrice(priceString) {
+        if (!priceString) return 0;
+        const match = priceString.match(/\$?(\d+\.?\d*)/);
+        return match ? parseFloat(match[1]) : 0;
+    }
+    
+    // Setup cart functionality for product cards
+    setupCartIntegration() {
+        // Add event listeners to all "Add to cart" buttons
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('boton-item')) {
+                e.preventDefault();
+                this.addProductToCart(e.target);
+            }
+        });
+    }
+    
+    // Add product to cart
+    addProductToCart(button) {
+        const item = button.closest('.item');
+        if (!item) return;
+        
+        // Get product data
+        const title = item.querySelector('.titulo-item')?.textContent || '';
+        const price = this.extractPrice(item.querySelector('.precio-item')?.textContent);
+        const image = item.querySelector('.img-item')?.src || '';
+        const category = item.dataset.category || '';
+        
+        // Create product object
+        const product = {
+            id: `product_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+            title: title,
+            supplier: this.getSupplierFromCategory(category),
+            image: image,
+            originalPrice: price,
+            discountedPrice: price
+        };
+        
+        // Add to cart if cart system is available
+        if (typeof window.addToCart === 'function') {
+            window.addToCart({ id: product.id, title: product.title, price: product.discountedPrice, image: product.image });
+            if (typeof window.openCart === 'function') window.openCart();
+        } else if (window.ShoppingCart) {
+            window.ShoppingCart.addItem(product, 1);
+            document.dispatchEvent(new CustomEvent('show-cart'));
+
+            const originalText = button.textContent;
+            button.textContent = 'Added ✓';
+            button.disabled = true;
+            button.style.background = 'linear-gradient(135deg, #2ecc71 0%, #27ae60 100%)';
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.disabled = false;
+                button.style.background = '';
+            }, 2000);
+        } else if (document.querySelector('app-cart')) {
+            const wc = document.querySelector('app-cart');
+            wc.addItem({ id: product.id, title: product.title, price: product.discountedPrice, image: product.image });
+            wc.openCart();
+        } else {
+            console.warn('Shopping cart not available');
+        }
+    }
+    
+    // Debug method to check all elements
+    debugElements() {
+        console.log('=== DEBUG INFO ===');
+        console.log('Search input:', this.searchInput);
+        console.log('Sort select:', this.sortSelect);
+        console.log('Filter pills:', this.filterPills.length);
+        console.log('View buttons:', this.viewButtons.length);
+        console.log('Products grid:', document.getElementById('products-grid'));
+        console.log('All items:', document.querySelectorAll('.item').length);
+        console.log('Visible items:', document.querySelectorAll('.item:not(.hidden)').length);
+        console.log('==================');
     }
 }
 
@@ -658,4 +500,4 @@ if (document.readyState === 'loading') {
     });
 } else {
     new MarketplaceManager();
-} 
+}

@@ -1,4 +1,4 @@
-/* ===== PÁGINA PRINCIPAL (INDEX) ===== */
+/* ===== PÁGINA PRINCIPAL (INDEX) - OPTIMIZADA ===== */
 .hero {
     position: relative;
     min-height: 80vh;
@@ -18,7 +18,9 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%2339b54a" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    background: radial-gradient(circle at 30% 20%, rgba(57, 181, 74, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 80%, rgba(46, 204, 113, 0.08) 0%, transparent 50%);
+    z-index: 1;
 }
 
 .hero-overlay {
@@ -27,7 +29,8 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(20, 21, 21, 0.7);
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1;
 }
 
 .hero-content {
@@ -45,6 +48,9 @@
     margin-bottom: 1.5rem;
     color: var(--white);
     line-height: 1.1;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    opacity: 1;
+    transform: none;
 }
 
 .hero-subtitle {
@@ -52,9 +58,8 @@
     margin-bottom: 2rem;
     color: var(--text-lighter);
     line-height: 1.6;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 0.8s ease 0.2s forwards;
+    opacity: 1;
+    transform: none;
 }
 
 .hero-actions {
@@ -62,9 +67,9 @@
     gap: 1rem;
     justify-content: center;
     margin-bottom: 2rem;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 0.8s ease 0.4s forwards;
+    opacity: 1;
+    transform: none;
+    flex-wrap: wrap;
 }
 
 .hero-stats {
@@ -76,9 +81,8 @@
 
 .stat-item {
     text-align: center;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 0.8s ease 0.6s forwards;
+    opacity: 1;
+    transform: none;
 }
 
 .stat-number {
@@ -2309,7 +2313,7 @@
     line-height: 1.1;
     opacity: 0;
     transform: translateY(30px);
-    animation: fadeInUp 0.8s ease forwards;
+    animation: fadeInUp 0.4s ease forwards;
 }
 
 .catalog-hero .hero-subtitle {
@@ -2319,7 +2323,7 @@
     line-height: 1.6;
     opacity: 0;
     transform: translateY(30px);
-    animation: fadeInUp 0.8s ease 0.2s forwards;
+    animation: fadeInUp 0.4s ease 0.1s forwards;
 }
 
 .about-content {
@@ -2920,7 +2924,7 @@
     line-height: 1.1;
     opacity: 0;
     transform: translateY(30px);
-    animation: fadeInUp 0.8s ease forwards;
+    animation: fadeInUp 0.4s ease forwards;
 }
 
 .about-hero .hero-subtitle {
@@ -2930,7 +2934,7 @@
     line-height: 1.6;
     opacity: 0;
     transform: translateY(30px);
-    animation: fadeInUp 0.8s ease 0.2s forwards;
+    animation: fadeInUp 0.4s ease 0.1s forwards;
 }
 
 .about-hero .hero-stats {
@@ -3591,7 +3595,7 @@
     backdrop-filter: blur(10px);
     opacity: 0;
     transform: translateY(30px);
-    animation: fadeInUp 0.8s ease forwards;
+    animation: fadeInUp 0.4s ease forwards;
 }
 
 .team-member-card:nth-child(1) { animation-delay: 0.1s; }
@@ -4288,7 +4292,7 @@
     line-height: 1.1;
     opacity: 0;
     transform: translateY(30px);
-    animation: fadeInUp 0.8s ease forwards;
+    animation: fadeInUp 0.4s ease forwards;
 }
 
 .qr-hero .hero-subtitle {
@@ -4298,7 +4302,7 @@
     line-height: 1.6;
     opacity: 0;
     transform: translateY(30px);
-    animation: fadeInUp 0.8s ease 0.2s forwards;
+    animation: fadeInUp 0.4s ease 0.1s forwards;
 }
 
 .qr-hero .hero-stats {
