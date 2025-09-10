@@ -281,6 +281,29 @@
     <script src="../js/components.js"></script>
     <script src="../js/main.js"></script>
     <script src="../js/cart.js"></script>
+    <script>
+      // Hook "Add to cart" botones clásicos a la capa global del carrito Web Component
+      document.addEventListener('click', function(e){
+        const btn = e.target.closest('.boton-item');
+        if (!btn) return;
+        const card = btn.closest('.item');
+        if (!card) return;
+        const title = card.querySelector('.titulo-item')?.textContent || '';
+        const priceText = card.querySelector('.precio-item')?.textContent || '';
+        const match = priceText.match(/\$?(\d+\.?\d*)/);
+        const price = match ? parseFloat(match[1]) : 0;
+        const image = card.querySelector('.img-item')?.src || '';
+        const id = card.dataset.productId || `prd_${Date.now()}`;
+        const product = { id, title, price, image };
+        if (typeof window.addToCart === 'function') {
+          window.addToCart(product);
+          if (typeof window.openCart === 'function') window.openCart();
+        } else if (window.ShoppingCart) {
+          window.ShoppingCart.addItem({ id, title, discountedPrice: price, image, supplier: 'Provider', originalPrice: price }, 1);
+          document.dispatchEvent(new CustomEvent('show-cart'));
+        }
+      });
+    </script>
     <script src="marketplace-new.js"></script>
     <script src="../js/marketplace-animations.js"></script>
 </body>

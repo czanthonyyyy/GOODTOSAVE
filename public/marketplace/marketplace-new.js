@@ -454,20 +454,26 @@ class MarketplaceManager {
         };
         
         // Add to cart if cart system is available
-        if (window.ShoppingCart) {
+        if (typeof window.addToCart === 'function') {
+            window.addToCart({ id: product.id, title: product.title, price: product.discountedPrice, image: product.image });
+            if (typeof window.openCart === 'function') window.openCart();
+        } else if (window.ShoppingCart) {
             window.ShoppingCart.addItem(product, 1);
-            
-            // Visual feedback
+            document.dispatchEvent(new CustomEvent('show-cart'));
+
             const originalText = button.textContent;
             button.textContent = 'Added ✓';
             button.disabled = true;
             button.style.background = 'linear-gradient(135deg, #2ecc71 0%, #27ae60 100%)';
-            
             setTimeout(() => {
                 button.textContent = originalText;
                 button.disabled = false;
                 button.style.background = '';
             }, 2000);
+        } else if (document.querySelector('app-cart')) {
+            const wc = document.querySelector('app-cart');
+            wc.addItem({ id: product.id, title: product.title, price: product.discountedPrice, image: product.image });
+            wc.openCart();
         } else {
             console.warn('Shopping cart not available');
         }

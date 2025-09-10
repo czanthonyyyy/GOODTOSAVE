@@ -74,7 +74,10 @@ class FoodMarketplaceApp {
    * @returns {string} - Nombre de la página actual
    */
   getCurrentPage() {
-    return window.location.pathname.split('/').pop() || 'index.html';
+    const path = window.location.pathname;
+    if (path.includes('/marketplace/marketplace.html')) return 'marketplace/marketplace.html';
+    const last = path.split('/').pop() || 'index.html';
+    return last;
   }
 
   /**

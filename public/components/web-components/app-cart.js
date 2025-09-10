@@ -24,6 +24,12 @@ class AppCart extends HTMLElement {
         
         // Asegurar que los event listeners se mantengan después de re-renderizar
         this.setupPersistentEventListeners();
+
+        // Exponer helpers globales para que el header pueda invocar de forma segura
+        window.toggleCart = () => this.toggleCart();
+        window.openCart = () => this.openCart();
+        window.closeCart = () => this.closeCart();
+        window.addToCart = (product) => this.addItem(product);
     }
 
     render() {
@@ -1374,6 +1380,8 @@ class AppCart extends HTMLElement {
 
         // Event listener to show cart
         document.addEventListener('show-cart', () => {
+            // Sync items from storage before opening
+            this.syncFromStorage();
             this.openCart();
         });
 
@@ -1382,6 +1390,11 @@ class AppCart extends HTMLElement {
             if (e.key === 'Escape' && this.isOpen) {
                 this.closeCart();
             }
+        });
+
+        // Listen to legacy cart updates to keep this cart in sync
+        document.addEventListener('cart-updated', () => {
+            this.syncFromStorage();
         });
     }
 
@@ -1506,6 +1519,24 @@ class AppCart extends HTMLElement {
         if (typeof window.updateCartCount === 'function') {
             window.updateCartCount(totalItems);
         }
+    }
+
+    syncFromStorage() {
+        try {
+            const itemsA = JSON.parse(localStorage.getItem('cartItems') || '[]');
+            const itemsB = JSON.parse(localStorage.getItem('foodmarketplace_cart') || '[]');
+            const normalizedB = (itemsB || []).map(it => ({
+                id: it.id,
+                title: it.title,
+                price: it.price ?? it.discountedPrice ?? 0,
+                image: it.image || '',
+                quantity: it.quantity ?? 1
+            }));
+            const latest = itemsA && itemsA.length ? itemsA : normalizedB;
+            this.cartItems = latest || [];
+            this.updateCartCount();
+            this.render();
+        } catch (e) { /* ignore */ }
     }
 
     checkout() {

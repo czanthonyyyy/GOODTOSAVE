@@ -326,54 +326,54 @@ class ShoppingCart {
    * Toggles the cart
    */
   toggleCart() {
+    // Delegate to Web Component if present
+    const wc = document.querySelector('app-cart');
+    if (wc?.toggleCart) {
+      wc.toggleCart();
+      return;
+    }
     if (!this.shouldInitializeCart()) {
-      // If we're not on a cart page, don't redirect; just warn
       console.warn('The cart is not available on this page');
       return;
     }
-    
     this.isOpen = !this.isOpen;
     this.element.classList.toggle('cart-open', this.isOpen);
-    
-    // Usar el elemento overlay correcto
     const overlay = document.getElementById('cart-overlay');
-    if (overlay) {
-      overlay.classList.toggle('active', this.isOpen);
-    }
+    if (overlay) overlay.classList.toggle('active', this.isOpen);
   }
 
   /**
    * Closes the cart
    */
   closeCart() {
+    const wc = document.querySelector('app-cart');
+    if (wc?.closeCart) {
+      wc.closeCart();
+      return;
+    }
     this.isOpen = false;
     this.element.classList.remove('cart-open');
-    
-    // Usar el elemento overlay correcto
     const overlay = document.getElementById('cart-overlay');
-    if (overlay) {
-      overlay.classList.remove('active');
-    }
+    if (overlay) overlay.classList.remove('active');
   }
 
   /**
    * Opens the cart
    */
   openCart() {
+    const wc = document.querySelector('app-cart');
+    if (wc?.openCart) {
+      wc.openCart();
+      return;
+    }
     if (!this.shouldInitializeCart()) {
-      // If we're not on a cart page, don't redirect; just warn
       console.warn('The cart is not available on this page');
       return;
     }
-    
     this.isOpen = true;
     this.element.classList.add('cart-open');
-    
-    // Usar el elemento overlay correcto
     const overlay = document.getElementById('cart-overlay');
-    if (overlay) {
-      overlay.classList.add('active');
-    }
+    if (overlay) overlay.classList.add('active');
   }
 
   /**
