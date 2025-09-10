@@ -60,7 +60,9 @@ class FoodMarketplaceApp {
    */
   async loadProducts() {
     try {
-              const response = await fetch('/assets/data/products.json');
+      // Armar ruta robusta al JSON de productos
+      const base = window.location.pathname.includes('/pages/') ? '..' : window.location.pathname.includes('/marketplace/') ? '..' : '.';
+      const response = await fetch(`${base}/assets/data/products.json`);
       const data = await response.json();
       this.products = data.products || [];
     } catch (error) {
