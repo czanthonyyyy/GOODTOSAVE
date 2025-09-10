@@ -34,7 +34,7 @@
                 <h1 class="hero-title">Welcome to Good to Save</h1>
                 <p class="hero-subtitle">We help restaurants prevent food waste and connect you with quality deals at better prices.</p>
                 <div class="hero-actions">
-                    <a href="../auth/auth.html" class="btn btn-primary" data-auth-link>Create Account / Sign In</a>
+                    <a href="../auth/auth.html" class="btn btn-primary" id="cta-auth" data-auth-link>Create Account / Sign In</a>
                     <a href="../marketplace/marketplace.html" class="btn btn-outline">Browse Deals</a>
                 </div>
                 <div class="hero-note">Are you a restaurant? <a class="link-inline" href="sponsor-form.html">Become a provider</a></div>
@@ -50,7 +50,7 @@
         <div class="container">
             <div class="how-it-works-header">
                 <div class="process-badge">Getting Started Is Easy</div>
-                <h2 class="process-title">How It Works</h2>
+                <h2 class="process-title">How to start</h2>
                 <p class="process-subtitle">Three simple steps to save money and reduce waste</p>
             </div>
 
@@ -111,43 +111,62 @@
     <!-- Divider -->
     <div class="section-divider"></div>
 
-    <!-- First-time checklist -->
-    <section class="quick-start">
+    <!-- FAQ replacing Quick Start -->
+    <section class="faq-section">
         <div class="container">
             <div class="section-header">
-                <div class="section-badge">Quick Start</div>
-                <h2 class="section-title">Your first time in Good to Save</h2>
-                <p class="section-description">Follow this quick checklist and be ready in 2 minutes.</p>
+                <div class="section-badge">FAQ</div>
+                <h2 class="section-title">Preguntas Frecuentes</h2>
+                <p class="section-description">Respuestas rápidas para comenzar sin dudas</p>
             </div>
 
-            <div class="qs-grid">
-                <div class="qs-card">
-                    <div class="qs-number">1</div>
-                    <h3>Sign up or sign in</h3>
-                    <p>Create your account with email or social login.</p>
-                    <a href="../auth/auth.html" class="btn btn-primary" data-auth-link>Create account</a>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>¿Cómo empiezo a usar Good to Save?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Crea una cuenta, explora ofertas cercanas en el Marketplace y realiza tu pedido para recogerlo a la hora indicada.</p>
+                    </div>
                 </div>
-                <div class="qs-card">
-                    <div class="qs-number">2</div>
-                    <h3>Review your profile</h3>
-                    <p>Verify your email and add a display name for a better experience.</p>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>¿El alimento es seguro?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sí. Solo trabajamos con establecimientos autorizados que cumplen normas estrictas de manipulación de alimentos.</p>
+                    </div>
                 </div>
-                <div class="qs-card">
-                    <div class="qs-number">3</div>
-                    <h3>Explore the Marketplace</h3>
-                    <p>Filter by distance and pick your favorite deal.</p>
-                    <a href="../marketplace/marketplace.html" class="btn btn-outline">View deals</a>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>¿Cuánto puedo ahorrar?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Normalmente entre 30% y 70%, según la oferta y el proveedor.</p>
+                    </div>
                 </div>
-                <div class="qs-card">
-                    <div class="qs-number">4</div>
-                    <h3>Confirm and pay</h3>
-                    <p>You'll receive a QR code with pickup details.</p>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>¿Cómo recibo mi pedido?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Tras pagar, recibirás un código QR con detalles de recogida. Preséntalo en el local a la hora indicada.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     
+    <!-- Font Awesome for FAQ icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Final CTA -->
     <section class="cta-section">
@@ -171,7 +190,36 @@
     <script src="../js/components.js"></script>
     <script src="../js/main.js"></script>
     <script src="../js/cart.js"></script>
-    
+    <script>
+        // FAQ toggle (same behavior as About)
+        document.addEventListener('DOMContentLoaded', function(){
+            const items = document.querySelectorAll('.faq-item');
+            items.forEach(item => {
+                const q = item.querySelector('.faq-question');
+                const icon = item.querySelector('.fa-chevron-down');
+                q && q.addEventListener('click', () => {
+                    const isOpen = item.classList.contains('active');
+                    items.forEach(o => o.classList.remove('active'));
+                    if (!isOpen) item.classList.add('active');
+                    if (icon) icon.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+                });
+            });
+        });
+    </script>
+    <script>
+        // Ensure the primary CTA always routes to auth page even if JS enhances links
+        (function(){
+            try {
+                const btn = document.getElementById('cta-auth');
+                if (btn) {
+                    btn.addEventListener('click', function(e){
+                        // allow normal navigation, but ensure href is correct
+                        this.setAttribute('href', '../auth/auth.html');
+                    });
+                }
+            } catch (e) {}
+        })();
+    </script>
 </body>
 </html>
 

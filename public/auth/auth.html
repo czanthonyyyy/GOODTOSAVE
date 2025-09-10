@@ -11,8 +11,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Iconos planos: Remix Icon -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     
     <!-- Global Styles -->
     <link rel="stylesheet" href="../css/main.css">
@@ -27,7 +27,7 @@
 </head>
 <body>
     <a href="../pages/index.html" class="back-home-btn" aria-label="Back to Home">
-        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+        <i class="ri-arrow-left-line" aria-hidden="true"></i>
         <span>Back to Home</span>
     </a>
 
@@ -60,13 +60,13 @@
                     <h1 style="flex-shrink: 0;">Create Account</h1>
                     <div class="social-container" style="flex-shrink: 0;">
                         <a href="#" class="social" aria-label="Sign up with Facebook">
-                            <i class="fab fa-facebook-f"></i>
+                            <i class="ri-facebook-fill"></i>
                         </a>
                         <a href="#" class="social" aria-label="Sign up with Google">
-                            <i class="fab fa-google"></i>
+                            <i class="ri-google-fill"></i>
                         </a>
                         <a href="#" class="social" aria-label="Sign up with LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
+                            <i class="ri-linkedin-fill"></i>
                         </a>
                     </div>
                     <span style="flex-shrink: 0;">or use your email to register</span>
@@ -86,7 +86,7 @@
                         <div class="input-group">
                             <input type="password" id="signup-password" placeholder="Password" required minlength="8" aria-label="Password"/>
                             <button type="button" class="toggle-password" aria-label="Toggle password visibility">
-                                <i class="far fa-eye"></i>
+                                <i class="ri-eye-line"></i>
                             </button>
                             <span class="validation-message">Password must be at least 8 characters long</span>
                             <div class="password-strength">
@@ -96,7 +96,7 @@
                         <div class="input-group">
                             <input type="password" id="signup-confirm-password" placeholder="Confirm Password" required aria-label="Confirm Password"/>
                             <button type="button" class="toggle-password" aria-label="Toggle password visibility">
-                                <i class="far fa-eye"></i>
+                                <i class="ri-eye-line"></i>
                             </button>
                             <span class="validation-message">Passwords do not match</span>
                         </div>
@@ -108,7 +108,7 @@
                             <select id="signup-account-type" required aria-label="Account Type">
                                 <option value="">Select your account type</option>
                                 <option value="buyer">Buyer</option>
-                                <option value="seller">Provider</option>
+                                <option value="provider">Provider</option>
                             </select>
                             <span class="validation-message">Please select your account type</span>
                         </div>
@@ -127,13 +127,13 @@
                     <h1>Sign In</h1>
                     <div class="social-container">
                         <a href="#" class="social" aria-label="Sign in with Facebook">
-                            <i class="fab fa-facebook-f"></i>
+                            <i class="ri-facebook-fill"></i>
                         </a>
                         <a href="#" class="social" aria-label="Sign in with Google">
-                            <i class="fab fa-google"></i>
+                            <i class="ri-google-fill"></i>
                         </a>
                         <a href="#" class="social" aria-label="Sign in with LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
+                            <i class="ri-linkedin-fill"></i>
                         </a>
                     </div>
                     <span>or use your account</span>
@@ -149,7 +149,7 @@
                         <input type="password" id="signin-password" placeholder="Password" required
                             aria-label="Password"/>
                         <button type="button" class="toggle-password" aria-label="Toggle password visibility">
-                            <i class="far fa-eye"></i>
+                            <i class="ri-eye-line"></i>
                         </button>
                         <span class="validation-message">Please enter your password</span>
                     </div>
@@ -163,11 +163,21 @@
             <div class="overlay-container">
                 <div class="overlay">
                     <div class="overlay-panel overlay-left">
+                        <div class="logo-container">
+                            <a href="../pages/index.html" class="logo-link">
+                                <img src="../assets/img/GTSw.png" alt="Good to Save Logo" class="auth-logo">
+                            </a>
+                        </div>
                         <h1>Welcome Back!</h1>
                         <p>To stay connected with us, sign in with your personal information</p>
                         <button class="ghost" id="signIn">Sign In</button>
                     </div>
                     <div class="overlay-panel overlay-right">
+                        <div class="logo-container">
+                            <a href="../pages/index.html" class="logo-link">
+                                <img src="../assets/img/GTSw.png" alt="Good to Save Logo" class="auth-logo">
+                            </a>
+                        </div>
                         <h1>Hello, Friend!</h1>
                         <p>Enter your personal details and start your journey with us</p>
                         <button class="ghost" id="signUp">Sign Up</button>
@@ -185,8 +195,42 @@
             <!-- Firebase Configuration -->
         <script src="../firebase/firebase-config.js"></script>
     <script src="firebase-auth.js"></script>
+    <script src="../js/roles.js"></script>
     
     <!-- Scripts -->
     <script src="auth.js"></script>
+    
+    <!-- Test Script para verificar que todo funciona -->
+    <script>
+        // Verificar que todo esté funcionando correctamente
+        setTimeout(() => {
+            console.log('🔍 Verificando estado de la página de autenticación...');
+            
+            // Verificar elementos del DOM
+            const elements = {
+                signUpButton: document.getElementById('signUp'),
+                signInButton: document.getElementById('signIn'),
+                container: document.getElementById('container'),
+                signinForm: document.getElementById('signinForm'),
+                signupForm: document.getElementById('signupForm')
+            };
+            
+            console.log('📋 Elementos del DOM:', elements);
+            
+            // Verificar servicios de Firebase
+            const services = {
+                firebaseAuthService: !!window.firebaseAuthService,
+                firebaseServices: !!window.firebaseServices,
+                RolesHelper: !!window.RolesHelper,
+                FirebaseUtils: !!window.FirebaseUtils
+            };
+            
+            console.log('🔧 Servicios disponibles:', services);
+            
+            // Verificar que no hay errores en la consola
+            console.log('✅ Página de autenticación cargada correctamente');
+            
+        }, 2000);
+    </script>
 </body>
 </html> 

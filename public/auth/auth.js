@@ -10,11 +10,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const togglePasswordButtons = document.querySelectorAll('.toggle-password');
     const forms = document.querySelectorAll('form');
 
-    // Verificar que Firebase esté disponible
+    // Verify Firebase is available (do not block UI)
     if (!window.firebaseAuthService) {
-        console.error('Firebase Auth Service is not available');
-        showError('Configuration error: Firebase is not available');
-        return;
+        console.warn('Firebase Auth Service is not available yet. The UI will remain operational.');
     }
 
     // Toggle between sign in and sign up
@@ -34,12 +32,12 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (input.type === 'password') {
                 input.type = 'text';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
+                icon.classList.remove('ri-eye-line');
+                icon.classList.add('ri-eye-off-line');
             } else {
                 input.type = 'password';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
+                icon.classList.remove('ri-eye-off-line');
+                icon.classList.add('ri-eye-line');
             }
         });
     });
@@ -136,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         try {
             submitButton.classList.add('loading');
-            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+            submitButton.innerHTML = '<i class="ri-loader-4-line ri-spin"></i> Processing...';
             
             if (form.id === 'signinForm') {
                 await handleSignIn(form);
@@ -153,10 +151,30 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function handleSignIn(form) {
-        const email = form.querySelector('#signin-email').value;
-        const password = form.querySelector('#signin-password').value;
+        const email = form.querySelector('#signin-email').value.trim();
+        const password = form.querySelector('#signin-password').value.trim();
 
         try {
+            // If already signed in with this email, avoid re-login
+            const current = window.firebaseAuthService.getCurrentUser?.();
+            if (current && current.email && current.email.toLowerCase() === email.toLowerCase()) {
+                console.log('User already authenticated with this email, redirecting…');
+                localStorage.setItem('user', JSON.stringify({
+                    uid: current.uid,
+                    email: current.email,
+                    displayName: current.displayName
+                }));
+                showSuccess('You were already signed in');
+                try {
+                    const role = await window.RolesHelper.fetchUserRole(current.uid);
+                    const target = role === 'provider' ? '../pages/provider-dashboard.html' : '../pages/buyer-dashboard.html';
+                    setTimeout(() => { window.location.href = target; }, 800);
+                } catch (e) {
+                    setTimeout(() => { window.location.href = '../marketplace/marketplace.html'; }, 800);
+                }
+                return;
+            }
+
             const user = await window.firebaseAuthService.signIn(email, password);
             console.log('Authenticated user:', user);
             
@@ -169,12 +187,30 @@ document.addEventListener('DOMContentLoaded', function() {
             
             showSuccess('Signed in successfully');
             
-            // Redirigir al marketplace tras login exitoso
-            setTimeout(() => {
-                window.location.href = '../marketplace/marketplace.html';
-            }, 1000);
+            // Redirigir según rol tras login exitoso
+            try {
+                const role = await window.RolesHelper.fetchUserRole(user.uid);
+                const target = role === 'provider' ? '../pages/provider-dashboard.html' : '../pages/buyer-dashboard.html';
+                setTimeout(() => { window.location.href = target; }, 800);
+            } catch (e) {
+                setTimeout(() => { window.location.href = '../marketplace/marketplace.html'; }, 800);
+            }
         } catch (error) {
-            throw new Error(error);
+            // Professional visual feedback per error type
+            const code = error?.code || '';
+            const message = error?.message || 'Error signing in';
+
+            if (code === 'auth/too-many-requests') {
+                showError('We have temporarily blocked attempts due to unusual activity. Try again later or reset your password.');
+                return;
+            }
+            if (code === 'auth/wrong-password' || code === 'auth/user-not-found' || code === 'auth/invalid-credential') {
+                markFieldError('#signin-email');
+                markFieldError('#signin-password');
+                showInlineFormError('signin-error-message', 'Incorrect email or password. Check your details and try again.');
+                return;
+            }
+            showInlineFormError('signin-error-message', message);
         }
     }
 
@@ -202,10 +238,17 @@ document.addEventListener('DOMContentLoaded', function() {
             
             showSuccess('Registered successfully');
             
-            // Redirect to marketplace after successful registration
-            setTimeout(() => {
-                window.location.href = '../marketplace/marketplace.html';
-            }, 1000);
+            // Redirigir según rol tras registro exitoso
+            try {
+                const role = await window.RolesHelper?.fetchUserRole?.(user.uid);
+                if (role === 'provider') {
+                    setTimeout(() => { window.location.href = '../pages/provider-dashboard.html'; }, 800);
+                } else {
+                    setTimeout(() => { window.location.href = '../pages/index.html'; }, 800);
+                }
+            } catch (e) {
+                setTimeout(() => { window.location.href = '../pages/index.html'; }, 800);
+            }
         } catch (error) {
             throw new Error(error);
         }
@@ -222,7 +265,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Required field validation
         if (input.required && !input.value.trim()) {
             parent.classList.add('error');
-            errorMessage.textContent = `Por favor ingresa tu ${input.getAttribute('aria-label')}`;
+            errorMessage.textContent = `Please enter your ${input.getAttribute('aria-label')}`;
             isValid = false;
         } 
         // Email validation
@@ -240,7 +283,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Minlength validation
         else if (input.minLength && input.value.length < input.minLength) {
             parent.classList.add('error');
-            errorMessage.textContent = `El campo debe tener al menos ${input.minLength} caracteres`;
+            errorMessage.textContent = `This field must have at least ${input.minLength} characters`;
             isValid = false;
         }
         // Success state
@@ -278,6 +321,28 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             errorDiv.style.display = 'none';
         }, 5000);
+    }
+
+    function showInlineFormError(containerId, message) {
+        const el = document.getElementById(containerId);
+        if (!el) return;
+        el.textContent = message;
+        el.style.display = 'block';
+        el.style.backgroundColor = '#ffe8e6';
+        el.style.border = '1px solid #ffb3ab';
+        el.style.color = '#a40000';
+        el.style.padding = '10px 12px';
+        el.style.borderRadius = '8px';
+        el.style.marginTop = '8px';
+    }
+
+    function markFieldError(selector) {
+        const input = document.querySelector(selector);
+        if (!input) return;
+        const parent = input.parentElement;
+        if (parent) parent.classList.add('error');
+        input.classList.add('shake');
+        setTimeout(() => input.classList.remove('shake'), 400);
     }
 
     function showSuccess(message) {
@@ -321,7 +386,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Show loading state
             const originalHTML = this.innerHTML;
-            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            this.innerHTML = '<i class="ri-loader-4-line ri-spin"></i>';
             
             // TODO: Implementar autenticación social
             setTimeout(() => {

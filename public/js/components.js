@@ -216,7 +216,7 @@ class ComponentLoader {
    */
   static async renderProducts(containerSelector, products, limit = null) {
     try {
-              const response = await fetch('../components/product-card.html');
+              const response = await fetch('../components/cards/product-card.html');
       const template = await response.text();
       
       const container = document.querySelector(containerSelector);
@@ -314,15 +314,21 @@ class ComponentLoader {
  * @returns {string} Ruta correcta para auth.html
  */
 function getAuthPath() {
-    const currentPath = window.location.pathname;
-    
-    // Si estamos en la carpeta auth/, usar auth.html (misma carpeta)
-    if (currentPath.includes('/auth/')) {
-        return 'auth.html';
+    try {
+        const current = window.location.pathname;
+        // Normalizar: eliminar posible nombre de archivo, quedarnos con carpeta
+        // y calcular ruta relativa a /public
+        // Casos:
+        // - /public/index.html -> auth/auth.html
+        // - /public/pages/guide.html -> ../auth/auth.html
+        // - /public/auth/auth.html -> auth.html
+        if (current.includes('/auth/')) return 'auth.html';
+        if (current.includes('/pages/') || current.includes('/marketplace/')) return '../auth/auth.html';
+        return 'auth/auth.html';
+    } catch (e) {
+        // Fallback seguro
+        return 'auth/auth.html';
     }
-    
-    // Si estamos en la raíz o en otra carpeta, usar auth/auth.html
-    return 'auth/auth.html';
 }
 
 /**

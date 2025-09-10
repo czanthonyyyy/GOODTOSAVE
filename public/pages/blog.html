@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Good to Save</title>
+    <meta name="description" content="Articles and practical guides on reducing food waste, saving money, and caring for the planet with Good to Save.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <link rel="stylesheet" href="../css/blog.css">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/logo.svg">
+</head>
+<body>
+    <app-header></app-header>
+
+    <section class="blog-hero">
+        <div class="container">
+            <h1 class="blog-title">Good to Save Blog</h1>
+            <p class="blog-subtitle">Tips, guides, and best practices to make the most of food and save sustainably</p>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="blog-controls">
+        <div class="container">
+            <div class="controls-grid">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input id="blog-search" type="search" placeholder="Search articles..." aria-label="Search articles">
+                </div>
+                <div class="categories">
+                    <button class="category-pill active" data-category="all">All</button>
+                    <div id="dynamic-categories" class="category-list"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="blog-list">
+        <div class="container">
+            <div id="articles-grid" class="articles-grid" aria-live="polite"></div>
+            <div id="no-results" class="no-results" hidden>
+                <i class="fas fa-folder-open"></i>
+                <p>No articles match your search or filters.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <app-footer></app-footer>
+
+    <script src="../js/web-components.js"></script>
+    <script src="../js/components.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/blog.js"></script>
+</body>
+</html>

@@ -498,8 +498,8 @@ class AppFooter extends HTMLElement {
                     <div class="footer-section">
                         <h3>Resources</h3>
                         <ul class="footer-links">
-                            <li><a href="#blog">Blog</a></li>
-                            <li><a href="#guides">Guides</a></li>
+                            <li><a href="../pages/blog.html">Blog</a></li>
+                            <li><a href="../pages/guide.html">Guides</a></li>
                             <li><a href="#faq">FAQ</a></li>
                             <li><a href="../pages/contact.html">Contact</a></li>
                         </ul>
@@ -519,7 +519,7 @@ class AppFooter extends HTMLElement {
                 </div>
                 
                 <div class="footer-bottom">
-                    <p>&copy; 2025 Good to Save. All rights reserved. | <i class="fas fa-heart"></i> Made with love for the planet</p>
+                    <p>&copy; 2025 Good to Save. All rights reserved. | <span aria-hidden="true" style="font-size:14px;">❤</span> Made with love for the planet</p>
                     <nav class="legal-links" aria-label="Legal links">
                         <a href="../pages/privacy.html">Privacy Policy</a>
                         <span class="separator">•</span>
