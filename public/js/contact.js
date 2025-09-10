@@ -94,7 +94,6 @@ class ContactPage {
         const form = document.getElementById('contactForm');
         const messageTextarea = document.getElementById('message');
         const charCount = document.getElementById('charCount');
-        const submitBtn = document.querySelector('.submit-btn');
 
         if (form) {
             // Character counter for message textarea
@@ -113,24 +112,11 @@ class ContactPage {
                 });
             }
 
-            // Form submission
+            // Form submission with Formspree
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
-                this.handleFormSubmission(form, submitBtn);
+                this.handleFormspreeSubmission(form);
             });
-
-            // Form reset
-            const resetBtn = document.querySelector('.reset-btn');
-            if (resetBtn) {
-                resetBtn.addEventListener('click', () => {
-                    setTimeout(() => {
-                        if (charCount) {
-                            charCount.textContent = '0';
-                            charCount.style.color = 'var(--text-light)';
-                        }
-                    }, 100);
-                });
-            }
 
             // Real-time validation
             this.initializeFormValidation(form);
@@ -138,35 +124,49 @@ class ContactPage {
     }
 
     /**
-     * Handle form submission
+     * Handle Formspree form submission
      */
-    handleFormSubmission(form, submitBtn) {
-        const formData = new FormData(form);
-        const submitText = submitBtn.querySelector('.btn-text');
-        const submitIcon = submitBtn.querySelector('.btn-icon');
-
+    handleFormspreeSubmission(form) {
+        const submitBtn = form.querySelector('.submit-btn');
+        const originalText = submitBtn.innerHTML;
+        
         // Show loading state
-        submitText.textContent = 'Sending...';
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
         submitBtn.disabled = true;
-        submitIcon.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-
-        // Simulate form submission
-        setTimeout(() => {
-            // Show success message
-            this.showNotification('Message sent successfully! We\'ll get back to you soon.', 'success');
-            
-            // Reset form
-            form.reset();
-            if (document.getElementById('charCount')) {
-                document.getElementById('charCount').textContent = '0';
+        
+        // Get form data
+        const formData = new FormData(form);
+        
+        // Submit to Formspree
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
             }
-            
+        })
+        .then(response => {
+            if (response.ok) {
+                // Success
+                this.showNotification('✅ Your message has been sent successfully!', 'success');
+                form.reset();
+                if (document.getElementById('charCount')) {
+                    document.getElementById('charCount').textContent = '0';
+                }
+            } else {
+                // Error
+                throw new Error('Network response was not ok');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            this.showNotification('❌ Something went wrong. Please try again later.', 'error');
+        })
+        .finally(() => {
             // Reset button state
-            submitText.textContent = 'Send Message';
+            submitBtn.innerHTML = originalText;
             submitBtn.disabled = false;
-            submitIcon.innerHTML = '<i class="fas fa-paper-plane"></i>';
-            
-        }, 2000);
+        });
     }
 
     /**
@@ -213,11 +213,11 @@ class ContactPage {
                 isValid = false;
                 errorMessage = 'Please enter a valid email address';
             }
-        } else if (field.type === 'tel' && value) {
-            const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
-            if (!phoneRegex.test(value.replace(/\s/g, ''))) {
+        } else if (field.type === 'textarea' && field.hasAttribute('minlength')) {
+            const minLength = parseInt(field.getAttribute('minlength'));
+            if (value.length < minLength) {
                 isValid = false;
-                errorMessage = 'Please enter a valid phone number';
+                errorMessage = `Message must be at least ${minLength} characters long`;
             }
         }
 
@@ -230,6 +230,7 @@ class ContactPage {
             errorElement.style.color = '#e74c3c';
             errorElement.style.fontSize = '0.8rem';
             errorElement.style.marginTop = '0.25rem';
+            errorElement.style.fontWeight = '500';
             field.parentNode.appendChild(errorElement);
         }
     }
