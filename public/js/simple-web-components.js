@@ -26,10 +26,10 @@
             
             // Cargar en paralelo
             await Promise.all([
-                loadScript('../components/web-components/app-header.js'),
-                loadScript('../components/web-components/app-header-auth.js'),
-                loadScript('../components/web-components/app-footer.js'),
-                loadScript('../components/web-components/app-cart.js')
+                loadScript('/components/web-components/app-header.js'),
+                loadScript('/components/web-components/app-header-auth.js'),
+                loadScript('/components/web-components/app-footer.js'),
+                loadScript('/components/web-components/app-cart.js')
             ]);
             
             console.log('✅ Todos los web components cargados');
