@@ -8,7 +8,7 @@ class AppHeader extends HTMLElement {
         this.render();
         this.setLogoSrc();
         this.setupEventListeners();
-        // Aplicar contador inicial del carrito
+        // Apply initial cart counter
         try {
             const initial = (typeof window.__cartCount === 'number') ? window.__cartCount : this.readCartCountFromStorage();
             this.updateCartCount(initial);
@@ -110,7 +110,7 @@ class AppHeader extends HTMLElement {
                 }
                 
 
-                /* Indicador activo deslizante */
+                /* Sliding active indicator */
                 .nav-indicator {
                     position: absolute;
                     height: 3px;
@@ -151,7 +151,7 @@ class AppHeader extends HTMLElement {
                     box-shadow: 0 4px 12px rgba(57, 181, 74, 0.2);
                 }
 
-                /* Fondo resaltado tipo "pill" */
+                /* Highlighted "pill" background */
                 .nav-menu a::before {
                     content: '';
                     position: absolute;
@@ -165,7 +165,7 @@ class AppHeader extends HTMLElement {
                     z-index: -1;
                 }
 
-                /* Subrayado fino para refuerzo visual */
+                /* Thin underline for visual reinforcement */
                 .nav-menu a::after {
                     content: '';
                     position: absolute;
@@ -360,17 +360,17 @@ class AppHeader extends HTMLElement {
                     justify-content: center;
                 }
 
-                /* Ocultar cualquier elemento que no debería estar visible */
+                /* Hide any element that should not be visible */
                 .header-container > *:not(.logo):not(nav):not(.auth-buttons) {
                     display: none !important;
                 }
 
-                /* Asegurar que el botón del carrito se muestre correctamente */
+                /* Ensure the cart button is displayed correctly */
                 .cart-toggle {
                     display: flex !important;
                 }
 
-                /* Ocultar el botón del carrito si no hay ícono */
+                /* Hide the cart button if there is no icon */
                 .cart-toggle:empty {
                     display: none !important;
                 }
@@ -503,7 +503,8 @@ class AppHeader extends HTMLElement {
             if (cartComponent?.toggleCart) {
                 cartComponent.toggleCart();
             } else {
-                document.dispatchEvent(new CustomEvent('show-cart'));
+                // If the cart component doesn't exist, dispatch a global event
+                document.dispatchEvent(new CustomEvent('cart-toggle'));
             }
         });
 
@@ -512,7 +513,7 @@ class AppHeader extends HTMLElement {
             console.log('Mobile menu toggle clicked');
         });
 
-        // Indicador activo: calcula posición/anchura según enlace activo
+        // Active indicator: calculate position/width based on the active link
         const updateIndicator = (activeLink) => {
             if (!nav || !navMenu || !indicator || !activeLink) return;
             const menuRect = navMenu.getBoundingClientRect();
@@ -528,7 +529,7 @@ class AppHeader extends HTMLElement {
             const current = window.location.pathname.replace(/\/index\.html$/, '/pages/index.html');
             let active = links.find(a => new URL(a.href, window.location.origin).pathname === current);
             if (!active) {
-                // heurística por segmento
+                // Fallback heuristic by URL segment
                 active = links.find(a => current.includes(new URL(a.href, window.location.origin).pathname.replace(/\.html$/, '')));
             }
             if (!active) active = links[0];
@@ -536,14 +537,14 @@ class AppHeader extends HTMLElement {
             updateIndicator(active);
         };
 
-        // Inicializar al conectar
+        // Initialize on connect
         resolveActiveLink();
 
-        // Recalcular en resize
+        // Recalculate on resize
         const onResize = () => resolveActiveLink();
         window.addEventListener('resize', onResize);
 
-        // Mover indicador al hover para feedback
+        // Move indicator on hover for feedback
         this.shadowRoot.querySelectorAll('.nav-menu a').forEach(a => {
             a.addEventListener('mouseenter', () => updateIndicator(a));
             a.addEventListener('mouseleave', resolveActiveLink);
@@ -551,7 +552,7 @@ class AppHeader extends HTMLElement {
             a.addEventListener('blur', resolveActiveLink);
         });
 
-        // Método de instancia disponible para que el loader global lo invoque
+        // Instance method available for global loader to call
     }
 
     updateCartCount(count) {
@@ -561,7 +562,7 @@ class AppHeader extends HTMLElement {
             cartCount.style.display = count > 0 ? 'block' : 'none';
             if (count > 0) {
                 cartCount.classList.remove('bump');
-                // reflow para reiniciar animación
+                // reflow to restart animation
                 void cartCount.offsetWidth;
                 cartCount.classList.add('bump');
             }

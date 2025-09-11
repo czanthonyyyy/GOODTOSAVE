@@ -42,7 +42,7 @@
     }
 }
 
-/* Pantallas pequeñas */
+/* Small screens */
 @media screen and (max-width: 850px) {
     .catalog-controls {
         flex-direction: column;
@@ -92,7 +92,7 @@
     }
 }
 
-/* Móviles medianos */
+/* Medium mobile devices */
 @media screen and (max-width: 768px) {
     .catalog-controls {
         padding: 1.5rem 1rem;
@@ -155,7 +155,7 @@
     }
 }
 
-/* Móviles pequeños */
+/* Small mobile devices */
 @media screen and (max-width: 480px) {
     .catalog-controls {
         padding: 1.25rem 0.75rem;
@@ -206,7 +206,7 @@
     }
 }
 
-/* Móviles muy pequeños */
+/* Very small mobile devices */
 @media screen and (max-width: 360px) {
     .catalog-controls {
         padding: 1rem 0.5rem;
@@ -465,7 +465,7 @@
     }
 }
 
-/* ===== FIXES PARA PANTALLAS MUY PEQUEÑAS ===== */
+/* ===== FIXES FOR VERY SMALL SCREENS ===== */
 
 @media screen and (max-width: 320px) {
     .catalog-controls {

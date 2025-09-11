@@ -284,6 +284,42 @@ class MarketplaceManager {
         }, 200);
     }
 
+<<<<<<< HEAD
+    addToCart(event) {
+        const button = event.target;
+        const item = button.closest('.item');
+        
+        if (!item) return;
+
+        const productId = item.dataset.productId;
+        const title = item.querySelector('.titulo-item').textContent;
+        const priceText = item.querySelector('.precio-item').textContent;
+        const price = parseFloat(priceText.replace('$', ''));
+        const image = item.querySelector('.img-item').src;
+        
+        // Find product in our products array
+        const product = this.products.find(p => p.id === productId);
+        
+        if (product) {
+            // Update product with real image
+            product.image = image;
+            
+            // Get the cart component
+            const cartComponent = document.querySelector('app-cart');
+            if (cartComponent) {
+                cartComponent.addItem(product);
+                
+                // Show success feedback
+                this.showAddToCartFeedback(button);
+                
+                // Open the cart automatically after 500ms
+                setTimeout(() => {
+                    if (cartComponent && !cartComponent.isOpen) {
+                        cartComponent.openCart();
+                        console.log('Cart opened automatically after adding product');
+                    }
+                }, 500);
+=======
     toggleView(view) {
         const productsGrid = document.getElementById('products-grid');
         if (productsGrid) {
@@ -294,6 +330,7 @@ class MarketplaceManager {
             } else {
                 productsGrid.classList.remove('list-view');
                 console.log('Removed list-view class');
+>>>>>>> c4d58f0a691a9850122899d238e342a5f669ed41
             }
             
             // Force reflow to ensure the change takes effect
@@ -393,6 +430,83 @@ class MarketplaceManager {
             const titleA = a.querySelector('.titulo-item')?.textContent.toLowerCase() || '';
             const titleB = b.querySelector('.titulo-item')?.textContent.toLowerCase() || '';
             
+<<<<<<< HEAD
+            if (this.container) {
+                this.container.appendChild(noResultsMsg);
+            }
+        } else if (!show && noResultsMsg) {
+            noResultsMsg.remove();
+        }
+    }
+
+    updateResultsCount(count) {
+        // Commenting out this function to avoid showing the product counter
+        // que no es necesario y causa problemas visuales
+        return;
+        
+        /*
+        let countElement = document.querySelector('.results-count');
+        
+        if (!countElement) {
+            countElement = document.createElement('div');
+            countElement.className = 'results-count';
+            countElement.style.cssText = `
+                text-align: center;
+                padding: 15px;
+                color: #666;
+                font-size: 14px;
+                font-weight: 500;
+            `;
+            
+            const controlsSection = document.querySelector('.catalog-controls');
+            if (controlsSection) {
+                controlsSection.appendChild(countElement);
+            }
+        }
+        
+        countElement.textContent = `${count} producto${count !== 1 ? 's' : ''} encontrado${count !== 1 ? 's' : ''}`;
+        */
+    }
+
+    showAddToCartFeedback(button) {
+        const originalText = button.textContent;
+        const originalBackground = button.style.background;
+        
+        button.textContent = 'Added!';
+        button.style.background = '#27ae60';
+        button.style.color = 'white';
+        button.style.transform = 'scale(1.05)';
+        
+        setTimeout(() => {
+            button.textContent = originalText;
+            button.style.background = originalBackground;
+            button.style.color = '';
+            button.style.transform = '';
+        }, 1500);
+    }
+
+    updateProductButtons() {
+        const cartComponent = document.querySelector('app-cart');
+        if (!cartComponent) return;
+
+        const cartItems = cartComponent.cartItems || [];
+        
+        this.products.forEach(product => {
+            const itemElement = document.querySelector(`[data-product-id="${product.id}"]`);
+            if (itemElement) {
+                const button = itemElement.querySelector('.boton-item');
+                const inCart = cartItems.some(item => item.id === product.id);
+                
+                if (inCart) {
+                    button.textContent = 'In Cart';
+                    button.style.background = '#27ae60';
+                    button.style.color = 'white';
+                } else {
+                    button.textContent = 'Add to Cart';
+                    button.style.background = '';
+                    button.style.color = '';
+                }
+=======
             switch (sort) {
                 case 'price-low':
                     return priceA - priceB;
@@ -407,6 +521,7 @@ class MarketplaceManager {
                 case 'featured':
                 default:
                     return 0; // Keep original order
+>>>>>>> c4d58f0a691a9850122899d238e342a5f669ed41
             }
         });
         
