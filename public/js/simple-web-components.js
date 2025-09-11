@@ -19,6 +19,16 @@
         });
     }
     
+    // Resuelve la base correcta para /public cuando se sirve localmente
+    function getPublicBase() {
+        try {
+            return window.location.pathname.includes('/public/') ? '/public' : '';
+        } catch (e) {
+            return '';
+        }
+    }
+    const PUBLIC_BASE = getPublicBase();
+
     // Cargar todos los componentes
     async function loadAllComponents() {
         try {
@@ -26,10 +36,10 @@
             
             // Cargar en paralelo
             await Promise.all([
-                loadScript('/components/web-components/app-header.js'),
-                loadScript('/components/web-components/app-header-auth.js'),
-                loadScript('/components/web-components/app-footer.js'),
-                loadScript('/components/web-components/app-cart.js')
+                loadScript(`${PUBLIC_BASE}/components/web-components/app-header.js`),
+                loadScript(`${PUBLIC_BASE}/components/web-components/app-header-auth.js`),
+                loadScript(`${PUBLIC_BASE}/components/web-components/app-footer.js`),
+                loadScript(`${PUBLIC_BASE}/components/web-components/app-cart.js`)
             ]);
             
             console.log('✅ Todos los web components cargados');

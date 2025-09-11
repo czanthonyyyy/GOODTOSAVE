@@ -10,24 +10,29 @@ class WebComponentsLoader {
         try {
             console.log('Starting web components load...');
             
+            // Detect proper base when served under /public
+            const publicBase = (function(){
+                try { return window.location.pathname.includes('/public/') ? '/public' : ''; } catch(e) { return ''; }
+            })();
+
             // Load header component
             console.log('Loading app-header.js...');
-            await this.loadScript('/components/web-components/app-header.js');
+            await this.loadScript(publicBase + '/components/web-components/app-header.js');
             console.log('app-header.js loaded successfully');
             
             // Load authenticated header
             console.log('Loading app-header-auth.js...');
-            await this.loadScript('/components/web-components/app-header-auth.js');
+            await this.loadScript(publicBase + '/components/web-components/app-header-auth.js');
             console.log('app-header-auth.js loaded successfully');
             
             // Load footer component
             console.log('Loading app-footer.js...');
-            await this.loadScript('/components/web-components/app-footer.js');
+            await this.loadScript(publicBase + '/components/web-components/app-footer.js');
             console.log('app-footer.js loaded successfully');
             
             // Load cart component
             console.log('Loading app-cart.js...');
-            await this.loadScript('/components/web-components/app-cart.js');
+            await this.loadScript(publicBase + '/components/web-components/app-cart.js');
             console.log('app-cart.js loaded successfully');
             
             this.componentsLoaded = true;
