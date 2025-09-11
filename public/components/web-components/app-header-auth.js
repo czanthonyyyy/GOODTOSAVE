@@ -9,7 +9,7 @@ class AppHeaderAuth extends HTMLElement {
     this.setLogoSrc();
     this.populateUser();
     this.setupEventListeners();
-    // Aplicar contador inicial del carrito
+    // Apply initial cart counter
     try {
       const initial = (typeof window.__cartCount === 'number') ? window.__cartCount : this.readCartCountFromStorage();
       this.updateCartCount(initial);
@@ -168,13 +168,13 @@ class AppHeaderAuth extends HTMLElement {
           return;
         }
       } catch (e) {}
-      // Si no es proveedor o hay error, ir al homepage
+      // If not a provider or on error, go to homepage
       window.location.href = '../pages/index.html';
     });
 
     orders?.addEventListener('click', () => {
-      // Placeholder: por ahora ir al marketplace o futura página de pedidos
-              window.location.href = '../marketplace/marketplace.html';
+      // Placeholder: for now go to marketplace or future orders page
+      window.location.href = '../marketplace/marketplace.html';
     });
 
     logout?.addEventListener('click', async () => {
@@ -184,11 +184,11 @@ class AppHeaderAuth extends HTMLElement {
         }
       } catch (e) {}
       localStorage.removeItem('user');
-      // Recargar o llevar a home
+      // Reload or go to home
       window.location.href = 'index.html';
     });
 
-    // Exponer método para actualizar contador del carrito
+    // Expose method to update cart counter
     this.updateCartCount = (count) => {
       const cartCount = this.shadowRoot.getElementById('cart-count');
       if (cartCount) {

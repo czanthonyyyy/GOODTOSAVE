@@ -491,7 +491,7 @@ class MarketplaceManager {
                 // Show success feedback
                 this.showAddToCartFeedback(button);
                 
-                // Abrir el carrito automáticamente después de 500ms
+                // Open the cart automatically after 500ms
                 setTimeout(() => {
                     if (cartComponent && !cartComponent.isOpen) {
                         cartComponent.openCart();
@@ -580,7 +580,7 @@ class MarketplaceManager {
     }
 
     updateResultsCount(count) {
-        // Comentamos esta función para evitar mostrar el contador de productos
+        // Commenting out this function to avoid showing the product counter
         // que no es necesario y causa problemas visuales
         return;
         

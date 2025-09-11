@@ -589,8 +589,8 @@ class AppFooter extends HTMLElement {
     }
 
     updateFoodSaved(amount) {
-        // Método para actualizar estadísticas de comida salvada
-        console.log(`Comida salvada actualizada: ${amount} kg`);
+        // Method to update saved food statistics
+        console.log(`Saved food updated: ${amount} kg`);
     }
 }
 

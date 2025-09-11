@@ -8,37 +8,37 @@ class WebComponentsLoader {
         if (this.componentsLoaded) return;
 
         try {
-            console.log('Iniciando carga de web components...');
+            console.log('Starting web components load...');
             
-            // Cargar el header component
-            console.log('Cargando app-header.js...');
+            // Load header component
+            console.log('Loading app-header.js...');
             await this.loadScript('../components/web-components/app-header.js');
-            console.log('app-header.js cargado exitosamente');
+            console.log('app-header.js loaded successfully');
             
-            // Cargar header autenticado
-            console.log('Cargando app-header-auth.js...');
+            // Load authenticated header
+            console.log('Loading app-header-auth.js...');
             await this.loadScript('../components/web-components/app-header-auth.js');
-            console.log('app-header-auth.js cargado exitosamente');
+            console.log('app-header-auth.js loaded successfully');
             
-            // Cargar el footer component
-            console.log('Cargando app-footer.js...');
+            // Load footer component
+            console.log('Loading app-footer.js...');
             await this.loadScript('../components/web-components/app-footer.js');
-            console.log('app-footer.js cargado exitosamente');
+            console.log('app-footer.js loaded successfully');
             
-            // Cargar el cart component
-            console.log('Cargando app-cart.js...');
+            // Load cart component
+            console.log('Loading app-cart.js...');
             await this.loadScript('../components/web-components/app-cart.js');
-            console.log('app-cart.js cargado exitosamente');
+            console.log('app-cart.js loaded successfully');
             
             this.componentsLoaded = true;
-            console.log('Web components cargados exitosamente');
+            console.log('Web components loaded successfully');
             
             // Emit event when components are ready
             document.dispatchEvent(new CustomEvent('web-components-ready'));
-            console.log('Evento web-components-ready emitido');
+            console.log('Event web-components-ready dispatched');
             
         } catch (error) {
-            console.error('Error al cargar los web components:', error);
+            console.error('Error loading web components:', error);
         }
     }
 
@@ -47,11 +47,11 @@ class WebComponentsLoader {
             const script = document.createElement('script');
             script.src = src;
             script.onload = () => {
-                console.log(`Script cargado exitosamente: ${src}`);
+                console.log(`Script loaded successfully: ${src}`);
                 resolve();
             };
             script.onerror = (error) => {
-                console.error(`Error al cargar script: ${src}`, error);
+                console.error(`Error loading script: ${src}`, error);
                 reject(error);
             };
             document.head.appendChild(script);
@@ -59,7 +59,7 @@ class WebComponentsLoader {
     }
 }
 
-// Inicializar el cargador de componentes
+// Initialize components loader
 const componentsLoader = new WebComponentsLoader();
 
 // Load components when DOM is ready
@@ -77,12 +77,12 @@ if (document.readyState === 'loading') {
 
 // Function to initialize components on a page
 function initializeWebComponents() {
-    console.log('Inicializando web components...');
+    console.log('Initializing web components...');
     
-    // Reemplazar el header existente con el web component adecuado
+    // Replace existing header with the appropriate web component
     const existingHeader = document.querySelector('header.main-header');
     if (existingHeader) {
-        console.log('Reemplazando header existente');
+        console.log('Replacing existing header');
         const user = getStoredUser();
         const headerEl = document.createElement(user ? 'app-header-auth' : 'app-header');
         existingHeader.parentNode.replaceChild(headerEl, existingHeader);
@@ -106,7 +106,7 @@ function initializeWebComponents() {
             }
         });
     } else {
-        // Si no hay ninguno, insertar uno al inicio del body como fallback
+        // If none present, insert one at the start of the body as a fallback
         const user = getStoredUser();
         const headerEl = document.createElement(user ? 'app-header-auth' : 'app-header');
         document.body.insertBefore(headerEl, document.body.firstChild);
@@ -115,14 +115,14 @@ function initializeWebComponents() {
         if (typeof headerEl.updateCartCount === 'function') headerEl.updateCartCount(initCount);
     }
 
-    // Reemplazar el footer existente con el web component
-    // No insertar footer en la página del blog del marketplace
+    // Replace existing footer with the web component
+    // Do not insert footer on the marketplace blog page
     const isMarketplaceGuidePage = window.location.pathname.includes('marketplace-guide.html');
     
     if (!isMarketplaceGuidePage) {
         const existingFooter = document.querySelector('footer.main-footer');
         if (existingFooter) {
-            console.log('Reemplazando footer existente');
+            console.log('Replacing existing footer');
             const appFooter = document.createElement('app-footer');
             existingFooter.parentNode.replaceChild(appFooter, existingFooter);
         }
@@ -130,7 +130,7 @@ function initializeWebComponents() {
 
     // Add cart if not present
     if (!document.querySelector('app-cart')) {
-        console.log('Agregando app-cart');
+        console.log('Adding app-cart');
         const appCart = document.createElement('app-cart');
         document.body.appendChild(appCart);
         
@@ -142,13 +142,13 @@ function initializeWebComponents() {
         }, 100);
     }
 
-    // Configurar event listeners para los componentes
+    // Configure event listeners for the components
     setupComponentEventListeners();
     
-    console.log('Web components inicializados');
+    console.log('Web components initialized');
 }
 
-// Configurar event listeners para los web components
+// Configure event listeners for the web components
 function setupComponentEventListeners() {
 // Event listener for cart toggle
     document.addEventListener('cart-toggle', (event) => {
@@ -160,11 +160,11 @@ function setupComponentEventListeners() {
 // Event listener for newsletter subscription
     document.addEventListener('newsletter-subscribe', (event) => {
         console.log('New newsletter subscription:', event.detail.email);
-        // Por ejemplo, enviar los datos a un servidor
+        // For example, send the data to a server
     });
 }
 
-// Helper para leer usuario almacenado
+// Helper to read stored user
 function getStoredUser() {
     try {
         const raw = localStorage.getItem('user');
@@ -174,7 +174,7 @@ function getStoredUser() {
     }
 }
 
-// Helper para leer conteo del carrito desde localStorage
+// Helper to read cart count from localStorage
 function getStoredCartCount() {
     try {
         const raw = localStorage.getItem('foodmarketplace_cart');
@@ -186,19 +186,19 @@ function getStoredCartCount() {
     }
 }
 
-// Función para actualizar el contador del carrito desde cualquier script
+// Function to update cart count from any script
 function updateCartCount(count) {
-    // Guardar último valor global para headers que se monten después
+    // Save last global value for headers that mount later
     window.__cartCount = count;
 
-    // Buscar header público o autenticado
+    // Find public or authenticated header
     const headerEl = document.querySelector('app-header') || document.querySelector('app-header-auth');
     if (headerEl && typeof headerEl.updateCartCount === 'function') {
         headerEl.updateCartCount(count);
     }
 }
 
-// Función para actualizar el contador de alimentos salvados
+// Function to update saved food counter
 function updateFoodSaved(count) {
     const appFooter = document.querySelector('app-footer');
     if (appFooter && appFooter.updateFoodSaved) {
@@ -206,7 +206,7 @@ function updateFoodSaved(count) {
     }
 }
 
-// Exponer funciones para uso global
+// Expose functions for global use
 window.WebComponentsLoader = WebComponentsLoader;
 window.initializeWebComponents = initializeWebComponents;
 window.updateCartCount = updateCartCount;

@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     
-    <!-- Iconos planos: Remix Icon -->
+    <!-- Flat icons: Remix Icon -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     
     <!-- Global Styles -->
@@ -33,7 +33,7 @@
 
     <!-- Auth Container - Completely Isolated -->
     <div class="auth-page">
-        <!-- Efectos de fondo modernos -->
+        <!-- Modern background effects -->
         <div class="floating-particles">
             <div class="particle"></div>
             <div class="particle"></div>
@@ -200,13 +200,13 @@
     <!-- Scripts -->
     <script src="auth.js"></script>
     
-    <!-- Test Script para verificar que todo funciona -->
+    <!-- Test Script to verify everything works -->
     <script>
-        // Verificar que todo esté funcionando correctamente
+        // Verify everything is working properly
         setTimeout(() => {
-            console.log('🔍 Verificando estado de la página de autenticación...');
+            console.log('🔍 Checking authentication page state...');
             
-            // Verificar elementos del DOM
+            // Check DOM elements
             const elements = {
                 signUpButton: document.getElementById('signUp'),
                 signInButton: document.getElementById('signIn'),
@@ -215,9 +215,9 @@
                 signupForm: document.getElementById('signupForm')
             };
             
-            console.log('📋 Elementos del DOM:', elements);
+            console.log('📋 DOM elements:', elements);
             
-            // Verificar servicios de Firebase
+            // Check Firebase services
             const services = {
                 firebaseAuthService: !!window.firebaseAuthService,
                 firebaseServices: !!window.firebaseServices,
@@ -225,10 +225,10 @@
                 FirebaseUtils: !!window.FirebaseUtils
             };
             
-            console.log('🔧 Servicios disponibles:', services);
+            console.log('🔧 Available services:', services);
             
-            // Verificar que no hay errores en la consola
-            console.log('✅ Página de autenticación cargada correctamente');
+            // Confirm there are no errors in the console
+            console.log('✅ Authentication page loaded correctly');
             
         }, 2000);
     </script>
