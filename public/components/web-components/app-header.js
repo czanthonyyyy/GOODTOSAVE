@@ -503,12 +503,8 @@ class AppHeader extends HTMLElement {
             if (cartComponent?.toggleCart) {
                 cartComponent.toggleCart();
             } else {
-<<<<<<< HEAD
                 // If the cart component doesn't exist, dispatch a global event
                 document.dispatchEvent(new CustomEvent('cart-toggle'));
-=======
-                document.dispatchEvent(new CustomEvent('show-cart'));
->>>>>>> c4d58f0a691a9850122899d238e342a5f669ed41
             }
         });
 
