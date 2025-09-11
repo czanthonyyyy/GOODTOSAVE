@@ -118,17 +118,19 @@ function initializeWebComponents() {
         if (typeof headerEl.updateCartCount === 'function') headerEl.updateCartCount(initCount);
     }
 
-    // Replace existing footer with the web component
-    // Do not insert footer on the marketplace blog page
-    const isMarketplaceGuidePage = window.location.pathname.includes('marketplace-guide.html');
-    
-    if (!isMarketplaceGuidePage) {
-        const existingFooter = document.querySelector('footer.main-footer');
-        if (existingFooter) {
-            console.log('Replacing existing footer');
-            const appFooter = document.createElement('app-footer');
-            existingFooter.parentNode.replaceChild(appFooter, existingFooter);
-        }
+    // Replace or insert footer web component on all pages
+    const existingFooter = document.querySelector('footer.main-footer');
+    if (existingFooter) {
+        console.log('Replacing existing footer');
+        const appFooter = document.createElement('app-footer');
+        existingFooter.parentNode.replaceChild(appFooter, existingFooter);
+    }
+
+    // If no <app-footer> is present, append one at the end of body
+    if (!document.querySelector('app-footer')) {
+        console.log('Adding app-footer');
+        const appFooter = document.createElement('app-footer');
+        document.body.appendChild(appFooter);
     }
 
     // Add cart if not present

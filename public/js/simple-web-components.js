@@ -57,7 +57,11 @@
                     header = document.createElement('app-header');
                     document.body.insertBefore(header, document.body.firstChild);
                 }
-                const footer = document.querySelector('app-footer');
+                let footer = document.querySelector('app-footer');
+                if (!footer) {
+                    footer = document.createElement('app-footer');
+                    document.body.appendChild(footer);
+                }
                 
                 console.log('🔍 Verificando componentes:');
                 console.log('Header:', header);

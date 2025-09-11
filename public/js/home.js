@@ -25,13 +25,15 @@ document.addEventListener('DOMContentLoaded', () => {
 // Función optimizada para cargar productos destacados
 async function loadTrendingProducts() {
     try {
-        const res = await fetch('/assets/data/products.json');
+        // Resolver base correcta al servir bajo /public
+        const publicBase = window.location.pathname.includes('/public/') ? '/public' : '';
+        const res = await fetch(`${publicBase}/assets/data/products.json`);
         const data = await res.json();
         const picks = (data.products || []).slice(0, 4).map(p => ({
             id: p.id,
             title: p.title,
             price: p.discountedPrice || p.originalPrice || 0,
-            image: p.image && !p.image.startsWith('data:') ? p.image : '../assets/articles/image.png'
+            image: p.image && !p.image.startsWith('data:') ? p.image : resolveAsset('../assets/articles/image.png')
         }));
 
         const grid = document.getElementById('trending-grid');
@@ -45,7 +47,7 @@ async function loadTrendingProducts() {
                 <div class="featured-body">
                     <h3 class="featured-title">${p.title}</h3>
                     <div class="featured-price">$${Number(p.price).toFixed(2)}</div>
-                    <a href="../marketplace/marketplace.html" class="btn btn-outline" aria-label="View deal ${p.title}">View deal</a>
+                    <a href="${resolveLink('../marketplace/marketplace.html')}" class="btn btn-outline" aria-label="View deal ${p.title}">View deal</a>
                 </div>
             </div>
         `).join('');
@@ -56,12 +58,12 @@ async function loadTrendingProducts() {
             grid.innerHTML = `
                 <div class="featured-card" role="listitem">
                     <div class="featured-image-wrap">
-                        <img src="../assets/articles/image.png" alt="Featured deal" loading="lazy"/>
+                        <img src="${resolveAsset('../assets/articles/image.png')}" alt="Featured deal" loading="lazy"/>
                     </div>
                     <div class="featured-body">
                         <h3 class="featured-title">Deal</h3>
                         <div class="featured-price">$0.00</div>
-                        <a href="../marketplace/marketplace.html" class="btn btn-outline" aria-label="View deals">View deals</a>
+                        <a href="${resolveLink('../marketplace/marketplace.html')}" class="btn btn-outline" aria-label="View deals">View deals</a>
                     </div>
                 </div>
             `;
@@ -81,6 +83,35 @@ function initFaq() {
         const ans = btn.nextElementSibling;
         if (ans) ans.classList.toggle('open', !open);
     });
+}
+
+// Helpers para rutas relativas robustas
+function resolveLink(relative) {
+    try {
+        const path = window.location.pathname;
+        if (path.includes('/pages/')) return relative; // ya está relativo a /pages
+        // desde raíz pública
+        return relative.replace('../', '');
+    } catch (e) {
+        return relative;
+    }
+}
+
+function resolveAsset(defaultPath) {
+    try {
+        const publicBase = pathIncludesPublic() ? '/public' : '';
+        // defaultPath suele empezar con ../ cuando estamos en /pages/
+        if (window.location.pathname.includes('/pages/')) {
+            return defaultPath;
+        }
+        return defaultPath.replace('../', `${publicBase}/`);
+    } catch (e) {
+        return defaultPath;
+    }
+}
+
+function pathIncludesPublic() {
+    try { return window.location.pathname.includes('/public/'); } catch { return false; }
 }
 
 

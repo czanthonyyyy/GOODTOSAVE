@@ -7,6 +7,7 @@ class AppHeader extends HTMLElement {
     connectedCallback() {
         this.render();
         this.setLogoSrc();
+        this.setLinkHrefs();
         this.setupEventListeners();
         // Apply initial cart counter
         try {
@@ -426,10 +427,10 @@ class AppHeader extends HTMLElement {
                     
                     <nav>
                         <ul class="nav-menu">
-                                                    <li><a href="../pages/index.html">Home</a></li>
-                        <li><a href="../marketplace/marketplace.html">Marketplace</a></li>
-                        <li><a href="../pages/about.html">About Us</a></li>
-                        <li><a href="../pages/contact.html">Contact</a></li>
+                                                    <li><a data-link="home" href="../pages/index.html">Home</a></li>
+                        <li><a data-link="marketplace" href="../marketplace/marketplace.html">Marketplace</a></li>
+                        <li><a data-link="about" href="../pages/about.html">About Us</a></li>
+                        <li><a data-link="contact" href="../pages/contact.html">Contact</a></li>
                         </ul>
                         <span class="nav-indicator" id="nav-indicator"></span>
                     </nav>
@@ -483,6 +484,35 @@ class AppHeader extends HTMLElement {
             img.src = logoPath;
         } catch (e) {
             console.error('Error setting logo src:', e);
+        }
+    }
+
+    setLinkHrefs() {
+        try {
+            const currentPath = window.location.pathname;
+            let up = '';
+            if (currentPath.includes('/pages/')) {
+                const after = currentPath.split('/pages/')[1] || '';
+                const depth = Math.max(0, (after.match(/\//g) || []).length); // subcarpetas dentro de pages
+                up = '../'.repeat(depth + 1);
+            } else if (currentPath.includes('/marketplace/')) {
+                up = '../';
+            } else if (currentPath.includes('/auth/')) {
+                up = '../';
+            } else {
+                up = '';
+            }
+
+            const home = this.shadowRoot.querySelector('a[data-link="home"]');
+            const market = this.shadowRoot.querySelector('a[data-link="marketplace"]');
+            const about = this.shadowRoot.querySelector('a[data-link="about"]');
+            const contact = this.shadowRoot.querySelector('a[data-link="contact"]');
+            if (home) home.href = `${up}pages/index.html`;
+            if (market) market.href = `${up}marketplace/marketplace.html`;
+            if (about) about.href = `${up}pages/about.html`;
+            if (contact) contact.href = `${up}pages/contact.html`;
+        } catch (e) {
+            console.error('Error setting header link hrefs:', e);
         }
     }
 

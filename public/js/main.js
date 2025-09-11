@@ -1031,6 +1031,12 @@ class GTSDataManager {
     // Enviar datos
     async postData(endpoint, data, options = {}) {
         try {
+            // Evitar POSTs a APIs ficticias durante desarrollo local (Live Server 5500)
+            const isLocal = window.location.port === '5500';
+            if (isLocal && endpoint.startsWith('/api/')) {
+                console.warn(`Skipping POST to ${endpoint} in local dev environment`);
+                return { ok: true, skipped: true };
+            }
             const response = await fetch(`${this.baseURL}${endpoint}`, {
                 method: 'POST',
                 headers: {
