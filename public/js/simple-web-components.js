@@ -36,14 +36,22 @@
             
             // Verificar que se cargaron
             setTimeout(() => {
-                const header = document.querySelector('app-header');
-                const footer = document.querySelector('app-footer');
+                // Ensure public header is present and replace any auth header
                 const headerAuth = document.querySelector('app-header-auth');
+                if (headerAuth) {
+                    const replacement = document.createElement('app-header');
+                    headerAuth.parentNode.replaceChild(replacement, headerAuth);
+                }
+                let header = document.querySelector('app-header');
+                if (!header) {
+                    header = document.createElement('app-header');
+                    document.body.insertBefore(header, document.body.firstChild);
+                }
+                const footer = document.querySelector('app-footer');
                 
                 console.log('🔍 Verificando componentes:');
                 console.log('Header:', header);
                 console.log('Footer:', footer);
-                console.log('Header Auth:', headerAuth);
                 
                 if (header || footer || headerAuth) {
                     console.log('🎉 Web components funcionando correctamente');

@@ -83,19 +83,18 @@ function initializeWebComponents() {
     const existingHeader = document.querySelector('header.main-header');
     if (existingHeader) {
         console.log('Replacing existing header');
-        const user = getStoredUser();
-        const headerEl = document.createElement(user ? 'app-header-auth' : 'app-header');
+        // Force public header across the site
+        const headerEl = document.createElement('app-header');
         existingHeader.parentNode.replaceChild(headerEl, existingHeader);
         // Initialize cart count with stored data
         const initCount = typeof window.__cartCount === 'number' ? window.__cartCount : getStoredCartCount();
         if (typeof headerEl.updateCartCount === 'function') headerEl.updateCartCount(initCount);
     }
 
-    // If a header exists, ensure the correct one based on session
+    // If a header exists, ensure it is the public header
     const headerComponents = document.querySelectorAll('app-header, app-header-auth');
     if (headerComponents.length > 0) {
-        const user = getStoredUser();
-        const desiredTag = user ? 'app-header-auth' : 'app-header';
+        const desiredTag = 'app-header';
         headerComponents.forEach((el) => {
             if (el.tagName.toLowerCase() !== desiredTag) {
                 const replacement = document.createElement(desiredTag);
@@ -107,8 +106,7 @@ function initializeWebComponents() {
         });
     } else {
         // If none present, insert one at the start of the body as a fallback
-        const user = getStoredUser();
-        const headerEl = document.createElement(user ? 'app-header-auth' : 'app-header');
+        const headerEl = document.createElement('app-header');
         document.body.insertBefore(headerEl, document.body.firstChild);
         // Initialize cart count with stored data
         const initCount = typeof window.__cartCount === 'number' ? window.__cartCount : getStoredCartCount();
