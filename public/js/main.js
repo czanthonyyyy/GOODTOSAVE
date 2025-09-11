@@ -60,7 +60,9 @@ class FoodMarketplaceApp {
    */
   async loadProducts() {
     try {
-              const response = await fetch('/assets/data/products.json');
+      // Armar ruta robusta al JSON de productos
+      const base = window.location.pathname.includes('/pages/') ? '..' : window.location.pathname.includes('/marketplace/') ? '..' : '.';
+      const response = await fetch(`${base}/assets/data/products.json`);
       const data = await response.json();
       this.products = data.products || [];
     } catch (error) {
@@ -74,7 +76,10 @@ class FoodMarketplaceApp {
    * @returns {string} - Nombre de la página actual
    */
   getCurrentPage() {
-    return window.location.pathname.split('/').pop() || 'index.html';
+    const path = window.location.pathname;
+    if (path.includes('/marketplace/marketplace.html')) return 'marketplace/marketplace.html';
+    const last = path.split('/').pop() || 'index.html';
+    return last;
   }
 
   /**
@@ -135,13 +140,13 @@ class FoodMarketplaceApp {
     const heroActions = document.querySelector('.hero-actions');
     
     if (heroTitle) {
-      setTimeout(() => heroTitle.classList.add('fade-in'), 100);
+      setTimeout(() => heroTitle.classList.add('fade-in'), 50);
     }
     if (heroSubtitle) {
-      setTimeout(() => heroSubtitle.classList.add('fade-in'), 300);
+      setTimeout(() => heroSubtitle.classList.add('fade-in'), 100);
     }
     if (heroActions) {
-      setTimeout(() => heroActions.classList.add('fade-in'), 500);
+      setTimeout(() => heroActions.classList.add('fade-in'), 150);
     }
   }
 

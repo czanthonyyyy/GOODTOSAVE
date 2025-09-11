@@ -231,34 +231,11 @@ class AnimationManager {
 
     /* ===== ANIMACIONES DE TEXTO ===== */
     setupTextAnimations() {
-        // Efecto de escritura
-        const typewriterElements = document.querySelectorAll('.typewriter');
-        typewriterElements.forEach(element => {
-            this.initTypewriter(element);
-        });
-
         // Efecto de resplandor
         const glowTextElements = document.querySelectorAll('.text-glow');
         glowTextElements.forEach(element => {
             this.addTextGlowEffect(element);
         });
-    }
-
-    initTypewriter(element) {
-        const text = element.textContent;
-        element.textContent = '';
-        element.style.borderRight = '2px solid var(--primary-color)';
-        
-        let i = 0;
-        const typeInterval = setInterval(() => {
-            element.textContent += text.charAt(i);
-            i++;
-            
-            if (i >= text.length) {
-                clearInterval(typeInterval);
-                element.style.borderRight = 'none';
-            }
-        }, 100);
     }
 
     addTextGlowEffect(element) {

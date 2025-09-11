@@ -23,13 +23,68 @@
     
     <!-- Styles to ensure immediate visibility -->
     <style>
+        /* Optimización inmediata del hero */
+        .hero {
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+        
         .hero-title, .hero-subtitle, .hero-actions {
             opacity: 1 !important;
             transform: none !important;
+            animation: none !important;
+            transition: none !important;
+            width: auto !important;
+            border-right: none !important;
+            overflow: visible !important;
+            white-space: normal !important;
+        }
+        
+        /* ELIMINAR COMPLETAMENTE EL EFECTO TYPEWRITER */
+        .typewriter {
+            animation: none !important;
+            border-right: none !important;
+            overflow: visible !important;
+            white-space: normal !important;
+            width: auto !important;
         }
         
         app-header, app-footer {
             display: block !important;
+        }
+<<<<<<< HEAD
+        /* Highlight for user name in hero subtitle */
+        .hero-subtitle .highlight-name {
+            color: var(--primary-light);
+            font-weight: 800;
+            text-shadow: 0 0 8px rgba(57,181,74,0.25);
+=======
+        
+        /* Optimización de animaciones pesadas */
+        .animate-float {
+            animation: none !important;
+        }
+        
+        .animate-pulse {
+            animation: none !important;
+        }
+        
+        .particle {
+            display: none !important;
+        }
+        
+        /* Reducir efectos complejos */
+        .glass-effect {
+            backdrop-filter: none !important;
+        }
+        
+        .hover-lift {
+            transition: none !important;
+        }
+        
+        .hover-lift:hover {
+            transform: none !important;
+>>>>>>> 07405f49761a1b1d81e991a8db3c626ac4e1732b
         }
     </style>
     
@@ -42,6 +97,7 @@
     
     <!-- Header Web Component -->
     <app-header></app-header>
+    
 
     <!-- Hero Section -->
     <section class="hero">
@@ -488,6 +544,7 @@
     </section>
 
     <!-- Footer Web Component -->
+    <app-cart></app-cart>
     <app-footer></app-footer>
 
     <!-- Scripts -->

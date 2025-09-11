@@ -55,6 +55,8 @@ class AppHeaderAuth extends HTMLElement {
         .nav-menu a { color: var(--text-primary); font-weight: 500; text-decoration: none; transition: all .3s cubic-bezier(.4,0,.2,1); font-family: 'Inter', sans-serif; padding: 12px 20px; border-radius: 8px; position: relative; display: block; font-size: .9rem; letter-spacing: .025em; }
         .nav-menu a:hover { color: var(--primary-color); background: rgba(57,181,74,.1); transform: translateY(-1px); }
         .auth-area { display: flex; gap: 1rem; align-items: center; }
+        .logout-btn { display: inline-flex; align-items: center; gap: .5rem; padding: 10px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,.12); background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%); color: var(--white); font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; transition: all .3s cubic-bezier(.4,0,.2,1); }
+        .logout-btn:hover { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(57,181,74,.35); }
         .cart-toggle { position: relative; background: transparent; border: 2px solid rgba(255,255,255,.1); color: var(--text-primary); font-size: 1.1rem; cursor: pointer; padding: 8px; border-radius: 8px; transition: all .3s cubic-bezier(.4,0,.2,1); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
         .cart-toggle:hover { color: var(--primary-color); background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.2); transform: translateY(-1px); }
         .cart-count { position: absolute; top: -6px; right: -6px; background: linear-gradient(135deg, var(--error-color) 0%, #ff6b6b 100%); color: var(--white); font-size: .7rem; font-weight: 700; padding: 3px 6px; border-radius: 12px; min-width: 20px; text-align: center; display: none; box-shadow: 0 2px 8px rgba(231,76,60,.4); border: 2px solid var(--white); }
@@ -110,6 +112,7 @@ class AppHeaderAuth extends HTMLElement {
                 <a class="menu-item" id="menu-logout"><span>Log out</span></a>
               </div>
             </div>
+            <button class="logout-btn" id="logout-visible" title="Log out">Log out</button>
           </div>
         </div>
       </header>
@@ -140,6 +143,7 @@ class AppHeaderAuth extends HTMLElement {
     const profileBtn = this.shadowRoot.getElementById('profile-button');
     const menu = this.shadowRoot.getElementById('profile-menu');
     const logout = this.shadowRoot.getElementById('menu-logout');
+    const logoutVisible = this.shadowRoot.getElementById('logout-visible');
     const profile = this.shadowRoot.getElementById('menu-profile');
     const orders = this.shadowRoot.getElementById('menu-orders');
 
@@ -177,7 +181,7 @@ class AppHeaderAuth extends HTMLElement {
       window.location.href = '../marketplace/marketplace.html';
     });
 
-    logout?.addEventListener('click', async () => {
+    const doLogout = async () => {
       try {
         if (window.firebaseAuthService?.signOut) {
           await window.firebaseAuthService.signOut();
@@ -186,7 +190,9 @@ class AppHeaderAuth extends HTMLElement {
       localStorage.removeItem('user');
       // Reload or go to home
       window.location.href = 'index.html';
-    });
+    };
+    logout?.addEventListener('click', doLogout);
+    logoutVisible?.addEventListener('click', doLogout);
 
     // Expose method to update cart counter
     this.updateCartCount = (count) => {

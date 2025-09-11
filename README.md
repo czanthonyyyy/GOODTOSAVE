@@ -255,3 +255,60 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más det
 ---
 
 **Good to Save Marketplace** - Transformando el desperdicio de alimentos en oportunidades sostenibles. 🌱 
+
+---
+
+## 📚 Documentación Consolidada
+
+### 🎨 Sistema de Animaciones
+
+Consulta de clases, patrones y buenas prácticas de animación usados en el proyecto, incluyendo efectos de entrada, hover, partículas, texto y rendimiento.
+
+- Archivos clave: `public/css/animations.css`, `public/css/enhanced-animations.css`, `public/css/marketplace-animations.css`, `public/js/animations.js`
+- Clases disponibles: `.animate-slide-in-*`, `.animate-fade-in-*`, `.hover-*`, `.animate-*`, `.glass-effect`, `.text-glow`
+- Rendimiento: uso de `transform/opacity`, IntersectionObserver y soporte `prefers-reduced-motion`
+
+### 🔐 Guía de Pruebas de Autenticación
+
+Pasos y comandos de consola para verificar el estado de Firebase/Auth, probar inicio de sesión, depurar problemas comunes y exportar logs.
+
+- Comandos: `debugAuth.checkStatus()`, `debugAuth.checkService()`, `debugAuth.getLogs()`
+- Problemas comunes cubiertos y soluciones: inicialización, errores de dependencias y validaciones
+- Checklist de pruebas básicas de login/registro y manejo de errores
+
+### 📊 Sistema de Estadísticas Dinámicas
+
+Sistema para cargar y animar cifras desde `public/assets/data/dynamic-stats.json`, con actualizaciones en tiempo real opcionales.
+
+- Archivos: `public/js/dynamic-stats.js`, `public/js/real-time-updates.js`
+- Uso en consola: `window.dynamicStats.getStat(...)`, `updateStat(...)`, `exportStats()`, `startRealTimeUpdates()`
+- Estructura de datos: `platform_stats`, `impact_stats`, `global_problem`, `testimonials`, `success_stories`
+
+### 🛠️ Fix Permanente de Firebase Auth
+
+Resumen de la solución aplicada para errores de `onAuthStateChanged`, dependencias y sintaxis, con inicialización robusta y utilidades de manejo de errores.
+
+- Archivos: `public/auth/firebase-auth.js`, `public/firebase/firebase-config.js`, `public/js/firebase-utils.js`, `public/js/roles.js`, `public/auth/auth.js`
+- Helpers: `ensureInitialized()`, `FirebaseUtils.handleError(...)`
+- Orden de carga recomendado de SDK y scripts
+
+### 🔥 Configuración de Firebase
+
+Instrucciones para crear proyecto, habilitar Authentication/Firestore, colocar credenciales en `public/firebase/firebase-config.js`, y reglas de Firestore base.
+
+- Reglas ejemplo para colecciones `users` y `products`
+- Checklist de verificación y solución de problemas comunes
+
+### 🗄️ Firestore: Reglas para Órdenes
+
+Reglas sugeridas para la colección `orders` (lectura/escritura por dueño), estructura de documento y verificación de funcionamiento.
+
+- Índice recomendado: `orders (uid asc, createdAt desc)`
+
+### 🌐 Firebase Hosting
+
+Guía de despliegue/servido local y optimizaciones de hosting.
+
+- Comandos: `npm run deploy`, `firebase hosting:channel:deploy preview`, `npm run serve`
+- Estructura publicada: carpeta `public/`
+- Headers de seguridad y caché, reescrituras para SPA, URLs de proyecto

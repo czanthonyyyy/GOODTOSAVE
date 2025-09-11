@@ -153,8 +153,11 @@ function setupComponentEventListeners() {
 // Event listener for cart toggle
     document.addEventListener('cart-toggle', (event) => {
         console.log('Cart toggle fired');
-        // Emit event so cart script handles it
-        document.dispatchEvent(new CustomEvent('show-cart'));
+        if (typeof window.toggleCart === 'function') {
+            window.toggleCart();
+        } else {
+            document.dispatchEvent(new CustomEvent('show-cart'));
+        }
     });
 
 // Event listener for newsletter subscription

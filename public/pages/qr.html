@@ -141,10 +141,6 @@
                  <i class="fas fa-share-alt"></i>
                  Share
              </button>
-             <button id="print-receipt" class="action-btn home-btn" title="Print">
-                 <i class="fas fa-print"></i>
-                 Print
-             </button>
              <button id="back-to-home" class="action-btn home-btn">
                  <i class="fas fa-home"></i>
                  Back to Home
@@ -213,10 +209,7 @@
                      window.location.href = '../marketplace/marketplace.html';
                  });
 
-                  // Print
-                  document.getElementById('print-receipt')?.addEventListener('click', () => {
-                      window.print();
-                  });
+                 
 
                  // Copy Order ID button
                  document.getElementById('copy-order-id')?.addEventListener('click', () => {
