@@ -566,15 +566,15 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
     document.head.appendChild(style);
     
-    // Parallax effect for hero section
-    window.addEventListener('scroll', function() {
-        const scrolled = window.pageYOffset;
-        const heroSection = document.querySelector('.about-hero');
-        if (heroSection) {
-            const rate = scrolled * -0.5;
-            heroSection.style.transform = `translateY(${rate}px)`;
-        }
-    });
+    // Parallax effect disabled to keep green hero band fixed
+    // window.addEventListener('scroll', function() {
+    //     const scrolled = window.pageYOffset;
+    //     const heroSection = document.querySelector('.about-hero');
+    //     if (heroSection) {
+    //         const rate = scrolled * -0.5;
+    //         heroSection.style.transform = `translateY(${rate}px)`;
+    //     }
+    // });
     
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
