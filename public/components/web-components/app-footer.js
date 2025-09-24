@@ -16,7 +16,7 @@ class AppFooter extends HTMLElement {
                     display: block;
                     background-color: var(--background-secondary);
                     color: var(--text-primary);
-                    padding: 4rem 0 calc(6rem + env(safe-area-inset-bottom, 0px));
+                    padding: 4rem 0 calc(8rem + env(safe-area-inset-bottom, 0px));
                     margin-top: 6rem;
                 }
 
@@ -343,6 +343,9 @@ class AppFooter extends HTMLElement {
                 }
 
                 @media (max-width: 768px) {
+                    :host {
+                        padding: 3.5rem 0 calc(9rem + env(safe-area-inset-bottom, 0px));
+                    }
                     .footer-content {
                         grid-template-columns: 1fr;
                         gap: 1.25rem;
@@ -403,6 +406,9 @@ class AppFooter extends HTMLElement {
                 }
 
                 @media (max-width: 480px) {
+                    :host {
+                        padding: 3rem 0 calc(10rem + env(safe-area-inset-bottom, 0px));
+                    }
                     .footer-content {
                         padding-left: 10px;
                         padding-right: 10px;

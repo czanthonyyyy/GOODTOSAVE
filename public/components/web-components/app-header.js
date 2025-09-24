@@ -548,18 +548,35 @@ class AppHeader extends HTMLElement {
         const indicator = this.shadowRoot.getElementById('nav-indicator');
 
         cartToggle.addEventListener('click', () => {
-            // Usar helper global robusto que garantiza existencia del carrito
+            // Prefer global helper if already available
             if (typeof window.toggleCart === 'function') {
                 window.toggleCart();
                 return;
             }
-            const cartComponent = document.querySelector('app-cart');
+
+            // Ensure an app-cart instance exists
+            let cartComponent = document.querySelector('app-cart');
+            if (!cartComponent) {
+                try {
+                    cartComponent = document.createElement('app-cart');
+                    document.body.appendChild(cartComponent);
+                } catch (e) {}
+            }
+
+            // Try direct method if present
             if (cartComponent?.toggleCart) {
                 cartComponent.toggleCart();
-            } else {
-                // If the cart component doesn't exist, dispatch a global event
-                document.dispatchEvent(new CustomEvent('cart-toggle'));
+                return;
             }
+
+            // Fallbacks: give a microtask for app-cart to initialize globals, then toggle
+            setTimeout(() => {
+                if (typeof window.toggleCart === 'function') {
+                    window.toggleCart();
+                } else {
+                    document.dispatchEvent(new CustomEvent('cart-toggle'));
+                }
+            }, 0);
         });
 
         mobileMenuToggle.addEventListener('click', () => {
@@ -664,6 +681,38 @@ class AppHeader extends HTMLElement {
 				const dashItem = this.shadowRoot.getElementById('menu-dashboard');
 				if (dashItem) dashItem.addEventListener('click', () => { window.location.href = `${up}pages/dashboard.html`; });
 			}
+
+			// Re-attach cart toggle listener to the newly rendered button
+			try {
+				const cartToggle = this.shadowRoot.getElementById('cart-toggle');
+				if (cartToggle && !cartToggle.hasAttribute('data-cart-listener')) {
+					cartToggle.setAttribute('data-cart-listener', 'true');
+					cartToggle.addEventListener('click', () => {
+						if (typeof window.toggleCart === 'function') {
+							window.toggleCart();
+							return;
+						}
+						let cartComponent = document.querySelector('app-cart');
+						if (!cartComponent) {
+							try {
+								cartComponent = document.createElement('app-cart');
+								document.body.appendChild(cartComponent);
+							} catch (e) {}
+						}
+						if (cartComponent?.toggleCart) {
+							cartComponent.toggleCart();
+							return;
+						}
+						setTimeout(() => {
+							if (typeof window.toggleCart === 'function') {
+								window.toggleCart();
+							} else {
+								document.dispatchEvent(new CustomEvent('cart-toggle'));
+							}
+						}, 0);
+					});
+				}
+			} catch (e) {}
 
 			// Dropdown toggle y logout
 			const menu = this.shadowRoot.getElementById('profile-menu');

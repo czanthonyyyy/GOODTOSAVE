@@ -217,48 +217,76 @@
                  });
              }
 
-             function loadOrderData() {
-                 // Prefer a snapshot saved at checkout
-                 const lastOrderRaw = localStorage.getItem('lastOrder');
-                 if (lastOrderRaw) {
-                     try {
-                         const parsed = JSON.parse(lastOrderRaw);
-                         if (parsed && Array.isArray(parsed.items)) {
-                             window.orderData = {
-                                 items: parsed.items,
-                                 subtotal: parsed.subtotal || 0,
-                                 tax: parsed.tax || 0,
-                                 total: parsed.total || 0,
-                                 orderId: generateOrderId(),
-                                 timestamp: parsed.timestamp || new Date().toISOString()
-                             };
-                             return;
-                         }
-                     } catch (e) {}
-                 }
+            function loadOrderData() {
+                // Prefer a snapshot saved at checkout
+                const lastOrderRaw = localStorage.getItem('lastOrder');
+                if (lastOrderRaw) {
+                    try {
+                        const parsed = JSON.parse(lastOrderRaw);
+                        if (parsed && Array.isArray(parsed.items)) {
+                            window.orderData = {
+                                items: parsed.items,
+                                subtotal: parsed.subtotal || 0,
+                                tax: parsed.tax || 0,
+                                total: parsed.total || 0,
+                                orderId: generateOrderId(),
+                                timestamp: parsed.timestamp || new Date().toISOString()
+                            };
+                            return;
+                        }
+                    } catch (e) {}
+                }
 
-                 // Fallback to cart storages
-                 const checkoutItems = localStorage.getItem('checkoutItems');
-                 const cartItems = localStorage.getItem('cartItems');
-                 const appCart = localStorage.getItem('foodmarketplace_cart');
-                 let items = [];
-                 if (checkoutItems) items = JSON.parse(checkoutItems);
-                 else if (cartItems) items = JSON.parse(cartItems);
-                 else if (appCart) items = JSON.parse(appCart);
+                // Check sessionStorage (legacy cart flow)
+                const ssItems = sessionStorage.getItem('checkout_items');
+                if (ssItems) {
+                    try {
+                        const parsed = JSON.parse(ssItems) || [];
+                        const subtotal = parsed.reduce((sum, it) => {
+                            const price = Number(it.price ?? it.discountedPrice ?? 0) || 0;
+                            const qty = Number(it.quantity ?? 1) || 1;
+                            return sum + (price * qty);
+                        }, 0);
+                        const tax = subtotal * 0.04;
+                        const total = subtotal + tax;
+                        window.orderData = {
+                            items: parsed,
+                            subtotal,
+                            tax,
+                            total,
+                            orderId: generateOrderId(),
+                            timestamp: new Date().toISOString()
+                        };
+                        return;
+                    } catch (e) {}
+                }
 
-                 const subtotal = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-                 const tax = subtotal * 0.04;
-                 const total = subtotal + tax;
+                // Fallback to localStorage cart storages
+                const checkoutItems = localStorage.getItem('checkoutItems');
+                const cartItems = localStorage.getItem('cartItems');
+                const appCart = localStorage.getItem('foodmarketplace_cart');
+                let items = [];
+                if (checkoutItems) items = JSON.parse(checkoutItems);
+                else if (cartItems) items = JSON.parse(cartItems);
+                else if (appCart) items = JSON.parse(appCart);
 
-                 window.orderData = {
-                     items,
-                     subtotal,
-                     tax,
-                     total,
-                     orderId: generateOrderId(),
-                     timestamp: new Date().toISOString()
-                 };
-             }
+                const subtotal = items.reduce((sum, item) => {
+                    const price = Number(item.price ?? item.discountedPrice ?? 0) || 0;
+                    const qty = Number(item.quantity ?? 1) || 1;
+                    return sum + (price * qty);
+                }, 0);
+                const tax = subtotal * 0.04;
+                const total = subtotal + tax;
+
+                window.orderData = {
+                    items,
+                    subtotal,
+                    tax,
+                    total,
+                    orderId: generateOrderId(),
+                    timestamp: new Date().toISOString()
+                };
+            }
 
              function generateOrderId() {
                  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';

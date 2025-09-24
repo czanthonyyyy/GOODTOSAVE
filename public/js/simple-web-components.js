@@ -62,10 +62,17 @@
                     footer = document.createElement('app-footer');
                     document.body.appendChild(footer);
                 }
+                // Ensure cart component exists for header toggle to work everywhere
+                let cart = document.querySelector('app-cart');
+                if (!cart) {
+                    cart = document.createElement('app-cart');
+                    document.body.appendChild(cart);
+                }
                 
                 console.log('🔍 Verificando componentes:');
                 console.log('Header:', header);
                 console.log('Footer:', footer);
+                console.log('Cart:', cart);
                 
                 if (header || footer || headerAuth) {
                     console.log('🎉 Web components funcionando correctamente');

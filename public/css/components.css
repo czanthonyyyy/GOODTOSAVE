@@ -71,7 +71,7 @@
 .footer {
     background-color: var(--background-secondary);
     color: var(--text-primary);
-    padding: 3rem 0 1rem;
+    padding: 3rem 0 2.5rem;
     margin-top: 4rem;
 }
 
@@ -1073,7 +1073,7 @@
 /* ===== RESPONSIVE FOOTER ===== */
 @media (max-width: 768px) {
     .footer {
-        padding: 2rem 0 1rem;
+        padding: 2.5rem 0 2rem;
         margin-top: 3rem;
     }
     
@@ -1124,7 +1124,7 @@
 
 @media (max-width: 480px) {
     .footer {
-        padding: 1.5rem 0 0.75rem;
+        padding: 2rem 0 1.5rem;
         margin-top: 2rem;
     }
     
@@ -1169,7 +1169,7 @@
 
 @media (max-width: 360px) {
     .footer {
-        padding: 1.25rem 0 0.5rem;
+        padding: 1.75rem 0 1.25rem;
         margin-top: 1.5rem;
     }
     
