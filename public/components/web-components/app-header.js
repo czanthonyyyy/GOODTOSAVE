@@ -9,6 +9,11 @@ class AppHeader extends HTMLElement {
         this.setLogoSrc();
         this.setLinkHrefs();
         this.setupEventListeners();
+		this.updateAuthStateUI();
+		// Suscribirse a cambios de autenticación si el servicio está disponible
+		try {
+			window.firebaseAuthService?.onAuthStateChanged?.(() => this.updateAuthStateUI());
+		} catch (e) {}
         // Apply initial cart counter
         try {
             const initial = (typeof window.__cartCount === 'number') ? window.__cartCount : this.readCartCountFromStorage();
@@ -344,6 +349,18 @@ class AppHeader extends HTMLElement {
                     animation: cart-bump 300ms ease;
                 }
 
+                /* Profile menu styles */
+                .profile { position: relative; }
+                .profile-button { display: inline-flex; align-items: center; gap: .6rem; padding: 6px 10px; border-radius: 10px; border: 2px solid rgba(255,255,255,.1); background: rgba(255,255,255,.05); color: var(--text-primary); cursor: pointer; font-family: 'Inter', sans-serif; transition: all .3s cubic-bezier(.4,0,.2,1); }
+                .profile-button:hover { background: rgba(255,255,255,.1); color: var(--white); border-color: rgba(255,255,255,.2); transform: translateY(-1px); }
+                .avatar { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-color), var(--primary-light)); color: white; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: .9rem; letter-spacing: .02em; }
+                .name { color: var(--text-primary); font-weight: 600; font-size: .9rem; }
+                .chev { width: 14px; height: 14px; opacity: .8; }
+                .menu { position: absolute; top: calc(100% + 8px); right: 0; background: #1a1a1a; border: 1px solid rgba(255,255,255,.08); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.25); min-width: 200px; padding: 8px; display: none; }
+                .menu.show { display: block; }
+                .menu-item { display: flex; align-items: center; gap: .6rem; padding: 10px 12px; color: var(--text-primary); text-decoration: none; border-radius: 8px; cursor: pointer; }
+                .menu-item:hover { background: rgba(255,255,255,.06); color: var(--white); }
+
                 .mobile-menu-toggle {
                     display: none;
                     background: rgba(255, 255, 255, 0.05);
@@ -400,6 +417,8 @@ class AppHeader extends HTMLElement {
                         padding: 6px 12px;
                         font-size: 0.8rem;
                     }
+
+                    .name { display: none; }
                 }
 
                 :root {
@@ -489,19 +508,7 @@ class AppHeader extends HTMLElement {
 
     setLinkHrefs() {
         try {
-            const currentPath = window.location.pathname;
-            let up = '';
-            if (currentPath.includes('/pages/')) {
-                const after = currentPath.split('/pages/')[1] || '';
-                const depth = Math.max(0, (after.match(/\//g) || []).length); // subcarpetas dentro de pages
-                up = '../'.repeat(depth + 1);
-            } else if (currentPath.includes('/marketplace/')) {
-                up = '../';
-            } else if (currentPath.includes('/auth/')) {
-                up = '../';
-            } else {
-                up = '';
-            }
+			const up = this.getPathPrefix();
 
             const home = this.shadowRoot.querySelector('a[data-link="home"]');
             const market = this.shadowRoot.querySelector('a[data-link="marketplace"]');
@@ -515,6 +522,23 @@ class AppHeader extends HTMLElement {
             console.error('Error setting header link hrefs:', e);
         }
     }
+
+	getPathPrefix() {
+		const currentPath = window.location.pathname;
+		let up = '';
+		if (currentPath.includes('/pages/')) {
+			const after = currentPath.split('/pages/')[1] || '';
+			const depth = Math.max(0, (after.match(/\//g) || []).length);
+			up = '../'.repeat(depth + 1);
+		} else if (currentPath.includes('/marketplace/')) {
+			up = '../';
+		} else if (currentPath.includes('/auth/')) {
+			up = '../';
+		} else {
+			up = '';
+		}
+		return up;
+	}
 
     setupEventListeners() {
         const cartToggle = this.shadowRoot.getElementById('cart-toggle');
@@ -584,6 +608,98 @@ class AppHeader extends HTMLElement {
 
         // Instance method available for global loader to call
     }
+
+	getStoredUser() {
+		try {
+			const raw = localStorage.getItem('user');
+			return raw ? JSON.parse(raw) : null;
+		} catch (e) { return null; }
+	}
+
+	async updateAuthStateUI() {
+		try {
+			const authArea = this.shadowRoot.querySelector('.auth-buttons');
+			if (!authArea) return;
+			const up = this.getPathPrefix();
+
+			// Preservar el botón del carrito
+			const cartBtn = authArea.querySelector('#cart-toggle')?.outerHTML || '';
+
+			// Determinar usuario actual
+			const currentUser = window.firebaseAuthService?.getCurrentUser?.() || this.getStoredUser();
+			if (!currentUser) {
+				// Usuario NO autenticado: mostrar Login/Register
+				authArea.innerHTML = `${cartBtn}\n<a href="${up}auth/auth.html" class="btn btn-primary" data-auth-link>Login or Register</a>\n<button class="mobile-menu-toggle" id="mobile-menu-toggle">\n\t<i class="fas fa-bars"></i>\n</button>`;
+				return;
+			}
+
+			// Usuario autenticado: mostrar Perfil (avatar+nombre) con menú (Dashboard, Log out)
+			const displayName = this.getDisplayName(currentUser);
+			const initials = this.getInitials(displayName);
+			authArea.innerHTML = `${cartBtn}
+<div class="profile" id="profile">
+	<button class="profile-button" id="profile-button" title="Account">
+		<span class="avatar" id="avatar">${initials}</span>
+		<span class="name" id="user-name">${displayName}</span>
+		<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+	</button>
+	<div class="menu" id="profile-menu">
+		<a class="menu-item" id="menu-dashboard"><span>Dashboard</span></a>
+		<a class="menu-item" id="menu-logout"><span>Log out</span></a>
+	</div>
+</div>
+<button class="mobile-menu-toggle" id="mobile-menu-toggle">
+	<i class="fas fa-bars"></i>
+</button>`;
+
+			// Resolver rol para enlace del dashboard
+			try {
+				const role = await window.RolesHelper?.getCurrentUserRole?.();
+				const dashItem = this.shadowRoot.getElementById('menu-dashboard');
+				if (dashItem) {
+					const href = role === 'provider' ? `${up}pages/provider-dashboard.html` : (role === 'buyer' ? `${up}pages/buyer-dashboard.html` : `${up}pages/dashboard.html`);
+					dashItem.addEventListener('click', () => { window.location.href = href; });
+				}
+			} catch (e) {
+				const dashItem = this.shadowRoot.getElementById('menu-dashboard');
+				if (dashItem) dashItem.addEventListener('click', () => { window.location.href = `${up}pages/dashboard.html`; });
+			}
+
+			// Dropdown toggle y logout
+			const menu = this.shadowRoot.getElementById('profile-menu');
+			const profileBtn = this.shadowRoot.getElementById('profile-button');
+			const toggleMenu = (e) => { e?.stopPropagation?.(); menu?.classList.toggle('show'); };
+			profileBtn?.addEventListener('click', toggleMenu);
+			document.addEventListener('click', (e) => { if (!this.shadowRoot.contains(e.target)) menu?.classList.remove('show'); });
+			const doLogout = async () => {
+				try { await window.firebaseAuthService?.signOut?.(); } catch (e) {}
+				localStorage.removeItem('user');
+				window.location.href = `${up}pages/index.html`;
+			};
+			this.shadowRoot.getElementById('menu-logout')?.addEventListener('click', doLogout);
+		} catch (e) {
+			console.warn('Auth UI update failed:', e);
+		}
+	}
+
+	getDisplayName(user) {
+		try {
+			if (!user) return 'User';
+			if (user.displayName && user.displayName.trim()) return user.displayName.trim();
+			if (user.email) return user.email.split('@')[0];
+			const stored = this.getStoredUser();
+			if (stored?.displayName) return stored.displayName;
+			return 'User';
+		} catch (e) { return 'User'; }
+	}
+
+	getInitials(name) {
+		const str = (name || '').trim();
+		if (!str) return 'U';
+		const parts = str.split(/\s+/).filter(Boolean);
+		if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+		return (parts[0][0] + parts[1][0]).toUpperCase();
+	}
 
     updateCartCount(count) {
         const cartCount = this.shadowRoot.getElementById('cart-count');

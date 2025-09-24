@@ -128,6 +128,15 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Authentication Handlers
+    async function waitForAuthServiceReady(maxMs = 10000) {
+        const start = Date.now();
+        while (Date.now() - start < maxMs) {
+            if (window.firebaseAuthService && window.firebaseAuthService.initialized) return true;
+            await new Promise(r => setTimeout(r, 100));
+        }
+        return false;
+    }
+
     async function handleFormSubmission(form) {
         const submitButton = form.querySelector('button[type="submit"]');
         const originalText = submitButton.innerHTML;
@@ -135,6 +144,13 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             submitButton.classList.add('loading');
             submitButton.innerHTML = '<i class="ri-loader-4-line ri-spin"></i> Processing...';
+            // Ensure Firebase is ready before attempting auth
+            const ready = await waitForAuthServiceReady(10000);
+            if (!ready) {
+                const target = form.id === 'signupForm' ? 'signup-error-message' : 'signin-error-message';
+                showInlineFormError(target, 'Authentication service is not ready. Please try again in a few seconds.');
+                return;
+            }
             
             if (form.id === 'signinForm') {
                 await handleSignIn(form);
@@ -143,10 +159,25 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         } catch (error) {
             console.error('Authentication error:', error);
-            showError(error.message);
+            const message = error?.message || String(error) || 'Unexpected authentication error';
+            const target = form.id === 'signupForm' ? 'signup-error-message' : 'signin-error-message';
+            showInlineFormError(target, message);
         } finally {
             submitButton.classList.remove('loading');
             submitButton.innerHTML = originalText;
+        }
+    }
+
+    async function redirectToPostAuth(uid) {
+        try {
+            const role = await window.RolesHelper?.fetchUserRole?.(uid);
+            const target = role === 'provider' ? '../pages/provider-dashboard.html'
+                          : role === 'buyer' ? '../pages/buyer-dashboard.html'
+                          : '../pages/dashboard.html';
+            setTimeout(() => { window.location.href = target; }, 800);
+        } catch (e) {
+            // Fallback genérico
+            setTimeout(() => { window.location.href = '../pages/dashboard.html'; }, 800);
         }
     }
 
@@ -175,8 +206,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 } catch (e) {}
                 showSuccess('You were already signed in');
-                // Ir siempre al home después de autenticar
-                setTimeout(() => { window.location.href = '../pages/index.html'; }, 800);
+                await redirectToPostAuth(current.uid);
                 return;
             }
 
@@ -201,9 +231,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } catch (e) {}
             
             showSuccess('Signed in successfully');
-            
-            // Ir siempre al home después de login exitoso
-            setTimeout(() => { window.location.href = '../pages/index.html'; }, 800);
+            await redirectToPostAuth(user.uid);
         } catch (error) {
             // Professional visual feedback per error type
             const code = error?.code || '';
@@ -246,20 +274,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }));
             
             showSuccess('Registered successfully');
-            
-            // Redirigir según rol tras registro exitoso
-            try {
-                const role = await window.RolesHelper?.fetchUserRole?.(user.uid);
-                if (role === 'provider') {
-                    setTimeout(() => { window.location.href = '../pages/provider-dashboard.html'; }, 800);
-                } else {
-                    setTimeout(() => { window.location.href = '../pages/index.html'; }, 800);
-                }
-            } catch (e) {
-                setTimeout(() => { window.location.href = '../pages/index.html'; }, 800);
-            }
+            await redirectToPostAuth(user.uid);
         } catch (error) {
-            throw new Error(error);
+            const friendly = (typeof error === 'string') ? error : (error?.message || 'Registration failed');
+            showInlineFormError('signup-error-message', friendly);
+            console.error('SignUp failed:', error);
         }
     }
 
@@ -343,6 +362,9 @@ document.addEventListener('DOMContentLoaded', function() {
         el.style.padding = '10px 12px';
         el.style.borderRadius = '8px';
         el.style.marginTop = '8px';
+        // Auto-hide after a while
+        clearTimeout(el._hideTimer);
+        el._hideTimer = setTimeout(() => { el.style.display = 'none'; }, 6000);
     }
 
     function markFieldError(selector) {
@@ -432,11 +454,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Verificar estado de autenticación al cargar la página
+    // Verificar estado de autenticación al cargar la página (sin redirigir automáticamente)
     window.firebaseAuthService.onAuthStateChanged((user) => {
         if (user) {
-            console.log('User already authenticated:', user);
-            // Redirection removed to allow staying on auth page
+            console.log('User already authenticated (no redirect on auth page):', user);
+            // No redirigir automáticamente aquí para no interrumpir la interacción del usuario
+            // La redirección ocurre solo tras login/registro exitoso explícito
         }
     });
 }); 

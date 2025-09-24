@@ -657,33 +657,53 @@ body {
 }
 
 .products-grid.list-view .item {
-    flex-direction: row !important;
+    display: grid !important;
+    grid-template-columns: 120px 1fr auto !important;
+    grid-template-areas:
+        "image title price"
+        "image .     button" !important;
+    column-gap: 24px !important;
+    row-gap: 10px !important;
+    align-items: center !important;
     text-align: left !important;
-    padding: 20px !important;
-    gap: 20px !important;
-    min-height: 150px !important;
+    padding: 20px 24px !important;
+    min-height: 140px !important;
 }
 
 .products-grid.list-view .img-item {
-    width: 120px !important;
-    height: 120px !important;
-    max-width: 120px !important;
+    grid-area: image !important;
+    width: 110px !important;
+    height: 110px !important;
+    max-width: 110px !important;
     flex-shrink: 0 !important;
 }
 
 .products-grid.list-view .titulo-item {
+    grid-area: title !important;
     text-align: left !important;
     margin-bottom: 5px !important;
+    align-self: start !important;
 }
 
 .products-grid.list-view .precio-item {
+    grid-area: price !important;
     margin: 5px 0 !important;
+    justify-self: end !important;
+    align-self: start !important;
 }
 
 .products-grid.list-view .boton-item {
+    grid-area: button !important;
     width: auto !important;
     max-width: 150px !important;
     margin-left: auto !important;
+    justify-self: end !important;
+}
+
+/* Ensure category badge does not overlap content in list view */
+.products-grid.list-view .item-badge {
+    top: 12px !important;
+    right: 12px !important;
 }
 
 /* Hidden state for filtering - ONLY for product items, NOT filter buttons */
