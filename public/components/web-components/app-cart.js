@@ -1414,6 +1414,13 @@ class AppCart extends HTMLElement {
 
     openCart() {
         console.log('Opening cart...');
+        
+        // Check if user is logged in
+        if (!this.isUserLoggedIn()) {
+            this.showLoginRequiredModal();
+            return;
+        }
+        
         this.isOpen = true;
         this.classList.add('open');
         
@@ -1660,6 +1667,168 @@ class AppCart extends HTMLElement {
         if (this.forceReinitializeCloseButton) {
             this.forceReinitializeCloseButton();
         }
+    }
+
+    // Check if user is logged in
+    isUserLoggedIn() {
+        try {
+            // Check Firebase auth service
+            if (window.firebaseAuthService?.getCurrentUser?.()) {
+                return true;
+            }
+            
+            // Check localStorage for user data
+            const storedUser = localStorage.getItem('user');
+            if (storedUser) {
+                const user = JSON.parse(storedUser);
+                return user && user.uid;
+            }
+            
+            return false;
+        } catch (e) {
+            console.warn('Error checking login status:', e);
+            return false;
+        }
+    }
+
+    // Show login required modal
+    showLoginRequiredModal() {
+        // Create modal overlay
+        const modalOverlay = document.createElement('div');
+        modalOverlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, rgba(15, 20, 25, 0.9), rgba(26, 31, 46, 0.8));
+            backdrop-filter: blur(10px);
+            z-index: 10002;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        `;
+
+        // Create modal content
+        const modalContent = document.createElement('div');
+        modalContent.style.cssText = `
+            background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 50%, #0f1419 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        `;
+
+        // Add shimmer effect
+        const shimmer = document.createElement('div');
+        shimmer.style.cssText = `
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, rgba(64, 224, 208, 0.5) 50%, transparent 100%);
+            animation: shimmer 3s ease-in-out infinite;
+        `;
+
+        modalContent.innerHTML = `
+            <div style="margin-bottom: 1.5rem;">
+                <div style="width: 80px; height: 80px; margin: 0 auto 1.5rem; background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid rgba(239, 68, 68, 0.2);">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2">
+                        <path d="M9 12l2 2 4-4"/>
+                        <path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3"/>
+                        <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3"/>
+                        <path d="M12 3v6"/>
+                        <path d="M12 15v6"/>
+                    </svg>
+                </div>
+                <h2 style="color: #ffffff; font-size: 1.75rem; font-weight: 800; margin: 0 0 1rem; letter-spacing: -0.02em; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">Login Required</h2>
+                <p style="color: #a1a1aa; font-size: 1.1rem; line-height: 1.6; margin: 0 0 2rem; font-weight: 500;">You need to be logged in to access your shopping cart. Please sign in to continue shopping.</p>
+            </div>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <button id="login-modal-btn" style="background: linear-gradient(135deg, #10b981 0%, #34d399 100%); color: white; border: none; padding: 1rem 2rem; border-radius: 12px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); min-width: 140px;">
+                    Sign In
+                </button>
+                <button id="close-modal-btn" style="background: rgba(255, 255, 255, 0.1); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.2); padding: 1rem 2rem; border-radius: 12px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(10px); min-width: 140px;">
+                    Cancel
+                </button>
+            </div>
+        `;
+
+        modalContent.appendChild(shimmer);
+        modalOverlay.appendChild(modalContent);
+        document.body.appendChild(modalOverlay);
+
+        // Add CSS animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shimmer {
+                0%, 100% { transform: translateX(-100%); }
+                50% { transform: translateX(100%); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Animate modal in
+        requestAnimationFrame(() => {
+            modalOverlay.style.opacity = '1';
+            modalContent.style.transform = 'scale(1)';
+        });
+
+        // Event listeners
+        const loginBtn = modalContent.querySelector('#login-modal-btn');
+        const closeBtn = modalContent.querySelector('#close-modal-btn');
+
+        const closeModal = () => {
+            modalOverlay.style.opacity = '0';
+            modalContent.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                document.body.removeChild(modalOverlay);
+                document.head.removeChild(style);
+            }, 300);
+        };
+
+        loginBtn.addEventListener('click', () => {
+            closeModal();
+            // Navigate to auth page
+            const currentPath = window.location.pathname;
+            let authPath;
+            
+            if (currentPath.includes('/pages/')) {
+                authPath = '../auth/auth.html';
+            } else if (currentPath.includes('/marketplace/')) {
+                authPath = '../auth/auth.html';
+            } else {
+                authPath = 'auth/auth.html';
+            }
+            
+            window.location.href = authPath;
+        });
+
+        closeBtn.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                closeModal();
+            }
+        });
+
+        // Close on Escape key
+        const handleEscape = (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                document.removeEventListener('keydown', handleEscape);
+            }
+        };
+        document.addEventListener('keydown', handleEscape);
     }
 }
 
